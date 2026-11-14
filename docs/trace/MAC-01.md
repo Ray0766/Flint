@@ -69,3 +69,25 @@ PID 会被系统复用，只凭一个数字发信号，杀到的可以是任何�
 - `docs/macOS-安装.md` 顶部那段「实机一次都没跑过」换成实跑日期与机型；
 - 哪一步走不通，记在本文件下面，再改脚本或文档；
 - `requirements.lock` 里若有哪个钉死版本没有 macOS 轮子，开问题单，NEVER 手改锁文件。
+
+## 六、后续：`CLAUDE.md` S8 改指现行台账（owner 2026-11-14 直接指令）
+
+`CLAUDE.md` 属 owner 变更通道（`DEC-019`：本体零修改）。本次改动由 owner 在会话里逐字下达：
+「把 CLAUDE.md 的 S8 改成指向新台账，然后推送」。
+
+改前 S8 让新会话读 `docs/progress.jsonl` 末 20 行，而那本台账停在 2026-08-01；
+现行的是 `docs/progress-v041.jsonl`。照旧文走，Mac 上的新会话会从三个月前的状态接手。
+
+改了四处，其余一字未动：
+
+- S8 第一条：现行台账写成 `docs/progress-v041.jsonl`；
+- S8 新增一条：点名两本历史台账及各自末行日期；
+- S8 启动规则：读 `docs/progress-v041.jsonl` 末 20 行；
+- 附页 Human Digest「怎么看进度」同步改指（它与 S8 说的是同一件事，留着旧指向即两处矛盾）。
+
+**有意没改的**：
+
+- S9 审核检查单第 ④ 项「trace 与 progress.jsonl 完整」——`tests/m4/test_m4_006.py:66`
+  逐字比对检查单条目，改它判据会红；
+- `AGENTS.md`——它是 `CLAUDE.md` 的同文副本（仅标题行不同），owner 的指令只点了 `CLAUDE.md`。
+  **两份现在在 S8 上不一致**，留给 owner 定要不要同步。

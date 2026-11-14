@@ -6383,6 +6383,7 @@
           "command": "npm test -- --run app",
           "files": [
             "web/__tests__/app/chain_ui.test.tsx",
+            "web/__tests__/app/interventions_rows.test.tsx",
             "web/__tests__/app/mainchain.test.tsx",
             "web/__tests__/app/nav02.test.tsx",
             "web/__tests__/app/nav03.test.tsx",
@@ -6433,6 +6434,7 @@
           "command": "npm test -- --run app",
           "files": [
             "web/__tests__/app/chain_ui.test.tsx",
+            "web/__tests__/app/interventions_rows.test.tsx",
             "web/__tests__/app/mainchain.test.tsx",
             "web/__tests__/app/nav02.test.tsx",
             "web/__tests__/app/nav03.test.tsx",
@@ -6469,6 +6471,7 @@
           "command": "npm test -- --run app",
           "files": [
             "web/__tests__/app/chain_ui.test.tsx",
+            "web/__tests__/app/interventions_rows.test.tsx",
             "web/__tests__/app/mainchain.test.tsx",
             "web/__tests__/app/nav02.test.tsx",
             "web/__tests__/app/nav03.test.tsx",
@@ -6507,6 +6510,7 @@
           "command": "npm test -- --run app",
           "files": [
             "web/__tests__/app/chain_ui.test.tsx",
+            "web/__tests__/app/interventions_rows.test.tsx",
             "web/__tests__/app/mainchain.test.tsx",
             "web/__tests__/app/nav02.test.tsx",
             "web/__tests__/app/nav03.test.tsx",

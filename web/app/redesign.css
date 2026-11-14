@@ -1458,3 +1458,413 @@ section.cluster-source-lines > h3 {
 .screen--longform .screen__body > .data-row a.data-row__value:hover {
   background: var(--paper-2);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+ * REDESIGN-03 · 继续细化：工作台三栏、只有一句话的屏、暗色与手机回看
+ * ═══════════════════════════════════════════════════════════════════════════════════════════ */
+
+/* ── 工作台右栏：章节导航 ──
+ * 改前这一条宽 138px，「结论与档位是否一句话可读？」这样的检查项要折成三四行。
+ * 加宽到 224px；每一章是一行条目，条目之间一条细线。 */
+.workbench__nav {
+  inline-size: 224px;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-radius: var(--r-card);
+}
+
+.wb-sections {
+  gap: 0;
+  font-size: var(--fs-13);
+}
+
+.wb-sections__title {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-13);
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.wb-sections__list {
+  gap: 0;
+}
+
+.wb-sections__item {
+  gap: var(--sp-1);
+  padding: var(--sp-3) 0;
+  border-top: 1px solid var(--rule);
+  border-radius: 0;
+}
+
+.wb-sections__jump {
+  font-size: var(--fs-14);
+  font-weight: 600;
+  color: var(--ink);
+  text-align: start;
+}
+
+.wb-sections__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-12);
+  color: var(--ink-3);
+}
+
+.wb-sections__check {
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.wb-sections__verdict,
+.wb-sections__absent {
+  font-size: var(--fs-12);
+  font-style: normal;
+  color: var(--ink-3);
+}
+
+/* 右栏还没有正文时的那句话：画成画布中间的一块空态。 */
+.workbench__placeholder {
+  box-sizing: border-box;
+  max-inline-size: 28em;
+  margin: var(--sp-7) auto;
+  padding: var(--sp-6) var(--sp-5);
+  text-align: center;
+  font-size: var(--fs-14);
+  color: var(--ink-2);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-card);
+}
+
+/* ── 正文区里只有一句话的屏：那句话就是这一屏的状态 ──
+ * `REDESIGN-02` 给 Gate 与组合页各写了一条；别的屏也有同样的情形（没有这张工作台、
+ * 执行包与质量卡接口未提供）。这里收成一条通用规则：正文区唯一的子节点是一段字或一枚
+ * 「未提供」标，就把它放到中间。 */
+.screen__body > p:only-child {
+  box-sizing: border-box;
+  max-inline-size: 36em;
+  margin: var(--sp-6) auto;
+  padding: var(--sp-6) var(--sp-5);
+  text-align: center;
+  font-size: var(--fs-16);
+  font-weight: 600;
+  color: var(--ink);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-card);
+}
+
+.screen__body > .not-provided:only-child,
+.screen__body > :only-child > .not-provided:only-child {
+  display: flex;
+  justify-content: center;
+  max-inline-size: 36em;
+  margin: var(--sp-6) auto;
+  padding: var(--sp-6) var(--sp-5);
+  font-family: var(--font-body);
+  font-size: var(--fs-14);
+  border-radius: var(--r-card);
+}
+
+/* ── 演示串屏：加载键是主按钮；还没加载时的那句话是一句次要提示 ── */
+
+[data-demo-load-plaza] {
+  min-block-size: 36px;
+  padding: 0 var(--sp-4);
+  font-family: var(--font-body);
+  font-size: var(--fs-14);
+  font-weight: 600;
+  color: var(--on-accent);
+  background: var(--sulfur);
+  border: 1px solid transparent;
+  border-radius: var(--r-data);
+  cursor: pointer;
+}
+
+[data-demo-not-loaded] {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-14);
+  color: var(--ink-3);
+}
+
+/* ── 模板工具：左边写与看过程，右边看结果 ──
+ * 改前五块竖着排满 1592px：输入框一行能写两百多个字，预览区空着两百像素，固化键悬在半空。
+ * 宽屏分两栏——左栏是「说一句话」与生成过程，右栏是预览与固化；窄屏照旧一栏。 */
+.design__generate,
+.design__solidify {
+  min-block-size: 36px;
+  padding: 0 var(--sp-4);
+  font-weight: 600;
+  color: var(--on-accent);
+  border-color: transparent;
+}
+
+.design__preview {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 320px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+}
+
+.design__preview:has(> .design__frame),
+.design__preview:has(> .design__failed) {
+  display: block;
+  padding: var(--sp-3);
+}
+
+.design__frame {
+  display: block;
+  border: 0;
+}
+
+.design__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+
+.design__blocked-reason {
+  flex: 1 1 20em;
+  margin: 0;
+  font-size: var(--fs-13);
+  color: var(--ink-2);
+}
+
+.design__explore-note {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+}
+
+@media (min-width: 1100px) {
+  .design {
+    display: grid;
+    grid-template-columns: minmax(360px, 30em) minmax(0, 1fr);
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: var(--sp-6);
+    align-items: start;
+  }
+
+  .design__compose {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .design__stream {
+    grid-column: 1;
+    grid-row: 2 / span 3;
+    max-block-size: 480px;
+    margin-bottom: 0;
+  }
+
+  .design__preview {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: stretch;
+    min-block-size: 420px;
+  }
+
+  .design__actions {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .design__explore-note {
+    grid-column: 2;
+    grid-row: 4;
+  }
+}
+
+.design__stream {
+  align-self: stretch;
+}
+
+/* ── 干预页：一行 = 这一块是什么 + 它写了什么 + 能对它做什么 ──
+ * 改前六类块在这里只有三个键与一个没有名字的输入框。结构上的那一半在
+ * `lib/blockExcerpt.ts` 与页面里（类型标签、摘要、输入框的名字），这里是样式的那一半。 */
+.intervention-row {
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+}
+
+.intervention-row__kind {
+  align-self: flex-start;
+  padding: 2px var(--sp-2);
+  font-size: var(--fs-12);
+  font-weight: 600;
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border-radius: var(--r-tag);
+}
+
+.intervention-row__excerpt {
+  font-size: var(--fs-16);
+  line-height: 1.6;
+}
+
+/* 受保护的那句话：一句说明，不再画成一枚虚线标——它不是「没接」，是「不许改」。 */
+.intervention-row__protected {
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+  border: 0;
+}
+
+/* 动作条：锁定、再生成在左，争议理由占满剩下的宽度，「争议」键跟在它后面。 */
+[data-intervention-panel] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--rule);
+}
+
+[data-intervention-panel] > button {
+  min-block-size: 36px;
+  padding: 0 var(--sp-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+  cursor: pointer;
+}
+
+[data-intervention-panel] > button:hover {
+  background: var(--paper-2);
+}
+
+[data-intervention-panel] > textarea {
+  box-sizing: border-box;
+  flex: 1 1 18em;
+  min-inline-size: 0;
+  block-size: 36px;
+  min-block-size: 36px;
+  margin-inline-start: var(--sp-3);
+  padding: 7px var(--sp-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-14);
+  line-height: 20px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+  resize: vertical;
+}
+
+[data-intervention-panel] > textarea::placeholder {
+  color: var(--ink-3);
+}
+
+[data-intervention-panel] > [data-testid="regenerate-status"]:not(:empty) {
+  padding: 2px var(--sp-2);
+  font-size: var(--fs-12);
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border-radius: var(--r-tag);
+}
+
+[data-intervention-panel] > [data-testid="dispute-done"] {
+  flex-basis: 100%;
+  font-size: var(--fs-13);
+  color: var(--ink-2);
+}
+
+@media (max-width: 899px) {
+  /* 手机上提示语要折成两行：框给到两行高，NEVER 让它在一行高的框里被裁掉一半。 */
+  [data-intervention-panel] > textarea {
+    flex-basis: 100%;
+    block-size: 64px;
+    margin-inline-start: 0;
+  }
+
+  .design__preview {
+    min-block-size: 200px;
+  }
+}
+
+/* ── 导出页：五种格式是一张表，每行一个键 ── */
+.screen__body:has(> [data-export-formats]) {
+  max-inline-size: 40em;
+}
+
+[data-export-formats] {
+  padding: var(--sp-2) var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+[data-export-formats] > .data-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  border-bottom: 0;
+  border-top: 1px solid var(--rule);
+}
+
+[data-export-formats] > .data-row:first-child {
+  border-top: 0;
+}
+
+[data-export-formats] .data-row__label {
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+[data-export-ok],
+[data-export-unavailable] {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-14);
+  color: var(--ink-2);
+}
+
+/* ── 手机视口回看（390×844）──
+ * 一、`.workbench__nav` 上面加宽到 224px 的那条压过了旧表「窄屏占满一行」的规则，
+ *     章节栏在手机上只占左半边、右边露出一块点阵底。窄屏照旧占满。
+ * 二、工具条里的「模板」两个字被挤成上下两行。标签与下拉不换行，后面那句提示自己折。
+ * 三、底栏当前项的标签（「计划书工作台」六个字 66px）比一格（56px）宽，
+ *     右半截被下一格的底色盖住。当前项叠在邻格之上，标签整句露出来——
+ *     邻格在那一行只有看不见的字，没有东西会被它挡住。 */
+@media (max-width: 899px) {
+  .workbench__nav {
+    inline-size: 100%;
+  }
+
+  .workbench__toolbar {
+    flex-wrap: wrap;
+  }
+
+  .workbench__toolbar > label,
+  .workbench__toolbar > label > span {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .anime-nav__tab[data-active="true"] {
+    z-index: 51;
+    overflow: visible;
+  }
+
+  .anime-nav__tab[data-active="true"] .anime-nav__label {
+    max-inline-size: none;
+    overflow: visible;
+    white-space: nowrap;
+  }
+}
+
+/* 演示串屏：加载键与它下面的广场之间留出一行的距离（改前两者贴在一起）。 */
+[data-demo-load-plaza] ~ .plaza {
+  margin-top: var(--sp-4);
+}

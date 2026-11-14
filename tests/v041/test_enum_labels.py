@@ -99,6 +99,8 @@ def _messages(path: Path) -> dict[str, str]:
     # `UIR-03`：项目总览把这两族的原值直接印在屏上（`proposal`、`gate1_analysis`、`report`）。
     ("job_kind", CONTRACTS, "JobKind"),
     ("deliverable_type", CONTRACTS, "DeliverableType"),
+    # `REDESIGN-03`：干预页每一行印块类型的标签。
+    ("block_type", CONTRACTS, "BlockType"),
 ])
 def test_the_family_matches_its_source_verbatim(
         prefix: str, path: Path, name: str) -> None:

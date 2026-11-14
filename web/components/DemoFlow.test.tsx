@@ -49,6 +49,28 @@ function routedFetch(): typeof fetch {
   return f as unknown as typeof fetch;
 }
 
+describe("DemoFlow · 没取过数 ≠ 没有数据（`REDESIGN-03`）", () => {
+  // 改前这一屏一进来就画广场的空态「该区当日无数据」——而那时一个请求都还没发。
+  // 「还没查」与「查过了，没有」是两句话；把前一句说成后一句，用户会以为库是空的。
+  it("进屏还没点加载：不说「无数据」，说还没加载", () => {
+    const { container } = render(
+      <DemoFlow day="2026-07-20" opts={{ fetchImpl: routedFetch() }} />);
+
+    expect(container.querySelector("[data-demo-not-loaded]")).not.toBeNull();
+    expect(container.querySelector("[data-plaza-empty]")).toBeNull();
+  });
+
+  it("点了加载之后那句「还没加载」就不在了", async () => {
+    const { container } = render(
+      <DemoFlow day="2026-07-20" opts={{ fetchImpl: routedFetch() }} />);
+
+    fireEvent.click(container.querySelector("[data-demo-load-plaza]")!);
+    await waitFor(() =>
+      expect(container.querySelector("[data-cluster-id='c1']")).not.toBeNull());
+    expect(container.querySelector("[data-demo-not-loaded]")).toBeNull();
+  });
+});
+
 describe("DemoFlow 端到端可点击流", () => {
   it("广场→点簇→工作台+combo→主题→选主题→Gate（路由到进度页）", async () => {
     const opts = { fetchImpl: routedFetch() };

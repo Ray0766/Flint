@@ -100,8 +100,11 @@ export function BlockInterventionPanel({
         <span data-testid="regenerate-status">{regenStatus.status ?? ""}</span>
       ) : null}
 
+      {/* 这个框改前没有名字也没有提示：屏上是一个空白方框夹在两个键中间。 */}
       <textarea
         data-testid="dispute-reason"
+        aria-label={t("block.dispute.reason_label")}
+        placeholder={t("block.dispute.reason_placeholder")}
         value={reason}
         onChange={(e) => setReason(e.target.value)}
       />

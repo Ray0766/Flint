@@ -98,6 +98,14 @@ export const ENUM_FAMILIES: readonly EnumFamily[] = [
              "revalidation_report"],
   },
   {
+    // `REDESIGN-03`：干预页每一行用它说「这一块是什么」。图表、质量卡这几类块没有自己的字，
+    // 屏上认得出它们靠的就是这一枚标签。
+    prefix: "block_type",
+    source: "contracts.models::BlockType",
+    values: ["heading", "paragraph", "table", "chart",
+             "declaration", "quality_card", "citation_list", "gap_notice"],
+  },
+  {
     prefix: "availability",
     source: "WIRE-12 three states: checked / not checked / not wired",
     values: ["ok", "not_checked", "not_provided", "down"],

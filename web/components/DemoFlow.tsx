@@ -39,6 +39,10 @@ export function DemoFlow({
 }): JSX.Element {
   const [step, setStep] = useState<Step>("plaza");
   const [clusters, setClusters] = useState<PlazaCluster[]>([]);
+  // `REDESIGN-03`：广场取没取过。**「还没查」与「查过了，没有」是两句话**——
+  // 改前 `clusters` 初值是空数组，一进屏就画出广场的空态「该区当日无数据」，
+  // 而那时一个请求都还没发。
+  const [plazaLoaded, setPlazaLoaded] = useState<boolean>(false);
   const [clusterId, setClusterId] = useState<string>("");
   const [cards, setCards] = useState<EvidenceCard[]>([]);
   const [projectId, setProjectId] = useState<string>("");
@@ -68,6 +72,7 @@ export function DemoFlow({
   async function loadPlaza(): Promise<void> {
     await run(async () => {
       setClusters(await fetchPlazaHot(day, opts));
+      setPlazaLoaded(true);
     });
   }
 
@@ -113,10 +118,14 @@ export function DemoFlow({
           <button type="button" data-demo-load-plaza onClick={() => void loadPlaza()}>
             {t("demo.load_plaza")}
           </button>
-          <PlazaCards
-            clusters={clusters}
-            onSelectCluster={(cid) => void onSelectCluster(cid)}
-          />
+          {plazaLoaded ? (
+            <PlazaCards
+              clusters={clusters}
+              onSelectCluster={(cid) => void onSelectCluster(cid)}
+            />
+          ) : (
+            <p data-demo-not-loaded="true">{t("demo.not_loaded")}</p>
+          )}
         </section>
       )}
       {step === "workbench" && (

@@ -8,6 +8,8 @@ import { ScreenFetchState } from "../../../../lib/ScreenFetchState";
 import { Screen } from "../../../../components/shell/Screen";
 import { isProtected, type Block } from "../../../../lib/types";
 import { availableBlockInterventions } from "../../../../lib/interventionClient";
+import { blockExcerpt } from "../../../../lib/blockExcerpt";
+import { enumLabel } from "../../../../lib/i18n/enumLabel";
 import { t } from "../../../../lib/i18n/t";
 import { useScreenData } from "../../../../lib/useScreenData";
 
@@ -26,13 +28,6 @@ import { useScreenData } from "../../../../lib/useScreenData";
 // 屏上**明说拒绝原因**（卡面 acceptance②）：三种受保护各说各的话，
 // 因为它们要用户做的事不同（解锁 / 这是你写的 / 你改过它）。
 type BlocksResponse = { deliverable_id: string; blocks: Block[] };
-
-/** 取这一块的开头一段。**原样截断，NEVER 改写**——改写过的摘要不是它本身。 */
-function excerptOf(block: Block): string {
-  const text = (block.content as { text?: unknown }).text;
-  if (typeof text !== "string") return "";
-  return text.length > 80 ? `${text.slice(0, 80)}…` : text;
-}
 
 function protectedReason(block: Block): string {
   // 顺序有意：`locked` 先判——一个既锁着又被用户改过的 block，
@@ -65,11 +60,15 @@ export default function InterventionsPage({
               >
                 {/* **内部 id 不上产品面**（`FB-10` 的 A 类，`no_scaffold_on_screen`
                     当场判红）。它留在 `data-block-id` 上供取证——取证认 id，人看内容。
-                    这里显示的是**这一块自己的文字**：用户要判断「该不该重生成这一块」，
-                    靠的正是它写了什么，而不是它叫什么。
-                    没有文字的块（图表之类）就不显示这一槽（逐槽隐藏）。 */}
-                {excerptOf(block) === "" ? null : (
-                  <p className="intervention-row__excerpt">{excerptOf(block)}</p>
+                    一行先说**这一块是什么**（类型标签），再给**它自己的文字**：
+                    用户要判断「该不该重生成这一块」，靠的是它写了什么，而不是它叫什么。
+                    图表、质量卡这几类块没有自己的字，那一槽不显示（逐槽隐藏），
+                    认它靠类型标签——改前它们在屏上只有三个键。 */}
+                <span className="intervention-row__kind" data-block-type={block.type}>
+                  {enumLabel("block_type", block.type)}
+                </span>
+                {blockExcerpt(block) === "" ? null : (
+                  <p className="intervention-row__excerpt">{blockExcerpt(block)}</p>
                 )}
                 {isProtected(block) ? (
                   // 受保护：**说清是哪一种**，NEVER 只把键灰掉了事。

@@ -163,4 +163,4 @@ PYTHONIOENCODING=utf-8 .venv/bin/ruff check . && .venv/bin/mypy --strict flint e
 | 后端 90 秒内未就绪 | 看 `.run/backend.log` | 连不上 55432 → `docker compose ps` |
 | 作业永远停在 `queued` | worker 没起 | `pgrep -fl harness.run_worker`；看 `.run/worker.log` |
 | 广场是空的 | 库里没有数据 | 跑第五节的回放 |
-| `/demo` 显「该区当日无数据」 | 这一屏不自动取数 | 点「加载当日热点广场」；点了仍空才是库里没有数据 |
+| `/demo` 显「还没加载」 | 这一屏不自动取数 | 点「加载当日热点广场」；点了之后显「该区当日无数据」才是库里没有数据 |

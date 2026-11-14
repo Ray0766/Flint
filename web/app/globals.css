@@ -2944,3 +2944,263 @@ body {
   font-size: var(--fs-13);
   color: var(--text-label);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * UIR-01 · 广场重排（owner 2026-11-14：「现在的 UI 难用而且丑」）
+ *
+ * 改前实测（1920×1080，真栈）：一个网格项里有五样东西——选入框、卡面、地区、各源原话、三个动作，
+ * 而画成「卡」的只有卡面那一小块；另外四样散在页面底色上。选入框、组合栏、各源原话这三处在本文件里
+ * **一条规则都没有**，屏上是浏览器默认样子。
+ *
+ * 改法：**整个网格项是一张卡**，里面那层卡面去掉自己的边与底。DOM 一个节点没动，
+ * 所以既有的 data-* 断言面原样都在。上面那些 `.hotspot-card` 规则也一个字没删——
+ * 卡堆（今日精选）与别的屏还在用它们，这里只覆盖「在网格项里」的那一种。
+ *
+ * 颜色、间距、圆角、投影全部取自 `_ds` 的 token，没有新增任何色值。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 页头下的说明：这一天是怎么定下来的。平常是一句次要信息；
+ * 兜底那一态（显示的不是今天）要让人第一眼看到，用 `--ochre`（提醒，不是报错）。 */
+.screen__body > [data-day-origin] {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
+}
+
+.screen__body > [data-day-origin="fallback"] {
+  max-inline-size: 60em;
+  padding: var(--sp-3) var(--sp-4);
+  border-inline-start: 3px solid var(--ochre);
+  border-radius: var(--r-data);
+  background: var(--ochre-soft);
+  color: var(--ink);
+}
+
+.plaza > [data-topic-deferred] {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-13);
+  color: var(--text-meta);
+}
+
+/* 组合栏：选卡 → 写一句假设 → 建组合。
+ *
+ * 这一屏有 4000 多像素高。栏留在原位的话，往下选到第三行卡就看不见「已选几张」了。
+ * 所以把它**贴在视口底部**跟着走：`order` 把它排到这一屏的最后，`sticky` 让它在滚动时留在底边。
+ * DOM 顺序没变（读屏与 Tab 顺序仍是先栏后卡）。 */
+.plaza {
+  display: flex;
+  flex-direction: column;
+}
+
+.plaza-combo-bar {
+  order: 99;
+  position: sticky;
+  inset-block-end: var(--sp-4);
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3) var(--sp-4);
+  margin: var(--sp-5) 0 0;
+  padding: var(--sp-3) var(--sp-4);
+  background-color: var(--surface);
+  background-image: var(--tex-paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-overlay);
+  font-size: var(--fs-14);
+  color: var(--ink);
+}
+
+.plaza-combo-bar > [data-testid="plaza-combo-count"] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.plaza-combo-bar__hyp {
+  flex: 1 1 320px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-inline-size: 0;
+}
+
+.plaza-combo-bar__hyp-label {
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+
+.plaza-combo-bar__hyp input {
+  flex: 1;
+  min-inline-size: 0;
+  font: inherit;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+}
+
+.plaza-combo-bar__hyp input:focus-visible {
+  border-color: var(--focus-ring);
+}
+
+/* 主按钮：与 `.chain-form__submit` 同一套取值——全站「提交」只有一种长相。 */
+.plaza-combo-bar > button {
+  font: inherit;
+  white-space: nowrap;
+  padding: var(--sp-2) var(--sp-4);
+  color: var(--ink);
+  background: var(--sulfur);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-data);
+  cursor: pointer;
+}
+
+.plaza-combo-bar > button:disabled {
+  background: var(--paper-2);
+  color: var(--ink-3);
+  border-color: var(--rule);
+  cursor: not-allowed;
+}
+
+.plaza-combo-bar > [data-combo-state] {
+  flex-basis: 100%;
+  font-size: var(--fs-13);
+  color: var(--text-meta);
+}
+
+.plaza-combo-bar > [data-combo-state="ready"] {
+  color: var(--moss);
+}
+
+/* 网格：列宽下限放到 340（卡里现在装得下五样东西），窄屏收进视口。 */
+.plaza-grid__list {
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  gap: var(--sp-5);
+}
+
+/* 网格项 = 一张卡。 */
+.plaza-grid__item {
+  position: relative;
+  min-height: 0;
+  padding: var(--sp-5);
+  background-color: var(--surface);
+  background-image: var(--tex-paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.plaza-grid__item:hover {
+  border-color: var(--ink-3);
+  box-shadow: var(--shadow-overlay);
+}
+
+/* 选中的卡要一眼认得出：边换成强调色，再加一圈同色细线（不靠底色——底色变了正文对比要重算）。 */
+.plaza-grid__item:has(.plaza-grid__select input:checked) {
+  border-color: var(--sulfur);
+  box-shadow: 0 0 0 1px var(--sulfur), var(--shadow-sticker);
+}
+
+/* 里面那层卡面：去掉自己的边、底、内边距，只留排版。 */
+.plaza-grid__item > .hotspot-card {
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.plaza-grid__item > .hotspot-card .native-name {
+  margin-top: var(--sp-3);
+}
+
+.plaza-grid__item > .hotspot-card .hotspot-card__foot {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  font-size: var(--fs-13);
+}
+
+/* 选入框：卡的右上角，一枚标签。勾上之后换强调色。 */
+.plaza-grid__select {
+  position: absolute;
+  inset-block-start: var(--sp-4);
+  inset-inline-end: var(--sp-4);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-3);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-tag);
+  font-size: var(--fs-13);
+  line-height: var(--lh-ui);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.plaza-grid__select:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+
+.plaza-grid__select input {
+  margin: 0;
+  inline-size: var(--sp-4);
+  block-size: var(--sp-4);
+  accent-color: var(--sulfur);
+}
+
+.plaza-grid__select:has(input:checked) {
+  border-color: var(--sulfur);
+  background: var(--sulfur-soft);
+  color: var(--ink);
+}
+
+/* 各源原话：卡面与动作之间的一段次要文字。 */
+.plaza-grid__item .cluster-source-lines {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-13);
+  line-height: var(--lh-ui);
+  color: var(--text-secondary);
+}
+
+.cluster-source-lines__missing {
+  margin: var(--sp-2) 0 0;
+  color: var(--text-meta);
+}
+
+/* 三个动作：字从 12 提到 13，点按高度不低于 32。 */
+.plaza-grid__item .hotspot-card__actions {
+  margin-top: var(--sp-4);
+}
+
+.plaza-grid__item .hotspot-card__action {
+  min-block-size: var(--sp-6);
+  padding: var(--sp-1) var(--sp-4);
+  font-size: var(--fs-13);
+  border-color: var(--rule);
+}
+
+.plaza-grid__item .hotspot-card__action:hover {
+  border-color: var(--ink);
+}
+
+/* 窄屏：组合栏折成四行，贴底时占掉五分之一屏（390×844 实测 186px）。
+ * 一张都没选的时候它没有东西要一直给人看，回到文档流里；选了卡才贴底。 */
+@media (max-width: 640px) {
+  .plaza-combo-bar {
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  .plaza-combo-bar[data-selected-count="0"] {
+    position: static;
+    box-shadow: var(--shadow-sticker);
+  }
+}

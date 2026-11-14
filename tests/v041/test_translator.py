@@ -124,9 +124,10 @@ def test_the_call_site_is_the_only_one() -> None:
             if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
                 continue
             if node.func.id in ("LocalModelTranslator", "GoogleFreeTranslator"):
-                hits.append(f"{path.relative_to(REPO_ROOT)}:{node.lineno}")
+                hits.append(f"{path.relative_to(REPO_ROOT).as_posix()}:{node.lineno}")
 
-    assert [h for h in hits if not h.startswith("flint\\i18n\\translate.py")] == [], hits
+    assert hits, "一个构造点都没扫到——扫描面塌了，NEVER 当它通过"
+    assert [h for h in hits if not h.startswith("flint/i18n/translate.py:")] == [], hits
 
 
 # ───────────────────────── 二、译文标来源（acceptance②）

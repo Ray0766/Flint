@@ -2123,8 +2123,8 @@
           "kind": "vitest",
           "command": "npm test -- --run components/hotspot-card",
           "files": [
-            "web/components/hotspot-card/HotspotCard.test.tsx",
-            "web/components/hotspot-card-actions/HotspotCardActions.test.tsx"
+            "web/components/hotspot-card-actions/HotspotCardActions.test.tsx",
+            "web/components/hotspot-card/HotspotCard.test.tsx"
           ],
           "in_gate": false,
           "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
@@ -2146,8 +2146,8 @@
           "kind": "vitest",
           "command": "npm test -- --run components/hotspot-card",
           "files": [
-            "web/components/hotspot-card/HotspotCard.test.tsx",
-            "web/components/hotspot-card-actions/HotspotCardActions.test.tsx"
+            "web/components/hotspot-card-actions/HotspotCardActions.test.tsx",
+            "web/components/hotspot-card/HotspotCard.test.tsx"
           ],
           "in_gate": false,
           "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
@@ -2381,8 +2381,8 @@
           "kind": "vitest",
           "command": "npm test -- --run components/source-columns",
           "files": [
-            "web/components/source-columns/attribution.test.tsx",
-            "web/components/source-columns/SourceColumns.test.tsx"
+            "web/components/source-columns/SourceColumns.test.tsx",
+            "web/components/source-columns/attribution.test.tsx"
           ],
           "in_gate": false,
           "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
@@ -2638,10 +2638,10 @@
           "kind": "vitest",
           "command": "npm test -- --run views/library",
           "files": [
-            "web/views/library/Library.test.tsx",
             "web/views/library-batch/LibraryBatch.test.tsx",
             "web/views/library-empty/LibraryEmpty.test.tsx",
-            "web/views/library-filters/LibraryFilters.test.tsx"
+            "web/views/library-filters/LibraryFilters.test.tsx",
+            "web/views/library/Library.test.tsx"
           ],
           "in_gate": false,
           "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
@@ -2674,10 +2674,10 @@
           "kind": "vitest",
           "command": "npm test -- --run views/library",
           "files": [
-            "web/views/library/Library.test.tsx",
             "web/views/library-batch/LibraryBatch.test.tsx",
             "web/views/library-empty/LibraryEmpty.test.tsx",
-            "web/views/library-filters/LibraryFilters.test.tsx"
+            "web/views/library-filters/LibraryFilters.test.tsx",
+            "web/views/library/Library.test.tsx"
           ],
           "in_gate": false,
           "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
@@ -3687,8 +3687,8 @@
           "kind": "vitest",
           "command": "npm test -- --run design/tweaks",
           "files": [
-            "web/design/tweaks/tweaks.test.ts",
-            "web/design/tweaks-denylist/denylist.test.ts"
+            "web/design/tweaks-denylist/denylist.test.ts",
+            "web/design/tweaks/tweaks.test.ts"
           ],
           "in_gate": false,
           "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
@@ -3720,8 +3720,8 @@
           "kind": "vitest",
           "command": "npm test -- --run design/tweaks",
           "files": [
-            "web/design/tweaks/tweaks.test.ts",
-            "web/design/tweaks-denylist/denylist.test.ts"
+            "web/design/tweaks-denylist/denylist.test.ts",
+            "web/design/tweaks/tweaks.test.ts"
           ],
           "in_gate": false,
           "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"

@@ -84,7 +84,10 @@ async def _client(app: Any) -> httpx.AsyncClient:
     )
 
 
-def test_read_and_three_formats() -> None:
+def test_read_and_three_formats(monkeypatch: pytest.MonkeyPatch) -> None:
+    # 「引擎不可用 → 503」这一支在哪台机器上都要量得到：原先靠的是 Windows 上
+    # weasyprint 恰好导不进来（Q-003），换到装了 pango 的机器这条断言就失去了前提。
+    monkeypatch.setattr("flint.api.deliverables._pdf_available", lambda: False)
     seed()
     app = make_app()
 
@@ -111,6 +114,36 @@ def test_read_and_three_formats() -> None:
                                    params={"fmt": "pdf"})
             assert pdf.status_code == 503, "pdf engine unavailable (Q-003) -> 503"
             assert pdf.json()["code"] == "SERVICE_UNAVAILABLE"
+
+    run(scenario())
+
+
+def _engine_importable() -> bool:
+    import importlib
+
+    try:
+        importlib.import_module("weasyprint")
+    except (OSError, ImportError):
+        return False
+    return True
+
+
+def test_pdf_is_served_when_the_engine_is_there() -> None:
+    """另一支：引擎在的机器上，同一个端点回的是一份真 PDF，不是 503。
+
+    引擎不在就 skip 并说清楚——**NEVER 当它通过**。
+    """
+    if not _engine_importable():
+        pytest.skip("本机 weasyprint 导不进来（Q-003：缺 GTK/pango 运行库），这一支量不了")
+    seed()
+    app = make_app()
+
+    async def scenario() -> None:
+        async with await _client(app) as client:
+            pdf = await client.get("/deliverables/m3058-d1/render",
+                                   params={"fmt": "pdf"})
+            assert pdf.status_code == 200, pdf.text[:300]
+            assert pdf.content[:5] == b"%PDF-"
 
     run(scenario())
 

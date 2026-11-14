@@ -27,6 +27,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 from uuid import uuid4
@@ -246,7 +247,7 @@ def test_the_dark_palette_ruler_still_stands() -> None:
     from subprocess import run as _run
 
     done = _run(
-        ["python", "-m", "pytest", "tests/v041/test_dark_palette.py",
+        [sys.executable, "-m", "pytest", "tests/v041/test_dark_palette.py",
          "tests/v041/test_theme_really_switches.py", "-q"],
         cwd=REPO, capture_output=True, text=True, encoding="utf-8",
         errors="replace", env={**os.environ, "PYTHONIOENCODING": "utf-8"},

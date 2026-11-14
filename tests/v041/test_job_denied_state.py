@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import subprocess
 import urllib.error
 import urllib.request
@@ -57,6 +58,18 @@ SHEET = REPO / "docs" / "blocked" / "JOB-SCREEN-HAS-NO-DENIED-STATE.md"
 BACKEND = "http://localhost:8000"
 NOT_MINE = "m1004-j"                 # initiated_by = u-sys，探针身份是 demo-user
 MINE = "probe-owned-ingest"          # FIX-09 种的那条
+
+
+def _npx() -> str:
+    """npx 的绝对路径。
+
+    原先写的是 `subprocess.run(["npx", ...], shell=True)`：Windows 上靠 shell 找到 `npx.cmd`，
+    而 POSIX 上 `shell=True` 配参数列表只执行第一个词——`npx` 空跑、退出码 0、
+    vitest 一条都没跑。只判退出码的判据在那里是假绿。
+    """
+    npx = shutil.which("npx")
+    assert npx is not None, "找不到 npx：这条量不了，NEVER 当它通过"
+    return npx
 
 
 def _status(path: str) -> int:
@@ -235,9 +248,9 @@ def test_the_rendering_is_asserted_by_a_real_component_test() -> None:
     """
     assert VITEST.exists(), "没有组件级判据"
     done = subprocess.run(
-        ["npx", "vitest", "run", "lib/jobDenied"],
+        [_npx(), "vitest", "run", "lib/jobDenied"],
         capture_output=True, text=True, encoding="utf-8", errors="replace",
-        cwd=REPO / "web", timeout=600, check=False, shell=True)
+        cwd=REPO / "web", timeout=600, check=False)
 
     assert done.returncode == 0, done.stdout[-3000:] + done.stderr[-2000:]
     assert "passed" in done.stdout

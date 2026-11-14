@@ -240,3 +240,24 @@ def test_report_lists_class_three_line_by_line() -> None:
         assert "零条" in text and "阴性结论" in text
     assert "GAUGE-03" in text, "看不见的那一类（F-05）必须如实登记并指向承接方"
     assert Path(REPO_ROOT / "docs" / "尺子清点-v041.md").read_bytes()[:3] != b"\xef\xbb\xbf"
+
+
+def test_file_order_does_not_depend_on_the_platform(tmp_path: Path) -> None:
+    """`MAC-04`：文件顺序 NEVER 随平台变。
+
+    原先靠 `sorted(Path)`：Windows 上不分大小写（`attribution` 在 `SourceColumns` 前），
+    POSIX 上分（反过来）。落盘 json 是 Windows 上生成的，搬到 macOS 当场「过期」。
+    这里造一大一小两个文件名，钉住逐码位序——大写在前。
+    """
+    from tools.gauge_map import Repo
+
+    web = tmp_path / "web" / "components" / "x"
+    web.mkdir(parents=True)
+    (web / "attribution.test.tsx").write_text("", encoding="utf-8")
+    (web / "SourceColumns.test.tsx").write_text("", encoding="utf-8")
+    (tmp_path / "tools").mkdir()
+    (tmp_path / "tests").mkdir()
+
+    names = [p.name for p in Repo(tmp_path)._web_tests]
+
+    assert names == ["SourceColumns.test.tsx", "attribution.test.tsx"], names

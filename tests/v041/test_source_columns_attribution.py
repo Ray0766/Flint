@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -49,6 +50,18 @@ ZH = WEB / "messages" / "zh.json"
 EN = WEB / "messages" / "en.json"
 SHEET = REPO / "docs" / "blocked" / "SOURCE-COLUMNS-DOES-NOT-SHOW-WHO-SAID-IT.md"
 SOURCES_DIR = REPO / "flint" / "sources"
+
+
+def _npx() -> str:
+    """npx 的绝对路径。
+
+    原先写的是 `subprocess.run(["npx", ...], shell=True)`：Windows 上靠 shell 找到 `npx.cmd`，
+    而 POSIX 上 `shell=True` 配参数列表只执行第一个词——`npx` 空跑、退出码 0、
+    vitest 一条都没跑。只判退出码的判据在那里是假绿。
+    """
+    npx = shutil.which("npx")
+    assert npx is not None, "找不到 npx：这条量不了，NEVER 当它通过"
+    return npx
 
 
 def _code_only(path: Path) -> str:
@@ -189,9 +202,9 @@ def test_the_visible_text_is_judged_by_rendering_not_by_attributes() -> None:
     assert "data-source-id" not in spec or "textContent" in spec
 
     done = subprocess.run(
-        ["npx", "vitest", "run", "components/source-columns"],
+        [_npx(), "vitest", "run", "components/source-columns"],
         capture_output=True, text=True, encoding="utf-8", errors="replace",
-        cwd=WEB, shell=True, timeout=900, check=False)
+        cwd=WEB, timeout=900, check=False)
 
     assert done.returncode == 0, (done.stdout or "")[-3000:]
 

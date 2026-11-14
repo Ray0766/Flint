@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -42,6 +43,18 @@ SPEC = WEB / "__tests__" / "app" / "nav03.test.tsx"
 GRAPH = REPO / "assets" / "screen_graph.json"
 ZH = WEB / "messages" / "zh.json"
 EN = WEB / "messages" / "en.json"
+
+
+def _npx() -> str:
+    """npx 的绝对路径。
+
+    原先写的是 `subprocess.run(["npx", ...], shell=True)`：Windows 上靠 shell 找到 `npx.cmd`，
+    而 POSIX 上 `shell=True` 配参数列表只执行第一个词——`npx` 空跑、退出码 0、
+    vitest 一条都没跑。只判退出码的判据在那里是假绿。
+    """
+    npx = shutil.which("npx")
+    assert npx is not None, "找不到 npx：这条量不了，NEVER 当它通过"
+    return npx
 
 
 def _code_only(path: Path) -> str:
@@ -221,9 +234,9 @@ def test_the_front_end_spec_runs_green() -> None:
     成功导航、失败不导航、`graph_id` 只认一个名字，全在那边。
     """
     done = subprocess.run(
-        ["npx", "vitest", "run", "__tests__/app/nav03.test.tsx"],
+        [_npx(), "vitest", "run", "__tests__/app/nav03.test.tsx"],
         capture_output=True, text=True, encoding="utf-8", errors="replace",
-        cwd=WEB, shell=True, timeout=900, check=False)
+        cwd=WEB, timeout=900, check=False)
 
     assert done.returncode == 0, (done.stdout or "")[-3000:] + (done.stderr or "")[-1500:]
 

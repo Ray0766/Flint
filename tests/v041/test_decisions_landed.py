@@ -150,12 +150,15 @@ def test_the_numbers_continue_the_existing_watermark() -> None:
     第 14 批落 059（新增计划书主工作台 · 旧屏改名退居次要），水位 58 → 59，第十一次。
     第 15 批落 060（v4 调色板并入 `_ds` · 保路由局部吸收 · 本轮出卡不直接改码），
     水位 59 → 60，第十二次。
+    第 17 批 owner 2026-10-27 一次点选四条：061（成文端点收分析作业号）· 062（Gate① 第二个
+    真实网络窗口）· 063（总览改查表 + 重写补事件）· 064（冻结件修订窗口），水位 60 → 64，
+    第十三次。那一批当天被叫停，这条判据没跟上，`MAC-04` 在 macOS 上首跑全量时补的。
     水位跟着事实走，而「不许跳号、不许重号」这两条意图一字未动。
     """
     numbers = sorted({int(m) for m in re.findall(r"DEC-0(\d{2})\b", _text())})
 
-    assert numbers[-1] == 60, f"最高编号是 DEC-0{numbers[-1]}，不是 DEC-060"
-    for expected in range(35, 61):
+    assert numbers[-1] == 64, f"最高编号是 DEC-0{numbers[-1]}，不是 DEC-064"
+    for expected in range(35, 65):
         assert expected in numbers, f"DEC-0{expected} 缺号"
     assert len(numbers) == len(set(numbers))
 

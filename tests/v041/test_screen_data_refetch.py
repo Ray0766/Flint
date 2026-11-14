@@ -28,6 +28,7 @@
 from __future__ import annotations
 
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -37,6 +38,18 @@ TOPICS = REPO / "web" / "app" / "projects" / "[id]" / "topics" / "page.tsx"
 VITEST = REPO / "web" / "lib" / "screenDataRefetch.test.tsx"
 SHEET = REPO / "docs" / "blocked" / "SCREEN-DATA-HOOK-HAS-NO-REFETCH.md"
 WEB_APP = REPO / "web" / "app"
+
+
+def _npx() -> str:
+    """npx 的绝对路径。
+
+    原先写的是 `subprocess.run(["npx", ...], shell=True)`：Windows 上靠 shell 找到 `npx.cmd`，
+    而 POSIX 上 `shell=True` 配参数列表只执行第一个词——`npx` 空跑、退出码 0、
+    vitest 一条都没跑。只判退出码的判据在那里是假绿。
+    """
+    npx = shutil.which("npx")
+    assert npx is not None, "找不到 npx：这条量不了，NEVER 当它通过"
+    return npx
 
 
 def _code(path: Path) -> str:
@@ -134,9 +147,9 @@ def test_the_refetch_really_refires_the_request() -> None:
     """
     assert VITEST.exists(), "没有运行时判据"
     done = subprocess.run(
-        ["npx", "vitest", "run", "lib/screenDataRefetch"],
+        [_npx(), "vitest", "run", "lib/screenDataRefetch"],
         capture_output=True, text=True, encoding="utf-8", errors="replace",
-        cwd=REPO / "web", timeout=600, check=False, shell=True)
+        cwd=REPO / "web", timeout=600, check=False)
 
     assert done.returncode == 0, done.stdout[-3000:] + done.stderr[-2000:]
     assert "passed" in done.stdout

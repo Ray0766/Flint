@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -562,7 +563,7 @@ def test_the_two_workbench_responses_are_typed_now() -> None:
     import subprocess
 
     out = subprocess.run(
-        [str(REPO / ".venv" / "Scripts" / "python.exe"),
+        [sys.executable,
          str(REPO / "tools" / "check_fe_be_parity.py"), "--json"],
         capture_output=True, text=True, encoding="utf-8", cwd=REPO,
         check=False)  # 尺子红不红由下面那句断言说了算，不由退出码

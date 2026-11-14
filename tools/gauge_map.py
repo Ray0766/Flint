@@ -111,6 +111,15 @@ _IDENT_STOPWORDS = frozenset({
 })
 
 
+def _posix(path: Path) -> str:
+    """排序键：按 posix 字符串逐码位比，各平台同序。
+
+    `sorted(Path)` 在 Windows 上不分大小写、在 POSIX 上分——同一棵树两边排出来不一样，
+    落盘的 json 换一台机器就「过期」。
+    """
+    return path.as_posix()
+
+
 def _read_text(path: Path) -> str:
     try:
         return path.read_text(encoding="utf-8", errors="replace")
@@ -129,7 +138,7 @@ class Repo:
         self.root = root
         self._text_cache: dict[str, str] = {}
         self._web_tests = [
-            p for p in sorted((root / "web").rglob("*"))
+            p for p in sorted((root / "web").rglob("*"), key=_posix)
             if ".test." in p.name and "node_modules" not in p.as_posix()
         ] if (root / "web").exists() else []
         self._tool_invokers = tool_invokers if tool_invokers is not None else self._scan_tools()
@@ -141,8 +150,8 @@ class Repo:
         tests_dir = self.root / "tests"
         if not tools_dir.exists() or not tests_dir.exists():
             return invokers
-        tool_names = [f"tools/{p.name}" for p in sorted(tools_dir.iterdir()) if p.is_file()]
-        for test_file in sorted(tests_dir.rglob("*.py")):
+        tool_names = [f"tools/{p.name}" for p in sorted(tools_dir.iterdir(), key=_posix) if p.is_file()]
+        for test_file in sorted(tests_dir.rglob("*.py"), key=_posix):
             body = _read_text(test_file)
             rel = test_file.relative_to(self.root).as_posix()
             for tool in tool_names:
@@ -157,7 +166,7 @@ class Repo:
         if target.is_dir():
             return [
                 p.relative_to(self.root).as_posix()
-                for p in sorted(target.rglob("*.py"))
+                for p in sorted(target.rglob("*.py"), key=_posix)
                 if p.is_file()
             ]
         return []

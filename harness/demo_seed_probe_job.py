@@ -42,15 +42,27 @@ demo 库里本来就有一族同类（`drill-2026-*`），形状经过验证；�
 
 ## 边界（读这段再决定要不要跑）
 
-- **只写 `jobs` 一行**，不碰任何既有行；重复跑幂等（`ON CONFLICT DO NOTHING`）；
+- **只写 `jobs` 两行**（探针自己的那条 + 反向样本），不碰任何既有行；
+  重复跑幂等（`ON CONFLICT DO NOTHING`）；
 - 连的是 `FLINT_DEMO_DSN`（默认本机 55432 的 `flint`）——**NEVER 指向生产**；
 - 不删任何东西。`m1004-j` **原样留着**：它是「不属于我的作业」的活样本，
   屏上该显示「无权查看」这件事将来要靠它来量
   （单据 `docs/blocked/JOB-SCREEN-HAS-NO-DENIED-STATE.md`）。
 
+## 反向样本 `m1004-j` 也在这里种（`MAC-05`）
+
+它原先不是谁种的：`tests/m1/test_m1_004.py` 早年直接打 demo 库，留下了这一行。
+后来它被当成「不属于探针的作业」的活样本用上了（`tests/v041/test_job_denied_state.py`），
+却始终没有一个脚本负责造它。新机器上的新库里没有它，那两条判据量到的就是 404 而不是 403。
+
+所以这里按它原来的形状补种：`daily_ingest` / `queued` / 发起人 `u-sys` / org 域 `sys`。
+库里已有就一个字不动（`ON CONFLICT DO NOTHING`）——老库里那一行仍是原来那一行。
+
 跑法：
 
-    .venv/Scripts/python.exe -m harness.demo_seed_probe_job
+    .venv/bin/python -m harness.demo_seed_probe_job
+
+（Windows 上是 `.venv/Scripts/python.exe -m harness.demo_seed_probe_job`。）
 """
 from __future__ import annotations
 
@@ -66,6 +78,12 @@ DSN = os.environ.get("FLINT_DEMO_DSN", "postgresql://flint:flint@localhost:55432
 # 而探针（playwright）不发那个头。**一处真相**：改这里之前先改那个中间件。
 PROBE_USER = "demo-user"
 PROBE_JOB_ID = "probe-owned-ingest"
+# 反向样本：发起人与 owner_scope 都**不是**探针。形状逐字照 `tests/m1/test_m1_004.py`
+# 当年留下的那一行——`harness/fe_smoke.py` 与 `tests/v041/test_job_denied_state.py`
+# 认的就是这个 id，改它之前先改那两处。
+NOT_MINE_JOB_ID = "m1004-j"
+NOT_MINE_USER = "u-sys"
+NOT_MINE_SCOPE = {"kind": "org", "id": "sys"}
 
 
 async def seed(dsn: str = DSN) -> str:
@@ -107,6 +125,19 @@ async def seed(dsn: str = DSN) -> str:
                 "VALUES ($1, $2, $3, $4::jsonb) ON CONFLICT DO NOTHING",
                 PROBE_JOB_ID, seq, now,
                 json.dumps(payload, ensure_ascii=False))
+        await conn.execute(
+            "INSERT INTO jobs (job_id, kind, project_id, owner_scope, state, progress, "
+            "partial_output_ref, budget, cost_accum, cancel_requested, error, "
+            "initiated_by, created_at, updated_at) "
+            "VALUES ($1, 'daily_ingest', NULL, $2::jsonb, 'queued', 0.0, NULL, 0.0, 0.0, "
+            "false, NULL, $3, $4, $4) ON CONFLICT (job_id) DO NOTHING",
+            NOT_MINE_JOB_ID, json.dumps(NOT_MINE_SCOPE, ensure_ascii=False),
+            NOT_MINE_USER, now)
+        await conn.execute(
+            "INSERT INTO job_events (job_id, seq, ts, payload) "
+            "VALUES ($1, 1, $2, $3::jsonb) ON CONFLICT DO NOTHING",
+            NOT_MINE_JOB_ID, now,
+            json.dumps({"kind": "status", "state": "queued"}, ensure_ascii=False))
     finally:
         await conn.close()
     return PROBE_JOB_ID
@@ -115,6 +146,7 @@ async def seed(dsn: str = DSN) -> str:
 def main() -> int:
     job_id = asyncio.run(seed())
     print(f"probe-owned job ready: {job_id} (initiated_by={PROBE_USER})")
+    print(f"not-mine job ready: {NOT_MINE_JOB_ID} (initiated_by={NOT_MINE_USER})")
     return 0
 
 

@@ -123,6 +123,20 @@ PYTHONIOENCODING=utf-8 .venv/bin/ruff check . && .venv/bin/mypy --strict flint e
 
 - 需要 postgres 与 redis 在线（先 `./start-demo.sh`，或只 `docker compose up -d`
   再跑 `.venv/bin/python scripts/provision_test_db.py`）；
+- **演示栈起着的时候**，有三条判据直接打 `:8000`，要演示库里有两条取证作业。新库里没有，
+  种一次（幂等，只写 `jobs` 两行与它们的事件；栈没起时这三条会 skip）：
+
+  ```bash
+  .venv/bin/python -m harness.demo_seed_probe_job
+  ```
+
+- `tests/m3/test_m3_035.py` 在容器里出 PDF，要本机有 `flint-pdf:69` 这张镜像。构建一次
+  （要联网拉 `python:3.11-slim`、apt 与 pip 包；2026-11-14 实测镜像 548MB）：
+
+  ```bash
+  docker build -t flint-pdf:69 docker/pdf
+  ```
+
 - `PYTHONIOENCODING=utf-8` 是为 Windows 的 GBK 管道加的固定前提（`Makefile` 里有说明），
   macOS 上不带它也该成立，带着无害；
 - `.ui-probe/` 没有进仓（79MB 截图，本机运行产物）。读它的那批判据在新机器上**一部分 skip、

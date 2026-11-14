@@ -206,6 +206,60 @@ def test_running_the_seed_twice_changes_nothing(probe_identity: None) -> None:
         pytest.skip(f"demo 库连不上：{exc}")
 
 
+@pytest.mark.compose
+def test_the_seed_also_plants_the_job_the_probe_must_not_see(probe_identity: None) -> None:
+    """`MAC-05`：反向样本 `m1004-j` 也由种子脚本种，NEVER 指望它「本来就在库里」。
+
+    它原先是 `tests/m1/test_m1_004.py` 早年直接打 demo 库时留下的一行残留，
+    没有任何脚本负责造它。换一台机器、建一个新库，它就不在了——
+    `test_job_denied_state` 那两条「不是我的作业回 403」于是量到 404，
+    而 404 与 403 之间差的正是那两条判据要守的东西。
+
+    判三件：种完它在；它**不属于**探针；重复种不多出一行。
+    """
+    from harness.demo_seed_probe_job import NOT_MINE_JOB_ID, PROBE_USER, seed
+
+    async def wipe() -> None:
+        import asyncpg
+
+        conn = await asyncpg.connect(DSN)
+        try:
+            await conn.execute("DELETE FROM job_events WHERE job_id = $1", NOT_MINE_JOB_ID)
+            await conn.execute("DELETE FROM jobs WHERE job_id = $1", NOT_MINE_JOB_ID)
+        finally:
+            await conn.close()
+
+    async def rows() -> Any:
+        import asyncpg
+
+        conn = await asyncpg.connect(DSN)
+        try:
+            return await conn.fetch(
+                "SELECT initiated_by, owner_scope FROM jobs WHERE job_id = $1",
+                NOT_MINE_JOB_ID)
+        finally:
+            await conn.close()
+
+    try:
+        _run(wipe())
+        _run(seed(DSN))
+        _run(seed(DSN))
+        found = _run(rows())
+        _run(wipe())
+    except OSError as exc:
+        pytest.skip(f"测试库连不上：{exc}")
+
+    assert NOT_MINE_JOB_ID == "m1004-j", "改这个 id 之前先改 fe_smoke 与 test_job_denied_state"
+    assert len(found) == 1, f"反向样本应当恰好一行，实得 {len(found)}"
+    assert found[0]["initiated_by"] != PROBE_USER, "反向样本的发起人成了探针自己"
+    scope = json.loads(found[0]["owner_scope"])
+    assert scope != {"kind": "user", "id": PROBE_USER}, "反向样本的 owner_scope 指向了探针"
+    assert scope["kind"] == "org", (
+        "用 org 域：探针不在那个 org 的 memberships 里，所以看不见——"
+        "这正是那条 403 要量的路径"
+    )
+
+
 def test_the_seed_never_invents_an_identity() -> None:
     """身份表是鉴权的根：脚本 NEVER 往 `users` 里插一行。
 

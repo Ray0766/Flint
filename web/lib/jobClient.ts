@@ -108,6 +108,9 @@ export function applyEvent(
       return next;
     case "failed":
       next.failedReason = payload.reason;
+      // `UIR-02`：失败事件自己就说明了状态。这里一置 `done`，流就关了，
+      // 后面那条 `status/failed` 读不到——不在这里写，状态那一格会停在上一个中间态。
+      next.status = "failed";
       next.done = true;
       return next;
     case "design_delta":

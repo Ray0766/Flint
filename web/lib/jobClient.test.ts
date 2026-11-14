@@ -63,6 +63,20 @@ describe("L1 事件归约器", () => {
     const failed = apply([["2", { kind: "failed", reason: "boom" }]]);
     expect(failed.failedReason).toBe("boom");
     expect(failed.done).toBe(true);
+  });
+
+  // `UIR-02`：失败事件到了，**状态那一格也要是 failed**。
+  //
+  // 归约器收到 `failed` 就置 `done`，流随即关掉——后面那条 `status/failed` 读不到了。
+  // 改前这里只记原因、不动状态：真栈上见到的屏是「状态 drafting」底下印着一句「作业失败」，
+  // 两句话互相打架。失败事件自己就说明了状态，NEVER 指望后面还有一条来补。
+  it("failed 事件到了，状态跟着是 failed（NEVER 停在上一个中间态）", () => {
+    const failed = apply([
+      ["1", { kind: "status", state: "drafting" }],
+      ["2", { kind: "failed", reason: "boom" }],
+    ]);
+    expect(failed.status).toBe("failed");
+    expect(failed.failedReason).toBe("boom");
     expect(TERMINAL_STATES.has("done")).toBe(true);
     expect(TERMINAL_STATES.has("cancelled")).toBe(true);
   });

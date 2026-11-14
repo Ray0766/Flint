@@ -10,7 +10,7 @@
 | 落点 | 推到什么 | 写事件流吗 |
 |---|---|---|
 | `flint/jobs/runner.py:184` | `cancelled` / target | **否** |
-| `flint/jobs/worker_main.py:349`（`mark_failed`） | `failed` | **否** |
+| ~~`flint/jobs/worker_main.py:349`（`mark_failed`）~~ | `failed` | ~~否~~ → **写了**（`UIR-02`，2026-11-14） |
 | `flint/jobs/ingest.py:176`（`_set_state`） | 各状态 | **否** |
 | `flint/jobs/pricebook_scan.py:101,106` | `retrieving` / `done` | **否** |
 | `flint/jobs/revalidation.py:152,157` | `retrieving` / `done` | **否** |
@@ -44,3 +44,13 @@
 
 `flint/jobs/state.py#enter_state` 是那一处真相，四族已经共用它。
 六处接进来的时候，**它就在那里**，不用再想「该写哪两句」。
+
+## 2026-11-14 · `mark_failed` 这一处接上了（`UIR-02`）
+
+六处里最要紧的那一处已改：`flint/jobs/worker_main.py#make_mark_failed` 不再自己 `UPDATE jobs SET state`，
+改走 `flint/jobs/state.py#enter_state`，推之前先追加一条带原因的 `failed` 事件。
+`worker_main.py` 因此从 `tests/v041/test_design_state.py` 那份「只写库不写事件」的清单里划掉了。
+判据：`tests/v041/test_fail_events.py`。
+
+**本单不关**：另外五处（`runner.py` / `ingest.py` / `pricebook_scan.py` / `revalidation.py` /
+`hardening.py`）还是原样。它们各自有没有订阅者、中间态推不推，上面「为什么没一并改」那一节的三条仍然要逐个答。

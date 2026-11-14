@@ -29,7 +29,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Final, cast
 
@@ -38,12 +38,13 @@ from arq import func
 from arq.connections import ArqRedis, RedisSettings
 from arq.worker import Worker
 
-from flint.domain.models import JSON, JobKind, UserProfile
+from flint.domain.models import JSON, JobFailedEvent, JobKind, UserProfile
 from flint.domain.protocols import LLMProvider
 from flint.jobs.compose import run_compose
 from flint.jobs.compose_deps import build_production_compose_deps
 from flint.jobs.design_generate import DesignGenerateDeps, run_design_generate
 from flint.jobs.dispatch import JobHandler, build_dispatch_table, dispatch_job
+from flint.jobs.events import PgJobEventStream
 from flint.jobs.gate1 import Gate1Deps, run_gate1
 from flint.jobs.ingest import IngestDeps, run_daily_ingest
 from flint.jobs.pricebook_scan import PricebookScanDeps, run_pricebook_scan
@@ -51,6 +52,7 @@ from flint.jobs.regenerate_job import RegenerateJobDeps, run_regenerate_job
 from flint.jobs.regenerate_worker import parse_regenerate_payload
 from flint.jobs.revalidation import RevalidationDeps, run_revalidation
 from flint.jobs.spec_export import SpecExportDeps, run_spec_export
+from flint.jobs.state import enter_state
 from flint.jobs.template_solidify import TemplateSolidifyDeps, run_template_solidify
 from flint.jobs.translate import TranslateDeps, run_translate
 from flint.llm.prompts import load_prompt
@@ -340,16 +342,48 @@ def build_dispatch_table_for(deps: WorkerDeps) -> Mapping[str, JobHandler]:
     return build_dispatch_table(build_handlers(deps))
 
 
-def make_mark_failed(dsn: str) -> Callable[[str, str], Any]:
-    """把作业记 failed 并落 error 文本——作业状态 NEVER 停在 queued。"""
+def make_mark_failed(
+    dsn: str, *, now: Callable[[], datetime] | None = None,
+) -> Callable[[str, str], Any]:
+    """把作业记 failed、落 error 文本，**并让订阅的那一头收得到**。
+
+    ## 改前只改库（`UIR-02`）
+
+    这里原来是一句直接把 `jobs` 那一行的状态改成 `failed` 的 UPDATE，不写事件流。
+    作业屏订阅的是事件流：它收到过 `drafting`，之后什么都收不到，屏上一直是「在写」，
+    而库里早就 `failed` 了（单 `SIX-FAMILIES-ADVANCE-STATE-WITHOUT-AN-EVENT`，
+    2026-11-14 在真栈上见到）。
+
+    ## 现在
+
+    - `error` 文本照旧落库；
+    - 状态经 `flint/jobs/state.py#enter_state` 推到 `failed`——那一处真相，库与事件流一起写；
+    - 推之前先追加一条带原因的 `failed` 事件：订阅的屏按到达顺序读，最后一条必须是终态。
+
+    已经 `done` / `cancelled` 的作业一个字不动（与改前那句 `WHERE … NOT IN` 同一条口径）。
+    已经 `failed` 的只补 `error`、NEVER 再说一遍：重写作业自己会写失败事件（`REGEN-EVT-01`），
+    随后异常抛到这里，再写一遍屏上就是两条一样的「失败」。
+    没有这一行作业就什么都不写：事件流的外键指着 `jobs`，硬写会抛，而抛了会盖掉原来那个错。
+    """
+    clock = now if now is not None else (lambda: datetime.now(UTC))
+    events = PgJobEventStream(dsn=dsn)
+
     async def mark_failed(job_id: str, error: str) -> None:
         conn = await asyncpg.connect(dsn)
         try:
+            previous: str | None = await conn.fetchval(
+                "SELECT state FROM jobs WHERE job_id = $1", job_id)
+            if previous is None or previous in ("done", "cancelled"):
+                return
             await conn.execute(
-                "UPDATE jobs SET state = 'failed', error = $2, updated_at = now() "
-                "WHERE job_id = $1 AND state NOT IN ('done', 'cancelled')",
-                job_id, error,
+                "UPDATE jobs SET error = $2, updated_at = $3 WHERE job_id = $1",
+                job_id, error, clock(),
             )
+            if previous == "failed":
+                return
+            await events.append(
+                job_id, JobFailedEvent(kind="failed", reason=error), ts=clock())
+            await enter_state(conn, events, job_id, "failed", clock())
         finally:
             await conn.close()
 

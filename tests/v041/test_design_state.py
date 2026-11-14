@@ -83,7 +83,8 @@ _KNOWN_WITHOUT_EVENTS = {
     "flint/jobs/pricebook_scan.py",
     "flint/jobs/revalidation.py",
     "flint/jobs/runner.py",
-    "flint/jobs/worker_main.py",
+    # `flint/jobs/worker_main.py`（`mark_failed`）2026-11-14 由 `UIR-02` 接上了：
+    # 它不再自己 UPDATE，改走 `enter_state`。清单从六处减到五处。
 }
 
 

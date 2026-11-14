@@ -1,0 +1,28 @@
+PROBE_A2_START 00:33:10Z
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 597, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 589, in main
+    run_model(
+    ~~~~~~~~~^
+        args.model, judged=args.judged, sample_limit=args.samples,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        repair_enabled=repair_enabled,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 308, in run_model
+    _warmup_model(tier.base_url, model, api_key=tier.api_key)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 154, in _warmup_model
+    provider.generate("warmup", tools=None)  # 结果丢弃：只为载入显存
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\flint\llm\local.py", line 97, in generate
+    raise LocalProviderUnavailable(
+    ...<2 lines>...
+    )
+flint.llm.local.LocalProviderUnavailable: local endpoint returned 500 for gemma4:31b
+PROBE_A2_EXIT=1 00:34:34Z

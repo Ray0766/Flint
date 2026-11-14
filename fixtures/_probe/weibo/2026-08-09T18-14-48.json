@@ -1,0 +1,20 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "weibo",
+ "url": "https://passport.weibo.com/visitor/genvisitor",
+ "requested_at_utc": "2026-08-09T18:14:48.207234+00:00",
+ "status": 200,
+ "final_url": "https://passport.weibo.com/visitor/genvisitor",
+ "redirects": [],
+ "headers": {
+  "content-type": "text/javascript; charset=utf-8",
+  "server": "APISIX/3.14.1"
+ },
+ "body_head": "window.gen_callback && gen_callback({\"retcode\":20000000,\"msg\":\"succ\",\"data\":{\"tid\":\"01AfYolks72BTVu_l9De2hX0o11YGKRG0tMfTbhu4Ytocs\",\"new_tid\":true}});",
+ "body_bytes": 150,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": [],
+ "method": "POST",
+ "cookie_names": []
+}

@@ -1,0 +1,371 @@
+{
+ "_note": "GAUGE-12 · 逐屏组件对照的**正向**声明。全仓此前的判据都是禁止性的（NEVER 空转 / NEVER 空态冒充 / NEVER 硬编码）——挡得住做错，挡不住没做。广场屏四条 EYE-03 判据全绿而它是个 ul/li，就是这么过去的。",
+ "_how": "每屏声明两样：`components` = MUST 被真渲染的选择器（取渲染后的 DOM）；`styled` = MUST 有样式的类名（取计算样式，与裸元素基线逐条比，一样即零样式判红）。名单少一项 = 那一屏可以悄悄退化回结构化文本。",
+ "_never": "NEVER 用「文件存在」代替「组件被渲染」：组件建好了而屏上没接，正是本批要治的病。",
+ "screens": [
+  {
+   "route": "/account",
+   "url": "http://localhost:3000/account",
+   "why": "UI-04 / 蓝本 R1。四态（正在查 / 200 / 框架 404 / 503）各有各的显示，而声明只钉住「身份与所属范围真的画出来了」——态由 test_be_account 判。NAV-04 之后这一屏还是账单的入口。",
+   "components": [
+    "[data-account-state]",
+    "[data-account-profile]",
+    "[data-account-memberships]",
+    "[data-billing-link]"
+   ],
+   "styled": [
+    "account",
+    "account__identity",
+    "account__memberships",
+    "data-row__value"
+   ]
+  },
+  {
+   "route": "/billing",
+   "url": "http://localhost:3000/billing",
+   "why": "UI-05 / 蓝本 R2。`billing_enabled: false` 与「没查过」始终不是一回事——三格各自成一格才看得出是哪一种。",
+   "components": [
+    "[data-billing-state]",
+    "[data-quota-state]",
+    "[data-events-state]"
+   ],
+   "styled": [
+    "billing",
+    "billing__status",
+    "billing__quota",
+    "billing__events"
+   ]
+  },
+  {
+   "route": "/clusters/[id]",
+   "url": "http://localhost:3000/clusters/c-20260629-088",
+   "why": "NAV-02 的承载屏。装的是 HOTSPOT-03 的 AnalysisView 本体。 FIX-19（owner 2026-08-09 许可）给它加了类名与样式，边界只限于此——判定语义、四态、既有 data-* 记号一个字没动。",
+   "components": [
+    "[data-testid='analysis-view']",
+    "[data-testid='analysis-verdict-heading']",
+    "[data-testid='analysis-evidence-heading']"
+   ],
+   "styled": [
+    "analysis",
+    "analysis__evidence",
+    "analysis__evidence-card",
+    "analysis__heading",
+    "analysis__note"
+   ],
+   "styled_state_conditional_note": "analysis__verdict / analysis__verdict-code / analysis__verdict-part / analysis__note--error 四个**故意不进这张名单**：它们只在特定态下渲染（前三个要这一屏真有一条判定，第四个要读失败），而这一屏的取证 URL 走的是「未判定」那一态。写进名单的话，尺子会拿一个当前不该存在的元素去判红——NEVER 为了名单好看而声明一个屏上此刻没有的东西。"
+  },
+  {
+   "route": "/combo",
+   "url": "http://localhost:3000/combo",
+   "why": "蓝本 P3 combo 入口。没带簇 id 时只说该怎么进来——**那一态也要有样式**。",
+   "components": [
+    "[data-combo-no-cluster]"
+   ],
+   "styled": [
+    "chain-form__outcome"
+   ]
+  },
+  {
+   "route": "/deliverables/[id]",
+   "url": "http://localhost:3000/deliverables/del-demo-fixture-report",
+   "why": "UI-02 第四屏。Block 树 + 解引用值 + 争议记号；NAV-05 之后底下有通往四个同族屏的入口。",
+   "components": [
+    "[data-block-tree]",
+    "[data-block-id]",
+    "[data-export-link]",
+    "[data-quality-link]",
+    "[data-pack-link]",
+    "[data-interventions-link]"
+   ],
+   "styled": [
+    "data-row",
+    "data-row__value",
+    "mark"
+   ]
+  },
+  {
+   "route": "/deliverables/[id]/export",
+   "url": "http://localhost:3000/deliverables/del-demo-fixture-report/export",
+   "why": "UI-02 第五屏。格式清单来自后端；409 阻断态要说清是哪几个 block 挡着。",
+   "components": [
+    "[data-export-formats]",
+    "[data-export-format]"
+   ],
+   "styled": [
+    "data-list",
+    "data-row",
+    "data-row__label"
+   ]
+  },
+  {
+   "route": "/deliverables/[id]/interventions",
+   "url": "http://localhost:3000/deliverables/del-demo-fixture-report/interventions",
+   "why": "蓝本 P10 干预页：四动作 + 受保护 block 的拒绝原因。",
+   "components": [
+    "[data-intervention-list]",
+    "[data-block-id]"
+   ],
+   "styled": [
+    "intervention-row"
+   ]
+  },
+  {
+   "route": "/deliverables/[id]/pack",
+   "url": "http://localhost:3000/deliverables/del-demo-fixture-report/pack",
+   "why": "UI-10 vibe_pack 受众。同上：诚实态也要有样式。",
+   "components": [
+    "[data-pack-state]",
+    "[data-not-provided]"
+   ],
+   "styled": [
+    "pack",
+    "not-provided",
+    "not-provided__text"
+   ]
+  },
+  {
+   "route": "/deliverables/[id]/quality",
+   "url": "http://localhost:3000/deliverables/del-demo-fixture-report/quality",
+   "why": "UI-09 质量卡。今天全库没有存储面，端点如实回 404——**诚实态也要有样式**。",
+   "components": [
+    "[data-quality-state]",
+    "[data-not-provided]"
+   ],
+   "styled": [
+    "quality",
+    "not-provided",
+    "not-provided__text"
+   ]
+  },
+  {
+   "route": "/demo",
+   "url": "http://localhost:3000/demo",
+   "why": "演示串屏。它今天是唯一能看到整条链路怎么走的地方（NAV-04 的决定），所以它退化了要有人知道。只声明首帧就在的两样——后面几步要点过按钮才出现，那属于流程判据（test_demo_stack_wired）的事。",
+   "components": [
+    "[data-demo-flow]",
+    "[data-demo-load-plaza]"
+   ],
+   "styled": [
+    "plaza"
+   ]
+  },
+  {
+   "route": "/design",
+   "url": "http://localhost:3000/design",
+   "why": "owner 指认的第二件：AI 设计工作台是空壳（无输入、无预览、无生成流）。",
+   "components": [
+    "[data-testid='design-prompt']",
+    "[data-testid='design-generate']",
+    "[data-testid='design-stream']",
+    "[data-design-preview]"
+   ],
+   "styled": [
+    "design__prompt",
+    "design__stream",
+    "design__generate"
+   ]
+  },
+  {
+   "route": "/favorites",
+   "url": "http://localhost:3000/favorites",
+   "why": "FAV-06。**PERSIST-01 之后这一屏不再是诚实态**：favorites 表建出来了，屏上是真列表（data-favorites-state=ready）。所以声明从「未提供那一套」换成真列表那一套——声明跟着屏走。**NEVER 留着 not-provided 那几项**：它们此刻不渲染，尺子会拿一个不存在的元素判红，而红的是声明过期了不是屏坏了。未提供那一态**并没有删**（store=None 时仍是唯一诚实的答复），它由 tests/v041/test_no_fake_empty.py 直接打缝去量，不再依赖这一屏当样本。",
+   "components": [
+    "[data-favorites-state]"
+   ],
+   "styled": [
+    "favorites",
+    "favorites__list",
+    "favorites__item"
+   ]
+  },
+  {
+   "route": "/gate/[id]",
+   "url": "http://localhost:3000/gate/job-gate1-live-qwen",
+   "why": "UI-02 主链路第二屏。四分类直取后端；引用 / 理由 / 竞品 / 缺口四块各自成块——并成一段就分不出哪条支持哪条。",
+   "components": [
+    "[data-gate]",
+    "[data-verdict]",
+    "[data-gate-citations]",
+    "[data-gate-rationale]",
+    "[data-report-entry]"
+   ],
+   "styled": [
+    "data-row",
+    "data-row__label",
+    "data-row__value"
+   ]
+  },
+  {
+   "route": "/jobs/[id]",
+   "url": "http://localhost:3000/jobs/probe-owned-ingest",
+   "why": "UI-02 第三屏。断线通知与步骤表各自成块（UIX-02）；NAV-05 之后跑完了多一条通往判定的入口。（`[data-job-connection]` **不声明**：它是断线通知的容器，连着的时候是个 0 高的空壳——声明它等于要求屏上恒有一条断线提示。那一态由 UIX-02 自己的判据判。）",
+   "components": [
+    "[data-job-id]",
+    "[data-job-status]",
+    "[data-arrived-count]",
+    "[data-job-steps]"
+   ],
+   "styled": [
+    "data-row",
+    "data-list",
+    "data-row__value"
+   ]
+  },
+  {
+   "route": "/plaza",
+   "url": "http://localhost:3000/plaza",
+   "why": "owner 2026-08-07 指认的第一件：广场没用卡片。REGION-10 加了地区筛选器——组件建好至今零页面引用，登记进来它才被量得到。",
+   "components": [
+    "[data-testid='region-select']",
+    "[data-plaza-stack]",
+    ".plaza-stack__deck",
+    ".plaza-stack__dot",
+    "[data-plaza-grid]",
+    "[data-testid='hotspot-card']",
+    "[data-testid='card-actions']"
+   ],
+   "styled": [
+    "region-switch",
+    "hotspot-card",
+    "hotspot-card__top",
+    "hotspot-card__foot",
+    "plaza-stack__deck",
+    "plaza-grid__list",
+    "hotspot-card__action"
+   ]
+  },
+  {
+   "route": "/projects/[id]",
+   "url": "http://localhost:3000/projects/proj-demo14bf9d94b0",
+   "why": "UI-11 项目总览。**一次查齐**（BE-01），三段各自成段；NAV-05 之后它是项目族的枢纽。",
+   "components": [
+    "[data-overview-state]",
+    "[data-overview-section]",
+    "[data-project-links]",
+    "[data-proposal-link]"
+   ],
+   "styled": [
+    "overview",
+    "overview__section",
+    "overview__list",
+    "overview__row"
+   ]
+  },
+  {
+   "route": "/projects/[id]/analysis",
+   "url": "http://localhost:3000/projects/proj-demo14bf9d94b0/analysis",
+   "why": "蓝本 P6。端点第 4 批就装配了，而没有界面能触发它。",
+   "components": [
+    "[data-testid='analysis-keywords']",
+    "[data-testid='analysis-budget']",
+    "[data-testid='analysis-submit']"
+   ],
+   "styled": [
+    "chain-form__input",
+    "chain-form__submit"
+   ]
+  },
+  {
+   "route": "/projects/[id]/proposal",
+   "url": "http://localhost:3000/projects/proj-demo14bf9d94b0/proposal",
+   "why": "蓝本 P11 受众分叉：五套人类模板 vs vibe_pack。",
+   "components": [
+    "[data-proposal-fork]",
+    "[data-audience='human_reader']"
+   ],
+   "styled": [
+    "chain-form__choice"
+   ]
+  },
+  {
+   "route": "/projects/[id]/topics",
+   "url": "http://localhost:3000/projects/proj-demo14bf9d94b0/topics",
+   "why": "蓝本 P4。改前 web/app 下连 topics 那一层都没有。",
+   "components": [
+    ".topic-list"
+   ],
+   "styled": [
+    "topic-list__heading"
+   ]
+  },
+  {
+   "route": "/settings/locale",
+   "url": "http://localhost:3000/settings/locale",
+   "why": "I18N-08 / UI-07。两根轴（语言 / 地区）各自成一格：合成一个下拉就等于把两件正交的事绑在一起（A3）。",
+   "components": [
+    "[data-locale-axis='lang']",
+    "[data-locale-axis='region']",
+    "[data-locale-saved]"
+   ],
+   "styled": [
+    "locale",
+    "locale__field",
+    "locale__select",
+    "locale__save"
+   ]
+  },
+  {
+   "route": "/share/[token]",
+   "url": "http://localhost:3000/share/share-placeholder",
+   "why": "UI-06 外链屏（可达性上豁免：token 由站外拿到）。端点未接通，诚实态也要有样式。",
+   "components": [
+    "[data-share-state]",
+    "[data-not-provided]"
+   ],
+   "styled": [
+    "share",
+    "not-provided",
+    "not-provided__text"
+   ]
+  },
+  {
+   "route": "/topics/[id]",
+   "url": "http://localhost:3000/topics/topic-demo-fixture-vecdb",
+   "why": "CHAIN-03 主题详情。why_now 的每条证据带日期与引用 id——**推测标记单独成格**，NEVER 混进正文。",
+   "components": [
+    "[data-topic-detail]",
+    "[data-topic-one-liner]",
+    "[data-topic-why-now-block]",
+    "[data-analysis-entry]"
+   ],
+   "styled": [
+    "topic-detail",
+    "topic-detail__one-liner",
+    "topic-detail__why-now",
+    "topic-detail__evidences"
+   ]
+  },
+  {
+   "route": "/workbench",
+   "url": "http://localhost:3000/workbench",
+   "why": "WB-01 / DEC-059：计划书主工作台，照蓝本 `前端设计/ai工作台/Flint 设计台 v3.dc.html` 做的三栏骨架（左卡片 / 中对话 / 右预览）。声明钉住的是**三栏与那一列文档真的画出来了**——三栏里的内容由 WB-02/03/04 分别填，各有各的判据。**NEVER 与 `/workbenches/[id]` 混为一谈**：那是热点图谱工作台（UI-03），两屏只差一个字母。",
+   "components": [
+    "[data-wb-col='cards']",
+    "[data-wb-col='chat']",
+    "[data-wb-col='preview']",
+    "[data-wb-doc]"
+   ],
+   "styled": [
+    "workbench",
+    "workbench__row",
+    "workbench__cards",
+    "workbench__chat",
+    "workbench__preview",
+    "workbench__doc"
+   ]
+  },
+  {
+   "route": "/workbenches/[id]",
+   "url": "http://localhost:3000/workbenches/wb-placeholder",
+   "why": "UI-03 图谱工作台。**改前这条声明写的是「`GET /workbenches` 未建，本屏一个请求都不发并如实标」——那句话在 `PERSIST-02` 之后就是假的**：那张卡建齐了三张表、让 `POST /workbenches` 落库、并新建了 `GET /workbenches/{id}`。屏因此真的在取数，而 `wb-placeholder` 这个样例 id 库里没有，于是它如实显示 `not_found`（「没有这张工作台」）。声明跟着屏走：钉住的是**那一态真的画出来了且有样式**，NEVER 留着 `[data-not-provided]` 那一套——它此刻不渲染，尺子会拿一个不存在的元素判红，而红的是声明过期了不是屏坏了（`/favorites` 那一条早走过同一步）。**这条只覆盖 not_found 那一路**：图真的画出来的样子要一个库里真有的 id 才量得到，见 `docs/blocked/WORKBENCH-SAMPLE-ID-IS-A-PLACEHOLDER.md`。",
+   "components": [
+    "[data-workbench-state]"
+   ],
+   "styled": [
+    "workbench__error"
+   ]
+  }
+ ],
+ "_coverage": "GAUGE-15：**铺满全部屏**。屏数与 web/app/**/page.tsx 对齐，新增一屏没声明就判红——NEVER 靠人记。7 屏那一版留下的 15 屏只有禁止性判据守着，它们可以悄悄退化回结构化文本而没人拦。",
+ "_styled_none": "`styled: []` 只在**改不动**时允许，且 MUST 写 `styled_none_because` 指向一张开着的单。NEVER 随手填一个别处的类名顶上——那会让那一屏看起来被量着，而它没有。"
+}

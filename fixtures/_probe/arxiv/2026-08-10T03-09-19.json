@@ -1,0 +1,21 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "arxiv",
+ "url": "https://arxiv.org/robots.txt",
+ "requested_at_utc": "2026-08-10T03:09:19.740418+00:00",
+ "status": 200,
+ "final_url": "https://arxiv.org/robots.txt",
+ "redirects": [],
+ "headers": {
+  "content-length": "705",
+  "server": "Apache",
+  "content-type": "text/plain; charset=utf-8"
+ },
+ "body_head": "# robots.txt for http://arxiv.org/ and mirror sites http://*.arxiv.org/\n# Indiscriminate automated downloads from this site are not permitted\n# See also: http://arxiv.org/help/robots\n\nUser-agent: *\nCrawl-delay: 15\nAllow: /archive\nAllow: /year\nAllow: /list\nAllow: /abs\nAllow: /pdf\nAllow: /html\nAllow: /catchup\nDisallow: /user\nDisallow: /e-print\nDisallow: /src\nDisallow: /ps\nDisallow: /dvi\nDisallow: /cookies\nDisallow: /form\nDisallow: /find\nDisallow: /view\nDisallow: /ftp\nDisallow: /refs\nDisallow: /cits\nDisallow: /format\nDisallow: /PS_cache\nDisallow: /Stats\nDisallow: /seek-and-destroy\nDisallow: /IgnoreMe\nDisallow: /oai2\nDisallow: /auth\nDisallow: /tb\nDisallow: /tb-recent\nDisallow: /trackback\nDisallow: /prevnext\nDisallow: /ct\nDisallow: /api\nDisallow: /search\nDisallow: /set_author_id\nDisallow: /show-email\n\nUser-agent: Googlebot\nAllow: /archive\nAllow: /year\nAllow: /list\nAllow: /abs\nAllow: /pdf\nAllow: /html\nAllow: /catchup\nDisallow: /user\nDisallow: /e-print\nDisallow: /src\nDisallow: /ps\nDisallow: /dvi\nDisallow: /cookies\nDisallow: /form\nDisallow: /find\nDisallow: /view\nDisallow: /ftp\nDisallow: /refs\nDisallow: /cits\nDisallow: /format\nDisallow: /PS_cache\nDisallow: /Stats\nDisallow: /seek-and-destroy\nDisallow: /IgnoreMe\nDisallow: /oai2\nDisallow: /auth\nDisallow: /tb\nDisallow: /tb-recent\nDisallow: /trackback\nDisallow: /prevnext\nDisallow: /ct\nDisallow: /api\nDisallow: /search\n\nUser-agent: Yahoo! Slurp\nCrawl-delay: 1\nAllow: /archive\nAllow: /year\nAllow: /list\nAllow: /abs\nAllow: /pdf\nAllow: /html\nAllow: /catchup\nDisallow: /user\nDisallow: /e-print\nDisallow: /src\nDisallow: /ps\nDisallow: /dvi\nDisallow: /cookies\nDisallow: /form\nDisallow: /find\nDisallow: /view\nDisallow: /ftp\nDisallow: /refs\nDisallow: /cits\nDisallow: /format\nDisallow: /PS_cache\nDisallow: /Stats\nDisallow: /seek-and-destroy\nDisallow: /IgnoreMe\nDisallow: /oai2\nDisallow: /auth\nDisallow: /tb\nDisallow: /tb-recent\nDisallow: /trackback\nDisallow: /prevnext\nDisallow: /ct\nDisallow: /api\nDisallow: /search\n\nUser-agent: bingbot\n# 2021-10-14 - removed crawl-delay for Bingbot. Needs to be re-a",
+ "body_bytes": 5854,
+ "sent_user_agent": "flint-cn05-probe/1.0 (contract check; DEC-052)",
+ "left_allowed_hosts": [],
+ "method": "GET",
+ "cookie_names": []
+}

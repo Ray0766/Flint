@@ -1,0 +1,10 @@
+{
+ "principle": "B4",
+ "title": "本国源优先但不隔离",
+ "source": "docs/PRINCIPLES-v04.md",
+ "raw": "`[s for s in sources if s.country == region]`；提示词写「综合各国观点给出统一结论」。",
+ "counter_examples": [
+  "`[s for s in sources if s.country == region]`",
+  "提示词写「综合各国观点给出统一结论」"
+ ]
+}

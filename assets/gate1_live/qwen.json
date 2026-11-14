@@ -1,0 +1,92 @@
+{
+ "steps": [
+  "plan",
+  "retrieve",
+  "judge",
+  "validate"
+ ],
+ "retrieved_docs": [
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2506.06962v3"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2504.13684v1"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2511.22858v1"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2401.15391v1"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2402.12317v2"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2501.05032v2"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2402.14679v2"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2501.02842v1"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2603.28944v2"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/1808.06100v6"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/cmp-lg/9701001v1"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2001.08941v1"
+  },
+  {
+   "source_id": "github",
+   "kind": "repo",
+   "url": "https://github.com/HKUDS/LightRAG"
+  },
+  {
+   "source_id": "github",
+   "kind": "repo",
+   "url": "https://github.com/microsoft/graphrag"
+  }
+ ],
+ "support_claims": [
+  {
+   "claim": "方向「检索增强生成」存在市场支持证据",
+   "doc_id": "doc-025a7c2ead5e"
+  }
+ ],
+ "pinned_citations": [
+  {
+   "doc_url": "http://arxiv.org/abs/2506.06962v3",
+   "quote_span": "We introduce Autoregressive Retrieval Augmentation (AR-RAG), a novel paradigm that enhances image generation by autoregressively incorporating knearest neighbor retrievals at the patch level."
+  }
+ ]
+}

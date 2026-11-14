@@ -1,0 +1,9 @@
+:root{
+--nx-font-sans:"Helvetica Now Var",Helvetica,Arial,sans-serif;
+/* sizes */
+--nx-text-nav:14px;--nx-text-footer:12px;--nx-text-footer-xs:10px;--nx-text-logo:20px;
+/* tracking */
+--nx-track-tighter:-0.05em;--nx-track-tight:-0.025em;--nx-track-wide:0.05em;--nx-track-menu:0.08em;--nx-track-wider:0.15em;--nx-track-widest:0.2em;
+/* weights */
+--nx-weight-light:300;--nx-weight-regular:400;--nx-weight-medium:500;--nx-weight-semibold:600;--nx-weight-bold:700;--nx-weight-black:900;
+}

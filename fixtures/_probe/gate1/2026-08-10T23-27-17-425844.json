@@ -1,0 +1,22 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-057",
+ "source": "github",
+ "url": "https://api.github.com/search/repositories?q=brain-computer+interface&per_page=3",
+ "method": "GET",
+ "requested_at_utc": "2026-08-10T23:27:17.425844+00:00",
+ "status": 200,
+ "headers": {
+  "date": "Mon, 10 Aug 2026 23:27:18 GMT",
+  "content-type": "application/json; charset=utf-8",
+  "server": "github.com",
+  "x-ratelimit-limit": "10",
+  "x-ratelimit-remaining": "8",
+  "x-ratelimit-reset": "1786404497",
+  "content-length": "2520"
+ },
+ "body_head": "{\"total_count\":1973,\"incomplete_results\":false,\"items\":[{\"id\":220845707,\"node_id\":\"MDEwOlJlcG9zaXRvcnkyMjA4NDU3MDc=\",\"name\":\"BCI\",\"full_name\":\"Sentdex/BCI\",\"private\":false,\"owner\":{\"login\":\"Sentdex\",\"id\":5905296,\"node_id\":\"MDQ6VXNlcjU5MDUyOTY=\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/5905296?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/Sentdex\",\"html_url\":\"https://github.com/Sentdex\",\"followers_url\":\"https://api.github.com/users/Sentdex/followers\",\"following_url\":\"https://api.github.com/users/Sentdex/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/Sentdex/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/Sentdex/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/Sentdex/subscriptions\",\"organizations_url\":\"https://api.github.com/users/Sentdex/orgs\",\"repos_url\":\"https://api.github.com/users/Sentdex/repos\",\"events_url\":\"https://api.github.com/users/Sentdex/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/Sentdex/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/Sentdex/BCI\",\"description\":\"Brain-Computer interface stuff\",\"fork\":false,\"url\":\"https://api.github.com/repos/Sentdex/BCI\",\"forks_url\":\"https://api.github.com/repos/Sentdex/BCI/forks\",\"keys_url\":\"https://api.github.com/repos/Sentdex/BCI/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/Sentdex/BCI/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/Sentdex/BCI/teams\",\"hooks_url\":\"https://api.github.com/repos/Sentdex/BCI/hooks\",\"issue_events_url\":\"https://api.github.com/repos/Sentdex/BCI/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/Sentdex/BCI/events\",\"assignees_url\":\"https://api.github.com/repos/Sentdex/BCI/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/Sentdex/BCI/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/Sentdex/BCI/tags\",\"blobs_url\":\"https://api.github.com/repos/Sentdex/BCI/git/blobs{/sha}\",\"git_tags_url\":\"https:",
+ "body_bytes": 14766,
+ "spent_before_this": 12,
+ "budget": 40
+}

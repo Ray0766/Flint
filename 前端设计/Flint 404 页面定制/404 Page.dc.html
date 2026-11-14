@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/typography.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/texture.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/base.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/styles.css">
+<script src="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/_ds_bundle.js"></script>
+<style>body{margin:0}a{color:var(--indigo)}a:hover{color:var(--ink)}</style>
+</helmet>
+<div data-screen-label="404" style="min-height:100vh; box-sizing:border-box; display:flex; flex-direction:column; background:var(--paper); background-image:var(--tex-paper-strong); color:var(--ink); font-family:var(--font-body);">
+  <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+    <header style="display:flex; align-items:center; justify-content:space-between; padding:20px 48px;">
+      <a href="{{ homeHref }}" style="font-family:var(--font-display); font-size:25px; color:var(--ink); text-decoration:none;">Flint 燧石</a>
+      <nav style="display:flex; align-items:center; gap:24px;">
+        <a href="#" style="font-size:14px; color:var(--ink-2); text-decoration:none;" style-hover="color:var(--ink); box-shadow:inset 0 -2px 0 var(--sulfur);">它怎么工作</a>
+        <a href="#" style="font-size:14px; color:var(--ink-2); text-decoration:none;" style-hover="color:var(--ink); box-shadow:inset 0 -2px 0 var(--sulfur);">如实原则</a>
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" size="sm" hint-size="auto,34px">开始使用</x-import>
+      </nav>
+    </header>
+  </sc-if>
+  <main style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px; gap:0;">
+    <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" tone="indigo" rotate="-1.5" hint-size="auto,30px">PAGE NOT FOUND</x-import>
+    <h1 style="font-family:var(--font-display); font-weight:400; font-size:48px; line-height:1.15; margin:24px 0 0; color:var(--ink);">你要找的这一页，不在这本册子里。</h1>
+    <p style="font-size:16px; line-height:1.8; color:var(--ink-2); max-width:30em; margin:16px 0 0;">已核对目录与索引——该地址可能已移动，或从未装订。</p>
+    <div style="position:relative; margin:48px 0;">
+      <div style="display:inline-block; font-family:var(--font-display); font-weight:400; font-size:clamp(112px, 16vw, 176px); line-height:1; color:var(--indigo); border:4px solid var(--indigo); border-radius:8px; padding:16px 48px 24px; transform:rotate(-2deg); background-image:var(--tex-paper); user-select:none;">404</div>
+      <svg width="88" height="88" viewBox="0 0 88 88" fill="none" aria-hidden="true" style="position:absolute; top:-34px; right:-46px; overflow:visible;">
+        <path d="M44 40 l12 -20 M52 46 l22 -8 M50 56 l16 12 M36 38 l-4 -22" stroke="var(--sulfur)" stroke-width="5" stroke-linecap="round"></path>
+        <circle cx="43" cy="47" r="9" fill="var(--sulfur)"></circle>
+      </svg>
+      <div style="position:absolute; left:50%; bottom:-14px; transform:translateX(-50%) rotate(1deg); background:var(--paper-2); border:1px solid var(--rule); border-radius:2px; padding:3px 10px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:var(--ink-3); white-space:nowrap; box-shadow:0 1px 2px rgba(27,42,46,.08);">HTTP 404 · 页面未找到</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px; margin-top:8px;">
+      <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" href="{{ homeHref }}" hint-size="auto,40px">返回首页</x-import>
+      <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="ghost" hint-size="auto,40px">查看今日线索</x-import>
+    </div>
+  </main>
+  <sc-if value="{{ showFooter }}" hint-placeholder-val="{{ true }}">
+    <footer style="border-top:1px solid var(--rule); padding:32px 48px; display:flex; justify-content:space-between; align-items:baseline;">
+      <span style="font-family:var(--font-display); font-size:20px; color:var(--ink-2);">Flint 燧石</span>
+      <span style="font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:var(--ink-3);">每日热点 → 可行性判定 → 深度报告</span>
+    </footer>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;showNav&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;结构&quot;},
+  &quot;showFooter&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;结构&quot;},
+  &quot;homeHref&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;#&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;链接&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      showNav: this.props.showNav ?? true,
+      showFooter: this.props.showFooter ?? true,
+      homeHref: this.props.homeHref ?? "#",
+    };
+  }
+}
+</script>
+</body>
+</html>

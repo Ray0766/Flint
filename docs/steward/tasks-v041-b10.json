@@ -1,0 +1,514 @@
+{
+ "spec_version": "v0.4.1-batch9",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward 2026-08-09（第 10 批 ·「点了有反应」批）",
+ "note": "第 9 批把路接通了（孤岛 0 · 三个空表成立 · 八张表 8/8）。本批治的是下一层：**屏上看得见的控件，按下去有没有反应**。八张卡里有两张是尺子自己的账（GAUGE-16），四张是「端点在、表在、屏上没入口」，一张是「两边对着虚构达成一致」，一张收尾。CN-01 那一次点头**不在本批**——它是红线，只在 owner 手上。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B10-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。（第 9 批 FIX-19 的 AnalysisView 例外已结清，本批无封版件例外。）",
+  "network": "**真实网络只在 DEC-052 窗口内**（DECISIONS-v04.md 水位 052，已落地）：只限 CN-04/05/06 三卡、四源本家域名族、额度 CN-04 每源每日 ≤20 / CN-05 每源 ≤10 / CN-06 完整录制一次，探测全落 fixtures/_probe/。窗口外一律 NEVER 真实网络 / 真实 API key / 付费调用；NEVER 登录凭据、NEVER 第三方聚合中转；每日定时持续采集 NEVER 接上（DEC-052 明写不含）。本机容器、本机模型、localhost:3000 与 :8000 不算外网。CI 照旧 NEVER 联网（S2-7）。",
+  "new_dependency": "NEVER 新增依赖。playwright 恒在项目外 C:\\pwenv。",
+  "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8。",
+  "stale_process": "打真栈之前 MUST 先核 :8000 的 PID 与启动时间——旧进程已经冒充过两次判据的对象。",
+  "migrations": "本批默认无迁移卡。若某卡确需迁移：接盘上当时最高的那一号，NEVER 跳号也 NEVER 撞号（当前最高 0027）；upgrade 与 downgrade 都要跑通。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "DEC-052-LANDING",
+   "title": "裁决落地：DEC-052 真实源联网工作窗口（owner 2026-08-10）",
+   "milestone": "W10",
+   "inputs": [
+    "DECISIONS-v04.md",
+    "docs/steward/起跑令-v041-第10批-2026-08-10-v2.md"
+   ],
+   "outputs": [
+    "DECISIONS-v04.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_decisions_landed.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "DEC-052 全文（owner 粘贴的那段，一字不改）追加进 DECISIONS-v04.md；既有行一字不动，水位 051→052",
+    "判据扩：水位断言 052、DEC 编号全序无洞、新增条目含「调试窗口边界」「CN-06 预授权」「每日定时采集不在本裁决内」三个关键句的存在性断言",
+    "先红后绿"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-16",
+   "title": "两把尺子没走到最后一格：孤岛那道闸不可达 + 阴性对照够不着两条 assert",
+   "milestone": "W10",
+   "inputs": [
+    "tests/v041/test_main_chain_walk.py",
+    "tests/v041/test_workbench_create.py",
+    "tools/check_reachability.py"
+   ],
+   "outputs": [
+    "tests/v041/test_main_chain_walk.py",
+    "tests/v041/test_workbench_create.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_main_chain_walk.py tests/v041/test_workbench_create.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "实况（steward 2026-08-09 实查）：`test_main_chain_walk.py:432-439` 里 `assert report.islands == []` 就在 `for route in report.islands:` 的**上一行**——循环体**永远执行不到**。而「每座孤岛要有 `island_reason` + 一张开着的单」这条纪律，全仓 grep `island_reason` / `island_sheet` **只命中那四行**，今天没有任何东西在守它",
+    "docstring 却写着「它必须留着，下一次长出孤岛时它就是那道闸」——**判据的说明与判据的可达性对不上**，与第 9 批刚修的那两条同族",
+    "改法：先遍历、每座孤岛逐条判 `island_reason` 与单据，**再**断言 `islands == []`；有孤岛时的报错 MUST 同时说得出**哪一座缺什么**",
+    "单据那一条 MUST 改用新的 `_assert_sheet_keeps_its_trace` 判形状，NEVER 再用 `splitlines()[2]` 数行号——状态行在第几行不该由行号决定",
+    "阴性对照（孤岛面）：造一个带孤岛且缺 `island_reason` 的图，**写临时目录**，NEVER 动 `assets/screen_graph.json`；断言判据红且点名那座孤岛。今天孤岛是 0，没有这条的话改完谁都不知道它活着",
+    "实况：`test_a_status_line_that_says_neither_open_nor_closed_goes_red` 的三个坏样本**全部落在 `_status_of` 的 ValueError 上**；而「必须有 `## 关闭` 节」与「关闭那一节要点名同一张卡」是两条 `assert`，阴性对照一次都没碰到——**把那两条 assert 删掉，阴性对照照样绿**",
+    "补第四、第五例：状态行合法但没有 `## 关闭` 节 / 有 `## 关闭` 节但里面点的是另一张卡，两例都期望 `AssertionError`（**不是 ValueError**），同样只写临时目录",
+    "两个文件里那份 `_STATUS_LINE` / `_status_of` / `_assert_sheet_keeps_its_trace` 是**逐字重复的两份**。本卡 MAY 收成一处（放 `tests/v041/_sheet_trace.py` 一类的共用件）；收与不收都要在 trace 写明理由——两份各自漂移时，两张单会按两套规矩判"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH9-COMPLETION.md",
+    "docs/trace/SHIP-09.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "CN-04",
+   "title": "真实源适配器修复：weibo 302 / gtrends 404（源契约首触实况，DEC-052 调试窗口内）",
+   "milestone": "W10",
+   "inputs": [
+    "flint/sources/weibo.py",
+    "flint/sources/gtrends.py",
+    "docs/cn-01-real-ingest-receipt.json",
+    "docs/blocked/K1-02-SOURCE-CONTRACTS-MISSING.md",
+    "fixtures/_record_cn_real.py"
+   ],
+   "outputs": [
+    "flint/sources/",
+    "fixtures/_record_cn_real.py",
+    "fixtures/_probe/",
+    "tests/v041/test_cn04_source_repair.py",
+    "docs/blocked/K1-02-SOURCE-CONTRACTS-MISSING.md",
+    "fixtures/_generate_4src.py",
+    "fixtures/gtrends/"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_cn04_source_repair.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（CN-01 首次实跑，2026-08-09 UTC，owner 在场；回执 docs/cn-01-real-ingest-receipt.json）：两源全败。weibo：GET `https://s.weibo.com/top/summary?cate=realtimehot` 回 **302 空体**——httpx 默认不跟随重定向、无 UA 无 cookie（`flint/sources/weibo.py:20,74`）；gtrends：GET `/trends/api/dailytrends` 回 **Google 通用 404 页**——该端点已被 Google 下线（`flint/sources/gtrends.py:80-84`）。两个适配器都是按合成夹具的形状建的（`fixtures/_generate_4src.py` 自述「本环境无法对四个真实站点做在线录制」），这是它们第一次接触真实站点——`K1-02` 那张单预言的正是这个",
+    "**没有 DEC-052 落进 DECISIONS-v04.md 之前，NEVER 发任何真实请求**——真实网络是 worker.md §7 事前必审类。DEC-052 的边界逐字执行：每源每日 ≤20 个真实请求 · 只许 weibo 族与 trends.google.com 族域名 · 每次探测往返 MUST 落 `fixtures/_probe/{source}/`（url / status / 关键响应头 / body 前 2048 字节 / UTC 时间戳）· 开关走命令行 flag NEVER 环境变量 · NEVER 引入付费 API、登录凭据或第三方聚合中转",
+    "gtrends 按 **DEC-054（港区代理口径）**：采集 `trends.google.com/trending/rss?geo=HK`（探测已证 200 text/xml），`region` 落 **CN**——这是 owner 定义的产品口径（华语圈代理信号），不是数据谎言，诚实性由三件东西扛：①DEC-054 文本写明代理；②provenance manifest 记真实 geo=HK URL；③**署名上屏 MUST 显示「Google 趋势（港区）」**（复用 FIX-17 的 sourceName 机制，判据取渲染后可见文本）。`ht:approx_traffic` 是区间下界（如 200+），score 照实存下界，NEVER 编精确值。下一版做多区时本代理口径撤销、改真区——这句写进 DEC-054",
+    "weibo 按 **DEC-053（访客握手授权）**：实现新浪访客系统匿名握手（两次 POST 动态取访客 cookie）。边界：cookie 值 MUST 每次动态获取，NEVER 硬编任何一枚；浏览器指纹参数集中在一处并在文件头注明「上游对抗件，预期会碎」；握手或抓取失败 → 如实 DegradationNote，当日补跑 NEVER 超 DEC-052 额度；**NEVER 升级成账号登录**——访客握手是授权的上限，要更多就回来找 owner",
+    "错误分类保持一一对应：RateLimitedError / SourceFetchError / ParseDrift 三类与 `flint/jobs/ingest.py` 的 DegradationNote 三类不增不减不改名（一处定义）",
+    "探测落盘的真实响应转成回放夹具后，适配器解析判据**全部离线跑**（CI 不联网，S2-7）；ParseDrift 的阴性对照用真实响应改坏一处构造，NEVER 手编一个「想象中的坏响应」",
+    "回执与干跑输出 MUST 同时打印 **UTC 日期与本机日期**（本机 UTC+10，午夜前后两个日期不同——owner 已被这个差异绊过一次；夹具命名照旧只按 UTC，NEVER 改，理由在 `_record_cn_real.py:191-193` 注释）",
+    "修完 NEVER 在本卡跑任何完整录制——端到端实跑归 CN-06（DEC-052 预授权的那一次，用 `--authorized-by=DEC-052` 旗标）；`--owner-is-here` 的语义一字不动",
+    "`K1-02-SOURCE-CONTRACTS-MISSING.md` 更新实况：把两源的真实契约（端点 / 结构 / 探测日期）写进去；单据保持 open 直到四源契约齐（ghtrend/arxiv 归 CN-05，本卡仍 NEVER 顺手碰）",
+    "夹具重生成 MUST 只换 HTTP 信封（URL 键 / content_type / body 形状照 CN-04 录下的真实 RSS 响应写），34 天的**词面与数值 NEVER 变**——变了的话下游血缘/热度判据的红就不再是「一条根因」，而是一片没人签过字的数据漂移。NEVER 让取数路同时接受新旧两条 URL（那是在取数路上留一条今天回 404 的备用路）",
+    "weibo 真榜结构差（第三轮探测实证，真响应在 real-board.html）：**第一行是置顶行**（td-01 是 icon-top 不是名次、td-02 无热度 span）——适配器 MUST 认这一档：置顶行没热度是上游常态，NEVER 因此判整页 ParseDrift，也 NEVER 给它编一个热度；置顶行怎么落（不入榜 / 单列）由实现定并把理由写进 trace，两条 NEVER 不动。转夹具 MUST 用真响应，NEVER 往合成夹具里补一行想象出来的置顶"
+   ],
+   "context_refs": [
+    "docs/cn-01-real-ingest-receipt.json",
+    "docs/trace/CN-01.md",
+    "docs/blocked/E2E-REALSOURCE.md",
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [
+    "DEC-052-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CN-05",
+   "title": "ghtrend / arxiv 真实契约验证——另外两源同样从没碰过真实站点",
+   "milestone": "W10",
+   "inputs": [
+    "flint/sources/ghtrend.py",
+    "flint/sources/arxiv.py",
+    "docs/blocked/K1-02-SOURCE-CONTRACTS-MISSING.md"
+   ],
+   "outputs": [
+    "flint/sources/",
+    "fixtures/_probe/",
+    "fixtures/robots/",
+    "tests/v041/test_cn05_contract_check.py",
+    "docs/blocked/K1-02-SOURCE-CONTRACTS-MISSING.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_cn05_contract_check.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况：四个适配器全部按合成夹具建（`_generate_4src.py` 自述无法在线录制）。CN-04 修的是已知坏的两源；这两源**没被证明是好的**——「没验证过」与「验证过没问题」在盘上长得一样，本卡把它们分开",
+    "DEC-052 边界内探测：每源 ≤10 个真实请求，域名族只许 github.com 与 arxiv.org / export.arxiv.org；每次往返落 `fixtures/_probe/{source}/`（同 CN-04 的五字段格式）",
+    "契约一致 → 录一份当日真实夹具 + provenance manifest + robots 快照，判据回放它证明解析真的吃得下真实响应；契约漂移 → 按 CN-04 同一套纪律修适配器",
+    "`K1-02-SOURCE-CONTRACTS-MISSING.md` 更新这两源的实况（端点 / 结构 / 探测日期）",
+    "判据离线跑（CI 不联网，S2-7）；ParseDrift 阴性对照用真实响应改坏一处构造"
+   ],
+   "context_refs": [
+    "docs/cn-01-real-ingest-receipt.json",
+    "docs/blocked/K1-02-SOURCE-CONTRACTS-MISSING.md"
+   ],
+   "depends_on": [
+    "DEC-052-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CN-06",
+   "title": "端到端真数据落地：四源真实录制一次 → 灌库 → 广场显当天真热点",
+   "milestone": "W10",
+   "inputs": [
+    "fixtures/_record_cn_real.py",
+    "flint/jobs/ingest.py",
+    "web/app/plaza/page.tsx",
+    "docs/blocked/E2E-REALSOURCE.md"
+   ],
+   "outputs": [
+    "fixtures/_record_cn_real.py",
+    "fixtures/",
+    "docs/cn-01-real-ingest-receipt.json",
+    "tests/v041/test_cn06_e2e_real.py",
+    "docs/blocked/E2E-REALSOURCE.md",
+    "docs/blocked/K1-02-SOURCE-CONTRACTS-MISSING.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_cn06_e2e_real.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "前置：CN-04 与 CN-05 verified——四源适配器全部经真实契约验证之后才许跑本卡",
+    "录制器新增显式旗标 `--authorized-by=DEC-052`（命令行 NEVER 环境变量；默认拒跑不变；`--owner-is-here` 保留原语义不动）——**NEVER 在 owner 不在场时冒用 --owner-is-here**：旗标的名字就是它的诚实性，DEC-052 预授权的运行要用说真话的旗标",
+    "录制器扩到四源（weibo/gtrends/ghtrend/arxiv），限速桶沿用容量 1；真跑一次完整录制（UTC 当日）→ 抓完必录 fixtures + provenance manifest + robots 快照，三样缺一即 fail",
+    "抓失败的源**如实降级**，当日对该源的补跑 NEVER 超过 DEC-052 限额；「跑过了」与「跑成了」两态在回执里分开",
+    "回执与干跑输出同时打印 **UTC 日期与本机日期**（本机 UTC+10；owner 被单时钟绊过一次）——CN-04 的这条改进在本卡验收",
+    "灌库走既有回放路径 → `http://localhost:3000/plaza` 不带 `?day=` 落在当日、CN 区显示真实词面；逐屏截图留 trace",
+    "`E2E-REALSOURCE.md` 按新规矩关单（状态行三样齐 + 「## 关闭」节点名 CN-06）；`K1-02` 视四源实况处置：全验证 → 关，有源没验证成 → 留 open 写清缺哪源",
+    "**每日定时的持续真实采集 NEVER 在本卡顺手接上**（cron 今天怎么配就怎么留）——那是上线动作，DEC-052 明写不含它",
+    "判据离线跑：端到端判据全部回放本卡录下的真实夹具，CI 不联网"
+   ],
+   "context_refs": [
+    "docs/trace/CN-01.md",
+    "docs/trace/CN-03.md",
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [
+    "CN-04",
+    "CN-05"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-VERDICT",
+   "title": "热点判定：后端通了、屏还在读旧那条路（PERSIST-04 建的 GET /clusters/{id}/verdict 无人调）",
+   "milestone": "W10",
+   "inputs": [
+    "flint/api/views.py",
+    "web/lib/viewsClient.ts",
+    "web/views/analysis/AnalysisView.tsx",
+    "web/app/plaza/page.tsx"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_wire_verdict.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wire_verdict.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 实查）：前端全仓只调 `GET /jobs/{jobId}/verdict`（`web/lib/viewsClient.ts:183`），**一处都没有** `/clusters/{id}/verdict`；后端那条由 `PERSIST-04` 按 `DEC-044` 建好、`cluster_verdicts` 表在（实查在库），对账器把它记在「已装配未调用」那 21 条的第一条",
+    "屏上今天仍显示「还没有判定」。**原因已经变了**：从前是查不到，现在是屏还没接这条读法——两者对用户是同一句话，对改代码的人是两件事，trace MUST 写清",
+    "分析屏改读 `/clusters/{id}/verdict`；`/jobs/{jobId}/verdict` 那条**留着**（它是「这一次分析作业判了什么」，与「这个热点现在的判定」不是同一件事），两条各自什么时候用 MUST 在文件头写死",
+    "实况：`web/app/plaza/page.tsx:37` 那句注释写着「`GET /clusters/{id}/verdict` 不存在」——**这句话今天是假的**。删掉或改成实况，NEVER 留一句已经变假的注释（`no_scaffold` 那一族判据读注释，而读注释的判据踩过 6 次）",
+    "判据打真代码：进程内起 app，塞一条真的 `cluster_verdicts` 行，断言屏上渲染出那条判定的四分类与引用；再断言**没有判定时**屏上说的是「还没有判定」而不是空白",
+    "对账器 `backend_unused_by_frontend` MUST 因此少一条，判据断言那一条的名字不在表里"
+   ],
+   "context_refs": [
+    "docs/trace/PERSIST-04.md",
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "LOCALE-SAVE",
+   "title": "地区语言详情屏：保存按钮按下去没反应（page 没传 onSave、status 写死 idle）",
+   "milestone": "W10",
+   "inputs": [
+    "web/app/settings/locale/page.tsx",
+    "web/components/locale-settings/LocaleSettings.tsx",
+    "flint/api/settings.py"
+   ],
+   "outputs": [
+    "web/app/settings/locale/",
+    "tests/v041/test_locale_save.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_locale_save.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 实查）：`web/app/settings/locale/page.tsx` 渲染 `<LocaleSettings ... status=\"idle\" onChange={…} />`——**没有 `onSave`**，且 `status` 是写死的字面量。组件自己早就备好了 `onSave?` 与 `status: idle|saving|error` 三态（`LocaleSettings.tsx:52,56`），缺的只是页面这一半",
+    "接上 `PUT /settings/locale`：按下去要真的存，并把 `status` 从写死改成真状态（`saving` 期间按钮禁用）",
+    "保存失败 **NEVER 回滚成旧值**——组件文件头那句「回滚之后屏上是旧值、没有报错，用户会以为自己没点到」是这条判据的由来，两个方向各断言一次",
+    "右上角那三根轴（`SHELL-01` / `SHELL-02`）与这一屏**存的是同一份 `prefs`**：判据 MUST 断言在这一屏保存之后，右上角读到的是新值（一处定义他处引用，NEVER 两套写法）",
+    "阴性对照：把 `onSave` 摘掉 → 判据 MUST 红且点名「按下去没反应」，NEVER 只断言「代码里有 onSave 这个词」"
+   ],
+   "context_refs": [
+    "docs/trace/SHELL-01.md",
+    "docs/trace/SHELL-02.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "COMBO-ECHO",
+   "title": "前端类型描述一份不存在的形状：/projects/combo 的三个字段一个都不在响应里",
+   "milestone": "W10",
+   "inputs": [
+    "tools/check_fe_be_parity.py",
+    "flint/api/combo.py",
+    "web/lib/types.ts"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_combo_echo.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_combo_echo.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "实况（第 9 批 `SHIP-09` 报的，单据 `PARITY-READS-A-REQUEST-PAYLOAD-AS-A-RESPONSE.md` 留着这一处）：`/projects/combo` 的 `card_ids` / `hypothesis` / `n` **一个都不在响应里**（前两个来自 job payload，`n` 来自局部计数器 `{\"n\": 0}`），而前端 `ComboSubmitEcho` 恰好照着这三个建了类型",
+    "**两边对着一份虚构的形状达成一致，尺子报绿**——这比报错更坏：它把「没人核对过」伪装成「核对过、没问题」。这句话 MUST 原样进 trace",
+    "先定哪一半是真的：响应该不该有这三格。**决定写进 trace 并说明理由**，NEVER 因为「前端已经这么写了」就去后端补三个字段（那是让虚构变成事实）",
+    "落地二选一：①响应确实该回这三格 → 后端补上并加判据打真响应；②不该回 → 前端类型与 `ComboSubmitEcho` 改成响应真有的形状",
+    "判据 MUST 拿**真响应**比对类型，NEVER 比对两份都是人写的声明",
+    "单据 `PARITY-READS-A-REQUEST-PAYLOAD-AS-A-RESPONSE.md` 收口后按新规矩关（状态行三样齐 + 「## 关闭」节点名本卡）"
+   ],
+   "context_refs": [
+    "docs/blocked/PARITY-READS-A-REQUEST-PAYLOAD-AS-A-RESPONSE.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "EDGES-UI",
+   "title": "画布连线：POST /workbenches/{id}/edges 端点在、表在，前端一处都没在调",
+   "milestone": "W10",
+   "inputs": [
+    "flint/api/graph_edges.py",
+    "web/components/graph-edge/GraphEdgeDraft.tsx",
+    "web/components/graph-workbench/GraphWorkbench.tsx"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_edges_ui.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_edges_ui.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况：端点 `POST /workbenches/{graph_id}/edges` 早已装配（`flint/api/graph_edges.py:62`），`graph_edges` 表由 `PERSIST-02` 建好（steward 实查在库），**缺的是画布上那个交互**（分诊表 B1）",
+    "连线要带假设（`hypothesis`）——空假设走既有的 `422 EMPTY_HYPOTHESIS`（`docs/blocked/EMPTY-HYPOTHESIS-TWO-CODES.md` 已定一个 code，NEVER 再分叉出第二个）",
+    "连完刷新页面那条线**还在**（跨进程重启活得下来，`graph_edges` 是真表）——判据打真库，NEVER 只断言前端 state",
+    "失败态照实说：连线存不下时 NEVER 把线留在画布上假装成功（与 `LocaleSettings` 那条「NEVER 回滚成旧值假装成功」是同一条纪律的两个方向）",
+    "对账器 `backend_unused_by_frontend` MUST 因此少一条"
+   ],
+   "context_refs": [
+    "docs/trace/PERSIST-02.md",
+    "docs/blocked/EMPTY-HYPOTHESIS-TWO-CODES.md"
+   ],
+   "depends_on": [
+    "GAUGE-16"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FAV-WRITES",
+   "title": "收藏：三张表真的在存了，屏上却没有入口按下去",
+   "milestone": "W10",
+   "inputs": [
+    "flint/api/favorites.py",
+    "web/components/plaza/cardActions.ts",
+    "docs/端点分诊-v041.md"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_fav_writes.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_fav_writes.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况：`favorites` 表由 `PERSIST-01` 建好、库里已有真行（steward 实查 1 行），三条写操作**屏上没有入口**（分诊表 B2）",
+    "逐条接：收藏 / 取消收藏 / 收藏列表——三条各自的失败态各说各的，NEVER 合成一句「操作失败」",
+    "陌生人 NEVER 看到别人的收藏（`PERSIST-01` 已定的不变量），判据两个方向各断言一次",
+    "收藏是**内嵌证据快照**（冻结件 `Favorite` 的原话：只存 snapshot_id 的话，被引 snapshot 被周删清掉之后收藏就变成一个指向空处的壳）——前端 NEVER 自己拼一份快照",
+    "对账器 `backend_unused_by_frontend` MUST 因此少三条"
+   ],
+   "context_refs": [
+    "docs/trace/PERSIST-01.md",
+    "contracts_v04/models_v04.py"
+   ],
+   "depends_on": [
+    "GAUGE-16"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TRIAGE-02",
+   "title": "剩余「已装配未调用」逐条判：接上，或明确不接并写清理由",
+   "milestone": "W10",
+   "inputs": [
+    "tools/check_fe_be_parity.py",
+    "docs/端点分诊-v041.md"
+   ],
+   "outputs": [
+    "docs/端点分诊-v041.md",
+    "tests/v041/test_triage_02.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_triage_02.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 直跑对账器）：`前端要而后端没有` **0 条** · `未装配` **0 条** · `已装配未调用` **21 条**",
+    "本批前三张卡（`WIRE-VERDICT` / `EDGES-UI` / `FAV-WRITES`）接完之后，剩下的**逐条**判成两类之一：**这一版要接**（给出卡号，进下一批）／**这一版明确不接**（写清为什么，且 NEVER 写成「以后再说」——要说清等的是哪一件具体的事）",
+    "判据钉住这张表与尺子的实况**双向一致**：表里每一条都在尺子的输出里，尺子输出的每一条都在表里；数字对不上时红，NEVER 靠人记",
+    "设计工作台那四条 render/export 端点单独成一段——那一屏今天是写死的，接端点与去掉写死是两件事",
+    "**NEVER 用「把它从尺子里排掉」来让数字变小**：排除名单每加一条，判据 MUST 要求同一次改动里写出理由与开着的单（与 `ENTRY-05` 豁免名单只许有 `/share/[token]` 那一条是同一条纪律）"
+   ],
+   "context_refs": [
+    "docs/端点分诊-v041.md"
+   ],
+   "depends_on": [
+    "WIRE-VERDICT",
+    "EDGES-UI",
+    "FAV-WRITES",
+    "COMBO-ECHO"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-10",
+   "title": "本批收尾：完成态报告 + 五条门 + 新纪律的落地检查",
+   "milestone": "W10",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b10.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH10-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_ledger_pairing_v041.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "五条全局门逐字贴出：`ruff check . --no-cache` / `mypy --strict flint` / `pytest -q` / `npx tsc --noEmit` / `npm test -- --run`",
+    "**顺序写死**：先写 trace 与台账 → 再跑五条门 → 最后只改完成态报告的数字。理由：本仓有大量判据在读 `docs/blocked/*.md` · `progress-v041.jsonl` · `docs/trace/*` · `assets/*.json`，**收工四步里只有完成态报告与收工标记没有任何判据读**（第 9 批 `SHIP-09` 数过一遍）",
+    "台账那一行落下之后，MUST **单独重跑它的读者判据**再进下一步（第 9 批的做法：83 passed）",
+    "pytest 的红**逐条点名归属**，NEVER 按族小结之后写一句「逐条有主」",
+    "每张卡的 `started` 与终态成对——**`blocked` 也是一次「开始过」的记号**（第 9 批 `SHIP-09` 在自己身上栽过一次）",
+    "报告里逐条回答 owner 那句话：**哪个功能点得到 / 点下去会发生什么 / 哪些点不到 / 卡在谁那里**"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH9-COMPLETION.md",
+    "worker.md"
+   ],
+   "depends_on": [
+    "GAUGE-16",
+    "WIRE-VERDICT",
+    "LOCALE-SAVE",
+    "COMBO-ECHO",
+    "EDGES-UI",
+    "FAV-WRITES",
+    "TRIAGE-02",
+    "CN-04",
+    "CN-05",
+    "CN-06"
+   ],
+   "blocked_by": null
+  }
+ ],
+ "steward_corrections": [
+  {
+   "on": "2026-08-10",
+   "by": "steward",
+   "card": "CN-04",
+   "what": "新增卡：真实源适配器修复（weibo 302 / gtrends 404）",
+   "why": "CN-01 首次实跑两源全败——机制全对（守卫/限速/错误分类/回执/零半成品/降级显示），败在源契约：两个适配器按合成夹具建、今晚第一次碰真实站点，weibo 被 302 弹走、gtrends 的 dailytrends 端点已被 Google 下线。K1-02 预言成真。本卡受 DEC-052（真实网络调试窗口）把门：裁决没落进 DECISIONS 之前一个请求都不许发。"
+  },
+  {
+   "on": "2026-08-10",
+   "by": "steward",
+   "card": "DEC-052-LANDING / CN-05 / CN-06（新增）+ CN-04（改两条）",
+   "what": "owner 2026-08-10「给工作 AI 联网权限，把要联网的问题一起解决」→ 联网事项全量入批",
+   "why": "全项目要联网的事共五件：weibo/gtrends 修复（CN-04）、ghtrend/arxiv 契约验证（CN-05）、端到端真数据落地（CN-06）、robots/出处合规照记（并入各卡）、每日定时持续采集（**刻意不入批**——上线动作，DEC-052 明写不含，等 owner 看过 CN-06 结果另裁）。CN-04 原「修完停下等 owner 再点」改为「端到端归 CN-06，用说真话的 --authorized-by=DEC-052 旗标」。"
+  },
+  {
+   "on": "2026-08-10",
+   "by": "steward",
+   "card": "rules（整块）",
+   "what": "done_marker B9→B10；network 从「CN-01 唯一涉网」改为 DEC-052 窗口口径；touch_boundary 撤下已结清的 FIX-19 例外；migrations 从 PERSIST-01~04 改为「默认无迁移」",
+   "why": "worker 上岗核对指出 rules 整块是第 9 批残留——照旧的 done_marker 读会开工即判收工（FLINT-V041-B9-DONE 已在盘上），照旧的 network 读 CN-04/05/06 一个请求都不能发。steward_corrections 与 DEC-052 更晚更具体，worker 已按它执行；本次把 rules 本体改齐，消除同一文件里两个真相。"
+  },
+  {
+   "on": "2026-08-10",
+   "by": "steward",
+   "card": "CN-04（改两条 acceptance）",
+   "what": "weibo 半 → DEC-053 访客握手授权；gtrends 半 → DEC-054 港区代理口径（署名上屏为 MUST）",
+   "why": "owner 2026-08-10 两句话裁决：①weibo 授权访客握手（钢丝走明处：动态获取/集中指纹/碎了如实降级/上限是访客 NEVER 账号）；②gtrends 用 HK 榜——steward 把「冒充 CN」转译成「明说的代理」：region 归组是产品口径由 DEC 定义，出处链（manifest 记 geo=HK）与屏上署名（港区）保持全真。worker 原拒绝针对的是无标注冒充，署名上屏后该反对已被解除。"
+  },
+  {
+   "on": "2026-08-10",
+   "by": "steward",
+   "card": "CN-04（outputs 加两处 + acceptance 加一条）",
+   "what": "outputs += fixtures/_generate_4src.py 与 fixtures/gtrends/；acceptance 补「重生成只换信封、词面数值不变、拒绝双 URL 备用路」",
+   "why": "worker 单据 CN-04-GTRENDS-FIXTURES-STILL-CARRY-THE-DEAD-ENDPOINT：34 天回放夹具仍是旧 dailytrends 形状，ReplayMiss 17 failed + 19 errors 一条根因。这不是口径问题——DEC-054 已把端点与形状定死，重生成夹具是机械后果，所以 steward 直接扩 outputs，不占 owner 一次拍板。worker 不建议的双 URL 路 steward 同意拒绝。"
+  },
+  {
+   "on": "2026-08-10",
+   "by": "steward",
+   "card": "CN-04（acceptance 加一条：置顶行）",
+   "what": "把第三轮探测实证的置顶行结构差写进卡面（不判漂移 / 不编热度 / 落法进 trace / 转夹具用真响应）",
+   "why": "worker 上下文用尽换会话——这条规则只活在交接消息里的话，新会话读工单看不见它。"
+  }
+ ]
+}

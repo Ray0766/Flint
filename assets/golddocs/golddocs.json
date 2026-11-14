@@ -1,0 +1,440 @@
+{
+ "generated_by": "fixtures/_generate_golddocs.py",
+ "samples": [
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-generic-1",
+      "fact-generic-2"
+     ],
+     "price_entries": [],
+     "profile_paths": []
+    },
+    "declaration_locked": true,
+    "sections": [
+     "summary",
+     "opportunity",
+     "market",
+     "competition",
+     "plan",
+     "budget",
+     "risks"
+    ]
+   },
+   "facts": [
+    "fact-generic-1",
+    "fact-generic-2"
+   ],
+   "price_entries": [],
+   "profile_paths": [],
+   "sample_id": "golddoc-generic-plain",
+   "template_id": "generic",
+   "variant": "plain"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-generic-1",
+      "fact-generic-2"
+     ],
+     "price_entries": [
+      "pe-compute-01"
+     ],
+     "profile_paths": [
+      "identity.org"
+     ]
+    },
+    "declaration_locked": true,
+    "sections": [
+     "summary",
+     "opportunity",
+     "market",
+     "competition",
+     "plan",
+     "budget",
+     "risks"
+    ]
+   },
+   "facts": [
+    "fact-generic-1",
+    "fact-generic-2"
+   ],
+   "price_entries": [
+    "pe-compute-01"
+   ],
+   "profile_paths": [
+    "identity.org"
+   ],
+   "sample_id": "golddoc-generic-channels",
+   "template_id": "generic",
+   "variant": "channels"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-thesis-1",
+      "fact-thesis-2"
+     ],
+     "price_entries": [],
+     "profile_paths": []
+    },
+    "declaration_locked": true,
+    "sections": [
+     "abstract",
+     "related_work",
+     "method",
+     "evaluation_plan",
+     "timeline",
+     "resources"
+    ]
+   },
+   "facts": [
+    "fact-thesis-1",
+    "fact-thesis-2"
+   ],
+   "price_entries": [],
+   "profile_paths": [],
+   "sample_id": "golddoc-thesis-plain",
+   "template_id": "thesis",
+   "variant": "plain"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-thesis-1",
+      "fact-thesis-2"
+     ],
+     "price_entries": [
+      "pe-compute-01"
+     ],
+     "profile_paths": [
+      "identity.org"
+     ]
+    },
+    "declaration_locked": true,
+    "sections": [
+     "abstract",
+     "related_work",
+     "method",
+     "evaluation_plan",
+     "timeline",
+     "resources"
+    ]
+   },
+   "facts": [
+    "fact-thesis-1",
+    "fact-thesis-2"
+   ],
+   "price_entries": [
+    "pe-compute-01"
+   ],
+   "profile_paths": [
+    "identity.org"
+   ],
+   "sample_id": "golddoc-thesis-channels",
+   "template_id": "thesis",
+   "variant": "channels"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-startup-1",
+      "fact-startup-2"
+     ],
+     "price_entries": [],
+     "profile_paths": []
+    },
+    "declaration_locked": true,
+    "sections": [
+     "one_liner",
+     "problem",
+     "solution",
+     "market_size",
+     "go_to_market",
+     "business_model",
+     "team",
+     "financials"
+    ]
+   },
+   "facts": [
+    "fact-startup-1",
+    "fact-startup-2"
+   ],
+   "price_entries": [],
+   "profile_paths": [],
+   "sample_id": "golddoc-startup-plain",
+   "template_id": "startup",
+   "variant": "plain"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-startup-1",
+      "fact-startup-2"
+     ],
+     "price_entries": [
+      "pe-compute-01"
+     ],
+     "profile_paths": [
+      "identity.org"
+     ]
+    },
+    "declaration_locked": true,
+    "sections": [
+     "one_liner",
+     "problem",
+     "solution",
+     "market_size",
+     "go_to_market",
+     "business_model",
+     "team",
+     "financials"
+    ]
+   },
+   "facts": [
+    "fact-startup-1",
+    "fact-startup-2"
+   ],
+   "price_entries": [
+    "pe-compute-01"
+   ],
+   "profile_paths": [
+    "identity.org"
+   ],
+   "sample_id": "golddoc-startup-channels",
+   "template_id": "startup",
+   "variant": "channels"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-engineering-1",
+      "fact-engineering-2"
+     ],
+     "price_entries": [],
+     "profile_paths": []
+    },
+    "declaration_locked": true,
+    "sections": [
+     "goal",
+     "architecture",
+     "milestones",
+     "resources",
+     "risks",
+     "budget"
+    ]
+   },
+   "facts": [
+    "fact-engineering-1",
+    "fact-engineering-2"
+   ],
+   "price_entries": [],
+   "profile_paths": [],
+   "sample_id": "golddoc-engineering-plain",
+   "template_id": "engineering",
+   "variant": "plain"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-engineering-1",
+      "fact-engineering-2"
+     ],
+     "price_entries": [
+      "pe-compute-01"
+     ],
+     "profile_paths": [
+      "identity.org"
+     ]
+    },
+    "declaration_locked": true,
+    "sections": [
+     "goal",
+     "architecture",
+     "milestones",
+     "resources",
+     "risks",
+     "budget"
+    ]
+   },
+   "facts": [
+    "fact-engineering-1",
+    "fact-engineering-2"
+   ],
+   "price_entries": [
+    "pe-compute-01"
+   ],
+   "profile_paths": [
+    "identity.org"
+   ],
+   "sample_id": "golddoc-engineering-channels",
+   "template_id": "engineering",
+   "variant": "channels"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-grant-1",
+      "fact-grant-2"
+     ],
+     "price_entries": [],
+     "profile_paths": []
+    },
+    "declaration_locked": true,
+    "sections": [
+     "significance",
+     "innovation",
+     "approach",
+     "feasibility",
+     "team_resources",
+     "budget_justification",
+     "timeline"
+    ]
+   },
+   "facts": [
+    "fact-grant-1",
+    "fact-grant-2"
+   ],
+   "price_entries": [],
+   "profile_paths": [],
+   "sample_id": "golddoc-grant-plain",
+   "template_id": "grant",
+   "variant": "plain"
+  },
+  {
+   "audience": "human_reader",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-grant-1",
+      "fact-grant-2"
+     ],
+     "price_entries": [
+      "pe-compute-01"
+     ],
+     "profile_paths": [
+      "identity.org"
+     ]
+    },
+    "declaration_locked": true,
+    "sections": [
+     "significance",
+     "innovation",
+     "approach",
+     "feasibility",
+     "team_resources",
+     "budget_justification",
+     "timeline"
+    ]
+   },
+   "facts": [
+    "fact-grant-1",
+    "fact-grant-2"
+   ],
+   "price_entries": [
+    "pe-compute-01"
+   ],
+   "profile_paths": [
+    "identity.org"
+   ],
+   "sample_id": "golddoc-grant-channels",
+   "template_id": "grant",
+   "variant": "channels"
+  },
+  {
+   "audience": "ai_executor",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-vibe_pack-1",
+      "fact-vibe_pack-2"
+     ],
+     "price_entries": [],
+     "profile_paths": []
+    },
+    "declaration_locked": true,
+    "sections": [
+     "S1_charter",
+     "S2_invariants",
+     "S3_contracts",
+     "S4_decision_log",
+     "S5_task_dag",
+     "S6_context_manifest",
+     "S7_verification",
+     "S8_progress_ledger",
+     "S9_escalation"
+    ]
+   },
+   "facts": [
+    "fact-vibe_pack-1",
+    "fact-vibe_pack-2"
+   ],
+   "price_entries": [],
+   "profile_paths": [],
+   "sample_id": "golddoc-vibe_pack-plain",
+   "template_id": "vibe_pack",
+   "variant": "plain"
+  },
+  {
+   "audience": "ai_executor",
+   "expected": {
+    "channel_manifest": {
+     "facts": [
+      "fact-vibe_pack-1",
+      "fact-vibe_pack-2"
+     ],
+     "price_entries": [
+      "pe-compute-01"
+     ],
+     "profile_paths": [
+      "identity.org"
+     ]
+    },
+    "declaration_locked": true,
+    "sections": [
+     "S1_charter",
+     "S2_invariants",
+     "S3_contracts",
+     "S4_decision_log",
+     "S5_task_dag",
+     "S6_context_manifest",
+     "S7_verification",
+     "S8_progress_ledger",
+     "S9_escalation"
+    ]
+   },
+   "facts": [
+    "fact-vibe_pack-1",
+    "fact-vibe_pack-2"
+   ],
+   "price_entries": [
+    "pe-compute-01"
+   ],
+   "profile_paths": [
+    "identity.org"
+   ],
+   "sample_id": "golddoc-vibe_pack-channels",
+   "template_id": "vibe_pack",
+   "variant": "channels"
+  }
+ ],
+ "version": 1
+}

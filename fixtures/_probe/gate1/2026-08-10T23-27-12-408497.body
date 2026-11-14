@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/1EN9Tq428Il+1xfUvM73fBL/4B0</id>
+  <title>arXiv Query: search_query=all:human-computer OR all:interaction&amp;id_list=&amp;start=0&amp;max_results=3</title>
+  <updated>2026-08-10T23:27:13Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:human-computer+OR+all:interaction&amp;start=0&amp;max_results=3&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>
+  <opensearch:totalResults>375614</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2506.16345v1</id>
+    <title>Can GPT-4o Evaluate Usability Like Human Experts? A Comparative Study on Issue Identification in Heuristic Evaluation</title>
+    <updated>2025-06-19T14:22:44Z</updated>
+    <link href="https://arxiv.org/abs/2506.16345v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.16345v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Heuristic evaluation is a widely used method in Human-Computer Interaction (HCI) to inspect interfaces and identify issues based on heuristics. Recently, Large Language Models (LLMs), such as GPT-4o, have been applied in HCI to assist in persona creation, the ideation process, and the analysis of semi-structured interviews. However, considering the need to understand heuristics and the high degree of abstraction required to evaluate them, LLMs may have difficulty conducting heuristic evaluation. However, prior research has not investigated GPT-4o's performance in heuristic evaluation compared to HCI experts in web-based systems. In this context, this study aims to compare the results of a heuristic evaluation performed by GPT-4o and human experts. To this end, we selected a set of screenshots from a web system and asked GPT-4o to perform a heuristic evaluation based on Nielsen's Heuristics from a literature-grounded prompt. Our results indicate that only 21.2% of the issues identified by human experts were also identified by GPT-4o, despite it found 27 new issues. We also found that GPT-4o performed better for heuristics related to aesthetic and minimalist design and match between system and real world, whereas it has difficulty identifying issues in heuristics related to flexibility, control, and user efficiency. Additionally, we noticed that GPT-4o generated several false positives due to hallucinations and attempts to predict issues. Finally, we highlight five takeaways for the conscious use of GPT-4o in heuristic evaluations.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-19T14:22:44Z</published>
+    <arxiv:comment>Paper accepted at the 20th IFIP TC13 International Conference on Human-Computer Interaction (INTERACT) 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <arxiv:journal_ref>In: Ardito, C., et al. Human-Computer Interaction - INTERACT 2025</arxiv:journal_ref>
+    <author>
+      <name>Guilherme Guerino</name>
+    </author>
+    <author>
+      <name>Luiz Rodrigues</name>
+    </author>
+    <author>
+      <name>Bruna Capeleti</name>
+    </author>
+    <author>
+      <name>Rafael Ferreira Mello</name>
+    </author>
+    <author>
+      <name>André Freire</name>
+    </author>
+    <author>
+      <name>Luciana Zaina</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-032-05005-2_20</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-032-05005-2_20" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.00474v1</id>
+    <title>Towards Responsible AI: A Design Space Exploration of Human-Centered Artificial Intelligence User Interfaces to Investigate Fairness</title>
+    <updated>2022-06-01T13:08:37Z</updated>
+    <link href="https://arxiv.org/abs/2206.00474v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.00474v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With Artificial intelligence (AI) to aid or automate decision-making advancing rapidly, a particular concern is its fairness. In order to create reliable, safe and trustworthy systems through human-centred artificial intelligence (HCAI) design, recent efforts have produced user interfaces (UIs) for AI experts to investigate the fairness of AI models. In this work, we provide a design space exploration that supports not only data scientists but also domain experts to investigate AI fairness. Using loan applications as an example, we held a series of workshops with loan officers and data scientists to elicit their requirements. We instantiated these requirements into FairHIL, a UI to support human-in-the-loop fairness investigations, and describe how this UI could be generalized to other use cases. We evaluated FairHIL through a think-aloud user study. Our work contributes better designs to investigate an AI model's fairness-and move closer towards responsible AI.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-01T13:08:37Z</published>
+    <arxiv:comment>44 pages, 17 figures, the draft of a paper on International Journal of Human-Computer Interaction</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <arxiv:journal_ref>International Journal of Human-Computer Interaction, 2022</arxiv:journal_ref>
+    <author>
+      <name>Yuri Nakao</name>
+    </author>
+    <author>
+      <name>Lorenzo Strappelli</name>
+    </author>
+    <author>
+      <name>Simone Stumpf</name>
+    </author>
+    <author>
+      <name>Aisha Naseer</name>
+    </author>
+    <author>
+      <name>Daniele Regoli</name>
+    </author>
+    <author>
+      <name>Giulia Del Gamba</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.16770v1</id>
+    <title>DeBiasMe: De-biasing Human-AI Interactions with Metacognitive AIED (AI in Education) Interventions</title>
+    <updated>2025-04-23T14:41:31Z</updated>
+    <link href="https://arxiv.org/abs/2504.16770v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.16770v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While generative artificial intelligence (Gen AI) increasingly transforms academic environments, a critical gap exists in understanding and mitigating human biases in AI interactions, such as anchoring and confirmation bias. This position paper advocates for metacognitive AI literacy interventions to help university students critically engage with AI and address biases across the Human-AI interaction workflows. The paper presents the importance of considering (1) metacognitive support with deliberate friction focusing on human bias; (2) bi-directional Human-AI interaction intervention addressing both input formulation and output interpretation; and (3) adaptive scaffolding that responds to diverse user engagement patterns. These frameworks are illustrated through ongoing work on "DeBiasMe," AIED (AI in Education) interventions designed to enhance awareness of cognitive biases while empowering user agency in AI interactions. The paper invites multiple stakeholders to engage in discussions on design and evaluation methods for scaffolding mechanisms, bias visualization, and analysis frameworks. This position contributes to the emerging field of AI-augmented learning by emphasizing the critical role of metacognition in helping students navigate the complex interaction between human, statistical, and systemic biases in AI use while highlighting how cognitive adaptation to AI systems must be explicitly integrated into comprehensive AI literacy frameworks.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-23T14:41:31Z</published>
+    <arxiv:comment>Presented at the 2025 ACM Workshop on Human-AI Interaction for Augmented Reasoning, Report Number: CHI25-WS-AUGMENTED-REASONING</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <arxiv:journal_ref>Proceedings of the 2025 ACM CHI Workshop on Human-AI Interaction for Augmented Reasoning</arxiv:journal_ref>
+    <author>
+      <name>Chaeyeon Lim</name>
+    </author>
+  </entry>
+</feed>

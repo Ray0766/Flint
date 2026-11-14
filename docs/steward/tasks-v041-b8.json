@@ -1,0 +1,406 @@
+{
+ "spec_version": "v0.4.1-batch8",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward @2026-08-09",
+ "note": "第8批 = 导航。owner 2026-08-09 亲自点过界面后指出前后端没连上——实测全站站内链接只有 5 个、顶栏只有 2 项、22 屏里点得到的只有 6 屏、热点卡片没有 href。根因是全仓判据全逐屏写，没有一把量路。本批建导航图与可达性尺子并把主链路串通。NEVER 改 contracts/。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B8-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "network": "NEVER 真实网络 / 真实 API key / 付费调用。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。playwright 恒在项目外 C:\\pwenv。",
+  "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8。不带时 27 条走 subprocess 的判据会以 TypeError: NoneType is not iterable 假红（第 7 批实测：不带 35 红 / 带上 8 红）。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "DEC-042-LANDING",
+   "title": "裁决落地：卡片点击去向（owner 2026-08-09）",
+   "milestone": "W8",
+   "inputs": [
+    "docs/steward/连跑工单-v041-第8批.md#2",
+    "DECISIONS-v04.md"
+   ],
+   "outputs": [
+    "DECISIONS-v04.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_decisions_landed.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "DEC-042 逐字追加：**点卡片主体进入该热点的分析界面；「入台」动作才进图谱工作台**。owner 2026-08-09 原话「点卡片进入卡片的分析界面，要使用卡片才进入图谱工作台」",
+    "写明影响面：卡片主体是导航、三个动作按钮是动作，两者 NEVER 混为一谈（HOTSPOT-02 的点击排除区判据正为此而建）",
+    "追加式写入，NEVER 回改既有 DEC 行"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "NAV-01",
+   "title": "导航①：导航图声明 + 可达性尺子——全仓三把尺子没有一把量路",
+   "milestone": "W8",
+   "inputs": [
+    "web/app/",
+    "web/components/shell/AppShell.tsx",
+    "assets/screen_composition.json"
+   ],
+   "outputs": [
+    "assets/screen_graph.json",
+    "tools/check_reachability.py",
+    "docs/导航图-v041.md",
+    "tests/v041/test_reachability.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_reachability.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 实测（省一次重查）：全站站内链接目标只有 5 个——/plaza · /gate/{verdictJob} · /deliverables/{id} · /deliverables/{id}/export · /jobs/{jobId}；AppShell 顶栏导航只有 2 项；**22 屏里点得到的只有 6 屏**，其余 16 屏只能手敲 URL",
+    "建导航图声明：每屏写明**谁能到这一屏**与**从这一屏能去哪**，两个方向都要写——只写出口的话，孤岛仍然查不出来",
+    "可达性尺子做图遍历：从顶栏入口出发，**走不到的屏判红并点名**。名单少一条要来删、多一条要停下登记（与既有基线同一套办法）",
+    "阴性对照：临时摘掉一条链接，尺子 MUST 报红并指出哪一屏因此变成孤岛",
+    "接进全局门——这条判据是本批的地基，NEVER 只跑一次就算",
+    "本卡只建图与尺子，**接线归 NAV-02~05**：尺子先红着是对的，它红着才说明它在量"
+   ],
+   "context_refs": [
+    "docs/steward/交接-STEWARD-HANDOFF.md",
+    "assets/screen_composition.json"
+   ],
+   "depends_on": [
+    "DEC-042-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "NAV-02",
+   "title": "导航②：点卡片本体进热点解析界面——判定 + 证据 + 来源分列三样齐",
+   "milestone": "W8",
+   "inputs": [
+    "web/views/analysis/AnalysisView.tsx",
+    "web/components/plaza/ClusterSourceLines.tsx",
+    "web/components/source-columns/SourceColumns.tsx",
+    "web/components/plaza/PlazaCards.tsx"
+   ],
+   "outputs": [
+    "web/app/clusters/",
+    "web/components/",
+    "tests/v041/test_card_to_analysis.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_card_to_analysis.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 实测：web/views/analysis/AnalysisView.tsx 是 HOTSPOT-03 建的成品（四态齐全、只读、复用 viewsClient），**全仓没有任何屏在用它**；PlazaCards.tsx 里 href 出现 0 次",
+    "owner 2026-08-09：**点卡片本体进入这个热点的解析界面**（DEC-042）。建承载屏并把卡片本体接上去",
+    "**解析界面 MUST 有三样**：① Gate① 既有判定 ② 证据概览 ③ **来源分列**。第三样今天点不到——`ClusterSourceLines` 挂在广场卡片上，解析界面里没有它。owner 2026-08-09 点名要的就是这一样",
+    "来源分列复用既有件：`ClusterSourceLines` → `SourceColumns`（HOTSPOT-07，v0.4 已 verified），**NEVER 另写一份**。它的 text 槽契约是原文而非译文，缺词面的源另起一行如实说「原话没查到」，NEVER 塞占位串——微博没说过「暂无」",
+    "**进入即渲染、进入不触发**：本屏只调既有读端点，NEVER 顺手跑一次分析——那会让用户每次点开都付一次钱，且同一个热点每次可能显示不同判定，判定本身就不再可被引用（AnalysisView 文件头原话）。判据用网络层 spy 断言零写请求",
+    "四态各自成一态 NEVER 互相冒充：加载中 / 已判定 / 未判定 / 读失败。「未判定」与「读失败」尤其不能合并",
+    "判定归属由调用方给出（verdictJobId），本屏 NEVER 自己推断——cluster→判定 的对应关系当前没有持久化真相（HOTSPOT-03 已上报）。缺就是缺，NEVER 拿 cluster_id 拼一个 job id 去试",
+    "点击排除区不倒：点三个动作按钮（收藏 / 入台 / 分享）NEVER 触发卡片跳转（HOTSPOT-02 双断言）"
+   ],
+   "context_refs": [
+    "web/views/analysis/AnalysisView.tsx",
+    "web/components/plaza/ClusterSourceLines.tsx",
+    "docs/blocked/HOTSPOT-03.md"
+   ],
+   "depends_on": [
+    "DEC-042-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "NAV-03",
+   "title": "导航③：「入台」按成功之后要把人带过去",
+   "milestone": "W8",
+   "inputs": [
+    "web/components/plaza/cardActions.ts",
+    "web/components/hotspot-card-actions/",
+    "web/app/workbenches/"
+   ],
+   "outputs": [
+    "web/components/",
+    "tests/v041/test_add_to_workbench_nav.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_add_to_workbench_nav.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "三个动作按钮当前真的在调后端（cardActions 的 addToWorkbench / favoriteCluster / shareCluster），但**按完停在原地**——用户不知道有没有成事",
+    "owner 2026-08-09 确认：**「入台」按了就入台**，进图谱工作台。POST 成功后导航到该工作台",
+    "失败时 NEVER 导航：留在原地并显示服务端自己的说明，NEVER 用一句「操作失败」盖住后端说的话",
+    "收藏与分享**不导航**（它们是动作不是去处），但要有明确的成功回执——按完没反应与按完失败 NEVER 长得一样",
+    "阴性对照：让 POST 返回失败，断言页面没有跳走且屏上出现原因"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md",
+    "web/components/plaza/PlazaCards.tsx"
+   ],
+   "depends_on": [
+    "NAV-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "NAV-04",
+   "title": "导航④：顶栏只有两项——16 屏没有任何入口",
+   "milestone": "W8",
+   "inputs": [
+    "web/components/shell/AppShell.tsx",
+    "assets/screen_graph.json"
+   ],
+   "outputs": [
+    "web/components/shell/",
+    "tests/v041/test_shell_nav.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_shell_nav.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "AppShell 的 NAV_ITEMS 当前只有 /plaza 与 /demo。补上常驻入口：账户 · 收藏图书馆 · AI 设计工作台 · 语言地区设置",
+    "账户位当前是「接口未提供」——**入口照常给，屏上如实说未提供**，NEVER 因为后端没数据就把入口藏起来：藏起来的话用户不知道有这个能力",
+    "/demo 是演示串屏、不是产品屏（屏对照表 §四 已登记）：本卡决定它留不留在顶栏，决定写进 trace 并给理由",
+    "导航项的可见与可达一致：出现在顶栏的每一项 MUST 在 NAV-01 的图里连得上，NEVER 有一个点不动的导航项",
+    "移动视口下顶栏不溢出（390px 实测，FIX-05/06 的既有判据不倒）"
+   ],
+   "context_refs": [
+    "web/components/shell/AppShell.tsx"
+   ],
+   "depends_on": [
+    "NAV-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "NAV-05",
+   "title": "导航⑤：主链路串成一条真能走的路",
+   "milestone": "W8",
+   "inputs": [
+    "web/app/",
+    "assets/screen_graph.json",
+    "docs/前端功能说明-v2.md"
+   ],
+   "outputs": [
+    "web/app/",
+    "tests/v041/test_main_chain_walk.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_main_chain_walk.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "把这条路接通并逐段可点：分析界面 → 图谱工作台 → 主题列表 → 主题详情 → 发起分析 → Job 进度 → Gate① 判定 → 报告 → 导出 / 干预 / 受众分叉",
+    "判据是**真走一遍**：从顶栏出发，逐跳断言目标屏 200 且渲染出该跳该有的东西，NEVER 只断言 href 存在",
+    "每一跳的 id 从上一屏拿，NEVER 在测试里硬编一串 id——硬编的话链路断了判据还是绿的",
+    "走不通的那几跳（缺端点或缺数据）逐条列名开单，NEVER 用一条假链接把路连起来",
+    "NAV-01 的可达性尺子在本卡之后 MUST 转绿：22 屏全部可达，或不可达的逐条在图里标明理由"
+   ],
+   "context_refs": [
+    "docs/前端功能说明-v2.md",
+    "docs/屏对照表-v041.md"
+   ],
+   "depends_on": [
+    "NAV-03",
+    "NAV-04"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-16",
+   "title": "缺陷⑯：解引用端点的鉴权方向是反的——匿名能看，带身份 404",
+   "milestone": "W8",
+   "inputs": [
+    "flint/api/deref.py",
+    "web/lib/derefClient.ts",
+    "web/lib/apiBase.ts"
+   ],
+   "outputs": [
+    "flint/api/",
+    "tests/v041/test_deref_auth_direction.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_deref_auth_direction.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 2026-08-08 实测（四次探针）：GET /facts/fact-demo-vecdb-cost 不带 X-User-Id 回 **200 真内容**，带 self / demo / u-demo 三种身份**全部 404**；/price-entries/{id} 恒 422；/citations/{id} 两种都 200",
+    "**这不是边角问题**：前端今天一个身份头都不发（derefClient.ts 只发 Accept，API_USER_ID 默认空串），所以报告屏能看到那些事实与价格**恰恰因为它匿名**——登录态一上，那一屏就丢内容",
+    "定出该有的方向并实现：要么解引用不需要身份（那就对匿名与带身份一致放行），要么需要身份（那就对匿名一致拒绝）。**NEVER 停在「匿名比带身份更有权限」**",
+    "/price-entries/{id} 那个恒 422 单独查根因并修，NEVER 与本条混在一起说",
+    "判据覆盖两种调用者 × 三族端点（facts / price-entries / citations），断言同一 id 的可见性与身份的关系是一致的",
+    "报告屏在**带身份**的情况下仍渲染出事实与价格——这才是这张卡真正要保住的东西"
+   ],
+   "context_refs": [
+    "docs/steward/巡检.jsonl",
+    "web/lib/derefClient.ts"
+   ],
+   "depends_on": [
+    "DEC-042-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-17",
+   "title": "缺陷⑰：两条来源的说法并排，屏上看不出谁说的",
+   "milestone": "W8",
+   "inputs": [
+    "docs/blocked/SOURCE-COLUMNS-DOES-NOT-SHOW-WHO-SAID-IT.md",
+    "web/components/source-columns/SourceColumns.tsx"
+   ],
+   "outputs": [
+    "web/components/source-columns/",
+    "web/messages/",
+    "tests/v041/test_source_columns_attribution.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_source_columns_attribution.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "owner 同意甲：每条陈述前加一行**可见**来源名（改 4 行 + 4 个文案 key）。当前 source id 只在 data-* 里，屏上看不见",
+    "这正踩在 HOTSPOT-07 那条「分列 ≥2 列、无合成句」的用意上：**不合成是为了让人分辨两个源说了不同的话，而分辨不出谁说的，等于白分列**",
+    "合成句黑名单零命中的既有判据不倒",
+    "判据取渲染后的可见文本，NEVER 只断言 data-* 属性在",
+    "关闭 docs/blocked/SOURCE-COLUMNS-DOES-NOT-SHOW-WHO-SAID-IT.md"
+   ],
+   "context_refs": [
+    "docs/blocked/SOURCE-COLUMNS-DOES-NOT-SHOW-WHO-SAID-IT.md"
+   ],
+   "depends_on": [
+    "DEC-042-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-15",
+   "title": "尺子⑨：逐屏组件声明从 7 屏铺到 22 屏",
+   "milestone": "W8",
+   "inputs": [
+    "assets/screen_composition.json",
+    "tools/check_screen_composition.mjs",
+    "web/app/"
+   ],
+   "outputs": [
+    "assets/screen_composition.json",
+    "tests/v041/test_screen_composition.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_screen_composition.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "GAUGE-12 建的正向声明当前只覆盖 7 屏（/plaza · /design · topics · analysis · proposal · interventions · combo），**其余 15 屏只有禁止性判据守着——它们可以悄悄退化回结构化文本而没人拦**",
+    "铺满 22 屏：每屏声明 MUST 被真渲染的组件与 MUST 有样式的类名",
+    "判据取渲染后的 DOM 与计算样式，**零 className 的组件判红**（广场屏当初就是这么过去的）",
+    "阴性对照：把任一屏的组件换成无样式裸元素，尺子 MUST 报红并点名是哪一屏缺哪一项",
+    "屏数与 web/app/**/page.tsx 的实际屏数对齐，新增屏没声明则判红——NEVER 靠人记"
+   ],
+   "context_refs": [
+    "assets/screen_composition.json",
+    "docs/屏对照表-v041.md"
+   ],
+   "depends_on": [
+    "NAV-05"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "ENV-01",
+   "title": "环境：pytest 不带 PYTHONIOENCODING=utf-8 会有 27 条判据假红",
+   "milestone": "W8",
+   "inputs": [
+    "docs/",
+    "Makefile",
+    "worker.md"
+   ],
+   "outputs": [
+    "docs/",
+    "tools/",
+    "tests/v041/test_encoding_guard.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_encoding_guard.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "第 7 批实测：不带 PYTHONIOENCODING=utf-8 时 27 条走 subprocess 的判据会以 TypeError: NoneType is not iterable 失败（子进程输出 GBK、父进程按 UTF-8 解，stdout 变 None）。不带 35 红 / 带上 8 红，那 8 条才是真的",
+    "**建一条自检**：跑测试时若该环境变量缺失，**立刻用一句人话说明**并指出正确跑法，NEVER 让下一个会话以为自己撞上了 27 条回归然后去修没坏的东西",
+    "写进文档与工单模板的固定纪律段，一处定义他处引用",
+    "阴性对照：清掉该环境变量跑一次，断言拿到的是那句说明而不是一片 TypeError"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH7-COMPLETION.md"
+   ],
+   "depends_on": [
+    "DEC-042-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-08",
+   "title": "收尾：第 8 批完成态报告 + 出口全局门",
+   "milestone": "W8",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b8.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH8-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041 -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "全局门五条全绿并逐字贴出：ruff check . --no-cache · mypy --strict flint · pytest -q · cd web && npm test -- --run · npx tsc --noEmit",
+    "**pytest MUST 零 failed**（第 6/7 批已达成，本批继承）",
+    "出口判据三个：可达性尺子转绿（22 屏全部可达，或不可达的逐条在图里标明理由）· 主链路从顶栏出发真走通一遍并留下逐跳截图 · 解引用在带身份时报告屏仍渲染出事实与价格",
+    "**本批最要紧的一句写进报告**：owner 2026-08-09 亲自点过之后指出前后端没连上，根因是全仓判据全逐屏写、没有一把量路。报告 MUST 说明这条现在由谁守着",
+    "未解决的逐条列名并说明卡在谁那里，NEVER 用一句「其余无异常」收口"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH7-COMPLETION.md"
+   ],
+   "depends_on": [
+    "NAV-05",
+    "FIX-16",
+    "FIX-17",
+    "GAUGE-15",
+    "ENV-01"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

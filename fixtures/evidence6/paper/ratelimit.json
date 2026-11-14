@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.crossref.org/works?query=probe&rows=10",
+  "status_code": 429,
+  "content_type": "text/plain",
+  "body_text": "rate limited: retry later"
+ }
+]

@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.products.example/search?q=low+altitude+economy&status=archived",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"results\": [{\"name\": \"Low Altitude Economy OpenProject\", \"url\": \"https://github.com/legacy/low-altitude-economy\", \"archived\": true, \"last_activity\": \"2023-11-02\", \"description\": \"Abandoned open implementation of low altitude economy\"}]}"
+ }
+]

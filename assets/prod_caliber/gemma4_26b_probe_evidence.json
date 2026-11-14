@@ -1,0 +1,29 @@
+[
+ {
+  "label": "mt16384",
+  "secs": 82.1,
+  "content_len": 0,
+  "content_head": "",
+  "reasoning_len": 26996,
+  "completion_tokens": 16384,
+  "finish": "length"
+ },
+ {
+  "label": "mt30000",
+  "secs": 102.8,
+  "content_len": 223,
+  "content_head": "随着AI需求激增，方言数据稀缺性日益凸显。全球约有7000(Fact-1)种语言面临风险。传统人工标注成本极高，单小时费用达50(PriceCell-1)元，且",
+  "reasoning_len": 31335,
+  "completion_tokens": 20418,
+  "finish": "stop"
+ },
+ {
+  "label": "reasoning_effort_low",
+  "secs": 41.2,
+  "content_len": 0,
+  "content_head": "",
+  "reasoning_len": 15000,
+  "completion_tokens": 8192,
+  "finish": "length"
+ }
+]

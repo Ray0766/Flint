@@ -1,0 +1,571 @@
+{
+ "spec_version": "2.1-vibe-v04",
+ "target": "tasks.json（M1~M4 + FE + TS 基线，232 卡）",
+ "produced_by": "MIGRATE-04",
+ "rule": [
+  "规则一：base 中 review_gate == true 的每一张卡 → set self_review=true，并加 review_gate_deprecated 说明；**原 review_gate 字段原样保留**，NEVER 删。",
+  "规则二：task_id 以 FE- / FE-CORE- / FV- 开头的每一张卡 → set impacted_by_v04=true。",
+  "两条规则纯按 base 判定，可从本说明逐字复现；同时命中的卡合并为一条 patch。"
+ ],
+ "counts": {
+  "review_gate_to_self_review": 77,
+  "impacted_by_v04": 15,
+  "patched_cards": 77
+ },
+ "patches": [
+  {
+   "task_id": "FE-000",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-001",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-002",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-003",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-004",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-001",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-002",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-003",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-004",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-005",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-006",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-007",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FE-CORE-008",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FV-001",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "FV-002",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。",
+    "impacted_by_v04": true
+   }
+  },
+  {
+   "task_id": "M1-007",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-015",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-029",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-032",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-034",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-035",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-037",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-039",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-040",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M1-041",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-003",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-014",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-015",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-023",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-027",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-029",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-032",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-038",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-039",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-040",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-043",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-051",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M2-052",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-003",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-006",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-013",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-016",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-023",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-025",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-028",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-031",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-032",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-037",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-042",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-048",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-051",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-060",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-065",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M3-066",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-007",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-015",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-023",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-029",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-036",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-038",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-040",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-041",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "M4-044",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-001",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-002",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-003",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-004",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-005",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-006",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-007",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-008",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-009",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-010",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-011",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-012",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-013",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  },
+  {
+   "task_id": "TS-014",
+   "set": {
+    "self_review": true,
+    "review_gate_deprecated": "review_gate 保留为历史字段（deprecated）：v04 起该语义由 self_review 自审替代（worker.md §1.4 例外条款）。"
+   }
+  }
+ ]
+}

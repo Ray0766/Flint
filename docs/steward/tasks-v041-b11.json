@@ -1,0 +1,311 @@
+{
+ "spec_version": "v0.4.1-batch9",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward 2026-08-10（第 11 批 v2 · owner 七项核心功能端到端可测批）",
+ "note": "owner 2026-08-10：「希望上线后看到这七项都能正常使用、和前端对接好，在此基础上给优化建议」。steward 逐项实查后重裁本批：**七项里 ④入台 · ⑤AI 设计工作台 两项今天已通**（屏在调真端点），**①搜集 ②广场 已通但有缺口**（ghtrend/arxiv 恒空），**③收藏 ⑥分析 ⑦计划书 三项差一件具体的东西**。本批只治这些缺口，**吸收批（对标 §2 九条）整批推迟**——要严格化的对象今天是空的（claims 0 / cluster_verdicts 0 / deliverables 只有 1 条夹具）。上一版 b11 草案（吸收批）已被本版取代，其内容留在 docs/steward/巡检.jsonl 与对标报告里可随时复原。 owner 2026-08-10 再给两条：①收藏快照走「后端在收藏那一刻自取」（DEC-055）；②CN / HK 两区分家、各自一源（DEC-056）——后者**修订 DEC-045 的「不同地区用不同信息源推迟下一版」**并**触发 DEC-054 自己写下的退出条件**（代理口径撤销、改真区），两件都在裁决文本里明说，NEVER 悄悄发生。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B11-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "network": "真实网络只在 DEC-052 窗口内且只限 CN-07（github.com 与 arxiv.org / export.arxiv.org，每源 ≤10，探测落 fixtures/_probe/）。其余卡一律 NEVER 真实网络。本机 Ollama、本机容器、localhost:3000 与 :8000 不算外网。CI 照旧 NEVER 联网（S2-7）。",
+  "llm_cost": "组稿与判定一律走**免费本地档**（LocalProvider → 本机 Ollama），**NEVER 读任何 API key、NEVER 调付费接口**（付费开通是 owner 人审节点 S2-10）。",
+  "new_dependency": "NEVER 新增依赖。需要新依赖 → 停下开单报 owner（S2-6）。",
+  "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8。",
+  "stale_process": "打真栈之前 MUST 先核 :8000 的 PID 与启动时间。",
+  "stale_premise": "本批有两处已知的**过期前提**（demo「无 report worker」、设计工作台「那一屏是写死的」）。遇到任何写着「因为 X 所以不做」的注释，MUST 先核 X 今天还成不成立，NEVER 照着它继续不做。",
+  "migrations": "本批默认无迁移卡。确需迁移 → 接盘上当时最高的那一号（当前 0027），NEVER 跳号也 NEVER 撞号。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "DEC-055-056-LANDING",
+   "title": "裁决落地：DEC-055（收藏快照后端自取）+ DEC-056（CN / HK 两区分家）",
+   "milestone": "W11",
+   "inputs": [
+    "DECISIONS-v04.md",
+    "docs/steward/起跑令-v041-第11批-2026-08-10.md"
+   ],
+   "outputs": [
+    "DECISIONS-v04.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_decisions_landed.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "两条原文（owner 粘贴的那两段）**一字不改**追加进 DECISIONS-v04.md；既有字节逐字节不动，水位 054→056",
+    "判据扩：水位断言 056 · DEC 编号全序无洞 · **DEC-056 里「修订 DEC-045」与「触发 DEC-054 退出条件」两句的存在性各断言一次**——一次对既有裁决的回改 NEVER 只体现在新条目里，读 DEC-045 的人要能顺着找到它被改了",
+    "既有 DEC-045 与 DEC-054 的行**一字不动**（append-only），修订关系只由 DEC-056 单向声明",
+    "先红后绿"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "COMPOSE-01",
+   "title": "⑦计划书：demo 挂上 compose 提交端点——「不挂」的理由已经过期",
+   "milestone": "W11",
+   "inputs": [
+    "harness/demo_server.py",
+    "harness/run_worker.py",
+    "flint/jobs/worker_main.py",
+    "flint/api/compose.py"
+   ],
+   "outputs": [
+    "harness/",
+    "tests/v041/test_compose_e2e.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_compose_e2e.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 2026-08-10 实查）：`harness/demo_server.py:13` 写着「report/proposal 提交端点**刻意不挂**：demo 无 report worker」——**那个前提今天是假的**：`harness/run_worker.py` 存在且 `start-demo.ps1` §3b 每次都起它，`flint/jobs/worker_main.py:135` 用 `build_production_compose_deps` 绑的是**真 LLM 生成器**（LocalProvider→本机 Ollama，零 key 零付费）",
+    "把 compose 提交端点挂进 demo；`flint.api.pack` 的路由冲突照旧规避（它与 deliverables 都定义 `GET /deliverables/{id}/render`，`_Assembler` 会当场 raise）",
+    "**那句过期注释 MUST 改成实况**，并写清「谁在消费 report 作业」——一句变假的注释比没有注释坏（第 10 批 WIRE-VERDICT 同形状）",
+    "端到端判据：提交一份报告 → 作业进队列 → worker 消费 → `deliverables` 里出现一条**新的**（`deliverable_id` NEVER 是 `del-demo-fixture-report`）→ 报告屏渲染它",
+    "正文 NEVER 是占位：判据断言生成的 block 里 `content` 不等于 `section_id` 字面量（`_default_generator` 那个离线桩的形状），且至少一节含真实句子",
+    "provider 缺失时照旧显式抛 `ComposeProviderMissing`，NEVER 静默回落到占位生成器（`compose_deps.py` 文件头那条纪律不动）",
+    "本卡 NEVER 改 `flint/jobs/compose.py` 的 `_default_generator`——它是离线确定性判据的桩，删它会连累 CI"
+   ],
+   "context_refs": [
+    "harness/demo_server.py",
+    "flint/jobs/compose_deps.py"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "VERDICT-01",
+   "title": "⑥热点分析：判定要真的落库（`cluster_verdicts` 今天 0 行）",
+   "milestone": "W11",
+   "inputs": [
+    "flint/jobs/gate1.py",
+    "flint/jobs/cluster_verdict.py",
+    "flint/api/analysis.py"
+   ],
+   "outputs": [
+    "flint/",
+    "tests/v041/test_verdict_lands.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_verdict_lands.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 实查）：`jobs` 表里 `gate1_analysis` **已 done 8 条**，而 `cluster_verdicts` **0 行**。读码见 `flint/jobs/gate1.py:760`：只有 `topic_id is not None` 才写，且注释自述「非 combo / 卡查不回簇 → 空集 → 一行都不写」——**那条路今天没有被真走过**",
+    "先查清是哪一种：①那 8 条的 payload 本来就没有 `topic_id`（则要打通「从广场发起分析」这条路让它带上）；②带了但 `clusters_for_topic` 回空（则是关系没建）。**结论写进 trace，NEVER 直接改代码去凑**",
+    "端到端判据：从广场选热点 → 建组合 → 发起分析 → 作业 done 之后 `cluster_verdicts` **多出至少一行**，且 `GET /clusters/{id}/verdict` 取得回来、分析屏显示的是判定而不是「还没有判定」",
+    "判定四分类与引用照旧走既有引擎（`flint/gate/`），本卡 NEVER 改判定逻辑——只治「判了却没落库」",
+    "阴性对照：不带 `topic_id` 的分析 → 判据 MUST 断言一行都不写**且**屏上说得出为什么（NEVER 与「还没有判定」共用同一句话）"
+   ],
+   "context_refs": [
+    "docs/trace/PERSIST-04.md",
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "FAV-SNAPSHOT",
+   "title": "③收藏：快照由后端自取（今天从广场收的每一条屏上都说「内容不在了」）",
+   "milestone": "W11",
+   "inputs": [
+    "flint/api/favorites.py",
+    "flint/fav/",
+    "web/components/plaza/cardActions.ts"
+   ],
+   "outputs": [
+    "flint/",
+    "web/",
+    "tests/v041/test_fav_snapshot.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_fav_snapshot.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况：`POST /favorites` 的 `evidence_snapshot` 必填而广场送 `{}`，于是 `FavoritesLibrary` 按 `hasSnapshot:false` 渲染「内容不在了」——**那句是实话，而真相是没有人往里面放东西**",
+    "按 DEC-055：`evidence_snapshot` 改可选，前端只发 `target_kind`/`target_id`，后端自取当刻证据卡组内嵌快照",
+    "冻结件 `Favorite` 的「内嵌不引用」语义**一字不动**——改的是谁来放，不是放什么",
+    "取不到证据卡时 NEVER 存空快照冒充成功：照实失败且屏上说清是取证失败，**NEVER 与「内容已被清理」共用同一句话**",
+    "判据两向各断言一次：从广场收 → 快照非空且来自后端；取不到 → 收藏失败且理由可读。前端 NEVER 自己拼快照那条禁令照旧钉着"
+   ],
+   "context_refs": [
+    "docs/blocked/FAV-SNAPSHOT-HAS-NO-PROVIDER.md",
+    "contracts_v04/models_v04.py"
+   ],
+   "depends_on": [
+    "DEC-055-056-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CN-07",
+   "title": "①热点搜集：ghtrend / arxiv 查询窗口写错，两源结构上恒回 0 条而回执记成 ok",
+   "milestone": "W11",
+   "inputs": [
+    "flint/sources/ghtrend.py",
+    "flint/sources/arxiv.py",
+    "docs/cn-01-real-ingest-receipt.json"
+   ],
+   "outputs": [
+    "flint/sources/",
+    "fixtures/",
+    "tests/v041/test_cn07_source_windows.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_cn07_source_windows.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 实查回执与真响应）：ghtrend 打 `q=created:>2026-08-10` → `total_count:0`——**查的是「创建晚于今天」的仓，结构上恒 0**；arxiv 打同日窗口而录制在当日 03:38 UTC → 空 feed。两条都不是「今天恰好没有」",
+    "改窗口：两源各改成当天真能取到东西的口径，N 与理由写进文件头。**NEVER 再用「今天」这种当天必空的窗口**",
+    "**「跑成了」与「拿到了」分开**：成功往返但 0 条目 MUST 落 DegradationNote，回执 NEVER 只写 `ok`——今天 `degradation_notes` 当日 0 行而库里只有 weibo/gtrends，盘上看不出这两源是空的",
+    "**CN-05 的契约判据回填**：那条是拿 0 条目响应过的，回放空 feed 只证明解析器不崩。本卡 MUST 用**真的有条目**的响应重录夹具并断言解析出 ≥1 条",
+    "真实请求走 DEC-052 窗口（github.com 与 arxiv.org / export.arxiv.org，每源 ≤10，探测落 `fixtures/_probe/`）",
+    "阴性对照：窗口改回「今天」→ 判据 MUST 红且点名是哪一源恒空"
+   ],
+   "context_refs": [
+    "docs/cn-01-real-ingest-receipt.json",
+    "docs/trace/CN-05.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "REGION-CN-HK",
+   "title": "①②地区分家：CN 只放微博、HK 只放 Google 趋势，两区都可切（DEC-056）",
+   "milestone": "W11",
+   "inputs": [
+    "flint/sources/gtrends.py",
+    "flint/region/",
+    "flint/api/views.py",
+    "web/app/plaza/page.tsx",
+    "web/components/plaza/",
+    "docs/trace/CN-02.md",
+    "docs/trace/CN-04.md"
+   ],
+   "outputs": [
+    "flint/",
+    "web/",
+    "migrations/versions/",
+    "tests/v041/test_region_cn_hk.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_region_cn_hk.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "按 DEC-056：`gtrends` 采集的 `EMIT_REGION` 从 `CN` 改成 `HK`（`FETCH_GEO` 本来就是 HK——CN-04 把这两个常量**刻意分开**正是为了今天这一改，改一个常量即可，NEVER 把它们合起来）",
+    "两区都进「本版有内容」的范围：CN = 微博，HK = Google 趋势。**其余七区照旧明说「本版暂无该区内容」**——`CN-02` 那三句不同的空态（本版暂无该区内容 / 该区当日无数据 / 读失败）一条都 NEVER 合并",
+    "广场默认区仍是 CN（`DEC-045` 的这一半未被修订）；地区下拉切到 HK MUST 看得到 Google 趋势的条目，切回 CN MUST 看得到微博的条目；URL 的 `?region=` 照旧是当前区的真相（`REGION-10`）",
+    "**历史数据回填**：库里既有的 gtrends 行今天标着 `region='CN'`，而它们的 provenance manifest 记的是真实的 `geo=HK` URL——**回填是把标签改回与出处一致，不是改写事实**，这句 MUST 写进迁移注释；回填只按 `source_id='gtrends'` 定位，NEVER 按词面猜哪几条是港区的",
+    "三者 MUST 一致且各有判据：**provenance 里的真实 URL（geo=HK）· 库里的 region · 屏上的署名**。署名照旧由 `sourceName` 机制给（`FIX-17`），NEVER 在前端另写一份",
+    "**owner 要知道的后果 MUST 在 trace 写明并在完成态报告里点出**：CN 区卡片数会从今天的 60 掉到 50（10 条港区条目移去 HK 区）——这不是数据丢了，是分家的必然结果",
+    "阴性对照两条：①把 `EMIT_REGION` 改回 CN → 判据 MUST 红且点名两区混了；②让某一区的空态用错句子（拿「该区当日无数据」冒充「本版暂无该区内容」）→ 判据 MUST 红",
+    "本卡 NEVER 动 `DEC-045` 与 `DEC-054` 的既有 DEC 行（append-only），也 NEVER 顺手把其余七区打开——那是下一版的事"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md",
+    "docs/trace/CN-02.md",
+    "docs/trace/CN-04.md"
+   ],
+   "depends_on": [
+    "DEC-055-056-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SMOKE-01",
+   "title": "七项核心功能逐项冒烟 + 给 owner 的一页《怎么测》",
+   "milestone": "W11",
+   "inputs": [
+    "harness/e2e_smoke.py",
+    "docs/屏对照表-v041.md"
+   ],
+   "outputs": [
+    "harness/",
+    "docs/怎么测-v041.md",
+    "tests/v041/test_smoke_seven.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_smoke_seven.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "对 owner 点名的七项各写一条**端到端冒烟**：①热点搜集 ②广场与卡片 ③收藏 ④入台 ⑤AI 设计工作台 ⑥热点分析 ⑦本地模型生成计划书",
+    "每条冒烟 MUST 打**真栈**（:8000/:3000）并留一张截图；**NEVER 用 mock 冒充**——冒烟的全部意义是证明真的能用",
+    "①那一条冒烟 MUST 覆盖**两个区各一次**：CN 看得到微博条目、HK 看得到 Google 趋势条目，切换后 URL 与屏上内容一致（DEC-056）",
+    "产出 `docs/怎么测-v041.md`：逐项写三件——**点哪里**（具体 URL 与按钮）· **该看到什么**（具体到词面或状态）· **看不到时是谁的问题**（哪个端点/哪张表/哪个进程）。owner 拿它对着产品逐条走",
+    "**七项里跑不通的照实标红并点名卡号**，NEVER 用「大体可用」这种话盖过去；每一条红都要说清是缺数据、缺接线还是缺功能",
+    "⑤AI 设计工作台今天屏在调真端点（`submitDesign`/`fetchDesignReplay`/`probeRegistry`/`solidifyTemplate`）但**从没被真跑验证过**——本卡是它第一次实跑，产出什么如实记录",
+    "阴性对照：把任一端点停掉 → 对应那条冒烟 MUST 红且点名是哪一项"
+   ],
+   "context_refs": [
+    "docs/屏对照表-v041.md"
+   ],
+   "depends_on": [
+    "COMPOSE-01",
+    "VERDICT-01",
+    "FAV-SNAPSHOT",
+    "CN-07",
+    "REGION-CN-HK"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-11",
+   "title": "本批收尾：完成态报告 + 五条门 + 七项功能的可测状态表",
+   "milestone": "W11",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b11.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH11-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_ledger_pairing_v041.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "五条全局门逐字贴出；pytest 的红**逐条点名归属**，NEVER 按族小结",
+    "顺序写死：先写 trace 与台账 → 再跑五条门 → 最后只改完成态报告的数字；台账落行后单独重跑它的读者判据",
+    "blocked 也要有 started；每张卡的 started 与终态成对",
+    "报告首节 = **七项功能可测状态表**（逐项：能不能用 / 怎么测 / 不能用时缺什么），与 `docs/怎么测-v041.md` 同源，NEVER 两处各写一份",
+    "**吸收批那 9 条（对标审阅 §2）本批不做**——推迟理由与重启条件写进报告：要严格化的对象（判定、引用）在本批之前基本是空的，本批跑通之后它们才有检得到的东西"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH10-COMPLETION.md",
+    "docs/research/对标审阅-2026-08.md"
+   ],
+   "depends_on": [
+    "SMOKE-01"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+[
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-173\",\"object\":\"chat.completion\",\"created\":1785446877,\"model\":\"qwen3.6:27b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校科研团队的‘钙钛矿组件’文献情报与‘高考录取结果’式数据可视化复用工作台，将教育领域的结构化数据呈现逻辑迁移至材料科学热点追踪场景\\\",\\n  \\\"target_user_tag\\\": \\\"高校材料学院科研助理/研究生\\\",\\n  \\\"form_factor_tag\\\": \\\"SaaS\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"钙钛矿技术进入产业化关键期，信息过载严重，而成熟的教育数据可视化范式可低成本迁移以解决科研情报的呈现痛点\\\",\\n    \\\"evidences\\\": []\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"分数线查询\\\",\\n      \\\"位次排名\\\",\\n      \\\"院校专业组\\\",\\n      \\\"平行志愿模拟\\\",\\n      \\\"数据可视化大屏\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"Perovskite solar cells\\\",\\n      \\\"光电转换效率PCE\\\",\\n      \\\"稳定性测试\\\",\\n      \\\"大面积制备\\\",\\n      \\\"材料基因组\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":734,\"completion_tokens\":235,\"total_tokens\":969}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-479\",\"object\":\"chat.completion\",\"created\":1785446880,\"model\":\"qwen3.6:27b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校招生办与新能源企业的‘双轨决策工作台’：复用高考录取的大规模多约束匹配算法优化钙钛矿组件供应链排产，实现复杂资源调度的一站式可视化配置\\\",\\n  \\\"target_user_tag\\\": \\\"高校信息化部门及新能源制造企业运营总监\\\",\\n  \\\"form_factor_tag\\\": \\\"SaaS\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"高考录取季产生的海量数据匹配需求与钙钛矿产业化初期的供应链波动形成共振，为跨领域算法迁移提供低成本验证场景\\\",\\n    \\\"evidences\\\": []\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"平行志愿投档算法\\\",\\n      \\\"多约束资源匹配\\\",\\n      \\\"大规模并发数据处理\\\",\\n      \\\"招生决策支持系统\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光伏供应链排产优化\\\",\\n      \\\"材料稳定性预测模型\\\",\\n      \\\"柔性制造调度\\\",\\n      \\\"新能源产能规划\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":734,\"completion_tokens\":229,\"total_tokens\":963}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-272\",\"object\":\"chat.completion\",\"created\":1785446883,\"model\":\"qwen3.6:27b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校科研团队的‘学术-招生’双轨数据工作台，将钙钛矿组件性能监测的时序分析逻辑迁移至高考录取结果的趋势预测与志愿模拟中\\\",\\n  \\\"target_user_tag\\\": \\\"高校辅导员及教育数据分析研究员\\\",\\n  \\\"form_factor_tag\\\": \\\"SaaS\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"当前缺乏跨领域数据方法论复用的工具，且高考决策对精细化趋势分析的需求激增\\\",\\n    \\\"evidences\\\": []\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"历年分数线预测\\\",\\n      \\\"位次换算模型\\\",\\n      \\\"志愿填报模拟\\\",\\n      \\\"高校投档规律\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光电转换效率衰减曲线\\\",\\n      \\\"稳定性测试数据\\\",\\n      \\\"材料老化分析\\\",\\n      \\\"时序异常检测\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":734,\"completion_tokens\":209,\"total_tokens\":943}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-875\",\"object\":\"chat.completion\",\"created\":1785446886,\"model\":\"qwen3.6:27b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校科研团队的‘钙钛矿组件’专利与论文情报自动化工作台，复用高考录取结果查询中的高并发实时数据聚合与可视化技术，实现科研热点的即时监控与竞品分析\\\",\\n  \\\"target_user_tag\\\": \\\"高校材料科学研究员/实验室管理员\\\",\\n  \\\"form_factor_tag\\\": \\\"SaaS\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"钙钛矿技术商业化加速导致情报需求激增，而成熟的高并发数据查询架构可被迁移以解决科研数据实时性痛点\\\",\\n    \\\"evidences\\\": []\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"高并发数据查询\\\",\\n      \\\"实时状态追踪\\\",\\n      \\\"多源数据聚合\\\",\\n      \\\"用户端可视化看板\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"Perovskite solar cells\\\",\\n      \\\"光伏材料专利监控\\\",\\n      \\\"科研文献自动化抓取\\\",\\n      \\\"技术成熟度评估\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":734,\"completion_tokens\":232,\"total_tokens\":966}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-168\",\"object\":\"chat.completion\",\"created\":1785446890,\"model\":\"qwen3.6:27b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校科研团队的‘钙钛矿组件研发数据合规与成果归档’工作台，将高考录取结果查询中的高并发身份核验与结构化数据快照技术迁移至实验室设备日志管理，实现研发过程的可追溯与自动化报告生成。\\\",\\n  \\\"target_user_tag\\\": \\\"高校新能源材料实验室PI及科研助理\\\",\\n  \\\"form_factor_tag\\\": \\\"SaaS工作台\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"钙钛矿电池产业化加速导致实验数据量激增，而现有科研管理系统缺乏针对高频设备日志的结构化归档能力，亟需引入成熟的高并发数据处理范式。\\\",\\n    \\\"evidences\\\": []\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"高并发身份验证\\\",\\n      \\\"结构化数据快照\\\",\\n      \\\"批量查询优化\\\",\\n      \\\"防篡改记录\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光伏材料研发日志\\\",\\n      \\\"实验室设备IoT数据\\\",\\n      \\\"材料合成参数追踪\\\",\\n      \\\"科研数据合规归档\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":734,\"completion_tokens\":246,\"total_tokens\":980}}\n"
+ }
+]

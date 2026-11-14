@@ -1,0 +1,47 @@
+[project]
+name = "flint"
+version = "0.1.0"
+description = "燧石 Flint — 热点分析与项目计划书引擎（M1 数据与索引层）"
+requires-python = ">=3.11"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+# ML 栈（torch/numpy/sentence-transformers/sklearn）类型桩面向 py3.12+ 语法，
+# 与本项目钉死的 3.11 语义冲突；域代码不消费其类型面（统一走注入后端协议），
+# 故跳过跟进不降低冻结件与业务代码的 strict 强度。
+[[tool.mypy.overrides]]
+module = [
+    "sentence_transformers.*",
+    "numpy.*",
+    "torch.*",
+    "sklearn.*",
+]
+follow_imports = "skip"
+follow_imports_for_stubs = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+# 冻结件 NEVER 修改（S2-1）：import 排版类规则对其豁免，语义类规则仍然生效。
+[tool.ruff.lint.per-file-ignores]
+"contracts/*" = ["I"]
+"flint/domain/*" = ["I"]
+# v04 工作副本逐字继承冻结件的 import 排版：给它排序就等于让副本与冻结件产生差异，
+# 而「与冻结件逐字对齐」正是 tools/check_frozen_additive.py 要守的东西（DEC-004）。
+"contracts_v04/*" = ["I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# 同名测试文件（tests/v04/i18n/test_translator.py 与 tests/v041/test_translator.py）
+# 在默认 prepend 模式下会撞 "import file mismatch"：两个目录都不是包，
+# 模块名只由 basename 决定。importlib 模式按路径导入，不靠 sys.path 与 basename。
+# 换名字也能绕开，但那要改卡上写死的 verify_cmd，且下一个同名文件会再撞一次。
+addopts = "--import-mode=importlib"
+markers = [
+    "compose: 需要 docker compose 栈在线的集成冒烟用例（CI 第 4 阶段单独执行）",
+]

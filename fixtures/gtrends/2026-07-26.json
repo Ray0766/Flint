@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://trends.google.com/trending/rss?geo=HK",
+  "status_code": 429,
+  "content_type": "text/plain",
+  "body_text": "rate limited: retry after 300 seconds"
+ }
+]

@@ -1,0 +1,233 @@
+[
+ {
+  "item_key": "golddoc-generic-plain/summary/generic/summary/q3",
+  "question_id": "generic/summary/q3",
+  "composition_id": "golddoc-generic-plain",
+  "section_id": "summary",
+  "question": "本节把哪些条件列为结论成立的前提？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-generic-plain/market/generic/market/q2",
+  "question_id": "generic/market/q2",
+  "composition_id": "golddoc-generic-plain",
+  "section_id": "market",
+  "question": "按本节，初期可实际触达的部分与总体市场如何区分？",
+  "deepseek": false,
+  "claude": true,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-generic-plain/budget/generic/budget/q2",
+  "question_id": "generic/budget/q2",
+  "composition_id": "golddoc-generic-plain",
+  "section_id": "budget",
+  "question": "按本节，支出在时间上如何分布或发生在哪个阶段？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-generic-channels/budget/generic/budget/q2",
+  "question_id": "generic/budget/q2",
+  "composition_id": "golddoc-generic-channels",
+  "section_id": "budget",
+  "question": "按本节，支出在时间上如何分布或发生在哪个阶段？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-generic-channels/risks/generic/risks/q3",
+  "question_id": "generic/risks/q3",
+  "composition_id": "golddoc-generic-channels",
+  "section_id": "risks",
+  "question": "本节提到缓解措施本身要付出什么代价？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-thesis-plain/related_work/thesis/related_work/q1",
+  "question_id": "thesis/related_work/q1",
+  "composition_id": "golddoc-thesis-plain",
+  "section_id": "related_work",
+  "question": "本节把已有工作分成哪几类？",
+  "deepseek": false,
+  "claude": true,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-thesis-plain/evaluation_plan/thesis/evaluation_plan/q2",
+  "question_id": "thesis/evaluation_plan/q2",
+  "composition_id": "golddoc-thesis-plain",
+  "section_id": "evaluation_plan",
+  "question": "本节设置了哪些对照、消融或参照？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-thesis-plain/timeline/thesis/timeline/q1",
+  "question_id": "thesis/timeline/q1",
+  "composition_id": "golddoc-thesis-plain",
+  "section_id": "timeline",
+  "question": "各阶段的产出物在本节分别是什么？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-thesis-plain/timeline/thesis/timeline/q3",
+  "question_id": "thesis/timeline/q3",
+  "composition_id": "golddoc-thesis-plain",
+  "section_id": "timeline",
+  "question": "本节把哪个环节标为最可能延期？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-thesis-plain/resources/thesis/resources/q1",
+  "question_id": "thesis/resources/q1",
+  "composition_id": "golddoc-thesis-plain",
+  "section_id": "resources",
+  "question": "本节各项资源分别用于哪个阶段？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-thesis-channels/related_work/thesis/related_work/q3",
+  "question_id": "thesis/related_work/q3",
+  "composition_id": "golddoc-thesis-channels",
+  "section_id": "related_work",
+  "question": "本工作与最接近的一条已有工作分界在哪里？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-thesis-channels/method/thesis/method/q1",
+  "question_id": "thesis/method/q1",
+  "composition_id": "golddoc-thesis-channels",
+  "section_id": "method",
+  "question": "本节列出方法成立所依赖的假设有哪些？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-thesis-channels/method/thesis/method/q2",
+  "question_id": "thesis/method/q2",
+  "composition_id": "golddoc-thesis-channels",
+  "section_id": "method",
+  "question": "本节关键步骤的输入与输出分别是什么？",
+  "deepseek": false,
+  "claude": true,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-thesis-channels/evaluation_plan/thesis/evaluation_plan/q3",
+  "question_id": "thesis/evaluation_plan/q3",
+  "composition_id": "golddoc-thesis-channels",
+  "section_id": "evaluation_plan",
+  "question": "多个指标冲突时本节给的取舍原则是什么？",
+  "deepseek": false,
+  "claude": true,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-thesis-channels/timeline/thesis/timeline/q1",
+  "question_id": "thesis/timeline/q1",
+  "composition_id": "golddoc-thesis-channels",
+  "section_id": "timeline",
+  "question": "各阶段的产出物在本节分别是什么？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-thesis-channels/resources/thesis/resources/q1",
+  "question_id": "thesis/resources/q1",
+  "composition_id": "golddoc-thesis-channels",
+  "section_id": "resources",
+  "question": "本节各项资源分别用于哪个阶段？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-startup-plain/market_size/startup/market_size/q1",
+  "question_id": "startup/market_size/q1",
+  "composition_id": "golddoc-startup-plain",
+  "section_id": "market_size",
+  "question": "本节把市场口径的边界划在哪里？",
+  "deepseek": false,
+  "claude": true,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": false
+ },
+ {
+  "item_key": "golddoc-startup-plain/financials/startup/financials/q2",
+  "question_id": "startup/financials/q2",
+  "composition_id": "golddoc-startup-plain",
+  "section_id": "financials",
+  "question": "按本节，这笔资金可支撑多长时间？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-startup-channels/market_size/startup/market_size/q1",
+  "question_id": "startup/market_size/q1",
+  "composition_id": "golddoc-startup-channels",
+  "section_id": "market_size",
+  "question": "本节把市场口径的边界划在哪里？",
+  "deepseek": false,
+  "claude": true,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-startup-channels/go_to_market/startup/go_to_market/q1",
+  "question_id": "startup/go_to_market/q1",
+  "composition_id": "golddoc-startup-channels",
+  "section_id": "go_to_market",
+  "question": "本节对获客成本或获客效率的预期是多少？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": true,
+  "recheck_sides_with_deepseek": true
+ },
+ {
+  "item_key": "golddoc-startup-channels/business_model/startup/business_model/q3",
+  "question_id": "startup/business_model/q3",
+  "composition_id": "golddoc-startup-channels",
+  "section_id": "business_model",
+  "question": "本节列出的主要成本项是什么，随规模如何变化？",
+  "deepseek": true,
+  "claude": false,
+  "claude_recheck": false,
+  "recheck_sides_with_deepseek": false
+ }
+]

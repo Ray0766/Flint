@@ -1,0 +1,133 @@
+{
+ "model": "deepseek-r1:32b",
+ "card_ids": [
+  "card-20260629-c-20260629-000",
+  "card-20260629-c-20260629-001"
+ ],
+ "hypothesis": "把两个不同热点的方法迁移到同一落地场景，做一个可复用工作台",
+ "delta": 0.9673769886622022,
+ "degraded": true,
+ "dropped_conflicts": [
+  [
+   "topic-caliber-1",
+   "topic-caliber-3"
+  ]
+ ],
+ "regen_rounds": 3,
+ "generations": 5,
+ "topics": [
+  {
+   "topic_id": "topic-caliber-1",
+   "one_liner": "多领域数据处理工作台：整合高考录取结果与钙钛矿组件分析工具",
+   "target_user_tag": "教育机构/高校招生办/新能源企业",
+   "form_factor_tag": "SaaS平台",
+   "why_now_claim": "结合高考录取结果和钙钛矿组件的热度，提供一站式数据处理解决方案",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "高校招生",
+     "学生信息管理"
+    ],
+    "钙钛矿组件": [
+     "新能源材料",
+     "光伏技术"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-2",
+   "one_liner": "跨领域数据整合工作台：高考录取结果与钙钛矿组件信息管理工具",
+   "target_user_tag": "教育机构/新能源企业",
+   "form_factor_tag": "插件",
+   "why_now_claim": "2026年6月29日是高考录取结果和钙钛矿组件相关事件的关键节点，适合推出跨领域数据整合工具。",
+   "why_now_evidences": [],
+   "speculative": true,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "教育数据",
+     "录取分析"
+    ],
+    "钙钛矿组件": [
+     "新能源材料",
+     "光伏技术"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-4",
+   "one_liner": "多领域信息聚合与分析工作台",
+   "target_user_tag": "教育/科研机构",
+   "form_factor_tag": "SaaS",
+   "why_now_claim": "高考录取结果公布和钙钛矿组件相关话题热度上升，为推出多领域信息工作台提供了时机。",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果公布",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "高考查询",
+     "录取数据分析"
+    ],
+    "钙钛矿组件": [
+     "新能源材料",
+     "光伏技术"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-5",
+   "one_liner": "开发一个可复用工作台，整合高考录取结果查询与钙钛矿组件数据分析功能",
+   "target_user_tag": "教育机构, 新能源企业",
+   "form_factor_tag": "插件",
+   "why_now_claim": "高考录取结果公布和钙钛矿组件热度提升为工具开发提供了契机",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "高考查询",
+     "录取状态"
+    ],
+    "钙钛矿组件": [
+     "钙钛矿太阳能电池",
+     "新能源材料"
+    ]
+   }
+  }
+ ],
+ "cost_usd": 0.0,
+ "schema_misses": 0,
+ "pipeline": "batch",
+ "prompt_name": "topic_gen@2"
+}

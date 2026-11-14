@@ -1,0 +1,131 @@
+{
+ "spec_version": "v0.4.1-batch9",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward 2026-08-12（第 16 批 · 停机前收尾）",
+ "note": "owner 2026-08-12 暂停项目约一周。本批只做两件**停机前值得做完**的事：① `COMBO-WIRE-01`——owner 在工作台屏上撞到的那处 503，缝是留好的、只是没插上，修完他回来时从广场一路点到计划书是通的；② `TAIL-01`——steward 已答复、只等落地的四张单，放着会在一周后变成「这是什么」。**NEVER 在本批开新战线**：还剩 23 张 open 单，那是回来之后的事。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B16-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "no_new_fronts": "**本批 NEVER 开新战线**：只做这三张卡。碰到别的问题一律开单，NEVER 顺手修——owner 要停一周，盘上留一个半成品比留一个已知问题坏得多。",
+  "single_color_source": "颜色唯一来源是 _ds/tokens/colors.css。TAIL-01 搬的是位置不是值——搬前搬后 computed color 逐个相等，NEVER 借搬家顺手调色。",
+  "positive_criteria": "判据一律正向、带实测数值，且要覆盖「显示的是不是对的东西」；视觉判据打真浏览器真栈，NEVER 用组件快照冒充整屏。",
+  "llm_cost": "一律免费本地档（LocalProvider → 本机 Ollama），NEVER 读任何 API key、NEVER 调付费接口。",
+  "network": "本批 NEVER 真实网络。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。",
+  "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8；**NEVER 同时跑两个 pytest**（共用 flint_test 会互相清空，假红长得和真红一模一样）。",
+  "stale_process": "打真栈之前 MUST 先核 :3000 与 :8000 的 PID 与启动时间。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "COMBO-WIRE-01",
+   "title": "把 combo 的 provider 插上——owner 在屏上撞到了，现在点不动",
+   "milestone": "W16",
+   "inputs": [
+    "harness/demo_server.py",
+    "flint/api/app.py",
+    "start-demo.ps1"
+   ],
+   "outputs": [
+    "harness/",
+    "flint/api/app.py",
+    "start-demo.ps1",
+    "tests/v041/test_combo_wire.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_combo_wire.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 实查，三处都定位到行）：`harness/demo_server.py:265` 是 `create_app(DSN, redis_url=REDIS_URL)`，**没传 `combo_provider` / `combo_model`**；而 `flint/api/app.py:459` 的签名有这两个参数、`:568` 是 `provider=combo_provider or _UnconfiguredProvider(\"combo\")`；demo_server 自己 `:281-282` 的注释就写着「demo 想让它真跑，把 provider 从 `create_app(combo_provider=...)` 注进去」。`LocalProvider` 在这个文件里已经造过两次（`:132` / `:159`）——**这是「留了缝、没插上」，NEVER 当成缺功能去新建什么**",
+    "把已造好的 `LocalProvider` 注进去；模型口径与组稿那一族**同一套**（同一实例或同一组参数，NEVER 各造一份——两份会让「combo 用的哪个模型」有两个答案）；一律免费本地档，NEVER 读任何 API key",
+    "**`flint/api/app.py:424` 那句消息是通用类硬套了一个具体原因**：`f\"{family} 这一族还没有后端（迁移里没有对应的表），本端点未配置。\"`——**对 combo 是假的**（表全在，缺的是模型），而 owner 屏上看到的就是这句。改成不猜原因的说法，或让构造方传入真实原因。**NEVER 把「没配」和「表不存在」写成同一句话**：两者该让人做的事完全不同",
+    "`start-demo.ps1:179` 打印的「combo 走免费本地」今天是过期的——本卡修好之后它才变成真话，**核一遍**，NEVER 留一句碰巧变真而没人验过的话",
+    "**端到端正向判据（这是 owner 撞到的那条路，MUST 走一遍留图）**：广场选 3 张热点 → 工作台左栏出现在「本次组合」→ 中栏输一句假设 → 按「按你选的卡建项」→ **不再 503**，回 `{project_id, topic_ids}` → 右栏能生成出真 Block。逐屏截图落 `.ui-probe/`",
+    "阴性对照：真去掉某一族的 provider → 仍然 503 且**说得出是哪一族没配**（那条缝的价值就在这里，NEVER 拆掉它）",
+    "断言 combo 与组稿读的是同一套模型参数（一处定义他处引用）",
+    "**这一改只动 `harness/` 与那句消息文本，`web/` 下零字节改动**——判据数一遍"
+   ],
+   "context_refs": [
+    "docs/blocked/COMBO-FAMILY-HAS-NO-PROVIDER-ANYWHERE.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "TAIL-01",
+   "title": "清掉 steward 已答复的四张单（改名 / 关单 / 搬色号 / 认措辞）",
+   "milestone": "W16",
+   "inputs": [
+    "docs/blocked/",
+    "web/public/_ds/"
+   ],
+   "outputs": [
+    "web/public/_ds/",
+    "web/app/globals.css",
+    "docs/blocked/",
+    "tests/v041/test_tail_01.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_tail_01.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "**① `--warn` 改名为 `--ochre`（赭），值 `#a3701c` 一个字不动**，注释写明「v4 --warn」；`--ochre-soft` 照 `--rust-soft` 那条路合成（v4 的 rgba 合到同主题 `--paper`）。理由：仓里命名法是**材料名**（paper / ink / rule / indigo / sulfur / rust / moss），而 `DEC-060` 把 `--warn` 逐字列进「NEVER 引进本仓」的 v4 记法",
+    "**用途边界要写死并各配一条判据，NEVER 只落一个色号**：`#a3701c` 明色实测 **4.01**——**够图形对比（3:1）不够正文（4.5）**。所以：只许用于图形 / 边框 / 图标 / 状态点；**NEVER 用作正文或链接文字**。阴性对照：把它挂到一段正文上 → 判据 MUST 红并报出实测比值",
+    "**② `PLAZA-UPPER-BOUND-CONTRADICTS-ENTRY-04` 按新规矩关**，关闭那一节写明「**卡面 acceptance⑤ 错、既有纪律对**」——2~5 数的是证据卡而广场选的是热点，`test_plaza_multiselect_combo.py` 那条判据**一个字不动**；广场三态提示只说下限与「关联假设必填」，**NEVER 说上限**",
+    "**③ 药丸条与吉祥物那 26 行写死色号搬进 `_ds/tokens/colors.css`**（`globals.css:1414-1428` 的 `--nav-surface` / `--nav-border` / `--nav-shadow` / `--nav-ink` / `--nav-hover-bg`），明暗各一套、命名照材料名法，`globals.css` 只留 `var()` 引用。**搬的是位置不是值**——判据断言搬前搬后药丸条与吉祥物在两主题下的 computed color **逐个相等**，NEVER 借这次搬家顺手调色（调色是另一件事，要单独看屏定）",
+    "再加一条全仓判据：`web/` 下除 `_ds/tokens/` 之外 NEVER 出现新的颜色字面量",
+    "**④ `DEC-060-TEXT-IS-STEWARD-AUTHORED-OPTIONS` 关掉**——steward 认下措辞（`DECISIONS` 是 append-only，NEVER 重写既有条目）",
+    "四张单**全部按新规矩关**（状态行三样齐 + `## 关闭` 节点名本卡）"
+   ],
+   "context_refs": [
+    "docs/blocked/WARN-TOKEN-NAME-CONTRADICTS-DEC-060.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-16",
+   "title": "停机收尾：完成态报告 + 一页《回来时从哪接》",
+   "milestone": "W16",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b16.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH16-COMPLETION.md",
+    "docs/怎么测-v041.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_ledger_pairing_v041.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "五条全局门逐字贴出；pytest 的红逐条点名归属，NEVER 按族小结",
+    "顺序写死：先写 trace 与台账 → 再跑五条门 → 最后只改完成态报告的数字",
+    "**owner 要停约一周**，所以报告首节 = **《回来时从哪接》一页**：① 今天能点通到哪一步（从广场一路到计划书，逐屏截图路径）；② 还剩几张 open 单、哪几张归 owner；③ 下一批最该做的三件事与各自理由",
+    "`docs/怎么测-v041.md` 补一节「工作台」：owner 从哪进、该看到什么、看不到时是谁的问题",
+    "**NEVER 把既有成果记成本批的活**——本批只做两张卡，其余全是此前批次的产出"
+   ],
+   "context_refs": [
+    "docs/steward/交接-STEWARD-HANDOFF.md"
+   ],
+   "depends_on": [
+    "COMBO-WIRE-01",
+    "TAIL-01"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

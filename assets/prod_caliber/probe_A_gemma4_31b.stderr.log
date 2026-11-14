@@ -1,0 +1,137 @@
+PROBE_A_START 19:27:54Z
+Traceback (most recent call last):
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_transports\default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 136, in handle_request
+    raise exc
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+        self.READ_NUM_BYTES, timeout=timeout
+    )
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_backends\sync.py", line 126, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\python\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\flint\llm\local.py", line 89, in generate
+    response = self._client.post(
+        f"{self._base_url}/chat/completions", json=body
+    )
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_client.py", line 1144, in post
+    return self.request(
+           ~~~~~~~~~~~~^
+        "POST",
+        ^^^^^^^
+    ...<11 lines>...
+        extensions=extensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 200, in handle_request
+    response = self._inner.handle_request(request)
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_transports\default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\python\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\.venv\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 562, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 554, in main
+    run_model(
+    ~~~~~~~~~^
+        args.model, judged=args.judged, sample_limit=args.samples,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        repair_enabled=repair_enabled,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 286, in run_model
+    comps = asyncio.run(_compose_all(samples[:sample_limit]))
+  File "C:\python\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\python\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\python\Lib\asyncio\base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 244, in _compose_all
+    return list(await asyncio.gather(*(one(s, t) for s, t in pairs)))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 239, in one
+    return await asyncio.to_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "C:\python\Lib\asyncio\threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\python\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 156, in compose_sample
+    text = _draft_nonempty(provider, prompt, where)
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\harness\prod_caliber.py", line 117, in _draft_nonempty
+    text = provider.generate(prompt, tools=None).text.strip()
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ray\Desktop\Vibe coding\燧石 Flint（热点分析+项目计划书）\flint\llm\local.py", line 93, in generate
+    raise LocalProviderUnavailable(
+        f"local endpoint unreachable for {self.model}: {err}"
+    ) from err
+flint.llm.local.LocalProviderUnavailable: local endpoint unreachable for gemma4:31b: timed out
+PROBE_A_EXIT=1 20:00:04Z

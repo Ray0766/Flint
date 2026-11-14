@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.patents.example/v1/search?q=low+altitude+economy&rows=10",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"patents\": [{\"patent_id\": \"US11002050\", \"title\": \"low altitude economy apparatus 0\", \"family_size\": 3, \"legal_status\": \"pending\", \"date\": \"2026-01-15\", \"url\": \"https://patents.example/US11002050\"}, {\"patent_id\": \"US11002051\", \"title\": \"low altitude economy apparatus 1\", \"family_size\": 4, \"legal_status\": \"active\", \"date\": \"2026-02-15\", \"url\": \"https://patents.example/US11002051\"}, {\"patent_id\": \"US11002052\", \"title\": \"low altitude economy apparatus 2\", \"family_size\": 5, \"legal_status\": \"active\", \"date\": \"2026-03-15\", \"url\": \"https://patents.example/US11002052\"}, {\"patent_id\": \"US11002053\", \"title\": \"low altitude economy apparatus 3\", \"family_size\": 6, \"legal_status\": \"pending\", \"date\": \"2026-04-15\", \"url\": \"https://patents.example/US11002053\"}, {\"patent_id\": \"US11002054\", \"title\": \"low altitude economy apparatus 4\", \"family_size\": 7, \"legal_status\": \"active\", \"date\": \"2026-05-15\", \"url\": \"https://patents.example/US11002054\"}], \"count\": 5}"
+ }
+]

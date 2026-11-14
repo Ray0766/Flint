@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/texture.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/base.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/styles.css">
+  <script src="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/_ds_bundle.js"></script>
+  <style>
+    @keyframes flintPulse{0%,100%{opacity:.4}50%{opacity:.85}}
+    input::placeholder,textarea::placeholder{color:var(--ink-3)}
+  </style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <header data-screen-label="S0 应用外壳" style="background:var(--surface);background-image:var(--tex-paper);border-bottom:1px solid var(--rule)">
+    <div style="max-width:1280px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <button onClick="{{ onHome }}" style="background:transparent;border:none;cursor:pointer;padding:2px 0;display:flex;align-items:baseline;gap:10px">
+        <span style="font-family:var(--font-display);font-weight:400;font-size:25px;color:var(--ink);line-height:1.15">Flint 燧石</span>
+        <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3)">批次一 · 外壳与入口</span>
+      </button>
+      <nav style="display:flex;gap:2px;flex-wrap:wrap" aria-label="主导航">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <button onClick="{{ item.onClick }}" style="position:relative;padding:10px 12px 12px;background:transparent;border:none;cursor:pointer;font-family:var(--font-body);font-size:14px;color:var(--ink);display:flex;align-items:center;gap:7px;white-space:nowrap" style-hover="text-decoration:underline;text-decoration-color:var(--sulfur);text-decoration-thickness:2px;text-underline-offset:4px">
+            <sc-if value="{{ item.active }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;background:var(--indigo);display:inline-block"></span></sc-if>
+            {{ item.label }}
+            <sc-if value="{{ item.active }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;left:12px;right:12px;bottom:5px;height:2px;background:var(--sulfur)"></span></sc-if>
+          </button>
+        </sc-for>
+      </nav>
+      <div style="flex:1"></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div title="账户端点未建（§3.9），userId 写死 self" style="display:flex;align-items:center;gap:8px;padding:5px 12px;border:1px dashed var(--ink-3);border-radius:var(--r-data);background:var(--surface)">
+          <span style="width:8px;height:8px;border:1.5px solid var(--ink-3);box-sizing:border-box;display:inline-block"></span>
+          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2);white-space:nowrap">X-User-Id: self</span>
+        </div>
+        <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" tone="paper" rotate="{{ rotPos }}" hint-size="auto,26px">账户端点未建 · §3.9</x-import></span>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--rule);background:var(--paper);background-image:var(--tex-paper)">
+      <div style="max-width:1280px;margin:0 auto;padding:8px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3)">大类 · GET /categories</span>
+        <sc-if value="{{ catsLoading }}" hint-placeholder-val="{{ true }}">
+          <span style="width:64px;height:22px;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite;display:inline-block"></span>
+          <span style="width:88px;height:22px;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite;display:inline-block"></span>
+          <span style="width:76px;height:22px;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite;display:inline-block"></span>
+        </sc-if>
+        <sc-for list="{{ catChips }}" as="chip" hint-placeholder-count="0">
+          <button onClick="{{ chip.onClick }}" style="display:flex;align-items:center;gap:7px;padding:4px 12px;font-family:var(--font-body);font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-data);cursor:pointer;white-space:nowrap" style-hover="border-color:var(--ink-2)">
+            <sc-if value="{{ chip.active }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;background:var(--indigo);display:inline-block"></span></sc-if>
+            <sc-if value="{{ chip.inactive }}" hint-placeholder-val="{{ true }}"><span style="width:6px;height:6px;border:1px solid var(--ink-3);box-sizing:border-box;display:inline-block"></span></sc-if>
+            {{ chip.name }}
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:1280px;margin:0 auto;padding:24px;width:100%;box-sizing:border-box;flex:1">
+
+    <sc-if value="{{ showPlaza }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="P1 热点广场">
+        <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:8px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <h1 style="font-family:var(--font-display);font-weight:400;font-size:31px;margin:0;color:var(--ink);line-height:1.15">热点广场</h1>
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3)">GET /plaza/hot?day={{ dayApplied }} · 排序由后端给定，前端不重排</span>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap">
+            <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Input" label="day" mono="{{ isTrue }}" value="{{ dayInput }}" on-change="{{ onDayChange }}" hint="YYYY-MM-DD" error="{{ dayErrorText }}" hint-size="150px,64px" style="width:150px"></x-import>
+            <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="secondary" size="sm" on-click="{{ onDayCommit }}" hint-size="auto,32px">查询</x-import></span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3)">mock 样例日：</span>
+          <button onClick="{{ onPreset04 }}" style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo);text-decoration:underline;text-underline-offset:3px;padding:0">2026-07-04（有数据）</button>
+          <button onClick="{{ onPreset20 }}" style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo);text-decoration:underline;text-underline-offset:3px;padding:0">2026-07-20（空）</button>
+          <button onClick="{{ onPresetBad }}" style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo);text-decoration:underline;text-underline-offset:3px;padding:0">2026-7-4（非法 → 400）</button>
+        </div>
+
+        <sc-if value="{{ plazaLoading }}" hint-placeholder-val="{{ true }}">
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,220px">
+            <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3);margin-bottom:14px">载入中 · GET /plaza/hot</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="height:14px;width:72%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              <div style="height:14px;width:88%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              <div style="height:14px;width:64%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              <div style="height:14px;width:80%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+            </div>
+          </x-import>
+        </sc-if>
+
+        <sc-if value="{{ plazaHasError }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1px solid var(--ink-2);background:var(--surface);background-image:var(--tex-paper);border-radius:var(--r-data);padding:18px 20px;display:flex;gap:14px;align-items:flex-start">
+            <span aria-hidden="true" style="width:11px;height:11px;border:1px solid var(--ink-2);background-image:var(--tex-hatch);box-sizing:border-box;display:inline-block;flex:none;margin-top:4px"></span>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">HTTP 400 · VALIDATION_FAILED</span>
+              <span style="font-size:14px;font-weight:600;color:var(--ink)">发生了什么：day 参数「{{ dayApplied }}」不是 YYYY-MM-DD 格式，后端拒绝了请求。</span>
+              <span style="font-size:13px;color:var(--ink-2)">怎么办：修正日期格式后重新查询；也可以直接点下方按钮改查样例日。</span>
+              <div style="margin-top:6px;white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="secondary" size="sm" on-click="{{ onPreset04 }}" hint-size="auto,32px">改查 2026-07-04</x-import></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ plazaEmpty }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,260px">
+            <x-import component-from-global-scope="FlintDesignSystem_8fd95b.EmptyState" illustration="spark" title="该日无热点" description="{{ emptyDayDesc }}" action-label="查看 2026-07-04" on-action="{{ onPreset04 }}" hint-size="100%,220px"></x-import>
+          </x-import>
+        </sc-if>
+
+        <sc-if value="{{ plazaHasData }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+            <div style="flex:1 1 640px;min-width:0">
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="0" radius="data" hint-size="100%,400px">
+                <div style="padding:12px 16px;border-bottom:1px solid var(--rule);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">主榜 clusters · 按 hotness 综合分（后端已排）</span>
+                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3)">{{ clusterCountText }}</span>
+                </div>
+                <div style="overflow-x:auto">
+                  <div style="min-width:820px">
+                    <div style="display:grid;grid-template-columns:34px minmax(0,1fr) 76px 76px 76px 76px 100px 36px;gap:0 12px;padding:8px 16px;align-items:center">
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3)">#</span>
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3)">簇 CLUSTER</span>
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3);text-align:right">GTRENDS</span>
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3);text-align:right">WEIBO</span>
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3);text-align:right">GHTREND</span>
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3);text-align:right">ARXIV</span>
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3);text-align:right">HOTNESS 综合</span>
+                      <span></span>
+                    </div>
+                    <sc-if value="{{ clustersFilteredEmpty }}" hint-placeholder-val="{{ false }}">
+                      <div style="padding:20px 16px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-2)">该大类下无主榜簇。四源分值仍按簇独立呈现，不合成。</div>
+                    </sc-if>
+                    <sc-for list="{{ clusterRows }}" as="item" hint-placeholder-count="4">
+                      <div style="border-top:1px solid var(--rule)">
+                        <div style="display:grid;grid-template-columns:34px minmax(0,1fr) 76px 76px 76px 76px 100px 36px;gap:0 12px;padding:12px 16px;align-items:center">
+                          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3)">{{ item.rank }}</span>
+                          <div style="min-width:0">
+                            <button onClick="{{ item.onOpen }}" style="background:none;border:none;padding:0;cursor:pointer;text-align:left;font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink)" style-hover="text-decoration:underline;text-decoration-color:var(--sulfur);text-decoration-thickness:2px;text-underline-offset:3px">{{ item.name }}</button>
+                            <div style="display:flex;align-items:center;gap:10px;margin-top:5px;flex-wrap:wrap">
+                              <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" rotate="{{ item.rot }}" hint-size="auto,24px">{{ item.catName }}</x-import></span>
+                              <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3)">{{ item.id }}</span>
+                            </div>
+                          </div>
+                          <div style="text-align:right;font-size:13px"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.ChannelValue" channel="fact" value="{{ item.srcG }}" hint-size="56px,20px"></x-import></div>
+                          <div style="text-align:right;font-size:13px"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.ChannelValue" channel="fact" value="{{ item.srcW }}" hint-size="56px,20px"></x-import></div>
+                          <div style="text-align:right;font-size:13px"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.ChannelValue" channel="fact" value="{{ item.srcH }}" hint-size="56px,20px"></x-import></div>
+                          <div style="text-align:right;font-size:13px"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.ChannelValue" channel="fact" value="{{ item.srcA }}" hint-size="56px,20px"></x-import></div>
+                          <div style="text-align:right;font-size:14px;font-weight:600"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.ChannelValue" channel="fact" value="{{ item.hotness }}" hint-size="64px,20px"></x-import></div>
+                          <button onClick="{{ item.onToggle }}" aria-label="展开 hotness_components" style="width:26px;height:26px;border:1px solid var(--rule);background:var(--surface);border-radius:var(--r-data);cursor:pointer;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink-2);justify-self:end;line-height:1" style-hover="border-color:var(--ink-2)">{{ item.expandGlyph }}</button>
+                        </div>
+                        <sc-if value="{{ item.expanded }}" hint-placeholder-val="{{ false }}">
+                          <div style="padding:12px 16px 16px 62px;background:var(--paper-2);background-image:var(--tex-press);border-top:1px dashed var(--rule)">
+                            <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3);margin-bottom:10px">hotness_components · total_heat · status（各分量独立，不合成显示）</div>
+                            <div style="display:flex;flex-wrap:wrap;gap:12px 28px;align-items:flex-end">
+                              <sc-for list="{{ item.comps }}" as="c" hint-placeholder-count="7">
+                                <div style="display:flex;flex-direction:column;gap:3px">
+                                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3)">{{ c.k }}</span>
+                                  <span style="font-size:13px"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.ChannelValue" channel="fact" value="{{ c.v }}" hint-size="44px,18px"></x-import></span>
+                                </div>
+                              </sc-for>
+                              <div style="display:flex;flex-direction:column;gap:3px">
+                                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3)">STATUS</span>
+                                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)">{{ item.status }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </x-import>
+            </div>
+            <div style="flex:0 1 300px;min-width:260px">
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" tone="paper-2" padding="0" radius="data" hint-size="100%,320px">
+                <div style="padding:12px 14px;border-bottom:1px solid var(--rule)">
+                  <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">弱信号轨 weak_signals</div>
+                  <div style="font-size:12px;color:var(--ink-3);margin-top:3px">早期语义新趋势 · 单列一轨，与主榜分开，不并入综合分</div>
+                </div>
+                <sc-if value="{{ weakFilteredEmpty }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:16px 14px;font-size:13px;color:var(--ink-2)">该大类下无弱信号。</div>
+                </sc-if>
+                <sc-for list="{{ weakRows }}" as="w" hint-placeholder-count="3">
+                  <div style="padding:12px 14px;border-top:1px solid var(--rule)">
+                    <button onClick="{{ w.onOpen }}" style="background:none;border:none;padding:0;cursor:pointer;text-align:left;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--ink)" style-hover="text-decoration:underline;text-decoration-color:var(--sulfur);text-decoration-thickness:2px;text-underline-offset:3px">{{ w.name }}</button>
+                    <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;color:var(--ink-3);margin-top:3px">{{ w.id }} · {{ w.catName }}</div>
+                    <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px">
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3)">WEAK_SCORE</span>
+                      <span style="font-size:15px;font-weight:600"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.ChannelValue" channel="fact" value="{{ w.score }}" hint-size="48px,20px"></x-import></span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-top:6px">
+                      <sc-for list="{{ w.metrics }}" as="m" hint-placeholder-count="4">
+                        <div style="display:flex;justify-content:space-between;gap:8px">
+                          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:0.04em;color:var(--ink-3)">{{ m.k }}</span>
+                          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">{{ m.v }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </x-import>
+            </div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showWorkbench }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="P2 工作台">
+        <button onClick="{{ onBackToPlaza }}" style="background:none;border:none;padding:0;cursor:pointer;font-family:var(--font-body);font-size:13px;color:var(--indigo);text-decoration:underline;text-underline-offset:3px;margin-bottom:12px">← 热点广场</button>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px">
+          <h1 style="font-family:var(--font-display);font-weight:400;font-size:31px;margin:0;color:var(--ink);line-height:1.15">{{ wbName }}</h1>
+          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3)">GET /clusters/{{ wbId }}/evidence-cards</span>
+        </div>
+
+        <sc-if value="{{ wbLoading }}" hint-placeholder-val="{{ true }}">
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,180px">
+            <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3);margin-bottom:14px">载入中 · 证据卡</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="height:14px;width:60%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              <div style="height:14px;width:82%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              <div style="height:14px;width:48%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+            </div>
+          </x-import>
+        </sc-if>
+
+        <sc-if value="{{ wbEmpty }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,260px">
+            <x-import component-from-global-scope="FlintDesignSystem_8fd95b.EmptyState" illustration="lens" title="该簇暂无证据卡" description="接口返回 evidence_cards: []（非 404）。换一个簇查看，或等待下一次日更采集。" action-label="回热点广场" on-action="{{ onBackToPlaza }}" hint-size="100%,220px"></x-import>
+          </x-import>
+        </sc-if>
+
+        <sc-if value="{{ wbHasCards }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ wbCards }}" as="card" hint-placeholder-count="1">
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="20" hint-size="100%,200px">
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">{{ card.cardId }}</span>
+                  <div style="flex:1"></div>
+                  <sc-if value="{{ card.flagN }}" hint-placeholder-val="{{ false }}">
+                    <span style="display:inline-flex;align-items:center;gap:7px;padding:2px 10px;border:1px solid rgba(46,74,125,.4);background:var(--surface);border-radius:var(--r-data);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo);white-space:nowrap"><span style="width:8px;height:8px;background:var(--indigo);transform:rotate(45deg);display:inline-block;flex:none"></span>novelty · 新奇</span>
+                  </sc-if>
+                  <sc-if value="{{ card.flagM }}" hint-placeholder-val="{{ false }}">
+                    <span style="display:inline-flex;align-items:center;gap:7px;padding:2px 10px;border:1px solid rgba(46,74,125,.4);background:var(--surface);border-radius:var(--r-data);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo);white-space:nowrap"><span style="width:8px;height:8px;border-top:2px solid var(--indigo);border-right:2px solid var(--indigo);transform:rotate(-45deg) translateY(2px);display:inline-block;flex:none"></span>momentum · 动量</span>
+                  </sc-if>
+                  <sc-if value="{{ card.flagR }}" hint-placeholder-val="{{ false }}">
+                    <span style="display:inline-flex;align-items:center;gap:7px;padding:2px 10px;border:1px solid rgba(46,74,125,.4);background:var(--surface);border-radius:var(--r-data);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo);white-space:nowrap"><span style="width:9px;height:9px;border:1.5px solid var(--indigo);border-bottom-color:transparent;border-radius:50%;transform:rotate(45deg);display:inline-block;box-sizing:border-box;flex:none"></span>revival · 复燃</span>
+                  </sc-if>
+                </div>
+                <div style="margin-top:14px">
+                  <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3);margin-bottom:6px">keyword_ids</div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ card.keywords }}" as="kw" hint-placeholder-count="2">
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2);background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--r-data);padding:2px 8px">{{ kw }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="margin-top:14px">
+                  <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3);margin-bottom:6px">top_links · 外链可点</div>
+                  <div style="display:flex;flex-direction:column;gap:5px">
+                    <sc-for list="{{ card.links }}" as="lnk" hint-placeholder-count="2">
+                      <a href="{{ lnk }}" target="_blank" rel="noreferrer" style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;word-break:break-all">{{ lnk }}</a>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="secondary" size="sm" on-click="{{ card.onToggleSel }}" hint-size="auto,32px">{{ card.selLabel }}</x-import></span>
+                  <sc-if value="{{ card.selected }}" hint-placeholder-val="{{ false }}">
+                    <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo);white-space:nowrap"><span style="width:7px;height:7px;background:var(--indigo);display:inline-block"></span>已在 combo 选卡篮</span>
+                  </sc-if>
+                </div>
+              </x-import>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="margin-top:24px">
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.VoidBlock" kind="missing-data" height="{{ voidH }}" note="关联假设：读端点未 surface hypothesis（§3.6）· 接口未提供，此处留取数位" hint-size="100%,88px"></x-import>
+        </div>
+        <div style="margin-top:16px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3)">
+          空态演示：<button onClick="{{ onOpenUnknown }}" style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:3px;padding:0">查看未知簇 c-unknown-999 →</button>（返回 evidence_cards: []，非 404）
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showCombo }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="P3 combo 入口">
+        <div style="text-align:center;max-width:640px;margin:8px auto 28px">
+          <h1 style="font-family:var(--font-display);font-weight:400;font-size:48px;margin:0;color:var(--ink);line-height:1.15">combo · 跨簇关联</h1>
+          <p style="font-size:14px;line-height:1.8;color:var(--ink-2);margin:10px 0 8px">跨热点选 2~5 张证据卡，写一句关联假设。Flint 据此生成候选主题。</p>
+          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3)">POST /projects/combo · Header X-User-Id: self · body {card_ids, hypothesis}</span>
+        </div>
+
+        <sc-if value="{{ comboLoading }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:640px;margin:0 auto 24px">
+            <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,160px">
+              <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2);margin-bottom:10px">POST /projects/combo · 生成中</div>
+              <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:12px">
+                <div style="height:12px;width:70%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+                <div style="height:12px;width:52%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              </div>
+              <div style="font-size:13px;color:var(--ink-2)">本地模型正在生成候选主题，通常数秒到十几秒。</div>
+            </x-import>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ comboSuccess }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:640px;margin:0 auto 24px">
+            <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,240px">
+              <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2);margin-bottom:14px">响应 200 · {project_id, topic_ids, degraded}</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
+                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3);width:88px">project_id</span>
+                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink)">{{ comboProjectId }}</span>
+                </div>
+                <div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
+                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3);width:88px">topic_ids</span>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ comboTopicIds }}" as="tid" hint-placeholder-count="3">
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2);background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--r-data);padding:2px 8px">{{ tid }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:14px">
+                <sc-if value="{{ comboDegraded }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="FlintDesignSystem_8fd95b.DegradedNotice" hint-size="100%,64px">degraded: true — 部分主题为降级生成（本地模型降级兜底），完整性可能低于正常水平。</x-import>
+                </sc-if>
+                <sc-if value="{{ comboNotDegraded }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">degraded: false</span>
+                </sc-if>
+              </div>
+              <div style="margin-top:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="secondary" size="sm" on-click="{{ onComboReset }}" hint-size="auto,32px">返回继续编辑</x-import></span>
+                <span style="font-size:12px;color:var(--ink-3)">主题列表（GET /projects/{id}/topics）属批次二，本批不建。</span>
+              </div>
+            </x-import>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ comboErr400 }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:640px;margin:0 auto 24px">
+            <div style="border:1px solid var(--ink-2);background:var(--surface);border-radius:var(--r-data);padding:18px 20px;display:flex;gap:14px;align-items:flex-start">
+              <span aria-hidden="true" style="width:11px;height:11px;border:1px solid var(--ink-2);background-image:var(--tex-hatch);box-sizing:border-box;display:inline-block;flex:none;margin-top:4px"></span>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">HTTP 400 · VALIDATION_FAILED</span>
+                <span style="font-size:14px;font-weight:600;color:var(--ink)">发生了什么：所选证据卡中有卡不存在，或校验失败。</span>
+                <span style="font-size:13px;color:var(--ink-2)">怎么办：你的选卡与假设已保留；检查选卡后重新提交。</span>
+                <div style="margin-top:6px;white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="secondary" size="sm" on-click="{{ onComboReset }}" hint-size="auto,32px">返回检查选卡</x-import></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ comboErr422 }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:640px;margin:0 auto 24px">
+            <div style="border:1px solid var(--ink-2);background:var(--surface);border-radius:var(--r-data);padding:18px 20px;display:flex;gap:14px;align-items:flex-start">
+              <span aria-hidden="true" style="width:11px;height:11px;border:1px solid var(--ink-2);background-image:var(--tex-hatch);box-sizing:border-box;display:inline-block;flex:none;margin-top:4px"></span>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">HTTP 422</span>
+                <span style="font-size:14px;font-weight:600;color:var(--ink)">发生了什么：请求缺少 X-User-Id 头或必填字段，后端未处理。</span>
+                <span style="font-size:13px;color:var(--ink-2)">怎么办：你的输入已保留。本原型 userId 写死 "self"（§3.9）；回接真实登录后此错误应不再出现。</span>
+                <div style="margin-top:6px;white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="secondary" size="sm" on-click="{{ onComboReset }}" hint-size="auto,32px">返回</x-import></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+          <div style="flex:1 1 560px;min-width:0">
+            <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.04em;color:var(--ink-3);margin-bottom:10px">跨簇选卡 · 数据来自 GET /clusters/{id}/evidence-cards（样例日 2026-07-04）</div>
+            <sc-if value="{{ pickerLoading }}" hint-placeholder-val="{{ true }}">
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="20" hint-size="100%,160px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="height:12px;width:64%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+                  <div style="height:12px;width:80%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+                  <div style="height:12px;width:56%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+                </div>
+              </x-import>
+            </sc-if>
+            <sc-if value="{{ pickerReady }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <sc-for list="{{ comboGroups }}" as="grp" hint-placeholder-count="3">
+                  <div>
+                    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap">
+                      <span style="font-size:13px;font-weight:600;color:var(--ink)">{{ grp.name }}</span>
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3)">{{ grp.id }}</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <sc-for list="{{ grp.cards }}" as="pc" hint-placeholder-count="1">
+                        <button onClick="{{ pc.onToggle }}" disabled="{{ pc.disabled }}" style="width:100%;text-align:left;display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-data);cursor:pointer;font-family:var(--font-body)" style-hover="border-color:var(--ink-2)">
+                          <sc-if value="{{ pc.sel }}" hint-placeholder-val="{{ false }}"><span style="width:10px;height:10px;background:var(--indigo);display:inline-block;flex:none;margin-top:4px"></span></sc-if>
+                          <sc-if value="{{ pc.unsel }}" hint-placeholder-val="{{ true }}"><span style="width:10px;height:10px;border:1.5px solid var(--ink-3);box-sizing:border-box;display:inline-block;flex:none;margin-top:4px"></span></sc-if>
+                          <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
+                            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink)">{{ pc.cardId }}</span>
+                            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3)">{{ pc.kwText }}</span>
+                          </span>
+                          <span style="flex:1"></span>
+                          <sc-if value="{{ pc.sel }}" hint-placeholder-val="{{ false }}"><span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--indigo);flex:none">已选</span></sc-if>
+                        </button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="flex:0 1 400px;min-width:300px;position:sticky;top:24px">
+            <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,420px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">① 选卡篮 card_ids · 需 2~5 张</span>
+                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:16px;font-weight:600;color:var(--ink)">{{ basketCount }} / 5</span>
+              </div>
+              <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+                <sc-if value="{{ basketIsEmpty }}" hint-placeholder-val="{{ true }}">
+                  <div style="border:1px dashed var(--ink-3);border-radius:var(--r-data);padding:14px;font-size:13px;color:var(--ink-3);text-align:center">选卡篮为空。从左侧跨簇选卡，或在工作台逐簇挑选。</div>
+                </sc-if>
+                <sc-for list="{{ basketCards }}" as="bc" hint-placeholder-count="0">
+                  <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--rule);border-radius:var(--r-data);background:var(--paper-2);padding:8px 10px">
+                    <span style="width:7px;height:7px;background:var(--indigo);display:inline-block;flex:none"></span>
+                    <span style="min-width:0;display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink);word-break:break-all">{{ bc.cardId }}</span>
+                      <span style="font-size:11px;color:var(--ink-3)">{{ bc.clusterName }}</span>
+                    </span>
+                    <button onClick="{{ bc.onRemove }}" aria-label="移出选卡篮" style="width:24px;height:24px;border:1px solid var(--rule);background:var(--surface);border-radius:var(--r-data);cursor:pointer;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2);line-height:1;flex:none" style-hover="border-color:var(--ink-2)">×</button>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top:20px">
+                <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2);margin-bottom:8px">② 关联假设 hypothesis · 一句话，非空</div>
+                <textarea value="{{ hypothesis }}" onChange="{{ onHypChange }}" placeholder="例：固态电池中试放量将带动家储集成商更换 BOM 选型逻辑" style="width:100%;box-sizing:border-box;min-height:88px;resize:vertical;font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-data);padding:10px 12px"></textarea>
+              </div>
+              <sc-if value="{{ hasValMsg }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:10px;display:flex;gap:8px;align-items:baseline">
+                  <span aria-hidden="true" style="width:9px;height:9px;border:1px solid var(--ink-2);background-image:var(--tex-hatch);box-sizing:border-box;display:inline-block;flex:none;align-self:center"></span>
+                  <span style="font-size:12px;color:var(--ink-2)">{{ valMsg }}</span>
+                </div>
+              </sc-if>
+              <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px">
+                <span style="white-space:nowrap;display:block"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="primary" disabled="{{ submitDisabled }}" on-click="{{ onSubmit }}" hint-size="100%,40px" style="width:100%;justify-content:center">敲下燧石 · 生成候选主题</x-import></span>
+                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3);text-align:center">本地模型生成 · 通常数秒到十几秒 · mock 场景见 Tweaks</span>
+              </div>
+            </x-import>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showSystem }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="S1 通用件">
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px">
+          <h1 style="font-family:var(--font-display);font-weight:400;font-size:31px;margin:0;color:var(--ink);line-height:1.15">S1 · 通用件</h1>
+          <span style="font-size:13px;color:var(--ink-2)">全批 20 屏复用的地基件。每件列 props 契约；无专属端点，均为设计决策。</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px">
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,200px">
+            <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px">状态标记 StatusMark（DS 现成 · 八态）</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-bottom:14px">每态同时有非颜色载体（记号形状 / 边缘质地 / 底纹）；批次二起大量使用。</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="verified" hint-size="auto,26px"></x-import>
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="review" hint-size="auto,26px"></x-import>
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="blocking" hint-size="auto,26px"></x-import>
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="disputed" hint-size="auto,26px"></x-import>
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="speculative" hint-size="auto,26px"></x-import>
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="void" hint-size="auto,26px"></x-import>
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="sealed" hint-size="auto,26px"></x-import>
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StatusMark" status="degraded" hint-size="auto,26px"></x-import>
+            </div>
+            <div style="margin-top:14px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;line-height:1.7;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-data);padding:12px 14px;white-space:pre-wrap">props: { status: "verified"|"review"|"blocking"|"disputed"|"speculative"|"void"|"sealed"|"degraded"; label?: string }
+映射：speculative←why_now.speculative · review/blocking←needs_review+review_severity · disputed←disputed_mark · sealed←locked∨author=="user"∨user_modified · degraded←degraded</div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,200px">
+            <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px">加载骨架 LoadingSkeleton</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-bottom:14px">一切 GET 等待态。只表等待，不表进度——后端无进度数据时不画百分比。</div>
+            <div style="display:flex;flex-direction:column;gap:12px;max-width:480px">
+              <div style="height:12px;width:72%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              <div style="height:12px;width:88%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+              <div style="height:12px;width:56%;background:var(--paper-2);border-radius:var(--r-data);animation:flintPulse 1.4s ease-in-out infinite"></div>
+            </div>
+            <div style="margin-top:14px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;line-height:1.7;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-data);padding:12px 14px;white-space:pre-wrap">props: { lines?: number = 3; height?: number = 12; label?: string }
+label 显示所等待的端点（mono），如「载入中 · GET /plaza/hot」。</div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,300px">
+            <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px">空态 EmptyState（DS 现成）</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-bottom:14px">插画只出现在空态与缺口。陈述句，不道歉、不卖萌。空态不是错误。</div>
+            <div style="border:1px solid var(--rule);border-radius:var(--r-data)">
+              <x-import component-from-global-scope="FlintDesignSystem_8fd95b.EmptyState" illustration="spark" title="该日无热点" description="2026-07-20 两轨均为空；换一个日期查看。" hint-size="100%,200px"></x-import>
+            </div>
+            <div style="margin-top:14px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;line-height:1.7;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-data);padding:12px 14px;white-space:pre-wrap">props: { title: string; description?: string; actionLabel?: string; onAction?: () => void; illustration?: "spark"|"lens"|"page" }
+用法：clusters=[]∧weak_signals=[] →「该日无热点」；evidence_cards=[] →「该簇暂无证据卡」。</div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,340px">
+            <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px">通用错误 ErrorState</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-bottom:14px">说清发生了什么、怎么办。色彩纪律：仅 409 EXPORT_BLOCKED / 503 用 --rust；其余错误一律墨色 + 划线纹警示记号。</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="border:1px solid var(--ink-2);background:var(--surface);border-radius:var(--r-data);padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+                <span aria-hidden="true" style="width:11px;height:11px;border:1px solid var(--ink-2);background-image:var(--tex-hatch);box-sizing:border-box;display:inline-block;flex:none;margin-top:3px"></span>
+                <div>
+                  <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">HTTP 400 · VALIDATION_FAILED</div>
+                  <div style="font-size:13px;color:var(--ink);margin-top:3px">发生了什么：day 参数格式非法。怎么办：改为 YYYY-MM-DD 后重试。</div>
+                </div>
+              </div>
+              <div style="border:3px double var(--rust);background:var(--rust-soft);border-radius:var(--r-data);padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+                <span aria-hidden="true" style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid var(--rust);display:inline-block;margin-top:3px;flex:none"></span>
+                <div>
+                  <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--rust)">HTTP 503 · SERVICE_UNAVAILABLE</div>
+                  <div style="font-size:13px;color:var(--ink);margin-top:3px">发生了什么：该格式暂不可用（如 pdf 引擎缺失）。怎么办：换用其他格式，或等待服务恢复。</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:14px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;line-height:1.7;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-data);padding:12px 14px;white-space:pre-wrap">props: { httpStatus: number; code: "LEDGER_CONFLICT"|"EXPORT_BLOCKED"|"PERMISSION_DENIED"|"BUDGET_EXCEEDED"|"NOT_FOUND"|"VALIDATION_FAILED"|"SERVICE_UNAVAILABLE"; what: string; how: string; retry?: { label: string; onClick: () => void }; detail?: object }
+--rust 仅在 code ∈ {EXPORT_BLOCKED(409), SERVICE_UNAVAILABLE(503)} 与阻塞级复核时出现。</div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,220px">
+            <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px">404 NotFound</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-bottom:14px">仅用于路由/资源确实不存在；空数据（空列表）绝不渲染成 404。</div>
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+              <span style="font-size:13px;color:var(--ink-2)">真实触发：</span>
+              <button onClick="{{ onGo404 }}" style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--indigo);text-decoration:underline;text-underline-offset:3px;padding:0">#/nowhere →</button>
+            </div>
+            <div style="margin-top:14px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;line-height:1.7;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-data);padding:12px 14px;white-space:pre-wrap">props: { path: string; onHome: () => void; homeLabel?: string = "回热点广场" }</div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,280px">
+            <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px">SSE 断线提示 SseDisconnectNotice</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-bottom:14px">批次二进度页使用。断线不是服务不可用，不用 --rust。</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="border:1px dashed rgba(46,74,125,.55);background:var(--indigo-soft);background-image:var(--tex-note);border-radius:var(--r-data);padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <span style="width:8px;height:8px;border:1.5px solid var(--indigo);box-sizing:border-box;display:inline-block;flex:none"></span>
+                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo)">连接中断 · 已读取 GET /jobs/job-9d2e 快照 · 正带 Last-Event-ID: 3 续订</span>
+              </div>
+              <div style="border:1px solid rgba(46,74,125,.55);background:var(--indigo-soft);border-radius:var(--r-data);padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <span style="width:8px;height:8px;background:var(--indigo);display:inline-block;flex:none"></span>
+                <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--indigo)">已恢复 · 自 seq 4 续传 · 重复事件按 seq 去重</span>
+              </div>
+            </div>
+            <div style="margin-top:14px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;line-height:1.7;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-data);padding:12px 14px;white-space:pre-wrap">props: { jobId: string; lastEventId: number; phase: "snapshot"|"resubscribe"|"restored" }
+行为契约（§2.6）：断线 → GET /jobs/{id} 快照 → 带 Last-Event-ID 续订 → 按 seq 去重 → 终态 close()。
+全站唯一 SSE 入口：openJobStream(jobId) → /jobs/{id}/events，不另造。</div>
+          </x-import>
+
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showSpec }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="字段对照表">
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px">
+          <h1 style="font-family:var(--font-display);font-weight:400;font-size:31px;margin:0;color:var(--ink);line-height:1.15">字段对照表 · 批次一</h1>
+          <span style="font-size:13px;color:var(--ink-2)">每屏元素 ↔ 后端字段。无专属端点处标注为设计决策。</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;max-width:960px">
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="0" radius="data" hint-size="100%,240px">
+            <div style="padding:12px 16px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">路由（本轮新建 · 仓库原无正式路由）</span>
+              <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" tone="sulfur" rotate="{{ rotNeg }}" hint-size="auto,24px">设计决策</x-import></span>
+            </div>
+            <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:0">
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink)">/plaza/hot</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink-2)">P1 热点广场（导航「热点广场」）</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink)">/clusters/[id]</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink-2)">P2 工作台（点簇进入；导航「工作台」回到最近查看的簇）</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink)">/combo/new</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink-2)">P3 combo 入口（导航「combo 入口」）</div>
+              <div style="padding:10px 16px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink)">#/system · #/spec</div><div style="padding:10px 16px;font-size:13px;color:var(--ink-2)">S1 通用件 / 本对照表——原型附件，非产品路由</div>
+            </div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="0" radius="data" hint-size="100%,220px">
+            <div style="padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">S0 应用外壳</div>
+            <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:0">
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">大类筛选</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">GET /categories → [{category_id, name}]（§2.12）；筛选仅隐藏行，不重排</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">导航结构</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink-2)">文档未定义 → <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px">设计决策</span>（路由见上表）</div>
+              <div style="padding:10px 16px;font-size:13px;color:var(--ink)">用户位</div><div style="padding:10px 16px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">无账户端点（§3.9）· X-User-Id 写死 "self" · 占位并明示</div>
+            </div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="0" radius="data" hint-size="100%,360px">
+            <div style="padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">P1 /plaza/hot · GET /plaza/hot?day=</div>
+            <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:0">
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">主榜行序</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">clusters[] 返回顺序（hotness 后端已排）· 前端不重排、无排序控件</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">簇名 / 大类 / id / 状态</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">canonical_name · category_id · cluster_id · status</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">四源等宽列</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">by_source.gtrends / weibo / ghtrend / arxiv——独立四列，不合成、不堆叠</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">综合分</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">hotness</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">展开明细</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">hotness_components{velocity, accel, cross_count, multi_boost, novelty_factor, decay} + total_heat</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">弱信号轨（单列并置）</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">weak_signals[]{weak_score, agg, velocity, drift, burst_weight}</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">日期选择</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">?day=YYYY-MM-DD；非法 → 400 VALIDATION_FAILED</div>
+              <div style="padding:10px 16px;font-size:13px;color:var(--ink)">空态</div><div style="padding:10px 16px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">clusters=[] ∧ weak_signals=[] →「该日无热点」（非错误）</div>
+            </div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="0" radius="data" hint-size="100%,280px">
+            <div style="padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">P2 /clusters/[id] · GET /clusters/{id}/evidence-cards</div>
+            <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:0">
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">证据卡</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">evidence_cards[]{card_id, cluster_id, keyword_ids, flags, top_links}</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">三旗标（各自可辨）</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">flags ∈ {novelty ◆, momentum ∧, revival ○}——三种记号形状，不合并</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">外链</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">top_links → 可点 target="_blank"</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">空态</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">未知簇 → evidence_cards: []（非 404）→「该簇暂无证据卡」</div>
+              <div style="padding:10px 16px;font-size:13px;color:var(--ink)">关联假设留位</div><div style="padding:10px 16px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">读端点未 surface hypothesis（§3.6）→ VoidBlock 留取数位，标「接口未提供」</div>
+            </div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="0" radius="data" hint-size="100%,280px">
+            <div style="padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">P3 /combo/new · POST /projects/combo</div>
+            <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:0">
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">选卡篮</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">body.card_ids——硬校验 2~5 张（COMBO_MIN/COMBO_MAX），不合规禁用提交</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">关联假设</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">body.hypothesis——非空</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">鉴权</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">Header X-User-Id（当前写死 "self"）</div>
+              <div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink)">结果</div><div style="padding:10px 16px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">{project_id, topic_ids, degraded}；degraded==true → DegradedNotice「部分主题为降级生成」</div>
+              <div style="padding:10px 16px;font-size:13px;color:var(--ink)">错误</div><div style="padding:10px 16px;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)">400 VALIDATION_FAILED（卡不存在）· 422 缺 Header/字段——均保留用户输入</div>
+            </div>
+          </x-import>
+
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="0" radius="data" hint-size="100%,140px">
+            <div style="padding:12px 16px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:0.04em;color:var(--ink-2)">S1 通用件</span>
+              <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" tone="sulfur" rotate="{{ rotPos }}" hint-size="auto,24px">设计决策</x-import></span>
+            </div>
+            <div style="padding:12px 16px;font-size:13px;color:var(--ink-2)">骨架 / 空态 / 错误 / 404 / SSE 断线——均无专属端点，为复用件设计决策；props 契约见 <button onClick="{{ onGoSystem }}" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--indigo);text-decoration:underline;text-underline-offset:3px;padding:0">S1 通用件</button> 屏。</div>
+          </x-import>
+
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ show404 }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="404">
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.PaperSurface" padding="24" hint-size="100%,300px">
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.EmptyState" illustration="page" title="该地址没有内容" description="{{ notFoundDesc }}" action-label="回热点广场" on-action="{{ onHome }}" hint-size="100%,260px"></x-import>
+        </x-import>
+      </section>
+    </sc-if>
+
+  </main>
+
+  <sc-if value="{{ showBasketFloat }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;right:24px;bottom:24px;z-index:20">
+      <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);box-shadow:var(--shadow-overlay);padding:12px 16px;display:flex;align-items:center;gap:14px">
+        <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink);white-space:nowrap">combo 选卡篮 · {{ basketCount }} / 5</span>
+        <span style="white-space:nowrap"><x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="primary" size="sm" on-click="{{ onGoCombo }}" hint-size="auto,32px">去 combo 入口</x-import></span>
+      </div>
+    </div>
+  </sc-if>
+
+  <footer style="border-top:1px solid var(--rule);margin-top:32px">
+    <div style="max-width:1280px;margin:0 auto;padding:14px 24px;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+      <span style="font-family:var(--font-display);font-size:14px;color:var(--ink-2)">Flint 燧石</span>
+      <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3)">批次一原型 · mock 接线 · 路由 /plaza/hot · /clusters/[id] · /combo/new</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;comboResponse&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;degraded&quot;, &quot;options&quot;: [&quot;degraded&quot;, &quot;ok&quot;, &quot;error_400&quot;, &quot;error_422&quot;], &quot;tsType&quot;: &quot;\&quot;degraded\&quot; | \&quot;ok\&quot; | \&quot;error_400\&quot; | \&quot;error_422\&quot;&quot;, &quot;section&quot;: &quot;Mock 场景&quot;},
+  &quot;mockLatencyMs&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 600, &quot;min&quot;: 0, &quot;max&quot;: 2400, &quot;step&quot;: 200, &quot;unit&quot;: &quot;ms&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Mock 场景&quot;}
+}">
+const CATEGORIES = [
+  { category_id: "cat-energy", name: "能源与储能" },
+  { category_id: "cat-ai", name: "人工智能" },
+];
+const PLAZA = {
+  "2026-07-04": {
+    day: "2026-07-04",
+    clusters: [
+      { cluster_id: "c-20260704-000", canonical_name: "固态电池量产突破", category_id: "cat-energy", status: "active",
+        by_source: { arxiv: 88.0, ghtrend: 41.2, gtrends: 30.5, weibo: 22.0 }, total_heat: 159.7, hotness: 87.75,
+        hotness_components: { velocity: 12.3, accel: 4.1, cross_count: 3, multi_boost: 1.2, novelty_factor: 0.8, decay: 1.0 } },
+      { cluster_id: "c-20260704-001", canonical_name: "端侧多模态小模型", category_id: "cat-ai", status: "active",
+        by_source: { arxiv: 74.4, ghtrend: 66.0, gtrends: 18.2, weibo: 12.6 }, total_heat: 171.2, hotness: 81.3,
+        hotness_components: { velocity: 9.8, accel: 3.4, cross_count: 4, multi_boost: 1.4, novelty_factor: 0.6, decay: 1.0 } },
+      { cluster_id: "c-20260704-002", canonical_name: "钠离子电池装车", category_id: "cat-energy", status: "active",
+        by_source: { arxiv: 22.1, ghtrend: 8.4, gtrends: 55.0, weibo: 61.3 }, total_heat: 146.8, hotness: 66.42,
+        hotness_components: { velocity: 7.1, accel: 1.9, cross_count: 3, multi_boost: 1.1, novelty_factor: 0.3, decay: 0.9 } },
+      { cluster_id: "c-20260704-003", canonical_name: "AI 代码审查代理", category_id: "cat-ai", status: "active",
+        by_source: { arxiv: 31.0, ghtrend: 77.5, gtrends: 12.4, weibo: 6.8 }, total_heat: 127.7, hotness: 58.11,
+        hotness_components: { velocity: 6.2, accel: 2.2, cross_count: 2, multi_boost: 1.0, novelty_factor: 0.5, decay: 1.0 } },
+      { cluster_id: "c-20260704-004", canonical_name: "电网级长时储能招标", category_id: "cat-energy", status: "active",
+        by_source: { arxiv: 10.3, ghtrend: 2.1, gtrends: 40.2, weibo: 35.5 }, total_heat: 88.1, hotness: 41.87,
+        hotness_components: { velocity: 3.5, accel: 0.8, cross_count: 2, multi_boost: 1.0, novelty_factor: 0.2, decay: 0.8 } },
+    ],
+    weak_signals: [
+      { cluster_id: "c-20260629-134", canonical_name: "solid-state battery", category_id: "cat-energy", status: "active",
+        weak_score: 20.0, agg: 6.4, velocity: 20.0, drift: 0.03, burst_weight: 1.0 },
+      { cluster_id: "c-20260701-208", canonical_name: "anode-free 电芯设计", category_id: "cat-energy", status: "active",
+        weak_score: 14.2, agg: 4.1, velocity: 11.8, drift: 0.05, burst_weight: 1.2 },
+      { cluster_id: "c-20260702-311", canonical_name: "agent 评测基准", category_id: "cat-ai", status: "active",
+        weak_score: 9.6, agg: 3.0, velocity: 8.2, drift: 0.02, burst_weight: 1.0 },
+    ],
+  },
+  "2026-07-20": { day: "2026-07-20", clusters: [], weak_signals: [] },
+};
+const CARDS = {
+  "c-20260704-000": [{ card_id: "card-20260704-c-20260704-000", cluster_id: "c-20260704-000",
+    keyword_ids: ["kw-solid-electrolyte", "kw-anode-free"], flags: ["novelty", "momentum"],
+    top_links: ["https://arxiv.org/abs/2507.01234", "https://github.com/acme/solid-cell"] }],
+  "c-20260704-001": [{ card_id: "card-20260704-c-20260704-001", cluster_id: "c-20260704-001",
+    keyword_ids: ["kw-on-device-vlm", "kw-quantization"], flags: ["novelty"],
+    top_links: ["https://arxiv.org/abs/2506.09876", "https://github.com/acme/edge-vlm"] }],
+  "c-20260704-002": [{ card_id: "card-20260704-c-20260704-002", cluster_id: "c-20260704-002",
+    keyword_ids: ["kw-sodium-ion", "kw-oem-fitment"], flags: ["momentum", "revival"],
+    top_links: ["https://arxiv.org/abs/2505.04321", "https://github.com/acme/na-ion-bms"] }],
+  "c-20260704-003": [{ card_id: "card-20260704-c-20260704-003", cluster_id: "c-20260704-003",
+    keyword_ids: ["kw-code-review-agent"], flags: ["momentum"],
+    top_links: ["https://github.com/acme/review-agent"] }],
+  "c-20260704-004": [{ card_id: "card-20260704-c-20260704-004", cluster_id: "c-20260704-004",
+    keyword_ids: ["kw-long-duration-storage", "kw-grid-tender"], flags: ["revival"],
+    top_links: ["https://arxiv.org/abs/2504.02222"] }],
+};
+const COMBO_RESP = {
+  degraded: { project_id: "proj-demo7c1", topic_ids: ["topic-demo7c1-1", "topic-demo7c1-2", "topic-demo7c1-3"], degraded: true },
+  ok: { project_id: "proj-demo7c2", topic_ids: ["topic-demo7c2-1", "topic-demo7c2-2", "topic-demo7c2-3"], degraded: false },
+};
+const NAME_MAP = {};
+Object.values(PLAZA).forEach(d => { d.clusters.concat(d.weak_signals).forEach(c => { NAME_MAP[c.cluster_id] = c.canonical_name; }); });
+const catName = id => { const c = CATEGORIES.find(x => x.category_id === id); return c ? c.name : id; };
+const f1 = v => v.toFixed(1), f2 = v => v.toFixed(2);
+
+class Component extends DCLogic {
+  state = {
+    route: "plaza", badRoute: "",
+    cats: null, catsLoading: true, activeCat: "all",
+    dayInput: "2026-07-04", dayApplied: "2026-07-04",
+    plaza: null, plazaLoading: true, plazaError: null,
+    wbId: null, wbData: null, wbLoading: false, lastWbId: "c-20260704-000",
+    expanded: {},
+    basket: [], hypothesis: "",
+    comboPhase: "idle", comboResult: null, pickerLoaded: false, pickerLoading: false,
+  };
+  lat() { const v = this.props.mockLatencyMs; return typeof v === "number" ? v : 600; }
+  componentDidMount() {
+    this._onHash = () => this.handleRoute();
+    window.addEventListener("hashchange", this._onHash);
+    this.handleRoute();
+    setTimeout(() => this.setState({ cats: CATEGORIES, catsLoading: false }), this.lat());
+    this.loadPlaza(this.state.dayApplied);
+  }
+  componentWillUnmount() { window.removeEventListener("hashchange", this._onHash); }
+  nav(h) { if (("#" + h) === location.hash) this.handleRoute(); else location.hash = h; }
+  handleRoute() {
+    const h = (location.hash || "").replace(/^#/, "") || "/plaza/hot";
+    const m = h.match(/^\/clusters\/([^/?#]+)/);
+    if (m) { const id = m[1]; this.setState({ route: "workbench", wbId: id, lastWbId: id }); this.loadWb(id); return; }
+    if (h.indexOf("/plaza") === 0) { this.setState({ route: "plaza" }); return; }
+    if (h.indexOf("/combo") === 0) {
+      this.setState({ route: "combo" });
+      if (!this.state.pickerLoaded) {
+        this.setState({ pickerLoading: true });
+        setTimeout(() => this.setState({ pickerLoaded: true, pickerLoading: false }), this.lat());
+      }
+      return;
+    }
+    if (h === "/system") { this.setState({ route: "system" }); return; }
+    if (h === "/spec") { this.setState({ route: "spec" }); return; }
+    this.setState({ route: "404", badRoute: h });
+  }
+  loadPlaza(day) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+      this.setState({ dayApplied: day, plazaLoading: false, plaza: null,
+        plazaError: { code: "VALIDATION_FAILED", message: "day 需为 YYYY-MM-DD" } });
+      return;
+    }
+    this.setState({ dayApplied: day, plazaLoading: true, plazaError: null, plaza: null });
+    const seq = (this._plazaSeq = (this._plazaSeq || 0) + 1);
+    setTimeout(() => { if (seq !== this._plazaSeq) return;
+      this.setState({ plazaLoading: false, plaza: PLAZA[day] || { day, clusters: [], weak_signals: [] } });
+    }, this.lat());
+  }
+  loadWb(id) {
+    this.setState({ wbLoading: true, wbData: null });
+    const seq = (this._wbSeq = (this._wbSeq || 0) + 1);
+    setTimeout(() => { if (seq !== this._wbSeq) return;
+      this.setState({ wbLoading: false, wbData: { cluster_id: id, evidence_cards: CARDS[id] || [] } });
+    }, this.lat());
+  }
+  toggleCard(card) {
+    this.setState(s => {
+      const has = s.basket.some(b => b.card_id === card.card_id);
+      if (has) return { basket: s.basket.filter(b => b.card_id !== card.card_id) };
+      if (s.basket.length >= 5) return {};
+      return { basket: s.basket.concat([{ card_id: card.card_id, cluster_id: card.cluster_id }]) };
+    });
+  }
+  submitCombo = () => {
+    this.setState({ comboPhase: "loading" });
+    setTimeout(() => {
+      const sc = this.props.comboResponse || "degraded";
+      if (sc === "error_400") this.setState({ comboPhase: "err400" });
+      else if (sc === "error_422") this.setState({ comboPhase: "err422" });
+      else this.setState({ comboPhase: "done", comboResult: sc === "ok" ? COMBO_RESP.ok : COMBO_RESP.degraded });
+    }, Math.max(this.lat() * 2, 900));
+  };
+  renderVals() {
+    const s = this.state;
+    const navDefs = [
+      { key: "plaza", label: "热点广场", to: "/plaza/hot" },
+      { key: "workbench", label: "工作台", to: "/clusters/" + s.lastWbId },
+      { key: "combo", label: "combo 入口", to: "/combo/new" },
+      { key: "system", label: "S1 通用件", to: "/system" },
+      { key: "spec", label: "对照表", to: "/spec" },
+    ];
+    const navItems = navDefs.map(n => ({ label: n.label, active: s.route === n.key, onClick: () => this.nav(n.to) }));
+    const catChips = [{ category_id: "all", name: "全部" }].concat(s.cats || []).map(c => ({
+      name: c.name, active: s.activeCat === c.category_id, inactive: s.activeCat !== c.category_id,
+      onClick: () => this.setState({ activeCat: c.category_id }),
+    }));
+    const plaza = s.plaza;
+    const clusterRows = [], weakRows = [];
+    if (plaza) {
+      plaza.clusters.forEach((c, i) => {
+        if (s.activeCat !== "all" && c.category_id !== s.activeCat) return;
+        const ex = !!s.expanded[c.cluster_id];
+        clusterRows.push({
+          rank: String(i + 1).padStart(2, "0"), name: c.canonical_name, id: c.cluster_id,
+          catName: catName(c.category_id), rot: i % 2 ? 1 : -1, status: c.status,
+          srcG: f1(c.by_source.gtrends), srcW: f1(c.by_source.weibo), srcH: f1(c.by_source.ghtrend), srcA: f1(c.by_source.arxiv),
+          hotness: f2(c.hotness), expanded: ex, expandGlyph: ex ? "−" : "+",
+          onToggle: () => this.setState(st => ({ expanded: Object.assign({}, st.expanded, { [c.cluster_id]: !st.expanded[c.cluster_id] }) })),
+          onOpen: () => this.nav("/clusters/" + c.cluster_id),
+          comps: [
+            { k: "VELOCITY", v: f1(c.hotness_components.velocity) },
+            { k: "ACCEL", v: f1(c.hotness_components.accel) },
+            { k: "CROSS_COUNT", v: String(c.hotness_components.cross_count) },
+            { k: "MULTI_BOOST", v: f1(c.hotness_components.multi_boost) },
+            { k: "NOVELTY_FACTOR", v: f1(c.hotness_components.novelty_factor) },
+            { k: "DECAY", v: f1(c.hotness_components.decay) },
+            { k: "TOTAL_HEAT", v: f1(c.total_heat) },
+          ],
+        });
+      });
+      plaza.weak_signals.forEach(w => {
+        if (s.activeCat !== "all" && w.category_id !== s.activeCat) return;
+        weakRows.push({
+          name: w.canonical_name, id: w.cluster_id, catName: catName(w.category_id),
+          score: f1(w.weak_score),
+          metrics: [
+            { k: "AGG", v: f1(w.agg) }, { k: "VELOCITY", v: f1(w.velocity) },
+            { k: "DRIFT", v: f2(w.drift) }, { k: "BURST_WEIGHT", v: f1(w.burst_weight) },
+          ],
+          onOpen: () => this.nav("/clusters/" + w.cluster_id),
+        });
+      });
+    }
+    const plazaEmpty = !!plaza && plaza.clusters.length === 0 && plaza.weak_signals.length === 0;
+    const wb = s.wbData;
+    const wbCards = (wb ? wb.evidence_cards : []).map(card => {
+      const sel = s.basket.some(b => b.card_id === card.card_id);
+      return {
+        cardId: card.card_id, keywords: card.keyword_ids, links: card.top_links,
+        flagN: card.flags.indexOf("novelty") >= 0, flagM: card.flags.indexOf("momentum") >= 0, flagR: card.flags.indexOf("revival") >= 0,
+        selected: sel, selLabel: sel ? "− 移出选卡篮" : "+ 选入 combo",
+        onToggleSel: () => this.toggleCard(card),
+      };
+    });
+    const basketCards = s.basket.map(b => ({
+      cardId: b.card_id, clusterName: NAME_MAP[b.cluster_id] || b.cluster_id,
+      onRemove: () => this.setState(st => ({ basket: st.basket.filter(x => x.card_id !== b.card_id) })),
+    }));
+    const comboGroups = PLAZA["2026-07-04"].clusters.map(c => ({
+      name: c.canonical_name, id: c.cluster_id,
+      cards: (CARDS[c.cluster_id] || []).map(card => {
+        const sel = s.basket.some(b => b.card_id === card.card_id);
+        return { cardId: card.card_id, kwText: card.keyword_ids.join(" · "), sel, unsel: !sel,
+          disabled: !sel && s.basket.length >= 5, onToggle: () => this.toggleCard(card) };
+      }),
+    }));
+    const n = s.basket.length;
+    const hypOk = s.hypothesis.trim().length > 0;
+    const countOk = n >= 2 && n <= 5;
+    let valMsg = "";
+    if (n === 0) valMsg = "选卡篮为空：card_ids 需 2~5 张证据卡。";
+    else if (n < 2) valMsg = "还差 " + (2 - n) + " 张：card_ids 需 2~5 张。";
+    else if (!hypOk) valMsg = "关联假设 hypothesis 不能为空。";
+    const result = s.comboResult;
+    return {
+      isTrue: true, rotPos: 1, rotNeg: -1, voidH: 88,
+      navItems, catChips, catsLoading: s.catsLoading,
+      onHome: () => this.nav("/plaza/hot"),
+      showPlaza: s.route === "plaza", showWorkbench: s.route === "workbench", showCombo: s.route === "combo",
+      showSystem: s.route === "system", showSpec: s.route === "spec", show404: s.route === "404",
+      notFoundDesc: "地址「" + s.badRoute + "」未匹配任何路由。空数据不会出现在这里——只有地址本身不存在时才会看到本页。",
+      dayInput: s.dayInput, dayApplied: s.dayApplied,
+      onDayChange: e => this.setState({ dayInput: e.target.value }),
+      onDayCommit: () => this.loadPlaza(this.state.dayInput.trim()),
+      onPreset04: () => { this.setState({ dayInput: "2026-07-04" }); this.loadPlaza("2026-07-04"); this.nav("/plaza/hot"); },
+      onPreset20: () => { this.setState({ dayInput: "2026-07-20" }); this.loadPlaza("2026-07-20"); },
+      onPresetBad: () => { this.setState({ dayInput: "2026-7-4" }); this.loadPlaza("2026-7-4"); },
+      dayErrorText: s.plazaError ? "day 需为 YYYY-MM-DD" : "",
+      plazaLoading: s.plazaLoading, plazaHasError: !!s.plazaError,
+      plazaEmpty, plazaHasData: !!plaza && !plazaEmpty,
+      emptyDayDesc: s.dayApplied + " 两轨均为空（clusters=[]，weak_signals=[]）；换一个日期查看。",
+      clusterRows, weakRows,
+      clusterCountText: clusterRows.length + " 簇",
+      clustersFilteredEmpty: !!plaza && !plazaEmpty && clusterRows.length === 0 && plaza.clusters.length > 0,
+      weakFilteredEmpty: !!plaza && !plazaEmpty && weakRows.length === 0 && plaza.weak_signals.length > 0,
+      wbName: s.wbId ? (NAME_MAP[s.wbId] || s.wbId) : "", wbId: s.wbId || "",
+      wbLoading: s.wbLoading, wbEmpty: !!wb && wb.evidence_cards.length === 0,
+      wbHasCards: !!wb && wb.evidence_cards.length > 0, wbCards,
+      onBackToPlaza: () => this.nav("/plaza/hot"),
+      onOpenUnknown: () => this.nav("/clusters/c-unknown-999"),
+      pickerLoading: s.pickerLoading, pickerReady: s.pickerLoaded, comboGroups,
+      basketCount: String(n), basketIsEmpty: n === 0, basketCards,
+      hypothesis: s.hypothesis, onHypChange: e => this.setState({ hypothesis: e.target.value }),
+      hasValMsg: !!valMsg && s.comboPhase !== "loading", valMsg,
+      submitDisabled: !(countOk && hypOk) || s.comboPhase === "loading",
+      onSubmit: this.submitCombo,
+      comboLoading: s.comboPhase === "loading",
+      comboSuccess: s.comboPhase === "done",
+      comboProjectId: result ? result.project_id : "",
+      comboTopicIds: result ? result.topic_ids : [],
+      comboDegraded: !!result && result.degraded === true,
+      comboNotDegraded: !!result && result.degraded === false && s.comboPhase === "done",
+      comboErr400: s.comboPhase === "err400", comboErr422: s.comboPhase === "err422",
+      onComboReset: () => this.setState({ comboPhase: "idle", comboResult: null }),
+      showBasketFloat: n > 0 && (s.route === "plaza" || s.route === "workbench"),
+      onGoCombo: () => this.nav("/combo/new"),
+      onGo404: () => this.nav("/nowhere"),
+      onGoSystem: () => this.nav("/system"),
+    };
+  }
+}
+</script>
+</body>
+</html>

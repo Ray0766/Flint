@@ -1,0 +1,5 @@
+v0.4.1 第 4 批收工 · 2026-08-06
+20/20 verified · Σ27 cycles
+出口判据：backend_not_assembled=0 · frontend_untyped_response=0
+全局门：ruff 通过 · mypy 301 files · pytest 4088 · 前端 754 · tsc 无输出
+报告：docs/V041-BATCH4-COMPLETION.md

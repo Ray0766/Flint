@@ -1,0 +1,18 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "weibo",
+ "url": "https://passport.weibo.com/js/visitor/mini_original.js?v=20161116",
+ "requested_at_utc": "2026-08-09T18:14:02.332097+00:00",
+ "status": 200,
+ "final_url": "https://passport.weibo.com/js/visitor/mini_original.js?v=20161116",
+ "redirects": [],
+ "headers": {
+  "content-type": "application/x-javascript",
+  "server": "APISIX/3.14.1"
+ },
+ "body_head": "window.ufp = window.ufp || {};\r\nwindow.ufp.config = {\r\n    platforms: [\r\n        [\"Win\", 1],\r\n        [\"Mac\", 2],\r\n        [\"Linux\", 3],\r\n        [\"FreeBSD\", 4],\r\n        [\"iPhone\", 21.1],\r\n        [\"iPod\", 21.2],\r\n        [\"iPad\", 21.3],\r\n        [\"Win.*CE\", 12.1],\r\n        [\"Win.*Mobile\", 12.2],\r\n        [\"Pocket\\\\s*PC\", 12.3],\r\n        [\"\", 999]\r\n    ],\r\n\r\n    plugins: {\r\n        '\\u9a71\\u52a8\\u7cbe\\u7075\\u5728\\u7ebf\\u72481.0.0.5': {\r\n            classid: 'clsid:A9EA64C1-D146-4B99-86A7-68B1786D82C0',\r\n            filename: \"dgweb.dll\",\r\n            name: \"\\u9a71\\u52a8\\u7cbe\\u7075\\u5728\\u7ebf\\u7248\",\r\n            version: '1.0.0.5'\r\n        },\r\n        'PPLive Lite Class ver 3.1.8.6046': {\r\n            classid: 'clsid:EF0D1A14-1033-41A2-A589-240C01EDC078',\r\n            filename: \"pplugin2.dll\",\r\n            name: \"PPLive Lite Class\",\r\n            version: '3.1.8.6046'\r\n        },\r\n        'baiduplayer Browser Plugin': {\r\n            classid: 'clsid:02E2D748-67F8-48B4-8AB4-0A085374BB99',\r\n            filename: \"npxbdyy.dll\",\r\n            name: \"BaiduPlayer Browser Plugin\"\r\n        },\r\n        'webmod Class': {\r\n            classid: 'clsid:FEE3C8C5-9BEA-4079-AB36-63ECABFC7392',\r\n            filename: \"Alidcp.dll\"\r\n        }\r\n    },\r\n\r\n    Detectable_Components_in_Internet_Explorer_by_capclient: {\r\n        \"Address Book\": \"7790769C-0471-11D2-AF11-00C04FA35D02\",\r\n        \"Windows Desktop Update NT\": \"89820200-ECBD-11CF-8B85-00AA005B4340\",\r\n        \"DirectAnimation\": \"283807B5-2C60-11D0-A31D-00AA00B92C03\",\r\n        \"DirectAnimation Java Classes\": \"4F216970-C90C-11D1-B5C7-0000F8051515\",\r\n        \"DirectShow\": \"44BBA848-CC51-11CF-AAFA-00AA00B6015C\",\r\n        \"Dynamic HTML Data Binding\": \"9381D8F2-0288-11D0-9501-00AA00B911A5\",\r\n        \"Dynamic HTML Data Binding for Java\": \"4F216970-C90C-11D1-B5C7-0000F8051515\",\r\n        \"Internet Connection Wizard\": \"5A8D6EE0-3E18-11D0-821E-444553540000\",\r\n        \"Internet Explorer 5 Browser\": \"89820200-ECBD-11CF-8B85-00AA005B4383\",\r\n        \"Windows Internet Explorer Classes for Jav",
+ "body_bytes": 67495,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": []
+}

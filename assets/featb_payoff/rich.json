@@ -1,0 +1,128 @@
+{
+ "model": "qwen3.6:35b-a3b",
+ "card_ids": [
+  "card-featb-flask",
+  "card-featb-arxiv"
+ ],
+ "hypothesis": "把两个不同热点的方法迁移到同一落地场景，做一个可复用工作台",
+ "delta": 0.05,
+ "degraded": true,
+ "dropped_conflicts": [
+  [
+   "topic-caliber-2",
+   "topic-caliber-3"
+  ],
+  [
+   "topic-caliber-2",
+   "topic-caliber-4"
+  ]
+ ],
+ "regen_rounds": 3,
+ "generations": 5,
+ "topics": [
+  {
+   "topic_id": "topic-caliber-1",
+   "one_liner": "面向独立开发者的本地化 AI Agent 工作台：集成 Flask 微服务架构与 Transformer 注意力机制，实现低代码、可复用的智能应用构建",
+   "target_user_tag": "独立开发者 / 全栈工程师",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "轻量级 Web 框架的成熟与注意力机制的理论奠基，共同降低了构建定制化 AI 应用的工程门槛",
+   "why_now_evidences": [
+    {
+     "event": "pallets/flask 将 web 应用框架定位为轻量 micro framework",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-flask"
+    },
+    {
+     "event": "Attention Is All You Need 提出基于复杂循环或卷积神经网络编码器-解码器配置的主导序列转导模型",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-arxiv"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "Web 应用框架": [
+     "Flask",
+     "micro framework",
+     "Python web app",
+     "lightweight backend"
+    ],
+    "Transformer 注意力机制": [
+     "Attention Is All You Need",
+     "sequence transduction",
+     "encoder-decoder",
+     "self-attention model"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-2",
+   "one_liner": "面向非算法工程师的本地化 Agent 工作台：集成 Flask 微服务架构与 Transformer 注意力模型，实现低代码 AI 应用构建",
+   "target_user_tag": "全栈开发者 / 独立开发者（非 AI 专家）",
+   "form_factor_tag": "本地 Agent / CLI 工具",
+   "why_now_claim": "轻量级 Web 框架与注意力机制的成熟结合，使得在本地构建具备复杂推理能力的微服务应用成为可能",
+   "why_now_evidences": [
+    {
+     "event": "pallets/flask 将 web 应用框架定位为轻量 micro framework",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-flask"
+    },
+    {
+     "event": "Attention Is All You Need 指出主导的序列转导模型基于编码器-解码器配置中的复杂循环或卷积神经网络，确立了注意力机制的核心地位",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-arxiv"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "Web 应用框架": [
+     "Flask micro framework",
+     "Python web app builder",
+     "lightweight backend"
+    ],
+    "Transformer 注意力机制": [
+     "Attention Is All You Need",
+     "sequence transduction",
+     "encoder-decoder configuration",
+     "attention model integration"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-5",
+   "one_liner": "面向非算法工程师的本地化 LLM 编排工作台：集成 Flask 微服务架构与 Transformer 注意力机制，实现低代码 AI 应用构建",
+   "target_user_tag": "全栈开发者 / AI 应用原型设计师",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "工程框架的轻量化趋势与注意力机制的理论奠基共同降低了 AI 应用的构建门槛，使得在本地环境快速集成复杂模型成为可能。",
+   "why_now_evidences": [
+    {
+     "event": "pallets/flask 将 web 应用框架定位为轻量 micro framework",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-flask"
+    },
+    {
+     "event": "Attention Is All You Need 确立了基于注意力机制的序列转导模型主导地位，取代了复杂的循环或卷积神经网络编码器-解码器配置",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-arxiv"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "Web 应用框架": [
+     "Flask micro framework",
+     "Python web application",
+     "lightweight backend",
+     "pallets/flask"
+    ],
+    "Transformer 注意力机制": [
+     "Attention Is All You Need",
+     "sequence transduction",
+     "encoder-decoder configuration",
+     "transformer architecture"
+    ]
+   }
+  }
+ ],
+ "prompt_name": "topic_gen@3",
+ "schema_misses": 0,
+ "variant": "rich"
+}

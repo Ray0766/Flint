@@ -1,0 +1,114 @@
+{
+ "judge_model": "claude-sonnet-5",
+ "cost_usd": 0.08859,
+ "input_tokens": 27530,
+ "output_tokens": 3353,
+ "unavailable": [],
+ "votes": {
+  "golddoc-generic-plain/summary/generic/summary/q3": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-generic-plain/market/generic/market/q2": {
+   "answered": true,
+   "available": true,
+   "answer": "团队计划优先覆盖粤语、闽南语、吴语、西南官话等使用人群基数较大、商业需求较明确的方言片区，逐步扩展至覆盖长尾方言，形成难以被简单复制的语料资源壁垒与标注流程护城河，从而在方言语音数据这一垂直赛道上建立起先发优势与规模效应，并为后续向多语种、跨境方言数据服务延伸预留战略空间。"
+  },
+  "golddoc-generic-plain/budget/generic/budget/q2": {
+   "answered": true,
+   "available": true,
+   "answer": "总预算初步设定为一百二十万元人民币（PriceCell-2），覆盖为期十二个月的建设周期。"
+  },
+  "golddoc-generic-channels/budget/generic/budget/q2": {
+   "answered": true,
+   "available": true,
+   "answer": "整体来看，本项目预算规模较小，符合MVP（最小可行产品）阶段快速验证市场需求的定位，资金压力可控，风险敞口有限，为后续版本迭代与规模化投入预留了充分的决策空间。"
+  },
+  "golddoc-generic-channels/risks/generic/risks/q3": {
+   "answered": true,
+   "available": true,
+   "answer": "需借助外部顾问或延长测试周期缓解。"
+  },
+  "golddoc-thesis-plain/related_work/thesis/related_work/q1": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-thesis-plain/evaluation_plan/thesis/evaluation_plan/q2": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-thesis-plain/timeline/thesis/timeline/q1": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-thesis-plain/timeline/thesis/timeline/q3": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-thesis-plain/resources/thesis/resources/q1": {
+   "answered": true,
+   "available": true,
+   "answer": "综合来看，本项目所需的设备、算力、软件许可与人力资源均已具备或已在可控预算范围内落实，能够支撑项目从野外数据采集、传输处理到最终地质建模与成果输出的全流程实施，资源就绪度较高，具备启动实施的现实基础。"
+  },
+  "golddoc-thesis-channels/related_work/thesis/related_work/q3": {
+   "answered": true,
+   "available": true,
+   "answer": "这些局限正是本项目的切入点：本团队在车规芯片可靠性建模与嵌入式健康监测系统开发方面已有多年积累（Profile-1），计划在现有研究基础上构建融合多机制物理模型与轻量化深度学习的混合预测框架，并结合实车运行数据进行验证，以弥补现有方法在真实场景适应性与可解释性上的不足，为车规芯片全生命周期健康管理提供可落地的技术支撑。"
+  },
+  "golddoc-thesis-channels/method/thesis/method/q1": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-thesis-channels/method/thesis/method/q2": {
+   "answered": true,
+   "available": true,
+   "answer": "第一阶段是特征工程与退化指标提取，从晶体管级电学参数（阈值电压漂移、跨导退化、漏电流变化）中筛选出与老化机理强相关的敏感特征，剔除噪声维度，同时对特征进行标准化处理以适配后续联合建模需求，这一步依赖团队此前在功率器件可靠性分析领域积累的工程经验（Profile-1）。"
+  },
+  "golddoc-thesis-channels/evaluation_plan/thesis/evaluation_plan/q3": {
+   "answered": true,
+   "available": true,
+   "answer": "漏检率则要求低于1%（Fact-4），因为漏检直接关系到车辆行驶安全，属于一票否决类指标，任何超过阈值的方案均须重新迭代。"
+  },
+  "golddoc-thesis-channels/timeline/thesis/timeline/q1": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-thesis-channels/resources/thesis/resources/q1": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-startup-plain/market_size/startup/market_size/q1": {
+   "answered": true,
+   "available": true,
+   "answer": "据行业测算，退役电池综合处理（含检测、梯次利用、回收拆解）市场规模在未来五年内有望达到千亿元级别（Fact-4），其中检测与分选环节占整体产业链价值量的比例约为8%至12%（Fact-5），对应的检测服务市场规模有望达到百亿元量级（Fact-6）。"
+  },
+  "golddoc-startup-plain/financials/startup/financials/q2": {
+   "answered": true,
+   "available": true,
+   "answer": "项目总投入预算为186万元（PriceCell-1），涵盖设备采购、场地改造、人员薪酬及运营维护四大板块，覆盖周期为十二个月。"
+  },
+  "golddoc-startup-channels/market_size/startup/market_size/q1": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  },
+  "golddoc-startup-channels/go_to_market/startup/go_to_market/q1": {
+   "answered": true,
+   "available": true,
+   "answer": "预计这一渠道的获客成本显著低于纯新增市场（PriceCell-1），转化周期也更短，因为用户无需重新评估屋顶条件、电网报装等前置问题。"
+  },
+  "golddoc-startup-channels/business_model/startup/business_model/q3": {
+   "answered": false,
+   "available": true,
+   "answer": ""
+  }
+ }
+}

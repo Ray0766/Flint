@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/1HeaEnK8VKcfS+UIKaMsv3OMi48</id>
+  <title>arXiv Query: search_query=all:electroencephalography-based OR all:BCI&amp;id_list=&amp;start=0&amp;max_results=3</title>
+  <updated>2026-08-10T23:27:14Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:electroencephalography-based+OR+all:BCI&amp;start=0&amp;max_results=3&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>
+  <opensearch:totalResults>1835</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1906.02894v1</id>
+    <title>Early Prediction of Epilepsy Seizures VLSI BCI System</title>
+    <updated>2019-06-07T04:45:19Z</updated>
+    <link href="https://arxiv.org/abs/1906.02894v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.02894v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Controlling the surrounding world and predicting future events has always seemed like a dream, but that could become a reality using a Brain-Computer/Machine Interface (BCI/BMI). Epilepsy is a group of neurological diseases characterized by epileptic seizures. It affects millions of people worldwide, with 80 percent of cases occurring in developing countries. This can result in accidents and sudden, unexpected death. Seizures can happen undetectably in newborns, comatose, or motor-impaired patients, especially due to the fact that many medical personnel is not qualified for EEG signal analysis. Therefore, a portable automated detection and monitoring solution is in high demand. Thus, in this study, a system of a wireless wearable adaptive for early prediction of epilepsy seizures is proposed, works via minimally invasive wireless technology paired with an external control device (e.g., a doctors smartphone), with a higher than standard accuracy 71 percent and prediction time (14.56 sec). This novel architecture has not only opened new opportunities for daily usable BCI implementations, but they can also save a life by helping to prevent a seizure fatal consequences</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-07T04:45:19Z</published>
+    <arxiv:comment>Novel predictive BCI VLSI architecture</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Zaghloul Saad Zaghloul</name>
+    </author>
+    <author>
+      <name>Magdy Bayoumi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.03428v1</id>
+    <title>Zero-calibration cVEP BCI using word prediction: a proof of concept</title>
+    <updated>2018-09-21T06:25:56Z</updated>
+    <link href="https://arxiv.org/abs/1810.03428v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.03428v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Brain Computer Interfaces (BCIs) based on visual evoked potentials (VEP) allow for spelling from a keyboard of flashing characters. Among VEP BCIs, code-modulated visual evoked potentials (c-VEPs) are designed for high-speed communication . In c-VEPs, all characters flash simultaneously. In particular, each character flashes according to a predefined 63-bit binary sequence (m-sequence), circular-shifted by a different time lag. For a given character, the m-sequence evokes a VEP in the electroencephalogram (EEG) of the subject, which can be used as a template. This template is obtained during a calibration phase at the beginning of each session. Then, the system outputs the desired character after a predefined number of repetitions by estimating its time lag with respect to the template. Our work avoids the calibration phase, by extracting from the VEP relative lags between successive characters, and predicting the full word using a dictionary.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.NC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-21T06:25:56Z</published>
+    <arxiv:comment>BCI 2018 - 7th International BCI Meeting, May 2018, Pacific Grove, California, United States</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Federica Turi</name>
+      <arxiv:affiliation>ATHENA, UCA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nathalie Gayraud</name>
+      <arxiv:affiliation>ATHENA, UCA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Maureen Clerc</name>
+      <arxiv:affiliation>ATHENA, UCA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.07064v2</id>
+    <title>Evaluation of a congruent auditory feedback for Motor Imagery BCI</title>
+    <updated>2018-05-22T08:26:23Z</updated>
+    <link href="https://arxiv.org/abs/1805.07064v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.07064v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Designing a feedback that helps participants to achieve higher performances is an important concern in brain-computer interface (BCI) research. In a pilot study, we demonstrate how a congruent auditory feedback could improve classification in a electroencephalography (EEG) motor imagery BCI. This is a promising result for creating alternate feedback modality.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-18T06:35:21Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <arxiv:journal_ref>International BCI meeting, May 2018, Asilomar, United States. http://bcisociety.org/</arxiv:journal_ref>
+    <author>
+      <name>Emmanuel Christophe</name>
+      <arxiv:affiliation>PRISM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jérémy Frey</name>
+      <arxiv:affiliation>PRISM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Richard Kronland-Martinet</name>
+      <arxiv:affiliation>PRISM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jean-Arthur Micoulaud-Franchi</name>
+      <arxiv:affiliation>Potioc</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jelena Mladenović</name>
+      <arxiv:affiliation>Potioc</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Gaëlle Mougin</name>
+      <arxiv:affiliation>PG, HCP</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jean Vion-Dury</name>
+      <arxiv:affiliation>PRISM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Solvi Ystad</name>
+      <arxiv:affiliation>PRISM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mitsuko Aramaki</name>
+      <arxiv:affiliation>PRISM</arxiv:affiliation>
+    </author>
+  </entry>
+</feed>

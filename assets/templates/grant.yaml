@@ -1,0 +1,67 @@
+template_id: grant
+locale: zh-CN
+audience: human_reader
+sections:
+- section_id: significance
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 意义陈述是否挂权威证据？
+  charts: []
+- section_id: innovation
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 创新点是否与文献对照？
+  charts: []
+- section_id: approach
+  ratio:
+    share: 0.25
+    unit: words
+    min_words: 750
+    max_words: 2250
+  check_questions:
+  - 技术路线是否含备选？
+  charts: []
+- section_id: feasibility
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 可行性是否引 track_record？
+  charts: []
+- section_id: team_resources
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 团队与设备是否走 ProfileRef？
+  charts: []
+- section_id: budget_justification
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 预算依据是否全 PriceCell？
+  charts: []
+- section_id: timeline
+  ratio:
+    share: 0.05
+    unit: words
+    min_words: 150
+    max_words: 450
+  check_questions:
+  - 进度是否与资助期对齐？
+  charts: []

@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.funding.example/orgs?q=low+altitude+economy",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"organizations\": [{\"name\": \"Low Altitude Economy Labs 0\", \"last_round\": \"Seed\", \"raised_usd\": 5000000, \"url\": \"https://funding.example/low-altitude-economy/0\"}, {\"name\": \"Low Altitude Economy Labs 1\", \"last_round\": \"Series B\", \"raised_usd\": 10000000, \"url\": \"https://funding.example/low-altitude-economy/1\"}, {\"name\": \"Low Altitude Economy Labs 2\", \"last_round\": \"Seed\", \"raised_usd\": 15000000, \"url\": \"https://funding.example/low-altitude-economy/2\"}]}"
+ }
+]

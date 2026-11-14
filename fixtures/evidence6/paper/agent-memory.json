@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.crossref.org/works?query=agent+memory&rows=10",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"message\": {\"total-results\": 6, \"items\": [{\"DOI\": \"10.5555/agent-memory.0\", \"title\": [\"agent memory study 0\"], \"container-title\": [\"NeurIPS\"], \"is-referenced-by-count\": 259, \"published\": {\"date-parts\": [[2026, 1, 10]]}, \"URL\": \"https://doi.org/10.5555/agent-memory.0\", \"type\": \"journal-article\"}, {\"DOI\": \"10.5555/agent-memory.1\", \"title\": [\"agent memory study 1\"], \"container-title\": [\"Journal of Applied Energy\"], \"is-referenced-by-count\": 290, \"published\": {\"date-parts\": [[2026, 2, 10]]}, \"URL\": \"https://doi.org/10.5555/agent-memory.1\", \"type\": \"journal-article\"}, {\"DOI\": \"10.5555/agent-memory.2\", \"title\": [\"agent memory study 2\"], \"container-title\": [\"NeurIPS\"], \"is-referenced-by-count\": 321, \"published\": {\"date-parts\": [[2026, 3, 10]]}, \"URL\": \"https://doi.org/10.5555/agent-memory.2\", \"type\": \"journal-article\"}, {\"DOI\": \"10.5555/agent-memory.3\", \"title\": [\"agent memory study 3\"], \"container-title\": [\"Journal of Applied Energy\"], \"is-referenced-by-count\": 352, \"published\": {\"date-parts\": [[2026, 4, 10]]}, \"URL\": \"https://doi.org/10.5555/agent-memory.3\", \"type\": \"journal-article\"}, {\"DOI\": \"10.5555/agent-memory.4\", \"title\": [\"agent memory study 4\"], \"container-title\": [\"NeurIPS\"], \"is-referenced-by-count\": 383, \"published\": {\"date-parts\": [[2026, 5, 10]]}, \"URL\": \"https://doi.org/10.5555/agent-memory.4\", \"type\": \"journal-article\"}, {\"DOI\": \"10.5555/agent-memory.5\", \"title\": [\"agent memory study 5\"], \"container-title\": [\"Journal of Applied Energy\"], \"is-referenced-by-count\": 14, \"published\": {\"date-parts\": [[2026, 6, 10]]}, \"URL\": \"https://doi.org/10.5555/agent-memory.5\", \"type\": \"journal-article\"}]}}"
+ }
+]

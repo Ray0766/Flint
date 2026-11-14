@@ -1,0 +1,842 @@
+{
+ "spec_version": "v0.4.1-batch3",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward @2026-08-05",
+ "note": "第3批 = 装配（51 条端点接通）+ 契约对齐 + S1 通用件 + 两把尺子加宽 + 三条真缺陷 + 队列链路。每张卡都锚在第 2 批实测出来的真件上，NEVER 凭推测立卡。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B3-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "network": "NEVER 真实网络 / 真实 API key / 付费调用。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。playwright 恒在项目外 C:\\pwenv。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "WIRE-01",
+   "title": "装配①：flint/api/app.py 挂上全部路由族——51 条够不到的端点接通",
+   "milestone": "W3",
+   "inputs": [
+    "flint/api/app.py",
+    "flint/api/",
+    "docs/前后端对账表-v041.md"
+   ],
+   "outputs": [
+    "flint/api/app.py",
+    "tests/v041/test_app_assembly.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_app_assembly.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "flint/api/app.py 现为 22 行、只挂 /categories（M1-022 起步件）。本卡把 flint/api/ 下全部模块的路由族挂进同一个 ASGI 应用",
+    "逐条探活：对每一条已装配路由发一次请求并断言**不是 404**——NEVER 只断言 include_router 语句存在，那是空转（造得出 create_*_app 不等于挂上了，这正是 51 条藏了一整批的原因）",
+    "路由前缀零冲突：同一 method+path 被两个模块注册时判红并指出是哪两个模块",
+    "建应用不连库：create_app 在数据库不可达时仍能构造成功（依赖注入延迟到请求期），否则冒烟脚本起不来",
+    "python tools/check_fe_be_parity.py 的 backend_not_assembled 计数归零",
+    "NEVER 改动任一 flint/api/*.py 模块内部实现；模块若缺参数装不上，停下走 docs/blocked/ 并在 trace 写明缺什么"
+   ],
+   "context_refs": [
+    "docs/前后端对账表-v041.md",
+    "docs/trace/AUDIT-01.md",
+    "flint/api/app.py"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-02",
+   "title": "装配②：demo 栈改用装配后的 app，顺带修 start-demo 报告屏恒 500",
+   "milestone": "W3",
+   "inputs": [
+    "harness/demo_server.py",
+    "start-demo.ps1",
+    "docs/blocked/FE-DEMO-ENV-FLINT-API-BASE.md"
+   ],
+   "outputs": [
+    "harness/demo_server.py",
+    "start-demo.ps1",
+    "tests/v041/test_demo_stack_wired.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_demo_stack_wired.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "demo 栈的后端进程改用 WIRE-01 装配后的 app，NEVER 继续各屏各造一个 create_*_app",
+    "修掉 docs/blocked/FE-DEMO-ENV-FLINT-API-BASE.md 记的那条：按 start-demo.ps1 的环境起栈时 /deliverables/[id] 恒 500，根因是相对 URL 解析（Failed to parse URL from /deliverables/...）",
+    "判据是**起栈后真发请求**拿到非 500，NEVER 只断言脚本里那行环境变量存在",
+    "关闭 docs/blocked/FE-DEMO-ENV-FLINT-API-BASE.md（顶部加关闭横幅 + 日期 + 修法一句）"
+   ],
+   "context_refs": [
+    "docs/blocked/FE-DEMO-ENV-FLINT-API-BASE.md",
+    "harness/demo_server.py"
+   ],
+   "depends_on": [
+    "WIRE-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-03",
+   "title": "装配③：九张新屏从「接口未提供」切到真数据（DEC-031 到期）",
+   "milestone": "W3",
+   "inputs": [
+    "web/app/",
+    "web/lib/",
+    "docs/V041-BATCH2-COMPLETION.md"
+   ],
+   "outputs": [
+    "web/app/",
+    "web/lib/",
+    "tests/v041/test_ui_wired_live.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_ui_wired_live.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "UI-03~11 九张屏改打装配后的真端点；组件里备好的两条路切到真数据那条",
+    "NotProvided 只在**端点真的没有**时出现：断言九张屏在装配后的栈上零 NotProvided，NEVER 用注释或 flag 把它藏起来",
+    "「没查过」与「查过了是空的」仍然 NEVER 挤进同一个表示——空态、错误态、未提供态三者的 data-*-state 各不相同（第 2 批钉住的纪律，本卡继承）",
+    "既有前端测试全绿不倒（第 2 批出口 745 passed / 74 文件）"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH2-COMPLETION.md",
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [
+    "WIRE-01",
+    "WIRE-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-04",
+   "title": "装配④：主链路四屏 + 九张新屏逐屏像素取证（明暗两主题）",
+   "milestone": "W3",
+   "inputs": [
+    "scripts/ui_probe.py",
+    "tools/visual_assert.py",
+    "harness/fe_smoke.py"
+   ],
+   "outputs": [
+    "harness/fe_smoke.py",
+    "tests/v041/test_screens_live_probe.py",
+    ".ui-probe/"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_screens_live_probe.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "十三张屏逐屏取证：HTTP 200 · 零控制台报错 · 无横向溢出 · 明暗两主题各一张截图存档",
+    "复用 DARK-02 建的 theme-switches 前置判据：两主题量到同一组颜色即判红，NEVER 关掉它",
+    "阴性对照：把任一屏的样式加载摘掉后判据必须报红",
+    "截图落 .ui-probe/，文件名带屏名与主题，NEVER 覆盖上一批的取证"
+   ],
+   "context_refs": [
+    "docs/trace/EYE-02.md",
+    "docs/trace/EYE-03.md"
+   ],
+   "depends_on": [
+    "WIRE-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-05",
+   "title": "装配⑤：装配面接进全局门，防止再裂开",
+   "milestone": "W3",
+   "inputs": [
+    "tools/check_fe_be_parity.py",
+    "tests/v041/test_fe_be_parity.py"
+   ],
+   "outputs": [
+    "tests/v041/test_fe_be_parity.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_fe_be_parity.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "把 backend_not_assembled 计数写成硬判据：大于 0 即红，并逐条列出是哪些路由",
+    "新增模块忘了挂 → 这条判据必须变红：阴性对照用一个临时模块验证（测试结束后删除，NEVER 留在产品树里）",
+    "判据在 pytest -q 里跑得到（F-11 的教训：不在门里的尺子等于没有）"
+   ],
+   "context_refs": [
+    "docs/trace/AUDIT-01.md"
+   ],
+   "depends_on": [
+    "WIRE-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-06",
+   "title": "装配⑥：SSE 长连接屏在装配后的栈上实测可用",
+   "milestone": "W3",
+   "inputs": [
+    "web/app/jobs/[id]/",
+    "flint/api/",
+    "docs/blocked/S1-COMMON-STATES-MISSING.md"
+   ],
+   "outputs": [
+    "tests/v041/test_sse_live.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_sse_live.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "jobs/[id] 屏的 SSE 通道在装配后的 app 上真连一次并收到至少一个事件",
+    "断线场景有判据：连接中断时屏上出现明确的断线态，NEVER 静默停在旧数据上",
+    "本卡只验通道与断线态；SseDisconnectNotice 组件本体归 UIX-02"
+   ],
+   "context_refs": [
+    "docs/blocked/S1-COMMON-STATES-MISSING.md"
+   ],
+   "depends_on": [
+    "WIRE-01",
+    "WIRE-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TYPE-01",
+   "title": "契约①：/deliverables/{} 的真漂移——前端类型少了三个后端字段",
+   "milestone": "W3",
+   "inputs": [
+    "web/lib/",
+    "flint/api/deliverables.py",
+    "docs/前后端对账表-v041.md"
+   ],
+   "outputs": [
+    "web/lib/",
+    "tests/v041/test_type_drift_deliverable.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_type_drift_deliverable.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "前端为 /deliverables/{} 建的类型补齐后端实际返回的 ledger_version · reproducible · version 三个字段",
+    "判据取自后端真实 payload，NEVER 手抄字段名清单（手抄的表不会跟着后端变）",
+    "对账表里这条 field_mismatch 消失"
+   ],
+   "context_refs": [
+    "docs/前后端对账表-v041.md"
+   ],
+   "depends_on": [
+    "WIRE-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TYPE-02",
+   "title": "契约②：九条端点前端根本没建类型——建齐",
+   "milestone": "W3",
+   "inputs": [
+    "web/lib/types.ts",
+    "docs/前后端对账表-v041.md"
+   ],
+   "outputs": [
+    "web/lib/types.ts",
+    "tests/v041/test_types_complete.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_types_complete.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "为对账表列出的九条端点建前端类型：/plaza/hot · /topics/{} · /projects/{}/topics · /projects/{}/analysis · /projects/{}/disputes · /projects/{}/evidence · /projects/combo · /clusters/{}/evidence-cards · /jobs/{}/verdict",
+    "字段以后端真实 payload 为准逐字对齐，NEVER 按蓝本或记忆写",
+    "对账表里 frontend_untyped_response 计数归零，并把该计数接成硬判据"
+   ],
+   "context_refs": [
+    "docs/前后端对账表-v041.md"
+   ],
+   "depends_on": [
+    "WIRE-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TYPE-03",
+   "title": "契约③：Verdict.constraints_checked 前端标成 boolean，后端是对象",
+   "milestone": "W3",
+   "inputs": [
+    "web/lib/viewsClient.ts",
+    "docs/blocked/VERDICT-CONSTRAINTS-CHECKED-TYPE.md"
+   ],
+   "outputs": [
+    "web/lib/viewsClient.ts",
+    "tests/v041/test_verdict_constraints_type.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_verdict_constraints_type.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "constraints_checked 改成对象类型，字段按后端 payload 逐字对齐（order · demoted_by_alignment · rule_a · rule_b · rule_c · gap_count）",
+    "危险点写成判据：非空对象恒为真，若有人按 boolean 写条件渲染会得到一个永远展开、内容为 true 的面板——测试构造这种误用并判红",
+    "关闭 docs/blocked/VERDICT-CONSTRAINTS-CHECKED-TYPE.md（顶部加关闭横幅 + 日期）"
+   ],
+   "context_refs": [
+    "docs/blocked/VERDICT-CONSTRAINTS-CHECKED-TYPE.md"
+   ],
+   "depends_on": [
+    "TYPE-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TYPE-04",
+   "title": "契约④：那条扫不动的动态派发路径——让它变成可判的",
+   "milestone": "W3",
+   "inputs": [
+    "tools/check_fe_be_parity.py",
+    "web/lib/"
+   ],
+   "outputs": [
+    "tools/check_fe_be_parity.py",
+    "tests/v041/test_parity_dynamic_path.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_parity_dynamic_path.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "/projects/${id}/${kind} 这条末段为参数的派发路径：要么在前端把可能的 kind 收敛成有限枚举让静态扫描判得动，要么让扫描器识别该枚举",
+    "dynamic_path_not_checked 这一类计数归零；若某条确实判不动，它 MUST 继续留在这一类里并被报告出来——NEVER 悄悄并进「已核对」",
+    "阴性对照：构造一条真判不动的路径，断言它仍被列进 dynamic_path_not_checked"
+   ],
+   "context_refs": [
+    "docs/前后端对账表-v041.md"
+   ],
+   "depends_on": [
+    "TYPE-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "UIX-01",
+   "title": "通用件①：LoadingSkeleton / EmptyState / ErrorState 三件 + 四个页面接入",
+   "milestone": "W3",
+   "inputs": [
+    "web/components/shell/",
+    "docs/blocked/S1-COMMON-STATES-MISSING.md",
+    "tests/v041/test_design_constraints.py"
+   ],
+   "outputs": [
+    "web/components/shell/",
+    "web/app/",
+    "tests/v041/test_design_constraints.py",
+    "tests/v041/test_common_states.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_common_states.py tests/v041/test_design_constraints.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "建三件通用件：LoadingSkeleton · EmptyState · ErrorState（交付包 S1 契约点名的五件里的前三件）",
+    "四个页面接入：app/deliverables/[id]/export · app/deliverables/[id] · app/demo · app/jobs/[id]",
+    "三态互不混用：加载态 ≠ 空态 ≠ 错误态，各有各的 data-*-state；「请求在路上」NEVER 渲染成「查过了没有内容」",
+    "把 tests/v041/test_design_constraints.py#KNOWN_GAPS 里对应的四行删掉——判据会因为少一条而红，那正是提醒删除的机制",
+    "node tools/check_design_constraints.mjs web 的 A6 违规归零"
+   ],
+   "context_refs": [
+    "docs/blocked/S1-COMMON-STATES-MISSING.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "UIX-02",
+   "title": "通用件②：NotFound404 与 SseDisconnectNotice",
+   "milestone": "W3",
+   "inputs": [
+    "web/components/shell/",
+    "docs/blocked/S1-COMMON-STATES-MISSING.md"
+   ],
+   "outputs": [
+    "web/components/shell/",
+    "tests/v041/test_notfound_and_sse_notice.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_notfound_and_sse_notice.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "建 S1 契约剩下的两件：NotFound404 · SseDisconnectNotice",
+    "NotFound404 与「接口未提供」NEVER 用同一个表示：一个是这条资源不存在，一个是这个能力还没接",
+    "SseDisconnectNotice 接进 jobs/[id] 屏，断线时可见（与 WIRE-06 的通道判据配对）"
+   ],
+   "context_refs": [
+    "docs/blocked/S1-COMMON-STATES-MISSING.md"
+   ],
+   "depends_on": [
+    "UIX-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "UIX-03",
+   "title": "通用件③：StatusMark——A4 规则现在无可量对象",
+   "milestone": "W3",
+   "inputs": [
+    "tools/check_design_constraints.mjs",
+    "web/components/"
+   ],
+   "outputs": [
+    "web/components/",
+    "tests/v041/test_status_mark.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_status_mark.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "建 StatusMark 组件：状态标记 MUST 有非颜色载体（文字或形状），NEVER 只靠颜色区分",
+    "A4 规则从 noSubject 名单里移出——现在有可量对象了；名单里少一条，判据据此变红并提醒",
+    "阴性对照：构造一个只靠颜色的状态标记，断言 A4 报红"
+   ],
+   "context_refs": [
+    "docs/blocked/S1-COMMON-STATES-MISSING.md",
+    "docs/trace/AUDIT-02.md"
+   ],
+   "depends_on": [
+    "UIX-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-07",
+   "title": "尺子①：locale 全仓尺加宽到九区代码 + 豁免清单写实",
+   "milestone": "W3",
+   "inputs": [
+    "tools/check_locale_seam.py",
+    "docs/blocked/LOCALE-SEAM-RULER-MISSES-REGION-CODES.md"
+   ],
+   "outputs": [
+    "tools/check_locale_seam.py",
+    "tests/v041/test_locale_seam_regions.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_locale_seam_regions.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "九区代码并入 LOCALE_LITERALS（CN · US · AU · SG · JP · KR · GB · IT · FR），取自冻结件而非手抄",
+    "两类豁免写实：数据表的键、类型声明——BL-09 已声明这两类不算违规，但当前没有针对区代码的白名单条目",
+    "先跑一遍全仓统计红多少处并写进 trace，再定豁免清单；豁免 MUST 逐条列名，NEVER 用通配一刀切",
+    "阴性对照：往任一模块插一行 region == \"CN\" 的分支假设与一处 select_sources(region=\"CN\") 的调用点实参，两种写法都要报红——变异考⑳ 当时两种都漏了",
+    "关闭 docs/blocked/LOCALE-SEAM-RULER-MISSES-REGION-CODES.md（走第 1 个选择）"
+   ],
+   "context_refs": [
+    "docs/blocked/LOCALE-SEAM-RULER-MISSES-REGION-CODES.md",
+    "docs/PRINCIPLES-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-08",
+   "title": "尺子②：换行符——一个 CRLF 就能让全仓剥注释的尺子集体失效",
+   "milestone": "W3",
+   "inputs": [
+    "docs/blocked/CRLF-BREAKS-COMMENT-STRIPPING.md",
+    "web/test-utils/"
+   ],
+   "outputs": [
+    "tools/",
+    "tests/v041/test_line_endings.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_line_endings.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "建一把换行符扫描尺：源码文件的行尾 MUST 一致，混入 CRLF 判红并指出是哪个文件",
+    "根因写进判据：JS 正则的行终止符定义使得剥注释那一步在 CRLF 下一个字都剥不掉——测试构造一份 CRLF 文件并断言剥注释失效被检出",
+    "接进全局门；同时评估是否需要 .gitattributes（本仓非 git 仓库时在 trace 记明并跳过该项，NEVER 悄悄略过）",
+    "关闭 docs/blocked/CRLF-BREAKS-COMMENT-STRIPPING.md"
+   ],
+   "context_refs": [
+    "docs/blocked/CRLF-BREAKS-COMMENT-STRIPPING.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-09",
+   "title": "尺子③：第 2 批 89 张卡的 acceptance ↔ 尺子专项清点",
+   "milestone": "W3",
+   "inputs": [
+    "docs/steward/tasks-v041-b2.json",
+    "tools/gauge_map.py",
+    "assets/gauge_map.json"
+   ],
+   "outputs": [
+    "assets/gauge_map.json",
+    "docs/尺子清点-v041-b2.md",
+    "tests/v041/test_gauge_map_b2.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_gauge_map_b2.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "照 GAUGE-02 的同一套办法，对第 2 批 89 张卡逐条 acceptance 回答「哪把尺子在守它」",
+    "查不到尺子的条目数 MUST 为 0，或逐条列名并说明为什么守不住——NEVER 用「已覆盖」一句话带过",
+    "产品是那份清单，不是代码；清单里每一条都要指到具体的测试函数名或工具名"
+   ],
+   "context_refs": [
+    "docs/trace/GAUGE-02.md",
+    "docs/尺子清点-v041.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-01",
+   "title": "缺陷①：\"\" in \"%％\" 恒为 True——正文末尾的每个数字都被误判",
+   "milestone": "W3",
+   "inputs": [
+    "flint/grounding/__init__.py",
+    "docs/blocked/GROUNDING-EMPTY-TAIL.md"
+   ],
+   "outputs": [
+    "flint/grounding/__init__.py",
+    "tests/v041/test_grounding_tail.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_grounding_tail.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "修 extract_numbers 的空串尾字符判断：Python 里空串是任何字符串的子串，于是正文以数字结尾时 is_percent 与 has_unit 双双为真",
+    "两个后果都要有判据：四位年份被当成 quantity 拿去查数字出处、整数被当成百分数——误判方向是**放松**，会让接地校验少查东西",
+    "既有用例的期望值若因此改变，逐条在 trace 写明改前改后与理由——NEVER 直接把期望值改成新行为了事",
+    "关闭 docs/blocked/GROUNDING-EMPTY-TAIL.md"
+   ],
+   "context_refs": [
+    "docs/blocked/GROUNDING-EMPTY-TAIL.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-02",
+   "title": "缺陷②：demo 报告正文引用了七个从未入库的实体",
+   "milestone": "W3",
+   "inputs": [
+    "docs/blocked/DEMO-REPORT-REFS-NOT-SEEDED.md",
+    "harness/demo_seed_report.py",
+    "fixtures/"
+   ],
+   "outputs": [
+    "harness/demo_seed_report.py",
+    "tests/v041/test_demo_refs_seeded.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_demo_refs_seeded.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "demo 报告屏正文引用的七个实体（两条 fact · 两条 price entry · 一条 chart · 一条 quality card · 两条 citation · 一条 hints ref）补种进 demo 库，或改 demo fixture 的 block 内容指向真实存在的实体",
+    "判据是**装配后的真栈上逐条解引用拿到内容**，NEVER 只断言种子脚本里有那几行",
+    "FB-09 的既有行为保留：端点不可用时如实标注并显示原 id，NEVER 空白、NEVER 编造",
+    "关闭 docs/blocked/DEMO-REPORT-REFS-NOT-SEEDED.md"
+   ],
+   "context_refs": [
+    "docs/blocked/DEMO-REPORT-REFS-NOT-SEEDED.md"
+   ],
+   "depends_on": [
+    "WIRE-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-03",
+   "title": "缺陷③：tsc 那两条既有错（WorkbenchSwitch 的 ?raw 导入）",
+   "milestone": "W3",
+   "inputs": [
+    "web/components/",
+    "docs/V041-BATCH2-COMPLETION.md"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_tsc_clean.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_tsc_clean.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "npx tsc --noEmit 归零：当前 2 条既有错来自 WorkbenchSwitch.test.tsx 的 ?raw 导入缺类型声明",
+    "修法是补类型声明，NEVER 用 any 或 ts-ignore 压掉",
+    "把 tsc --noEmit exit 0 接成判据，防止再攒新错"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH2-COMPLETION.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "QUEUE-01",
+   "title": "队列链路：经作业队列跑通 gate1（回放，非红线）",
+   "milestone": "W3",
+   "inputs": [
+    "flint/jobs/worker_main.py",
+    "docs/blocked/NET-03-CARD-PREMISE-STALE.md",
+    "fixtures/gate1_live/"
+   ],
+   "outputs": [
+    "flint/jobs/",
+    "tests/v041/test_gate1_via_queue.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_gate1_via_queue.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 裁决（DEC-032②）：这条链路缺的是 WorkerDeps.gate1_deps 注入而非网络授权，走 respx 回放验证，NEVER 继续挂红线",
+    "链路逐段跑通：提交作业 → jobs 表 → worker_main 消费 → gate1 判定 → 结果落盘，全程走 fixtures/gate1_live/ 的录制回放",
+    "respx 护栏不得绕过：断言全程零真实出网；**若回放下仍暴露出真实网络请求，立即停下走 docs/blocked/ 并把该链路退回红线卡**",
+    "NET-03 按 DEC-032① 标 skipped_by_owner，理由逐字记入台账（真实源检索已由 2026-07-31 payoff 执行并录制）"
+   ],
+   "context_refs": [
+    "docs/blocked/NET-03-CARD-PREMISE-STALE.md",
+    "docs/生产Gate1-真实源切换-payoff.md"
+   ],
+   "depends_on": [
+    "WIRE-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "LOC-01",
+   "title": "地区清单退役副本：前端 REGIONS 改从 /settings/locale 的 options 取",
+   "milestone": "W3",
+   "inputs": [
+    "web/components/region-switch/RegionSwitch.tsx",
+    "flint/api/settings.py"
+   ],
+   "outputs": [
+    "web/components/",
+    "tests/v041/test_regions_from_backend.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_regions_from_backend.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "BE-07 的 GET /settings/locale 已把九区清单当 options 返回；前端 REGIONS 常量改成从该端点取",
+    "断言前端不再持有九区代码的字面量副本——两份清单迟早各说各的，而读的人分不出哪份是真的",
+    "端点不可用时的回落行为明确：显示未提供态，NEVER 悄悄退回硬编码副本"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH2-COMPLETION.md"
+   ],
+   "depends_on": [
+    "WIRE-01",
+    "GAUGE-07"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "HYG-01",
+   "title": "卫生①：关闭三张根因已消失的陈旧问题单 + 单据状态机读化",
+   "milestone": "W3",
+   "inputs": [
+    "docs/blocked/",
+    "docs/progress-v04.jsonl"
+   ],
+   "outputs": [
+    "docs/blocked/",
+    "tests/v041/test_blocked_sheets_state.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_blocked_sheets_state.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "逐张核实并关闭根因已消失的单：I18N-01 与 I18N-FRONTEND-GROUP（13 张 I18N 卡在 progress-v04.jsonl 里全部 verified，next-intl 4.13.4 已在 web/package.json）· V0-PROMPTS-LOCK（tests/m2/test_m2_004.py 与 tests/fe_core/test_section_prompt.py 实测 9 passed）",
+    "CONCURRENT-WORKER-COLLISION 与 SUMMARY 标成历史留存并加醒目横幅：NEVER 被当作当前状态引用",
+    "单据状态机读化：每张单顶部 MUST 有 open 或 closed 标记，closed 的 MUST 带日期与解决它的卡号；缺标记判红",
+    "关闭前 MUST 逐张实跑验证根因消失并把命令输出贴进 trace，NEVER 凭印象关单"
+   ],
+   "context_refs": [
+    "docs/blocked/",
+    "docs/progress-v04.jsonl"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "HYG-02",
+   "title": "卫生②：owner_review 复核摘要——37 张压着没人看",
+   "milestone": "W3",
+   "inputs": [
+    "docs/steward/tasks-v041-b2.json",
+    "docs/trace/",
+    "docs/progress-v041.jsonl"
+   ],
+   "outputs": [
+    "docs/owner复核摘要-v041.md",
+    "tests/v041/test_owner_review_digest.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_owner_review_digest.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "把第 2 批 37 张 owner_review 卡逐张压成一行：卡号 · 一句话结论 · owner 要看的那个具体点 · trace 锚点",
+    "已被后续裁决覆盖的逐条标出（DEC-030/031/032 覆盖了哪些），让 owner 只看剩下的",
+    "机读守着不漂移：测试断言摘要里的卡号集合与 tasks-v041-b2.json 里 owner_review=true 的集合逐字相等",
+    "NEVER 替 owner 下结论——摘要只陈述与指路"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH2-COMPLETION.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "E2E-01",
+   "title": "端到端：一键起栈跑通主链路（提交 → gate1 → 报告 → 导出）",
+   "milestone": "W3",
+   "inputs": [
+    "start-demo.ps1",
+    "harness/",
+    "tests/v041/test_asm_05_e2e.py"
+   ],
+   "outputs": [
+    "harness/",
+    "tests/v041/test_e2e_full_stack.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_e2e_full_stack.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "在装配后的真栈上跑完整主链路：提交 → 入队 → worker 消费 → gate1 判定 → 组稿 → 渲染 → 导出",
+    "LLM 与外部源全程走录制回放，respx 护栏包住整条链；断言零真实出网",
+    "导出门禁两种用例都覆盖（409 与 200）",
+    "与 ASM-05 的既有 7 条用例的区别写进 trace：那 7 条走的是 harness 直调，本卡走的是装配后的 ASGI 应用 + 队列"
+   ],
+   "context_refs": [
+    "docs/trace/ASM-05.md",
+    "docs/blocked/E2E-REALSOURCE.md"
+   ],
+   "depends_on": [
+    "WIRE-01",
+    "WIRE-02",
+    "QUEUE-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-03",
+   "title": "收尾：第 3 批完成态报告 + 出口全局门",
+   "milestone": "W3",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b3.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH3-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041 -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "完成态报告逐项写：收在哪儿 · 全局门最后一次实跑输出 · 本批发现 · 未解决清单 · 给下一批的建议",
+    "全局门五条全绿并把输出逐字贴进报告：ruff check . --no-cache · mypy --strict flint · pytest -q · cd web && npm test -- --run · npx tsc --noEmit",
+    "对账器与设计约束尺各跑一次并贴输出：backend_not_assembled 与 frontend_untyped_response 两个计数 MUST 为 0",
+    "未解决的逐条列名并说明卡在谁那里，NEVER 用一句「其余无异常」收口"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH2-COMPLETION.md"
+   ],
+   "depends_on": [
+    "WIRE-04",
+    "WIRE-05",
+    "WIRE-06",
+    "TYPE-01",
+    "TYPE-03",
+    "TYPE-04",
+    "UIX-02",
+    "UIX-03",
+    "GAUGE-07",
+    "GAUGE-08",
+    "GAUGE-09",
+    "FIX-01",
+    "FIX-02",
+    "FIX-03",
+    "LOC-01",
+    "HYG-01",
+    "HYG-02",
+    "E2E-01"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

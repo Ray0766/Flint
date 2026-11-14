@@ -1,0 +1,235 @@
+# 中英术语映射表 v0（M1-018，首批 200+ 条）。
+# 维护规则（PDD v0.2 §3.1）：LLM 提议 + 人工审核入表，增量维护；
+# 键空间 = zh + en + aliases，装载时经 clean() 归一并做全局唯一性校验。
+version: 0
+terms:
+  # ── AI / 机器学习 ──
+  - {zh: 人工智能, en: artificial intelligence, aliases: [ai, 人工智慧]}
+  - {zh: 大语言模型, en: large language model, aliases: [llm, 大模型]}
+  - {zh: 机器学习, en: machine learning}
+  - {zh: 深度学习, en: deep learning}
+  - {zh: 神经网络, en: neural network}
+  - {zh: 强化学习, en: reinforcement learning}
+  - {zh: 联邦学习, en: federated learning}
+  - {zh: 迁移学习, en: transfer learning}
+  - {zh: 生成式人工智能, en: generative ai, aliases: [生成式ai]}
+  - {zh: 多模态模型, en: multimodal model}
+  - {zh: 智能体, en: ai agent}
+  - {zh: 具身智能, en: embodied intelligence}
+  - {zh: 检索增强生成, en: retrieval augmented generation, aliases: [rag, 检索增强]}
+  - {zh: 提示工程, en: prompt engineering}
+  - {zh: 思维链, en: chain of thought}
+  - {zh: 微调, en: fine-tuning}
+  - {zh: 预训练, en: pretraining}
+  - {zh: 知识蒸馏, en: knowledge distillation}
+  - {zh: 模型量化, en: model quantization}
+  - {zh: 端侧大模型, en: on-device llm, aliases: [端侧模型]}
+  - {zh: 向量数据库, en: vector database}
+  - {zh: 语音识别, en: speech recognition}
+  - {zh: 语音合成, en: speech synthesis, aliases: [tts]}
+  - {zh: 计算机视觉, en: computer vision}
+  - {zh: 目标检测, en: object detection}
+  - {zh: 图像分割, en: image segmentation}
+  - {zh: 人脸识别, en: face recognition}
+  - {zh: 自然语言处理, en: natural language processing, aliases: [nlp]}
+  - {zh: 机器翻译, en: machine translation}
+  - {zh: 情感分析, en: sentiment analysis}
+  - {zh: 推荐系统, en: recommender system}
+  - {zh: 知识图谱, en: knowledge graph}
+  - {zh: 图神经网络, en: graph neural network, aliases: [gnn]}
+  - {zh: 扩散模型, en: diffusion model}
+  - {zh: 生成对抗网络, en: generative adversarial network, aliases: [gan]}
+  - {zh: 自监督学习, en: self-supervised learning}
+  - {zh: 世界模型, en: world model}
+  - {zh: 通用人工智能, en: artificial general intelligence, aliases: [agi]}
+  - {zh: 模型对齐, en: model alignment}
+  - {zh: 模型幻觉, en: model hallucination}
+  # ── 机器人 / 自动驾驶 ──
+  - {zh: 人形机器人, en: humanoid robot}
+  - {zh: 机械臂, en: robotic arm}
+  - {zh: 协作机器人, en: collaborative robot, aliases: [cobot]}
+  - {zh: 服务机器人, en: service robot}
+  - {zh: 工业机器人, en: industrial robot}
+  - {zh: 无人机, en: drone, aliases: [uav]}
+  - {zh: 无人机配送, en: drone delivery}
+  - {zh: 自动驾驶, en: autonomous driving}
+  - {zh: 激光雷达, en: lidar}
+  - {zh: 毫米波雷达, en: millimeter wave radar}
+  - {zh: 同步定位与建图, en: simultaneous localization and mapping, aliases: [slam]}
+  - {zh: 路径规划, en: path planning}
+  - {zh: 灵巧手, en: dexterous hand}
+  - {zh: 外骨骼, en: exoskeleton}
+  - {zh: 四足机器人, en: quadruped robot}
+  # ── 能源 ──
+  - {zh: 固态电池, en: solid-state battery}
+  - {zh: 钠离子电池, en: sodium-ion battery}
+  - {zh: 锂离子电池, en: lithium-ion battery}
+  - {zh: 磷酸铁锂, en: lithium iron phosphate, aliases: [lfp]}
+  - {zh: 燃料电池, en: fuel cell}
+  - {zh: 氢能, en: hydrogen energy}
+  - {zh: 绿氢, en: green hydrogen}
+  - {zh: 光伏, en: photovoltaics, aliases: [太阳能发电]}
+  - {zh: 钙钛矿电池, en: perovskite solar cell}
+  - {zh: 风电, en: wind power}
+  - {zh: 海上风电, en: offshore wind power}
+  - {zh: 储能, en: energy storage}
+  - {zh: 长时储能, en: long-duration energy storage}
+  - {zh: 抽水蓄能, en: pumped hydro storage}
+  - {zh: 虚拟电厂, en: virtual power plant}
+  - {zh: 智能电网, en: smart grid}
+  - {zh: 核聚变, en: nuclear fusion}
+  - {zh: 小型模块化反应堆, en: small modular reactor, aliases: [smr]}
+  - {zh: 碳捕集, en: carbon capture, aliases: [ccus]}
+  - {zh: 碳中和, en: carbon neutrality}
+  # ── 半导体 ──
+  - {zh: 半导体芯片, en: semiconductor chip}
+  - {zh: 光刻机, en: lithography machine}
+  - {zh: 晶圆, en: wafer}
+  - {zh: 先进封装, en: advanced packaging}
+  - {zh: 芯粒, en: chiplet}
+  - {zh: 存算一体, en: compute-in-memory}
+  - {zh: 碳化硅, en: silicon carbide, aliases: [sic]}
+  - {zh: 氮化镓, en: gallium nitride}
+  - {zh: 开源指令集架构, en: risc-v}
+  - {zh: 电子设计自动化, en: electronic design automation, aliases: [eda]}
+  - {zh: 高带宽内存, en: high bandwidth memory, aliases: [hbm]}
+  - {zh: 图形处理器, en: graphics processing unit, aliases: [gpu]}
+  - {zh: 张量处理器, en: tensor processing unit, aliases: [tpu]}
+  - {zh: 现场可编程门阵列, en: field programmable gate array, aliases: [fpga]}
+  - {zh: 专用集成电路, en: application specific integrated circuit, aliases: [asic]}
+  # ── 量子 ──
+  - {zh: 量子计算, en: quantum computing}
+  - {zh: 量子比特, en: qubit}
+  - {zh: 量子纠错, en: quantum error correction}
+  - {zh: 量子通信, en: quantum communication}
+  - {zh: 量子密钥分发, en: quantum key distribution, aliases: [qkd]}
+  - {zh: 量子传感, en: quantum sensing}
+  - {zh: 量子优越性, en: quantum advantage}
+  - {zh: 超导量子计算, en: superconducting quantum computing}
+  # ── 生物医药 ──
+  - {zh: 基因编辑, en: gene editing}
+  - {zh: 合成生物学, en: synthetic biology}
+  - {zh: 脑机接口, en: brain-computer interface, aliases: [bci]}
+  - {zh: 蛋白质结构预测, en: protein structure prediction}
+  - {zh: 信使核糖核酸, en: mrna}
+  - {zh: 细胞治疗, en: cell therapy}
+  - {zh: 基因治疗, en: gene therapy}
+  - {zh: 免疫治疗, en: immunotherapy}
+  - {zh: 抗体偶联药物, en: antibody drug conjugate, aliases: [adc]}
+  - {zh: 双特异性抗体, en: bispecific antibody}
+  - {zh: 类器官, en: organoid}
+  - {zh: 单细胞测序, en: single-cell sequencing}
+  - {zh: 基因测序, en: gene sequencing}
+  - {zh: 液体活检, en: liquid biopsy}
+  - {zh: 医疗影像, en: medical imaging}
+  - {zh: 远程医疗, en: telemedicine}
+  - {zh: 数字疗法, en: digital therapeutics}
+  - {zh: 手术机器人, en: surgical robot}
+  - {zh: 人工智能制药, en: ai drug discovery, aliases: [ai制药]}
+  - {zh: 精准医疗, en: precision medicine}
+  - {zh: 可穿戴设备, en: wearable device}
+  - {zh: 连续血糖监测, en: continuous glucose monitoring, aliases: [cgm]}
+  - {zh: 干细胞, en: stem cell}
+  - {zh: 微生物组, en: microbiome}
+  - {zh: 药物发现, en: drug discovery}
+  # ── 航天 / 低空 ──
+  - {zh: 商业航天, en: commercial spaceflight}
+  - {zh: 可重复使用火箭, en: reusable rocket}
+  - {zh: 卫星互联网, en: satellite internet}
+  - {zh: 低轨卫星, en: low earth orbit satellite, aliases: [leo卫星]}
+  - {zh: 遥感, en: remote sensing}
+  - {zh: 空间站, en: space station}
+  - {zh: 载人登月, en: crewed lunar landing}
+  - {zh: 火星探测, en: mars exploration}
+  - {zh: 低空经济, en: low-altitude economy}
+  - {zh: 电动垂直起降, en: electric vertical takeoff and landing, aliases: [evtol, 飞行汽车]}
+  - {zh: 空中交通管理, en: air traffic management}
+  - {zh: 高超音速, en: hypersonic}
+  # ── 计算 / 互联网 ──
+  - {zh: 云计算, en: cloud computing, aliases: [云端运算]}
+  - {zh: 边缘计算, en: edge computing}
+  - {zh: 数据中心, en: data center}
+  - {zh: 液冷, en: liquid cooling}
+  - {zh: 算力, en: computing power}
+  - {zh: 超级计算机, en: supercomputer}
+  - {zh: 区块链, en: blockchain}
+  - {zh: 加密货币, en: cryptocurrency}
+  - {zh: 数字人民币, en: digital yuan}
+  - {zh: 去中心化金融, en: decentralized finance, aliases: [defi]}
+  - {zh: 非同质化代币, en: non-fungible token, aliases: [nft]}
+  - {zh: 元宇宙, en: metaverse}
+  - {zh: 虚拟现实, en: virtual reality, aliases: [vr]}
+  - {zh: 增强现实, en: augmented reality, aliases: [ar]}
+  - {zh: 混合现实, en: mixed reality, aliases: [mr]}
+  - {zh: 空间计算, en: spatial computing}
+  - {zh: 数字孪生, en: digital twin}
+  - {zh: 物联网, en: internet of things, aliases: [iot]}
+  - {zh: 车联网, en: vehicle-to-everything, aliases: [v2x]}
+  - {zh: 第五代移动通信, en: 5g, aliases: [5g网络]}
+  - {zh: 第六代移动通信, en: 6g}
+  - {zh: 网络安全, en: cybersecurity}
+  - {zh: 零信任, en: zero trust}
+  - {zh: 隐私计算, en: privacy computing}
+  - {zh: 开源软件, en: open source software}
+  # ── 材料 / 制造 ──
+  - {zh: 三维打印, en: 3d printing, aliases: [增材制造]}
+  - {zh: 碳纤维, en: carbon fiber}
+  - {zh: 石墨烯, en: graphene}
+  - {zh: 超导材料, en: superconducting material}
+  - {zh: 稀土, en: rare earth}
+  - {zh: 纳米材料, en: nanomaterial}
+  - {zh: 智能制造, en: smart manufacturing}
+  - {zh: 工业互联网, en: industrial internet}
+  - {zh: 柔性电子, en: flexible electronics}
+  - {zh: 微机电系统, en: mems}
+  - {zh: 超材料, en: metamaterial}
+  - {zh: 生物材料, en: biomaterial}
+  - {zh: 自修复材料, en: self-healing material}
+  - {zh: 气凝胶, en: aerogel}
+  - {zh: 高熵合金, en: high-entropy alloy}
+  # ── 出行 / 消费 ──
+  - {zh: 新能源汽车, en: new energy vehicle, aliases: [新能源车]}
+  - {zh: 电动汽车, en: electric vehicle, aliases: [ev, 电动车]}
+  - {zh: 增程式电动车, en: extended-range electric vehicle}
+  - {zh: 换电, en: battery swapping}
+  - {zh: 充电桩, en: charging station}
+  - {zh: 智能座舱, en: smart cockpit}
+  - {zh: 高级驾驶辅助系统, en: advanced driver assistance system, aliases: [adas]}
+  - {zh: 城市空中交通, en: urban air mobility, aliases: [uam]}
+  - {zh: 直播电商, en: livestream commerce}
+  - {zh: 跨境电商, en: cross-border e-commerce}
+  - {zh: 短视频, en: short video}
+  - {zh: 社交电商, en: social commerce}
+  - {zh: 共享经济, en: sharing economy}
+  - {zh: 零工经济, en: gig economy}
+  - {zh: 银发经济, en: silver economy}
+  - {zh: 宠物经济, en: pet economy}
+  - {zh: 预制菜, en: ready-to-cook meal}
+  - {zh: 植物基食品, en: plant-based food}
+  - {zh: 细胞培养肉, en: cultured meat}
+  - {zh: 智能家居, en: smart home}
+  - {zh: 电子竞技, en: esports}
+  - {zh: 云游戏, en: cloud gaming}
+  - {zh: 独立游戏, en: indie game}
+  - {zh: 虚拟主播, en: virtual youtuber, aliases: [vtuber]}
+  # ── 金融 / 企业服务 ──
+  - {zh: 金融科技, en: fintech}
+  - {zh: 监管科技, en: regtech}
+  - {zh: 保险科技, en: insurtech}
+  - {zh: 量化交易, en: quantitative trading}
+  - {zh: 智能投顾, en: robo-advisor}
+  - {zh: 软件即服务, en: software as a service, aliases: [saas]}
+  - {zh: 平台即服务, en: platform as a service, aliases: [paas]}
+  - {zh: 基础设施即服务, en: infrastructure as a service, aliases: [iaas]}
+  - {zh: 低代码, en: low-code}
+  - {zh: 无代码, en: no-code}
+  - {zh: 机器人流程自动化, en: robotic process automation, aliases: [rpa]}
+  - {zh: 客户关系管理, en: customer relationship management, aliases: [crm]}
+  - {zh: 企业资源计划, en: enterprise resource planning, aliases: [erp]}
+  - {zh: 商业智能, en: business intelligence, aliases: [bi]}
+  - {zh: 数据湖, en: data lake}
+  - {zh: 数据仓库, en: data warehouse}
+  - {zh: 数据中台, en: data platform}
+  - {zh: 开放银行, en: open banking}
+  - {zh: 供应链金融, en: supply chain finance}
+  - {zh: 数字化转型, en: digital transformation}

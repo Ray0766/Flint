@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "deny": [
+      "Edit(contracts/**)",
+      "Write(contracts/**)",
+      "Edit(flint/domain/**)",
+      "Write(flint/domain/**)",
+      "Edit(assets/heldout_questions.yaml)",
+      "Write(assets/heldout_questions.yaml)",
+      "Edit(requirements.lock)",
+      "Write(requirements.lock)",
+      "Bash(rm -rf *)",
+      "Bash(docker compose down*)",
+      "Bash(docker volume rm*)",
+      "Bash(dropdb *)"
+    ],
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Edit",
+      "Write",
+      "NotebookEdit",
+      "WebSearch",
+      "WebFetch",
+      "Bash(cd *)",
+      "Bash(pytest *)",
+      "Bash(python *)",
+      "Bash(.venv/Scripts/python.exe *)",
+      "Bash(node *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(ruff *)",
+      "Bash(mypy *)",
+      "Bash(alembic *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(mkdir *)",
+      "Bash(echo *)",
+      "Bash(curl *)",
+      "Bash(docker ps*)",
+      "Bash(docker compose up*)",
+      "Bash(C:/pwenv/Scripts/python.exe *)"
+    ]
+  }
+}

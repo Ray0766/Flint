@@ -1,0 +1,58 @@
+{
+ "samples": [
+  {
+   "name": "one",
+   "case_id": "gold-C-01",
+   "tier": "C_opportunity",
+   "category": "cat-ai",
+   "goal": "方言语音标注平台：面向语音模型训练方的方言语料标注与质检服务",
+   "task_count": 6,
+   "competition_task_ids": [
+    "T-04"
+   ],
+   "gates": {
+    "dag_errors": 0,
+    "registry_violations": 0,
+    "export_allowed": true
+   },
+   "path": "one/pack.zip"
+  },
+  {
+   "name": "two",
+   "case_id": "gold-B-01",
+   "tier": "B_red_ocean",
+   "category": "cat-ai",
+   "goal": "会议纪要摘要工具：红海市场以行业术语纠错与迁移成本为差异面",
+   "task_count": 7,
+   "competition_task_ids": [
+    "T-02",
+    "T-03",
+    "T-05",
+    "T-06"
+   ],
+   "gates": {
+    "dag_errors": 0,
+    "registry_violations": 0,
+    "export_allowed": true
+   },
+   "path": "two/pack.zip"
+  },
+  {
+   "name": "three",
+   "case_id": "gold-C-04",
+   "tier": "C_opportunity",
+   "category": "cat-quantum×cat-geology",
+   "goal": "量子传感地质勘探：量子磁力仪跨入地质勘探大类（M0 跨大类判例回归）",
+   "task_count": 6,
+   "competition_task_ids": [
+    "T-04"
+   ],
+   "gates": {
+    "dag_errors": 0,
+    "registry_violations": 0,
+    "export_allowed": true
+   },
+   "path": "three/pack.zip"
+  }
+ ]
+}

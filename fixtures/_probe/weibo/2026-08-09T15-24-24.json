@@ -1,0 +1,25 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "weibo",
+ "url": "https://m.weibo.cn/api/container/getIndex?containerid=106003type%3D25%26t%3D3%26disable_hot%3D1%26filter_type%3Drealtimehot",
+ "requested_at_utc": "2026-08-09T15:24:24.299858+00:00",
+ "status": 200,
+ "final_url": "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap&a=enter&url=https%3A%2F%2Fm.weibo.cn%2Fapi%2Fcontainer%2FgetIndex%3Fcontainerid%3D106003type%253D25%2526t%253D3%2526disable_hot%253D1%2526filter_type%253Drealtimehot&domain=.weibo.cn&sudaref=&ua=php-sso_sdk_client-0.6.36&_rand=1786289066.0202",
+ "redirects": [
+  {
+   "status": 302,
+   "location": "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap&a=enter&url=https%3A%2F%2Fm.weibo.cn%2Fapi%2Fcontainer%2FgetIndex%3Fcontainerid%3D106003type%253D25%2526t%253D3%2526disable_hot%253D1%2526filter_type%253Drealtimehot&domain=.weibo.cn&sudaref=&ua=php-sso_sdk_client-0.6.36&_rand=1786289066.0202"
+  }
+ ],
+ "headers": {
+  "content-type": "text/html",
+  "server": "APISIX/3.14.1"
+ },
+ "body_head": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"/>\n    <title>Sina Visitor System</title>\n</head>\n<body>\n<span id=\"message\"></span>\n<script type=\"text/javascript\" src=\"/js/visitor/mini_original.js?v=20161116\"></script>\n<script src=\"https://passport.sinaimg.cn/js/fp/1.2.1.umd.js\"></script>\n<script type=\"text/javascript\">\n    window.use_fp = \"0\" == \"1\"; // 是否采集设备指纹。\n    var url = url || {};\n    (function () {\n        this.l = function (u, c) {\n            try {\n                var s = document.createElement(\"script\");\n                s.type = \"text/javascript\";\n                s[document.all ? \"onreadystatechange\" : \"onload\"] = function () {\n                    if (document.all && this.readyState != \"loaded\" && this.readyState != \"complete\") {\n                        return\n                    }\n                    this[document.all ? \"onreadystatechange\" : \"onload\"] = null;\n                    this.parentNode.removeChild(this);\n                    if (c) {\n                        c()\n                    }\n                };\n                s.src = u;\n                document.getElementsByTagName(\"head\")[0].appendChild(s)\n            } catch (e) {\n            }\n        };\n    }).call(url);\n\n    var visitor_origin = function () {\n        try {\n            var need_restore = \"0\" == \"1\"; // 是否走恢复身份流程。\n\n            // 如果需要走恢复身份流程，尝试从 cookie 获取用户身份。\n            if (!need_restore || !Store.CookieHelper.get(\"SRF\")) {\n\n                // 若获取失败走创建访客流程。\n                // 流程执行时间过长（超过 3s），则认为出错。\n                var error_timeout = window.setTimeout(\"error_back()\", 5000);\n\n                tid.get(function (tid, where, confidence) {\n                    // 取指纹顺利完成，清除出错 timeout 。\n                    window.clearTimeout(error_timeout);\n                    incarnate(tid, where, confidence);\n                });\n            } else {\n                // 用户身份存在，尝试恢复用户身份。\n                restore();\n            }\n        } catch (e) {\n            // 出错。\n            error_back();\n        ",
+ "body_bytes": 10092,
+ "sent_user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+ "left_allowed_hosts": [
+  "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap&a=enter&url=https%3A%2F%2Fm.weibo.cn%2Fapi%2Fcontainer%2FgetIndex%3Fcontainerid%3D106003type%253D25%2526t%253D3%2526disable_hot%253D1%2526filter_type%253Drealtimehot&domain=.weibo.cn&sudaref=&ua=php-sso_sdk_client-0.6.36&_rand=1786289066.0202"
+ ]
+}

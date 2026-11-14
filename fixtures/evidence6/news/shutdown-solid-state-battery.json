@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.news.example/v2/everything?q=solid+state+battery+shutdown&pageSize=5",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"status\": \"ok\", \"articles\": [{\"title\": \"Solid State Battery startup shuts down after funding dries up\", \"url\": \"https://news.example/solid-state-battery/shutdown\", \"source\": {\"name\": \"Reuters\"}, \"media_tier\": 1, \"independent_sources\": 3, \"publishedAt\": \"2026-06-30T08:00:00Z\"}]}"
+ }
+]

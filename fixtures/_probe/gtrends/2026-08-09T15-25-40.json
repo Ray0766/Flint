@@ -1,0 +1,18 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "gtrends",
+ "url": "https://trends.google.com/trending/rss?geo=TW",
+ "requested_at_utc": "2026-08-09T15:25:40.255956+00:00",
+ "status": 200,
+ "final_url": "https://trends.google.com/trending/rss?geo=TW",
+ "redirects": [],
+ "headers": {
+  "content-type": "text/xml; charset=utf-8",
+  "server": "ESF"
+ },
+ "body_head": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<rss xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:ht=\"https://trends.google.com/trending/rss\" version=\"2.0\">\n\t<channel>\n\t\t<title>Daily Search Trends</title>\n\t\t<description>Recent searches</description>\n\t\t<link>https://trends.google.com/trending/rss?geo=TW</link>\n\t\t<atom:link href=\"https://trends.google.com/trending/rss?geo=TW\" rel=\"self\" type=\"application/rss+xml\"/>\n\t\t<item>\n\t\t\t<title>伺服 器</title>\n\t\t\t<ht:approx_traffic>100+</ht:approx_traffic>\n\t\t\t<description/>\n\t\t\t<link>https://trends.google.com/trending/rss?geo=TW</link>\n\t\t\t<pubDate>Sun, 9 Aug 2026 08:00:00 -0700</pubDate>\n\t\t\t<ht:picture>https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcStEQG6JvKDDmxSkHzzaEoDcIxq4MsXOdj0Rg9LxcQg4AC46-i104-u3xXfkuE</ht:picture>\n\t\t\t<ht:picture_source>Yahoo股市</ht:picture_source>\n\t\t\t<ht:news_item>\n\t\t\t\t<ht:news_item_title>AI伺服器需求旺！「這2檔代工大廠」單周被外資狂掃14.5萬張 鴻海法說前夕獲挹注158億元</ht:news_item_title>\n\t\t\t\t<ht:news_item_snippet/>\n\t\t\t\t<ht:news_item_url>https://tw.stock.yahoo.com/news/ai%E4%BC%BA%E6%9C%8D%E5%99%A8%E9%9C%80%E6%B1%82%E6%97%BA-%E9%80%992%E6%AA%94%E4%BB%A3%E5%B7%A5%E5%A4%A7%E5%BB%A0-%E5%96%AE%E5%91%A8%E8%A2%AB%E5%A4%96%E8%B3%87%E7%8B%82%E6%8E%8314-5%E8%90%AC%E5%BC%B5-%E9%B4%BB%E6%B5%B7%E6%B3%95%E8%AA%AA%E5%89%8D%E5%A4%95%E7%8D%B2%E6%8C%B9%E6%B3%A8158%E5%84%84%E5%85%83-133000148.html</ht:news_item_url>\n\t\t\t\t<ht:news_item_picture>https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcStEQG6JvKDDmxSkHzzaEoDcIxq4MsXOdj0Rg9LxcQg4AC46-i104-u3xXfkuE</ht:news_item_picture>\n\t\t\t\t<ht:news_item_source>Yahoo股市</ht:news_item_source>\n\t\t\t</ht:news_item>\n\t\t\t<ht:news_item>\n\t\t\t\t<ht:news_item_title>緯創、緯穎前七月營收同期新高- 日報</ht:news_item_title>\n\t\t\t\t<ht:news_item_snippet/>\n\t\t\t\t<ht:news_item_url>https://www.ctee.com.tw/news/20260808700144-439901</ht:news_item_url>\n\t\t\t\t<ht:news_item_picture>https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT5UaSZXahETX35P9plqOKsTDjcVcLr05RThlaeS1xbRBL1obD9RRUOo7PX1BQ</ht:news_item_picture>\n\t\t\t\t<ht:news_item_source>工商時報</ht:news_item_source>\n\t\t\t</ht:news_item>\n\t\t\t<ht:new",
+ "body_bytes": 16950,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": []
+}

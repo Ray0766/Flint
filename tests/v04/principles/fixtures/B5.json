@@ -1,0 +1,9 @@
+{
+ "principle": "B5",
+ "title": "跨区不得合并成簇",
+ "source": "docs/PRINCIPLES-v04.md",
+ "raw": "embedding 把 US 与 JP 对同一事件的报道合成一簇——产出哪国都不存在的假热点。",
+ "counter_examples": [
+  "embedding 把 US 与 JP 对同一事件的报道合成一簇——产出哪国都不存在的假热点"
+ ]
+}

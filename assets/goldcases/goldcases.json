@@ -1,0 +1,2185 @@
+{
+ "cases": [
+  {
+   "alignment_truth": {
+    "[gold-A-01] 该方向存在公开证伪证据 #1|gold-A-01-ref-1": "supports",
+    "[gold-A-01] 该方向存在市场支持证据 #1|gold-A-01-sup-1": "supports"
+   },
+   "case_id": "gold-A-01",
+   "category": "cat-ai",
+   "competitors": [],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q1"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-A-01-ref-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-01 ref evidence 1",
+     "url": "https://gold.example/gold-A-01/ref1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-01-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-01 sup evidence 1",
+     "url": "https://gold.example/gold-A-01/sup1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "A_infeasible",
+     "C_opportunity"
+    ],
+    "verdict": "A_infeasible"
+   },
+   "keywords": [
+    "室温超导存储"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [
+    {
+     "claim": "[gold-A-01] 该方向存在公开证伪证据 #1",
+     "doc_id": "gold-A-01-ref-1"
+    }
+   ],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-A-01] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-A-01-sup-1"
+    }
+   ],
+   "tier": "A_infeasible",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-A-02] 该方向存在公开证伪证据 #1|gold-A-02-ref-1": "supports",
+    "[gold-A-02] 该方向存在市场支持证据 #1|gold-A-02-sup-1": "supports"
+   },
+   "case_id": "gold-A-02",
+   "category": "cat-energy",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-A-02-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-A-02-comp-1"
+     ],
+     "url": "https://gold.example/gold-A-02/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-A-02-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-A-02-comp-2"
+     ],
+     "url": "https://gold.example/gold-A-02/comp2"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-A-02-3",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-A-02-comp-3"
+     ],
+     "url": "https://gold.example/gold-A-02/comp3"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 3,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-A-02-ref-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-02 ref evidence 1",
+     "url": "https://gold.example/gold-A-02/ref1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-02-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-02 sup evidence 1",
+     "url": "https://gold.example/gold-A-02/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-02-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-02 comp evidence 1",
+     "url": "https://gold.example/gold-A-02/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-02-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-02 comp evidence 2",
+     "url": "https://gold.example/gold-A-02/comp2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-02-comp-3",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-02 comp evidence 3",
+     "url": "https://gold.example/gold-A-02/comp3"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "A_infeasible",
+     "B_red_ocean"
+    ],
+    "verdict": "A_infeasible"
+   },
+   "keywords": [
+    "家用微型核电"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [
+    {
+     "claim": "[gold-A-02] 该方向存在公开证伪证据 #1",
+     "doc_id": "gold-A-02-ref-1"
+    }
+   ],
+   "refute_executed": true,
+   "refute_hit_rate": 0.4,
+   "support_claims": [
+    {
+     "claim": "[gold-A-02] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-A-02-sup-1"
+    }
+   ],
+   "tier": "A_infeasible",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-A-03] 该方向存在公开证伪证据 #1|gold-A-03-ref-1": "supports",
+    "[gold-A-03] 该方向存在公开证伪证据 #2|gold-A-03-ref-2": "supports"
+   },
+   "case_id": "gold-A-03",
+   "category": "cat-robotics",
+   "competitors": [
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-A-03-1",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-A-03-comp-1"
+     ],
+     "url": "https://gold.example/gold-A-03/comp1"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 1,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-A-03-ref-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-03 ref evidence 1",
+     "url": "https://gold.example/gold-A-03/ref1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-03-ref-2",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-03 ref evidence 2",
+     "url": "https://gold.example/gold-A-03/ref2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-03-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-03 comp evidence 1",
+     "url": "https://gold.example/gold-A-03/comp1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "A_infeasible"
+    ],
+    "verdict": "A_infeasible"
+   },
+   "keywords": [
+    "全自主家政人形机器人"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [
+    {
+     "claim": "[gold-A-03] 该方向存在公开证伪证据 #1",
+     "doc_id": "gold-A-03-ref-1"
+    },
+    {
+     "claim": "[gold-A-03] 该方向存在公开证伪证据 #2",
+     "doc_id": "gold-A-03-ref-2"
+    }
+   ],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [],
+   "tier": "A_infeasible",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-A-04] 该方向存在公开证伪证据 #1|gold-A-04-ref-1": "supports"
+   },
+   "case_id": "gold-A-04",
+   "category": "cat-semiconductor",
+   "competitors": [],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q1"
+    }
+   ],
+   "docs": [
+    {
+     "access": "private",
+     "doc_id": "gold-A-04-ref-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "user_provided",
+     "published_at": "2026-05-01",
+     "source_id": "user_upload",
+     "title": "gold-A-04 ref evidence 1",
+     "url": "https://gold.example/gold-A-04/ref1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "A_infeasible"
+    ],
+    "verdict": "A_infeasible"
+   },
+   "keywords": [
+    "1nm 家庭光刻机"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [
+    {
+     "claim": "[gold-A-04] 该方向存在公开证伪证据 #1",
+     "doc_id": "gold-A-04-ref-1"
+    }
+   ],
+   "refute_executed": true,
+   "refute_hit_rate": 0.7,
+   "support_claims": [],
+   "tier": "A_infeasible",
+   "user_evidence_optin": true
+  },
+  {
+   "alignment_truth": {
+    "[gold-A-05] 该方向存在公开证伪证据 #1|gold-A-05-ref-1": "supports",
+    "[gold-A-05] 该方向存在市场支持证据 #1|gold-A-05-sup-1": "supports"
+   },
+   "case_id": "gold-A-05",
+   "category": "cat-ai",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-A-05-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-A-05-comp-1"
+     ],
+     "url": "https://gold.example/gold-A-05/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-A-05-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-A-05-comp-2"
+     ],
+     "url": "https://gold.example/gold-A-05/comp2"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 2,
+     "query_text": "q1"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-A-05-ref-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-05 ref evidence 1",
+     "url": "https://gold.example/gold-A-05/ref1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-05-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-05 sup evidence 1",
+     "url": "https://gold.example/gold-A-05/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-05-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-05 comp evidence 1",
+     "url": "https://gold.example/gold-A-05/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-A-05-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-A-05 comp evidence 2",
+     "url": "https://gold.example/gold-A-05/comp2"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "A_infeasible"
+    ],
+    "verdict": "A_infeasible"
+   },
+   "keywords": [
+    "脑机接口写作助手"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [
+    {
+     "claim": "[gold-A-05] 该方向存在公开证伪证据 #1",
+     "doc_id": "gold-A-05-ref-1"
+    }
+   ],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-A-05] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-A-05-sup-1"
+    }
+   ],
+   "tier": "A_infeasible",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-B-01] 该方向存在市场支持证据 #1|gold-B-01-sup-1": "supports"
+   },
+   "case_id": "gold-B-01",
+   "category": "cat-ai",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-01-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-01-comp-1"
+     ],
+     "url": "https://gold.example/gold-B-01/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-01-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-01-comp-2"
+     ],
+     "url": "https://gold.example/gold-B-01/comp2"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-01-3",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-01-comp-3"
+     ],
+     "url": "https://gold.example/gold-B-01/comp3"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 3,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-B-01-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-01 sup evidence 1",
+     "url": "https://gold.example/gold-B-01/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-01-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-01 comp evidence 1",
+     "url": "https://gold.example/gold-B-01/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-01-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-01 comp evidence 2",
+     "url": "https://gold.example/gold-B-01/comp2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-01-comp-3",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-01 comp evidence 3",
+     "url": "https://gold.example/gold-B-01/comp3"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "B_red_ocean",
+     "C_opportunity"
+    ],
+    "verdict": "B_red_ocean"
+   },
+   "keywords": [
+    "会议纪要摘要工具"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-B-01] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-B-01-sup-1"
+    }
+   ],
+   "tier": "B_red_ocean",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-B-02] 该方向存在市场支持证据 #1|gold-B-02-sup-1": "supports"
+   },
+   "case_id": "gold-B-02",
+   "category": "cat-energy",
+   "competitors": [
+    {
+     "intended_strength": "strong",
+     "name": "Vendor gold-B-02-1",
+     "signals": {
+      "active_last_12m": null,
+      "funded_or_scaled": true,
+      "mature_pricing": true,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-02-comp-1"
+     ],
+     "url": "https://gold.example/gold-B-02/comp1"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 1,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-B-02-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-02 sup evidence 1",
+     "url": "https://gold.example/gold-B-02/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-02-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-02 comp evidence 1",
+     "url": "https://gold.example/gold-B-02/comp1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "B_red_ocean"
+    ],
+    "verdict": "B_red_ocean"
+   },
+   "keywords": [
+    "户用储能电池"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-B-02] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-B-02-sup-1"
+    }
+   ],
+   "tier": "B_red_ocean",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-B-03] 该方向存在市场支持证据 #1|gold-B-03-sup-1": "supports"
+   },
+   "case_id": "gold-B-03",
+   "category": "cat-robotics",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-03-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-03-comp-1"
+     ],
+     "url": "https://gold.example/gold-B-03/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-03-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-03-comp-2"
+     ],
+     "url": "https://gold.example/gold-B-03/comp2"
+    },
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-B-03-3",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-B-03-comp-3"
+     ],
+     "url": "https://gold.example/gold-B-03/comp3"
+    },
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-B-03-4",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-B-03-comp-4"
+     ],
+     "url": "https://gold.example/gold-B-03/comp4"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 4,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-B-03-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-03 sup evidence 1",
+     "url": "https://gold.example/gold-B-03/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-03-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-03 comp evidence 1",
+     "url": "https://gold.example/gold-B-03/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-03-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-03 comp evidence 2",
+     "url": "https://gold.example/gold-B-03/comp2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-03-comp-3",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-03 comp evidence 3",
+     "url": "https://gold.example/gold-B-03/comp3"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-03-comp-4",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-03 comp evidence 4",
+     "url": "https://gold.example/gold-B-03/comp4"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "B_red_ocean"
+    ],
+    "verdict": "B_red_ocean"
+   },
+   "keywords": [
+    "仓储搬运机器人"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.3,
+   "support_claims": [
+    {
+     "claim": "[gold-B-03] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-B-03-sup-1"
+    }
+   ],
+   "tier": "B_red_ocean",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-B-04] 该方向存在市场支持证据 #1|gold-B-04-sup-1": "supports"
+   },
+   "case_id": "gold-B-04",
+   "category": "cat-quantum",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-04-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-04-comp-1"
+     ],
+     "url": "https://gold.example/gold-B-04/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-04-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-04-comp-2"
+     ],
+     "url": "https://gold.example/gold-B-04/comp2"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-04-3",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-04-comp-3"
+     ],
+     "url": "https://gold.example/gold-B-04/comp3"
+    },
+    {
+     "intended_strength": "unknown",
+     "name": "Vendor gold-B-04-4",
+     "signals": {
+      "active_last_12m": null,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-04-comp-4"
+     ],
+     "url": "https://gold.example/gold-B-04/comp4"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 4,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-B-04-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-04 sup evidence 1",
+     "url": "https://gold.example/gold-B-04/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-04-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-04 comp evidence 1",
+     "url": "https://gold.example/gold-B-04/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-04-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-04 comp evidence 2",
+     "url": "https://gold.example/gold-B-04/comp2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-04-comp-3",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-04 comp evidence 3",
+     "url": "https://gold.example/gold-B-04/comp3"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-04-comp-4",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-04 comp evidence 4",
+     "url": "https://gold.example/gold-B-04/comp4"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "B_red_ocean"
+    ],
+    "verdict": "B_red_ocean"
+   },
+   "keywords": [
+    "量子随机数云服务"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-B-04] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-B-04-sup-1"
+    }
+   ],
+   "tier": "B_red_ocean",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-B-05] 该方向存在市场支持证据 #1|gold-B-05-sup-1": "supports"
+   },
+   "case_id": "gold-B-05",
+   "category": "cat-semiconductor",
+   "competitors": [
+    {
+     "intended_strength": "strong",
+     "name": "Vendor gold-B-05-1",
+     "signals": {
+      "active_last_12m": null,
+      "funded_or_scaled": true,
+      "mature_pricing": true,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-05-comp-1"
+     ],
+     "url": "https://gold.example/gold-B-05/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-B-05-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-B-05-comp-2"
+     ],
+     "url": "https://gold.example/gold-B-05/comp2"
+    },
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-B-05-3",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-B-05-comp-3"
+     ],
+     "url": "https://gold.example/gold-B-05/comp3"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 3,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-B-05-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-05 sup evidence 1",
+     "url": "https://gold.example/gold-B-05/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-05-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-05 comp evidence 1",
+     "url": "https://gold.example/gold-B-05/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-05-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-05 comp evidence 2",
+     "url": "https://gold.example/gold-B-05/comp2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-B-05-comp-3",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-B-05 comp evidence 3",
+     "url": "https://gold.example/gold-B-05/comp3"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "B_red_ocean"
+    ],
+    "verdict": "B_red_ocean"
+   },
+   "keywords": [
+    "国产 EDA 插件市场"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-B-05] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-B-05-sup-1"
+    }
+   ],
+   "tier": "B_red_ocean",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-C-01] 该方向存在市场支持证据 #1|gold-C-01-sup-1": "supports"
+   },
+   "case_id": "gold-C-01",
+   "category": "cat-ai",
+   "competitors": [
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-C-01-1",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-C-01-comp-1"
+     ],
+     "url": "https://gold.example/gold-C-01/comp1"
+    },
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-C-01-2",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-C-01-comp-2"
+     ],
+     "url": "https://gold.example/gold-C-01/comp2"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 2,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-C-01-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-01 sup evidence 1",
+     "url": "https://gold.example/gold-C-01/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-01-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-01 comp evidence 1",
+     "url": "https://gold.example/gold-C-01/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-01-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-01 comp evidence 2",
+     "url": "https://gold.example/gold-C-01/comp2"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "C_opportunity"
+    ],
+    "verdict": "C_opportunity"
+   },
+   "keywords": [
+    "方言语音标注平台"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-C-01] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-C-01-sup-1"
+    }
+   ],
+   "tier": "C_opportunity",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-C-02] 该方向存在市场支持证据 #1|gold-C-02-sup-1": "supports"
+   },
+   "case_id": "gold-C-02",
+   "category": "cat-energy",
+   "competitors": [],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q1"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-C-02-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-02 sup evidence 1",
+     "url": "https://gold.example/gold-C-02/sup1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "C_opportunity"
+    ],
+    "verdict": "C_opportunity"
+   },
+   "keywords": [
+    "退役电池梯次检测"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.7,
+   "support_claims": [
+    {
+     "claim": "[gold-C-02] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-C-02-sup-1"
+    }
+   ],
+   "tier": "C_opportunity",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-C-03] 该方向存在市场支持证据 #1|gold-C-03-sup-1": "supports",
+    "[gold-C-03] 该方向存在市场支持证据 #2|gold-C-03-sup-2": "supports"
+   },
+   "case_id": "gold-C-03",
+   "category": "cat-robotics",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-C-03-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-C-03-comp-1"
+     ],
+     "url": "https://gold.example/gold-C-03/comp1"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 1,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-C-03-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-03 sup evidence 1",
+     "url": "https://gold.example/gold-C-03/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-03-sup-2",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-03 sup evidence 2",
+     "url": "https://gold.example/gold-C-03/sup2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-03-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-03 comp evidence 1",
+     "url": "https://gold.example/gold-C-03/comp1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "C_opportunity"
+    ],
+    "verdict": "C_opportunity"
+   },
+   "keywords": [
+    "果园采摘执行器"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.9,
+   "support_claims": [
+    {
+     "claim": "[gold-C-03] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-C-03-sup-1"
+    },
+    {
+     "claim": "[gold-C-03] 该方向存在市场支持证据 #2",
+     "doc_id": "gold-C-03-sup-2"
+    }
+   ],
+   "tier": "C_opportunity",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-C-04] 该方向存在市场支持证据 #1|gold-C-04-sup-1": "supports"
+   },
+   "case_id": "gold-C-04",
+   "category": "cat-quantum",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-C-04-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-C-04-comp-1"
+     ],
+     "url": "https://gold.example/gold-C-04/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-C-04-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-C-04-comp-2"
+     ],
+     "url": "https://gold.example/gold-C-04/comp2"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 2,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-C-04-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-04 sup evidence 1",
+     "url": "https://gold.example/gold-C-04/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-04-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-04 comp evidence 1",
+     "url": "https://gold.example/gold-C-04/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-04-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-04 comp evidence 2",
+     "url": "https://gold.example/gold-C-04/comp2"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "C_opportunity"
+    ],
+    "verdict": "C_opportunity"
+   },
+   "keywords": [
+    "量子传感地质勘探"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.65,
+   "support_claims": [
+    {
+     "claim": "[gold-C-04] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-C-04-sup-1"
+    }
+   ],
+   "tier": "C_opportunity",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-C-05] 该方向存在市场支持证据 #1|gold-C-05-sup-1": "supports"
+   },
+   "case_id": "gold-C-05",
+   "category": "cat-semiconductor",
+   "competitors": [
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-C-05-1",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-C-05-comp-1"
+     ],
+     "url": "https://gold.example/gold-C-05/comp1"
+    },
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-C-05-2",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-C-05-comp-2"
+     ],
+     "url": "https://gold.example/gold-C-05/comp2"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 2,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-C-05-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-05 sup evidence 1",
+     "url": "https://gold.example/gold-C-05/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-05-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-05 comp evidence 1",
+     "url": "https://gold.example/gold-C-05/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-C-05-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-C-05 comp evidence 2",
+     "url": "https://gold.example/gold-C-05/comp2"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "C_opportunity"
+    ],
+    "verdict": "C_opportunity"
+   },
+   "keywords": [
+    "车规芯片老化预测"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-C-05] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-C-05-sup-1"
+    }
+   ],
+   "tier": "C_opportunity",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-D-01] 该方向存在市场支持证据 #1|gold-D-01-sup-1": "partial"
+   },
+   "case_id": "gold-D-01",
+   "category": "cat-ai",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-D-01-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-D-01-comp-1"
+     ],
+     "url": "https://gold.example/gold-D-01/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-D-01-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-D-01-comp-2"
+     ],
+     "url": "https://gold.example/gold-D-01/comp2"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-D-01-3",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-D-01-comp-3"
+     ],
+     "url": "https://gold.example/gold-D-01/comp3"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 3,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-D-01-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-01 sup evidence 1",
+     "url": "https://gold.example/gold-D-01/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-01-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-01 comp evidence 1",
+     "url": "https://gold.example/gold-D-01/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-01-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-01 comp evidence 2",
+     "url": "https://gold.example/gold-D-01/comp2"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-01-comp-3",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-01 comp evidence 3",
+     "url": "https://gold.example/gold-D-01/comp3"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "D_insufficient"
+    ],
+    "verdict": "D_insufficient"
+   },
+   "keywords": [
+    "行业大模型咨询"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-D-01] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-D-01-sup-1"
+    }
+   ],
+   "tier": "D_insufficient",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-D-02] 该方向存在市场支持证据 #1|gold-D-02-sup-1": "supports"
+   },
+   "case_id": "gold-D-02",
+   "category": "cat-energy",
+   "competitors": [
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-D-02-1",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-D-02-comp-1"
+     ],
+     "url": "https://gold.example/gold-D-02/comp1"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 1,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-D-02-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-02 sup evidence 1",
+     "url": "https://gold.example/gold-D-02/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-02-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-02 comp evidence 1",
+     "url": "https://gold.example/gold-D-02/comp1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "D_insufficient"
+    ],
+    "verdict": "D_insufficient"
+   },
+   "keywords": [
+    "社区虚拟电厂聚合"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": false,
+   "refute_hit_rate": 0.0,
+   "support_claims": [
+    {
+     "claim": "[gold-D-02] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-D-02-sup-1"
+    }
+   ],
+   "tier": "D_insufficient",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-D-03] 该方向存在市场支持证据 #1|gold-D-03-sup-1": "supports"
+   },
+   "case_id": "gold-D-03",
+   "category": "cat-robotics",
+   "competitors": [],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q1"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-D-03-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-03 sup evidence 1",
+     "url": "https://gold.example/gold-D-03/sup1"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "D_insufficient"
+    ],
+    "verdict": "D_insufficient"
+   },
+   "keywords": [
+    "深海巡检蛇形机器人"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.3,
+   "support_claims": [
+    {
+     "claim": "[gold-D-03] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-D-03-sup-1"
+    }
+   ],
+   "tier": "D_insufficient",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-D-04] 该方向存在市场支持证据 #1|gold-D-04-sup-1": "supports"
+   },
+   "case_id": "gold-D-04",
+   "category": "cat-quantum",
+   "competitors": [
+    {
+     "intended_strength": "unknown",
+     "name": "Vendor gold-D-04-1",
+     "signals": {
+      "active_last_12m": null,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-D-04-comp-1"
+     ],
+     "url": "https://gold.example/gold-D-04/comp1"
+    },
+    {
+     "intended_strength": "weak",
+     "name": "Vendor gold-D-04-2",
+     "signals": {
+      "active_last_12m": false,
+      "funded_or_scaled": false,
+      "mature_pricing": false,
+      "same_target_user": false
+     },
+     "source_doc_ids": [
+      "gold-D-04-comp-2"
+     ],
+     "url": "https://gold.example/gold-D-04/comp2"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 2,
+     "query_text": "q1"
+    },
+    {
+     "executed": true,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-D-04-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-04 sup evidence 1",
+     "url": "https://gold.example/gold-D-04/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-04-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-04 comp evidence 1",
+     "url": "https://gold.example/gold-D-04/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-04-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-04 comp evidence 2",
+     "url": "https://gold.example/gold-D-04/comp2"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "D_insufficient"
+    ],
+    "verdict": "D_insufficient"
+   },
+   "keywords": [
+    "量子加密对讲终端"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-D-04] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-D-04-sup-1"
+    }
+   ],
+   "tier": "D_insufficient",
+   "user_evidence_optin": false
+  },
+  {
+   "alignment_truth": {
+    "[gold-D-05] 该方向存在市场支持证据 #1|gold-D-05-sup-1": "supports"
+   },
+   "case_id": "gold-D-05",
+   "category": "cat-semiconductor",
+   "competitors": [
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-D-05-1",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-D-05-comp-1"
+     ],
+     "url": "https://gold.example/gold-D-05/comp1"
+    },
+    {
+     "intended_strength": "moderate",
+     "name": "Vendor gold-D-05-2",
+     "signals": {
+      "active_last_12m": true,
+      "funded_or_scaled": null,
+      "mature_pricing": null,
+      "same_target_user": null
+     },
+     "source_doc_ids": [
+      "gold-D-05-comp-2"
+     ],
+     "url": "https://gold.example/gold-D-05/comp2"
+    }
+   ],
+   "coverage_executions": [
+    {
+     "executed": true,
+     "new": 2,
+     "query_text": "q1"
+    },
+    {
+     "executed": false,
+     "new": 0,
+     "query_text": "q2"
+    }
+   ],
+   "docs": [
+    {
+     "access": "public",
+     "doc_id": "gold-D-05-sup-1",
+     "kind": "paper",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-05 sup evidence 1",
+     "url": "https://gold.example/gold-D-05/sup1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-05-comp-1",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-05 comp evidence 1",
+     "url": "https://gold.example/gold-D-05/comp1"
+    },
+    {
+     "access": "public",
+     "doc_id": "gold-D-05-comp-2",
+     "kind": "product",
+     "meta": {
+      "fetched_at": "2026-07-26T12:00:00+00:00"
+     },
+     "origin": "retrieved",
+     "published_at": "2026-05-01",
+     "source_id": "goldcase",
+     "title": "gold-D-05 comp evidence 2",
+     "url": "https://gold.example/gold-D-05/comp2"
+    }
+   ],
+   "expected": {
+    "all_satisfied": [
+     "D_insufficient"
+    ],
+    "verdict": "D_insufficient"
+   },
+   "keywords": [
+    "晶圆缺陷开源数据集"
+   ],
+   "locale": "zh-CN",
+   "refute_claims": [],
+   "refute_executed": true,
+   "refute_hit_rate": 0.8,
+   "support_claims": [
+    {
+     "claim": "[gold-D-05] 该方向存在市场支持证据 #1",
+     "doc_id": "gold-D-05-sup-1"
+    }
+   ],
+   "tier": "D_insufficient",
+   "user_evidence_optin": false
+  }
+ ],
+ "generated_by": "fixtures/_generate_goldcases.py",
+ "version": 1
+}

@@ -1,0 +1,19 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "weibo",
+ "url": "https://weibo.com/ajax/statuses/hot_band",
+ "requested_at_utc": "2026-08-09T15:24:26.550166+00:00",
+ "status": 403,
+ "final_url": "https://weibo.com/ajax/statuses/hot_band",
+ "redirects": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "content-length": "21",
+  "server": "SHANHAI-SERVER"
+ },
+ "body_head": "{\"error\":\"Forbidden\"}",
+ "body_bytes": 21,
+ "sent_user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+ "left_allowed_hosts": []
+}

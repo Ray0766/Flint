@@ -1,0 +1,153 @@
+{
+ "model": "qwen3.6:35b-a3b",
+ "card_ids": [
+  "card-featb-flask",
+  "card-featb-arxiv"
+ ],
+ "hypothesis": "把两个不同热点的方法迁移到同一落地场景，做一个可复用工作台",
+ "delta": 0.8791653384740783,
+ "degraded": true,
+ "dropped_conflicts": [
+  [
+   "topic-caliber-3",
+   "topic-caliber-5"
+  ]
+ ],
+ "regen_rounds": 3,
+ "generations": 5,
+ "topics": [
+  {
+   "topic_id": "topic-caliber-1",
+   "one_liner": "面向独立开发者的本地化 AI 原型工作台：集成 Flask 微服务架构与 Transformer 注意力机制，实现从数据建模到 Web 部署的一体化闭环",
+   "target_user_tag": "全栈独立开发者 / AI 应用原型构建者",
+   "form_factor_tag": "本地 Agent / CLI 工具",
+   "why_now_claim": "工程框架的轻量化与注意力机制的成熟度正在降低 AI 应用的构建门槛，使得在本地环境快速集成两者成为可能。",
+   "why_now_evidences": [
+    {
+     "event": "pallets/flask 将 web 应用框架定位为轻量 micro framework",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-flask"
+    },
+    {
+     "event": "Transformer 注意力机制作为核心建模能力被广泛引用与实现",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-arxiv"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "Web 应用框架": [
+     "Flask micro framework",
+     "Python web app scaffolding",
+     "lightweight backend"
+    ],
+    "Transformer 注意力机制": [
+     "attention mechanism implementation",
+     "transformer model integration",
+     "local LLM inference"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-2",
+   "one_liner": "基于 Flask 构建的轻量级 Transformer 注意力机制推理微服务网关",
+   "target_user_tag": "AI 工程化开发者",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "Web 框架的工程易用性与注意力机制的建模能力正趋向于在同一可复用工作台融合",
+   "why_now_evidences": [
+    {
+     "event": "pallets/flask 将 web 应用框架定位为轻量 micro framework",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-flask"
+    },
+    {
+     "event": "Transformer 注意力机制被定义为一种建模能力",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-arxiv"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "Web 应用框架": [
+     "Flask",
+     "micro framework",
+     "web application framework"
+    ],
+    "Transformer 注意力机制": [
+     "attention mechanism",
+     "modeling capability",
+     "transformer architecture"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-3",
+   "one_liner": "基于 Flask 构建的轻量级 Transformer 注意力机制推理微服务框架",
+   "target_user_tag": "需要快速集成 AI 能力的后端开发者",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "Web 应用框架的工程易用性与注意力机制的建模能力正趋向于在同一可复用工作台中融合，降低 AI 应用落地门槛。",
+   "why_now_evidences": [
+    {
+     "event": "pallets/flask 将 web 应用框架定位为轻量 micro framework",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-flask"
+    },
+    {
+     "event": "Transformer 注意力机制作为核心建模能力被明确标识",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-arxiv"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "Web 应用框架": [
+     "Flask",
+     "micro framework",
+     "web application",
+     "backend service"
+    ],
+    "Transformer 注意力机制": [
+     "attention mechanism",
+     "transformer model",
+     "inference",
+     "AI modeling"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-4",
+   "one_liner": "基于 Flask 构建的轻量级 Transformer 注意力机制可视化与推理工作台",
+   "target_user_tag": "AI 算法工程师 / 模型可解释性研究者",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "Web 框架的工程易用性与注意力机制的建模能力正通过轻量级工具链实现融合，降低 AI 应用开发门槛。",
+   "why_now_evidences": [
+    {
+     "event": "pallets/flask 将 web 应用框架定位为轻量 micro framework",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-flask"
+    },
+    {
+     "event": "Transformer 注意力机制作为核心建模能力被明确标识",
+     "event_date": "2026-06-29",
+     "citation_id": "card-featb-arxiv"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "Web 应用框架": [
+     "Flask micro framework",
+     "Python web app builder",
+     "lightweight backend"
+    ],
+    "Transformer 注意力机制": [
+     "Transformer attention mechanism",
+     "model interpretability",
+     "attention visualization"
+    ]
+   }
+  }
+ ],
+ "prompt_name": "topic_gen@3",
+ "schema_misses": 0,
+ "variant": "thin"
+}

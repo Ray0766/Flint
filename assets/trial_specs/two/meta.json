@@ -1,0 +1,19 @@
+{
+ "name": "two",
+ "case_id": "gold-B-01",
+ "tier": "B_red_ocean",
+ "category": "cat-ai",
+ "goal": "会议纪要摘要工具：红海市场以行业术语纠错与迁移成本为差异面",
+ "task_count": 7,
+ "competition_task_ids": [
+  "T-02",
+  "T-03",
+  "T-05",
+  "T-06"
+ ],
+ "gates": {
+  "dag_errors": 0,
+  "registry_violations": 0,
+  "export_allowed": true
+ }
+}

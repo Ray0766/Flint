@@ -1,0 +1,7 @@
+第 9 批收工 2026-08-09（返工后重发）
+16/16 verified · 0 blocked
+pytest 5015 passed, 4 skipped / 0 failed · ruff · mypy 319 · tsc 0 · vitest 858
+八张表 8/8（ver=0027）· 孤岛 0 · 三个空表齐
+首版贴的 5013/0 是假的：全量之后 88 秒又关了三张单据，两条判据钉着它们必须 open。
+教训：全局门跑完之后 NEVER 再动任何被判据读的文件；真要动，重跑。
+CN-01 单列：准备到位、等 owner 一次点头（docs/V041-BATCH9-COMPLETION.md §五）

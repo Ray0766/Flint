@@ -1,0 +1,689 @@
+{
+ "spec_version": "v0.4.1-batch4",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward @2026-08-06",
+ "note": "第4批 = 鉴权地基（owner 2026-08-06 裁决走第 1 条）+ 四族装配 + 主链路那一跳 + 假空态 + 三条缺陷。User/Org/Membership/Principal/Role 五个类型已在冻结件里，本批 NEVER 改 contracts/。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B4-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "network": "NEVER 真实网络 / 真实 API key / 付费调用。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。playwright 恒在项目外 C:\\pwenv。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "AUTH-01",
+   "title": "鉴权①：迁移 0020——users / orgs / memberships 三张表",
+   "milestone": "W4",
+   "inputs": [
+    "contracts/models.py#User",
+    "contracts/models.py#Org",
+    "contracts/models.py#Membership",
+    "migrations/versions/0019_doc_content.py"
+   ],
+   "outputs": [
+    "migrations/versions/0020_identity.py",
+    "tests/v041/test_migration_identity.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_migration_identity.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "三张表的列按冻结件逐字：User(user_id · email · display_name · created_at) · Org(org_id · name · created_at) · Membership(user_id · org_id · role)",
+    "role 的取值域 MUST 与冻结件 Role 一致（owner · admin · member · viewer），越界值在库层被拒",
+    "Membership 的主键是 (user_id, org_id) 复合键；同一人在同一组织 NEVER 有两条角色行",
+    "upgrade 与 downgrade 都跑一遍并断言表在、表走：迁移号接 0019，NEVER 跳号",
+    "NEVER 改 contracts/ 与 flint/domain/——这三个类型已经在冻结件里了，本卡只落表"
+   ],
+   "context_refs": [
+    "contracts/models.py",
+    "migrations/versions/0017_topic_subsystem.py"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "AUTH-02",
+   "title": "鉴权②：真 role_resolver 与 owner_scope_for_project——替掉那只假手",
+   "milestone": "W4",
+   "inputs": [
+    "flint/jobs/runner.py#RoleResolver",
+    "flint/api/analysis.py#may_view",
+    "migrations/versions/0020_identity.py"
+   ],
+   "outputs": [
+    "flint/authz/",
+    "tests/v041/test_role_resolver.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_role_resolver.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "role_resolver 按签名 Callable[[str, str], str | None] 实现：(user_id, org_id) 查 memberships 返回角色，查不到返回 None——NEVER 返回一个兜底角色",
+    "owner_scope_for_project 按签名 Callable[[str], Principal] 实现：查 projects.owner 那一列（JSONB，已存 Principal），项目不存在时抛出可被端点转成 404 的错误",
+    "NEVER 出现任何形如 lambda _u, _o: \"owner\" 的常量解析：测试断言模块源码里不含常量角色返回",
+    "阴性对照三条：无 membership 行 → None；role 是 viewer → 写操作被拒；owner_scope.kind 为 user 时只有本人通过（照 may_view 的既有语义）",
+    "runner.py 文件头那句「memberships 表随身份任务落库后接 SQL 实现」本卡兑现，trace 引用该行"
+   ],
+   "context_refs": [
+    "flint/jobs/runner.py",
+    "flint/api/analysis.py",
+    "contracts/models.py#Principal"
+   ],
+   "depends_on": [
+    "AUTH-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "AUTH-03",
+   "title": "鉴权③：身份入口的口径——未知用户 NEVER 静默当成 owner",
+   "milestone": "W4",
+   "inputs": [
+    "flint/api/",
+    "flint/authz/"
+   ],
+   "outputs": [
+    "flint/api/",
+    "tests/v041/test_identity_entry.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_identity_entry.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "身份来源写死一处：X-User-Id 受信头（BE-05 已按此实现），全仓只此一个入口",
+    "缺头 → 401；头里的 user_id 在 users 表查不到 → 401；查得到但对该资源无角色 → 403。三种 NEVER 混成同一个响应",
+    "404 与 403 的边界照既有口径：资源不存在给 404，存在但无权给 403——NEVER 用 404 掩盖 403 之外的情况",
+    "错误响应形状与既有 ErrorBody 一致（code · message），前端分得出是哪一种"
+   ],
+   "context_refs": [
+    "flint/api/account.py",
+    "flint/api/analysis.py"
+   ],
+   "depends_on": [
+    "AUTH-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "AUTH-04",
+   "title": "鉴权④：越权矩阵——四种角色 × 三类操作逐格断言",
+   "milestone": "W4",
+   "inputs": [
+    "flint/authz/",
+    "flint/api/"
+   ],
+   "outputs": [
+    "tests/v041/test_authz_matrix.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_authz_matrix.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "矩阵逐格：owner · admin · member · viewer 四种角色 × 读 / 写 / 干预 三类操作，外加「非成员」与「未登录」两行，每一格都有一条断言",
+    "越权 MUST 抛 PermissionError 或返回 403，NEVER 静默降级成只读或空结果",
+    "个人归属与组织归属分别覆盖：owner_scope.kind 为 user 时经 memberships 的路径走不通，只有本人通过",
+    "阴性对照：把 role_resolver 换成常量 owner 版本，矩阵里的拒绝格 MUST 全部变红——证明这些格子真的在量权限而不是在量别的"
+   ],
+   "context_refs": [
+    "contracts/models.py#Role",
+    "flint/api/interventions.py#may_intervene"
+   ],
+   "depends_on": [
+    "AUTH-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "AUTH-05",
+   "title": "鉴权⑤：demo 栈那只假手退役",
+   "milestone": "W4",
+   "inputs": [
+    "harness/demo_server.py",
+    "flint/authz/"
+   ],
+   "outputs": [
+    "harness/demo_server.py",
+    "tests/v041/test_demo_uses_real_authz.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_demo_uses_real_authz.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "harness/demo_server.py:192 的 lambda _u, _o: \"owner\" 删除，改用 AUTH-02 的真 resolver",
+    "demo 用种子身份：种一个 demo 用户 + 一条 membership，NEVER 用常量角色顶替",
+    "判据是全仓扫描：产品树与 harness 里都不含常量角色解析——这条是这次装不上四族的根因，NEVER 留一个回来的口子",
+    "demo 栈仍能一键起、报告屏仍打得开（WIRE-02 的判据不倒）"
+   ],
+   "context_refs": [
+    "docs/blocked/WIRE-01-FOUR-FAMILIES-NEED-AUTH-AND-PROVIDER.md"
+   ],
+   "depends_on": [
+    "AUTH-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-07",
+   "title": "装配⑦：analysis 族三条路由接通",
+   "milestone": "W4",
+   "inputs": [
+    "flint/api/analysis.py",
+    "flint/api/app.py",
+    "flint/authz/"
+   ],
+   "outputs": [
+    "flint/api/app.py",
+    "tests/v041/test_wire_analysis.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_wire_analysis.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "三条路由挂进 create_app：/projects/{}/analysis · /jobs/{} · /jobs/{}/events",
+    "逐条探活：发真请求断言不是 404；带无权用户断言 403——NEVER 只断言 include_router 语句存在",
+    "建应用不连库这条仍然成立（WIRE-01 acceptance④ 不倒）",
+    "从 flint/api/app.py 的 UNWIRED_FAMILIES 里删掉 analysis 那条；该常量是等值判据，少一条会红——红了就是提醒你改判据"
+   ],
+   "context_refs": [
+    "docs/blocked/WIRE-01-FOUR-FAMILIES-NEED-AUTH-AND-PROVIDER.md",
+    "flint/api/app.py"
+   ],
+   "depends_on": [
+    "AUTH-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-08",
+   "title": "装配⑧：compose 族两条路由接通",
+   "milestone": "W4",
+   "inputs": [
+    "flint/api/compose.py",
+    "flint/api/app.py",
+    "flint/authz/"
+   ],
+   "outputs": [
+    "flint/api/app.py",
+    "tests/v041/test_wire_compose.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_wire_compose.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "两条路由挂进 create_app：/projects/{}/report · /projects/{}/proposal",
+    "runner 里的 role_resolver 用 AUTH-02 的真件注入，NEVER 另造一个",
+    "逐条探活 + 无权用户 403；UNWIRED_FAMILIES 删掉 compose 那条"
+   ],
+   "context_refs": [
+    "flint/api/compose.py",
+    "flint/jobs/runner.py"
+   ],
+   "depends_on": [
+    "AUTH-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-09",
+   "title": "装配⑨：interventions 族四条路由接通（含 aligner）",
+   "milestone": "W4",
+   "inputs": [
+    "flint/api/interventions.py",
+    "flint/api/app.py",
+    "flint/authz/"
+   ],
+   "outputs": [
+    "flint/api/app.py",
+    "tests/v041/test_wire_interventions.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wire_interventions.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "四条路由挂进 create_app：/interventions/lock · /projects/{}/evidence · /projects/{}/disputes · /deliverables/{}/sections/{}/regenerate",
+    "aligner 吃 LLM：注入走 LLMProvider 适配器，测试恒 fixture 回放，NEVER 真调用",
+    "受保护 block 的既有不变量不倒：locked 或 author 为 user 或 user_modified 的 block NEVER 被 regenerate 改写（S2-5），本卡加一条端到端断言",
+    "逐条探活 + 无权用户 403；UNWIRED_FAMILIES 删掉 interventions 那条"
+   ],
+   "context_refs": [
+    "flint/api/interventions.py",
+    "CLAUDE.md#S2"
+   ],
+   "depends_on": [
+    "AUTH-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-10",
+   "title": "装配⑩：combo 族一条路由 + 模型地址进配置",
+   "milestone": "W4",
+   "inputs": [
+    "flint/api/combo.py",
+    "flint/config.py",
+    "flint/api/app.py"
+   ],
+   "outputs": [
+    "flint/config.py",
+    "flint/api/app.py",
+    "tests/v041/test_wire_combo.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wire_combo.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "Settings 加模型接入项：现有三项只有 env · database_url · redis_url，combo 要的 provider 与 embed_service 无处配置——demo 从 OLLAMA 常量拿的那条路 NEVER 进产品",
+    "新配置项未设时端点回「未配置」而不是崩，也 NEVER 回一个空结果冒充算过了",
+    "/projects/combo 挂进 create_app 并逐条探活；UNWIRED_FAMILIES 删掉 combo 那条",
+    "NEVER 新增依赖：本卡只加配置项与注入口，模型调用走既有 LLMProvider 适配器"
+   ],
+   "context_refs": [
+    "flint/config.py",
+    "flint/api/combo.py"
+   ],
+   "depends_on": [
+    "AUTH-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-11",
+   "title": "装配⑪：UNWIRED_FAMILIES 清空，出口判据回到真归零",
+   "milestone": "W4",
+   "inputs": [
+    "flint/api/app.py",
+    "tools/check_fe_be_parity.py",
+    "tests/v041/test_fe_be_parity.py"
+   ],
+   "outputs": [
+    "flint/api/app.py",
+    "tests/v041/test_fe_be_parity.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_fe_be_parity.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "UNWIRED_FAMILIES 清空；判据从「已挂 52 + 已登记 10」改回 backend_not_assembled == 0",
+    "python tools/check_fe_be_parity.py 实跑输出贴进 trace，三个计数逐个列出",
+    "阴性对照仍在位：临时加一个不挂的模块，判据 MUST 变红（WIRE-05 建的那条不许拆）",
+    "关闭 docs/blocked/WIRE-01-FOUR-FAMILIES-NEED-AUTH-AND-PROVIDER.md，顶部写明由 owner 2026-08-06 裁决走第 1 条、哪几张卡兑现的"
+   ],
+   "context_refs": [
+    "docs/blocked/WIRE-01-FOUR-FAMILIES-NEED-AUTH-AND-PROVIDER.md"
+   ],
+   "depends_on": [
+    "WIRE-07",
+    "WIRE-08",
+    "WIRE-09",
+    "WIRE-10"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WIRE-12",
+   "title": "装配⑫：假空态——没有存储面的族 NEVER 回一个空表",
+   "milestone": "W4",
+   "inputs": [
+    "docs/blocked/WIRE-03-EMPTY-FROM-A-STORE-THAT-HAS-NO-DATABASE.md",
+    "flint/api/"
+   ],
+   "outputs": [
+    "flint/api/",
+    "tests/v041/test_no_fake_empty.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_no_fake_empty.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "favorites 与 design/templates 这两族当前挂的是内存件，库里没有 favorites / templates / prefs / share_links 四张表——它们回的 {\"items\": []} 是一句系统没有依据说出口的话",
+    "改成「未提供」姿态：照 /billing 已经做对的形状（status 与 reason 说明为什么），NEVER 用空表冒充查过了",
+    "「没查过」与「查过了是空的」NEVER 挤进同一个表示——这是第 2 批钉住、本卡继续执行的同一条纪律",
+    "前端对应屏跟着改：显示未提供态而不是空态（WIRE-03 已备好两条路）",
+    "关闭 docs/blocked/WIRE-03-EMPTY-FROM-A-STORE-THAT-HAS-NO-DATABASE.md"
+   ],
+   "context_refs": [
+    "docs/blocked/WIRE-03-EMPTY-FROM-A-STORE-THAT-HAS-NO-DATABASE.md"
+   ],
+   "depends_on": [
+    "WIRE-11"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "ROUTE-01",
+   "title": "路由归属：/deliverables/{}/render 被两个模块注册",
+   "milestone": "W4",
+   "inputs": [
+    "flint/api/deliverables.py",
+    "flint/api/pack.py",
+    "docs/blocked/RENDER-ROUTE-CLAIMED-BY-TWO-MODULES.md"
+   ],
+   "outputs": [
+    "flint/api/",
+    "tests/v041/test_render_route_owner.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_render_route_owner.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 建议（owner 可划掉）：deliverables.py 赢——它管五种 fmt 且在 pack_builder 未注入时给 503 明说不可用；pack.py 的 /pack 独立路径保留",
+    "FastAPI 对重复注册不报错、先注册的先匹配——本卡 MUST 加一条判据：同 method+path 被多模块注册即判红，NEVER 靠挂载顺序保证",
+    "fmt=pack 这条路仍然通：经 deliverables.py 转到 pack 的门禁（M4-027 三与），409 与 200 两种用例都覆盖",
+    "关闭 docs/blocked/RENDER-ROUTE-CLAIMED-BY-TWO-MODULES.md"
+   ],
+   "context_refs": [
+    "docs/blocked/RENDER-ROUTE-CLAIMED-BY-TWO-MODULES.md"
+   ],
+   "depends_on": [
+    "WIRE-11"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CHAIN-01",
+   "title": "主链路①：gate1 收尾把 support_claims 落成 claims 行",
+   "milestone": "W4",
+   "inputs": [
+    "flint/jobs/gate1.py",
+    "flint/compose/",
+    "docs/blocked/GATE1-VERDICT-IS-NOT-A-COMPOSE-SOURCE.md"
+   ],
+   "outputs": [
+    "flint/jobs/gate1.py",
+    "tests/v041/test_gate1_writes_claims.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_gate1_writes_claims.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 建议（owner 可划掉）：由 gate1 落 claims 行，而不是让组稿多认一种来源——前者让 claims 成为唯一真相，后者让组稿绑死判定的内部形状",
+    "claims 的 deliverable_id 口径先定后写：gate1 的产出不是一份交付物，本卡 MUST 在 trace 写明这个 id 的语义并给出判据，NEVER 随手填一个能跑通的值",
+    "Claim 与 Fact 的边界不动：alignment 为 partial 的 claim NEVER 提升为 Fact（S2-4），本卡加一条断言",
+    "落盘幂等：同一 job 重跑 NEVER 产生重复 claim 行（arq 按 job id 去重这件事第 3 批已登记，本卡不依赖它兜底）"
+   ],
+   "context_refs": [
+    "docs/blocked/GATE1-VERDICT-IS-NOT-A-COMPOSE-SOURCE.md",
+    "CLAUDE.md#S2"
+   ],
+   "depends_on": [
+    "WIRE-08"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CHAIN-02",
+   "title": "主链路②：端到端删掉「人手种一条 claim」那一步",
+   "milestone": "W4",
+   "inputs": [
+    "tests/v041/test_e2e_full_stack.py",
+    "flint/jobs/gate1.py"
+   ],
+   "outputs": [
+    "tests/v041/test_e2e_full_stack.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_e2e_full_stack.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "端到端用例里的种 claim 那步删掉，改成真的从 gate1 的产出接上组稿",
+    "test_gate1_output_is_still_not_the_claims_source 这条守门断言按其自述处理：它红了就是这一跳接通了——改写成正向断言并在 trace 记明改前改后",
+    "全链路仍走录制回放，respx 护栏断言零真实出网",
+    "关闭 docs/blocked/GATE1-VERDICT-IS-NOT-A-COMPOSE-SOURCE.md"
+   ],
+   "context_refs": [
+    "docs/blocked/GATE1-VERDICT-IS-NOT-A-COMPOSE-SOURCE.md",
+    "docs/trace/E2E-01.md"
+   ],
+   "depends_on": [
+    "CHAIN-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-04",
+   "title": "缺陷④：一条前端用例 5 次红 1 次——间歇红比稳定红更坏",
+   "milestone": "W4",
+   "inputs": [
+    "docs/blocked/UI07-LOCALE-TEST-IS-FLAKY.md",
+    "web/vitest.config.ts",
+    "web/__tests__/"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_no_flaky_globals.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_no_flaky_globals.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "先证因后修：连跑全量 10 次记录红了几次并把输出贴进 trace，NEVER 直接按怀疑的根因改了就算",
+    "怀疑面是 vi.stubGlobal 在用例之间不还原（web/__tests__/app/ 下多个文件 stub 同一个全局）——若证实，配置加 unstubGlobals 或 afterEach 还原",
+    "修完再连跑 10 次全绿；若 10 次里仍有红，NEVER 记 verified，回 docs/blocked/ 补证据",
+    "关闭 docs/blocked/UI07-LOCALE-TEST-IS-FLAKY.md"
+   ],
+   "context_refs": [
+    "docs/blocked/UI07-LOCALE-TEST-IS-FLAKY.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-05",
+   "title": "缺陷⑤：语言与地区表单在 390px 横向溢出 48px",
+   "milestone": "W4",
+   "inputs": [
+    "docs/blocked/LOCALE-FORM-OVERFLOWS-ON-MOBILE.md",
+    "web/"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_locale_mobile.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_locale_mobile.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "/settings/locale 在 390px 视口 scroll_width 不超过 viewport（实测 438 > 390，溢出的是三件套那一行不换行）",
+    "判据用 EYE-02 的既有量法取真实 scroll_width，NEVER 只断言样式类名在",
+    "明暗两主题各量一次，桌面视口不倒",
+    "关闭 docs/blocked/LOCALE-FORM-OVERFLOWS-ON-MOBILE.md"
+   ],
+   "context_refs": [
+    "docs/blocked/LOCALE-FORM-OVERFLOWS-ON-MOBILE.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-06",
+   "title": "缺陷⑥：移动视口从来没有全量量过——十三屏补一遍",
+   "milestone": "W4",
+   "inputs": [
+    "harness/fe_smoke.py",
+    "scripts/ui_probe.py",
+    "docs/blocked/LOCALE-FORM-OVERFLOWS-ON-MOBILE.md"
+   ],
+   "outputs": [
+    "harness/fe_smoke.py",
+    "tests/v041/test_mobile_sweep.py",
+    ".ui-probe/"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_mobile_sweep.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "十三张屏在 390px 视口逐屏取证：无横向溢出 · HTTP 200 · 零控制台报错 · 截图存档",
+    "locale 那条溢出是「新被看见的」而不是新坏的——此前取证只跑三屏且没跑 mobile。本卡把 mobile 视口接进常规取证，NEVER 再让它靠偶然被发现",
+    "查出来的每一条溢出：本卡能修的修，改动面超出的逐条开单，NEVER 只报数不落实",
+    "明暗两主题各一遍"
+   ],
+   "context_refs": [
+    "docs/trace/WIRE-04.md",
+    "docs/blocked/LOCALE-FORM-OVERFLOWS-ON-MOBILE.md"
+   ],
+   "depends_on": [
+    "FIX-05"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-10",
+   "title": "尺子④：第二份扫描器同样不剥注释——注释里写路径会被当真调用",
+   "milestone": "W4",
+   "inputs": [
+    "tests/v041/test_fe_api_contract.py",
+    "docs/blocked/SCANNERS-DO-NOT-STRIP-COMMENTS.md"
+   ],
+   "outputs": [
+    "tests/v041/test_fe_api_contract.py",
+    "tests/v041/test_scanner_strips_comments.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_scanner_strips_comments.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "tests/v041/test_fe_api_contract.py 里那份独立扫描器补上剥注释（check_fe_be_parity.py 那一半第 3 批已修）",
+    "根因写进判据：注释里的反引号本身长得像模板串，「只在字符串里找就能排除注释」这句话对反引号引的路径不成立",
+    "阴性对照：写一句含路径的注释，断言两把尺子都不再把它读成真调用；再写一处真调用，断言仍被抓到",
+    "关闭 docs/blocked/SCANNERS-DO-NOT-STRIP-COMMENTS.md"
+   ],
+   "context_refs": [
+    "docs/blocked/SCANNERS-DO-NOT-STRIP-COMMENTS.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-11",
+   "title": "尺子⑤：33 条端点前端没调用——逐条分诊，NEVER 一句「不是缺陷」带过",
+   "milestone": "W4",
+   "inputs": [
+    "docs/前后端对账表-v041.md",
+    "tools/check_fe_be_parity.py"
+   ],
+   "outputs": [
+    "docs/端点分诊-v041.md",
+    "tests/v041/test_endpoint_triage.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_endpoint_triage.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "backend_unused_by_frontend 当前 33 条，逐条归三类：该上屏但没接 · 本就不上屏（后台或内部调用）· 该退役",
+    "机读守着不漂移：测试断言分诊表里的端点集合与对账器实跑输出逐字相等——新增端点没分诊则判红",
+    "「本就不上屏」这一类 MUST 逐条写为什么，NEVER 用一句「多为内部用途」概括一整类",
+    "该上屏的那一类落成下一批的候选清单，带屏名与优先级"
+   ],
+   "context_refs": [
+    "docs/前后端对账表-v041.md",
+    "docs/V041-BATCH3-COMPLETION.md"
+   ],
+   "depends_on": [
+    "WIRE-11"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-04",
+   "title": "收尾：第 4 批完成态报告 + 出口全局门",
+   "milestone": "W4",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b4.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH4-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041 -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "全局门五条全绿并把输出逐字贴进报告：ruff check . --no-cache · mypy --strict flint · pytest -q · cd web && npm test -- --run · npx tsc --noEmit",
+    "出口判据本批可以真达标：backend_not_assembled == 0 且 frontend_untyped_response == 0，两个数逐字贴出",
+    "达不到就记 blocked 并逐条说明卡在谁那里——把出口判据的一半写成达标是这份报告最坏的写法（第 3 批的原话，本批继承）",
+    "未解决的逐条列名，NEVER 用一句「其余无异常」收口"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH3-COMPLETION.md"
+   ],
+   "depends_on": [
+    "AUTH-04",
+    "AUTH-05",
+    "WIRE-11",
+    "WIRE-12",
+    "ROUTE-01",
+    "CHAIN-02",
+    "FIX-04",
+    "FIX-06",
+    "GAUGE-10",
+    "GAUGE-11"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

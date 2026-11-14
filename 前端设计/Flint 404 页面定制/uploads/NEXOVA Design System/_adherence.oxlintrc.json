@@ -1,0 +1,209 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/core/**",
+              "components/page/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Helvetica Now Var))/i]",
+        "message": "Font not provided by the design system. Available: Helvetica Now Var."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='BackgroundVideo'] > JSXAttribute > JSXIdentifier[name!=/^(?:src|poster|key|ref|className|style|children)$/]",
+        "message": "<BackgroundVideo> doesn't accept that prop. Declared props: src, poster."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|href|onClick|type|className|style|children|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: variant, href, onClick, type, className, style, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:gradient|glass)$/]",
+        "message": "<Button> variant must be one of 'gradient' | 'glass'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='type'] > Literal[value!=/^(?:button|submit)$/]",
+        "message": "<Button> type must be one of 'button' | 'submit'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Footer'] > JSXAttribute > JSXIdentifier[name!=/^(?:columns|newsletterTitle|sendLabel|placeholder|connectTitle|socials|key|ref|className|style|children)$/]",
+        "message": "<Footer> doesn't accept that prop. Declared props: columns, newsletterTitle, sendLabel, placeholder, connectTitle, socials."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Hero404'] > JSXAttribute > JSXIdentifier[name!=/^(?:line1|line2|code|ctaLabel|ctaHref|key|ref|className|style|children)$/]",
+        "message": "<Hero404> doesn't accept that prop. Declared props: line1, line2, code, ctaLabel, ctaHref."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Icon'] > JSXAttribute > JSXIdentifier[name!=/^(?:name|size|strokeWidth|className|style|key|ref|className|style|children)$/]",
+        "message": "<Icon> doesn't accept that prop. Declared props: name, size, strokeWidth, className, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Logo'] > JSXAttribute > JSXIdentifier[name!=/^(?:size|wordmark|color|className|style|key|ref|className|style|children)$/]",
+        "message": "<Logo> doesn't accept that prop. Declared props: size, wordmark, color, className, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='NavBar'] > JSXAttribute > JSXIdentifier[name!=/^(?:links|loginLabel|onLogin|key|ref|className|style|children)$/]",
+        "message": "<NavBar> doesn't accept that prop. Declared props: links, loginLabel, onLogin."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "BackgroundVideo": {
+        "replaces": []
+      },
+      "Button": {
+        "replaces": []
+      },
+      "Footer": {
+        "replaces": []
+      },
+      "Hero404": {
+        "replaces": []
+      },
+      "Icon": {
+        "replaces": []
+      },
+      "Logo": {
+        "replaces": []
+      },
+      "NavBar": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--nx-black-40",
+      "--nx-blur-backdrop",
+      "--nx-blur-glass",
+      "--nx-blur-panel",
+      "--nx-cyan-500",
+      "--nx-dur-fast",
+      "--nx-dur-med",
+      "--nx-dur-menu",
+      "--nx-ease",
+      "--nx-emerald-400",
+      "--nx-font-sans",
+      "--nx-glass-bg",
+      "--nx-glass-inset",
+      "--nx-glow-404",
+      "--nx-grad-cta",
+      "--nx-radius-input",
+      "--nx-radius-panel",
+      "--nx-radius-pill",
+      "--nx-space-900",
+      "--nx-space-950",
+      "--nx-surface-page",
+      "--nx-text-body",
+      "--nx-text-dim",
+      "--nx-text-footer",
+      "--nx-text-footer-xs",
+      "--nx-text-hi",
+      "--nx-text-logo",
+      "--nx-text-nav",
+      "--nx-track-menu",
+      "--nx-track-tight",
+      "--nx-track-tighter",
+      "--nx-track-wide",
+      "--nx-track-wider",
+      "--nx-track-widest",
+      "--nx-weight-black",
+      "--nx-weight-bold",
+      "--nx-weight-light",
+      "--nx-weight-medium",
+      "--nx-weight-regular",
+      "--nx-weight-semibold",
+      "--nx-white",
+      "--nx-white-10",
+      "--nx-white-50",
+      "--nx-white-80"
+    ],
+    "tokenKinds": {
+      "--nx-emerald-400": "color",
+      "--nx-cyan-500": "color",
+      "--nx-space-950": "spacing",
+      "--nx-space-900": "spacing",
+      "--nx-white": "color",
+      "--nx-white-80": "color",
+      "--nx-white-50": "color",
+      "--nx-white-10": "color",
+      "--nx-black-40": "color",
+      "--nx-surface-page": "color",
+      "--nx-text-hi": "font",
+      "--nx-text-body": "font",
+      "--nx-text-dim": "font",
+      "--nx-grad-cta": "color",
+      "--nx-glass-bg": "color",
+      "--nx-font-sans": "font",
+      "--nx-text-nav": "font",
+      "--nx-text-footer": "font",
+      "--nx-text-footer-xs": "font",
+      "--nx-text-logo": "font",
+      "--nx-track-tighter": "spacing",
+      "--nx-track-tight": "spacing",
+      "--nx-track-wide": "spacing",
+      "--nx-track-menu": "spacing",
+      "--nx-track-wider": "spacing",
+      "--nx-track-widest": "spacing",
+      "--nx-weight-light": "font",
+      "--nx-weight-regular": "font",
+      "--nx-weight-medium": "font",
+      "--nx-weight-semibold": "font",
+      "--nx-weight-bold": "font",
+      "--nx-weight-black": "font",
+      "--nx-radius-pill": "radius",
+      "--nx-radius-panel": "radius",
+      "--nx-radius-input": "radius",
+      "--nx-glow-404": "shadow",
+      "--nx-glass-inset": "spacing",
+      "--nx-blur-glass": "spacing",
+      "--nx-blur-panel": "spacing",
+      "--nx-blur-backdrop": "spacing",
+      "--nx-dur-fast": "other",
+      "--nx-dur-med": "other",
+      "--nx-dur-menu": "other",
+      "--nx-ease": "other"
+    },
+    "fontFamilies": [
+      "Helvetica Now Var"
+    ]
+  }
+}

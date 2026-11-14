@@ -1,0 +1,339 @@
+{
+  "spec_version": "v0.4.1-batch9",
+  "frozen_against": "contracts/ @2026-07-30",
+  "audience": "ai_executor",
+  "generated_by": "steward 2026-08-12（第 15 批 · 落 v4 交接包：换板并入 _ds + 保路由局部吸收）",
+  "note": "owner 2026-08-12 放进 `前端设计/应用前端设计需求/design-handoff/` 一份交接包（`Flint v4.dc.html` 主壳 + `studio.dc.html` 设计台 + `support.js` + `README.md`），并附一份工单。steward 逐条回源核过之后，**工单的四项拆解里有三项在仓里已经建成**，且各自带着判据：① 主题令牌与导航壳 = `_ds/tokens/colors.css` 明暗双板双通道 + `AppShell`/`AnimeNav` 七入口药丸条 + 三态主题开关；② 热点广场 = `PlazaCards`/`HotspotCard` + `plaza-combo-bar`，2~5 的规则在 `flint/topic/create.py:67`，空假设校验在 `flint/api/errors.py`；③ 判定台各件 = `app/gate/[id]` + `app/jobs/[id]`（SSE）+ `app/projects/[id]/proposal`（`useState<Audience|null>(null)` 无默认、radio 单选、`disabled={audience===null||…}`，后端 `flint/api/compose.py:39` 是 `Literal[...]` 所以缺字段即 pydantic 422）+ `components/pack-viewer/PackViewer.tsx`。工单另有三处前提与仓里对不上，**NEVER 照工单原文执行**：工程根是 `web/` 不是 `apps/web`（`DEC-007`）；`web/package.json` 里没有 zustand 也没有 tiptap（tiptap 2026-07-30 已被裁掉，改成块级指令式重生成），所以「vibe_pack 不进 tiptap」这条今天是自动成立的；工单要求把 v4 的 12 个变量落在 `app/globals.css` 当唯一主题层，owner 已裁决改为**把 v4 的值写进 `_ds`**（见 DEC-060），单一颜色来源不变、组件侧零改动。**本批真正在做的事只有两件**：把调色板换成 v4 那套暖橙/暗棕（PAL-01~03），以及把 v4 比现网多出来的两处交互吸收进既有路由（PLZ-COMBO-01 / JUDGE-TAB-01）。",
+  "rules": {
+    "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+    "done_marker": "docs/FLINT-V041-B15-DONE",
+    "batch_14_first": "**本批 MUST 等 `docs/FLINT-V041-B14-DONE` 落盘之后才开跑**。第 15 批与第 14 批碰同一批文件（`web/app/globals.css` · `web/components/shell/AppShell.tsx` · `web/components/workbench/`）；两批并跑会互相覆盖，且第 14 批的五条门会被本批的改动污染。开跑第一件事 MUST 是核这个标记在不在，不在就停下写 `docs/blocked/`。",
+    "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+    "blueprint": "风格来源唯一锚点 = `前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html`（owner 2026-08-12 放入）。设计台那一半 `studio.dc.html` 与第 14 批的蓝本 `前端设计/ai工作台/Flint 设计台 v3.dc.html` 是同一份文件（差 12 字节），**第 14 批已按它做完，本批 NEVER 重做设计台**——换板之后设计台跟着变，因为它的颜色本来就全落在 `_ds` token 上（`WB-01` trace：裸色值 0）。",
+    "single_color_source": "颜色的唯一来源仍是 `web/public/_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css`（DEC-060 第一条）。**NEVER 在 `app/globals.css` 或任何组件里新开一套 `--bg/--panel/--accent`**——那会变成两套颜色各自漂移，而屏上看不出自己在读哪一套。v4 的 12 个变量名是**设计稿的记法**，本仓 NEVER 引入这些名字，只搬它们的**值**。",
+    "no_new_routes": "DEC-060 第二条：**29 条路由与 7 个导航入口一条不动**。本批 NEVER 新建 `/judge` 一类的合并屏，NEVER 改 `NAV_ITEMS`。v4 的「3 顶导航 + 判定台 5 tab」只以**互链带**的形式吸收（JUDGE-TAB-01），它是屏内的一条导航条，不是路由。",
+    "positive_criteria": "**判据一律正向**：每条 MUST 是「这个元素/这条链 MUST 是什么样」并带实测数值或真产物，NEVER 只写禁止性判据。**换板批的专门形态**：颜色类判据 MUST 从 `tokens/colors.css` 现场解析出期望值再比（`test_hotspot_card_format.py` 的 `_hex_to_rgb(tokens[\"--surface\"])` 就是范式），NEVER 在判据里写死一个色号——写死的那一刻，这条判据钉的是今天这块板而不是「屏上显示的值 == token 里的值」。",
+    "gauges_follow_the_ruling": "换板会让既有判据变红的地方**已经数清楚了，只有两处**（PAL-02）。碰到第三处红：MUST 先分辨它是「判据钉着旧板」还是「换板真的碰坏了东西」，**NEVER 直接改判据放行**。判据要跟着裁决重新瞄准时，改的是**方向**，意图一个字不动。",
+    "real_browser": "视觉判据 MUST 打真浏览器真栈（playwright 恒在项目外 C:\\pwenv，:3000），NEVER 用组件快照冒充整屏。",
+    "llm_cost": "本批不生成任何文书。若跑通链需要生成，一律走**免费本地档**（LocalProvider → 本机 Ollama），NEVER 读任何 API key、NEVER 调付费接口（付费开通是 owner 人审节点 S2-10）。",
+    "network": "本批 NEVER 真实网络。本机容器、本机模型、localhost:3000 与 :8000 不算外网。设计稿里那两行 `fonts.googleapis.com` / `fonts.gstatic.com` 的外链字体 **NEVER 引进来**（`tools/no_external_fonts.mjs` 已经在扫）。",
+    "new_dependency": "NEVER 新增依赖。v4 的所有形态用现有 CSS 手写。",
+    "stale_premise": "遇到任何写着「因为 X 所以不做」的注释，MUST 先核 X 今天还成不成立，NEVER 照着它继续不做。本批已经吃过一次这个亏：工单说前端有 tiptap，实况是 2026-07-30 就裁掉了。",
+    "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8。",
+    "stale_process": "打真栈之前 MUST 先核 :3000 与 :8000 的 PID 与启动时间。"
+  },
+  "isolation": {
+    "droppable": []
+  },
+  "tasks": [
+    {
+      "id": "DEC-060-LANDING",
+      "title": "裁决落地：v4 调色板并入 _ds · 保路由局部吸收 · 出卡不直接改码（DEC-060）",
+      "milestone": "W15",
+      "inputs": [
+        "DECISIONS-v04.md",
+        "前端设计/应用前端设计需求/design-handoff/README.md"
+      ],
+      "outputs": [
+        "DECISIONS-v04.md",
+        "docs/blocked/DEC-060-TEXT-IS-STEWARD-AUTHORED-OPTIONS.md",
+        "tests/v041/test_decisions_landed.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_decisions_landed.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "DEC-060 追加进 `DECISIONS-v04.md`；既有字节逐字节不动，水位 059→060（`test_decisions_landed.py` 的水位断言与 `range(35, 61)` 全序断言同步推一格）",
+        "**出处如实写在条目第一行**：这三条裁决的文字是 **steward 拟的选项文本**，owner 从三组选项里各选了一项——**NEVER 写成「owner 原文」或「owner 粘贴的」**。`DEC-059` 已经踩过一次同类（`docs/blocked/DEC-059-TEXT-CAME-FROM-THE-WORK-ORDER.md`），这次照同一条纪律开单 `docs/blocked/DEC-060-TEXT-IS-STEWARD-AUTHORED-OPTIONS.md`（不阻断，状态行三样齐：状态 · 日期 · 卡号）",
+        "**三句要害各断言一次**（转述时最先掉的三件事）：①「唯一颜色来源仍是 `_ds/tokens/colors.css`，换的是值不是位置」②「29 条路由与 7 个导航入口一条不动，v4 的 5 tab 以屏内互链带吸收」③「v4 的 12 个变量名 NEVER 进本仓，只搬值」",
+        "先红后绿：判据 MUST 在 DEC-060 落盘前实测为红（水位仍是 059），落盘后转绿"
+      ],
+      "context_refs": [
+        "DECISIONS-v04.md",
+        "tests/v041/test_decisions_landed.py",
+        "docs/blocked/DEC-059-TEXT-CAME-FROM-THE-WORK-ORDER.md"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "PAL-01",
+      "title": "换板：v4 的值写进 _ds/tokens/colors.css（组件侧零改动）",
+      "milestone": "W15",
+      "inputs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "web/public/_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css",
+        "tools/visual_assert.py"
+      ],
+      "outputs": [
+        "web/public/_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css",
+        "tests/v041/test_palette_v4.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_palette_v4.py tests/v041/test_dark_palette.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "**映射表逐条落地，16 个 token 一个不少**（v4 → _ds，明暗各一套）：`--paper`←v4 `--bg` · `--paper-2`←`--panel2` · `--surface`←`--panel` · `--ink`←`--ink` · `--ink-2`←`--sub` · `--ink-3`←`--unk` · `--rule`←`--line` · `--sulfur`←`--accent` · `--sulfur-soft`←`--accent-soft` · `--rust`←`--bad` · `--rust-soft`←`--bad-soft` · `--moss`←`--ok` · `--moss-soft`←`--ok-soft`。判据 MUST 逐条比对设计稿文件里那两行 body 声明与 colors.css 的落地值",
+        "**v4 原值有两处过不了本仓既有的线，按已实测的最小改动量落，NEVER 照抄**：① 明色 `--sub #867b67` 在 `--bg #f2ede4` 上只有 **3.57**（AA 正文线 4.5），压暗到 **#736a59** 实测 **4.58**；② 暗色 `--ink #ede5d7` 在 `--panel #211d17` 上 **13.40** 低于明色的 14.79（`DARK-01` acceptance③ 要求暗色不退化），提亮到 **#f9f0e2** 实测 **14.84**。两处的改前值、改后值、实测比值 MUST 逐个写进 colors.css 的注释与 trace",
+        "**`--indigo` 这一档按 v4 原意与 `--sulfur` 合并**（两者同取 v4 accent：明 `#d1531f`、暗 `#e8763a`）——理由 MUST 写在 colors.css 注释里：v4 自己写的就是 `a{color:var(--accent)}`，它没有第二个性格色，「结构/链接」与「高亮/CTA」在 v4 里是同一档。**NEVER 让它看起来像拷贝时的手滑**：注释里点名这是照 v4 做的合并，且写明反悔只需改这一行。`--indigo-soft`/`--indigo-mist` 同族跟着走（明 `#f6ded0` 一族、暗 `#43301f` 一族）",
+        "**v4 的 `--warn`/`--unk` 两族是新增，NEVER 覆盖既有 token**：以 `--warn`（明 `#a3701c` / 暗 `#c99a4a`）与 `--warn-soft`（明 `#e9deca` / 暗 `#352b1b`）落成新 token。soft 类一律落成不透明 hex（`_ds` 现有 soft 全是 hex），合成基底是同主题的 `--paper`；`--rust-soft` 明 `#ead8ce` / 暗 `#37231e`，`--moss-soft` 明 `#dddfcf` / 暗 `#292e21`",
+        "**正向判据 · 对比度四条全部实测过线**（尺子复用 `tools/visual_assert.py`，NEVER 另造）：`--ink`/`--paper` 明 13.56 暗 15.96 · `--ink`/`--surface` 明 14.79 暗 14.84 · `--ink-2`/`--paper` 明 4.58 暗 5.61，三对都 MUST「两边 ≥4.5 且 暗 ≥ 明」；`--indigo`/`--sulfur`/`--rust` 在暗 `--surface` 上分别 5.65/5.65/4.77，MUST ≥3.0",
+        "**正向判据 · 「组件侧零改动」是可以数出来的**：换板前后，`web/app` `web/components` `web/views` `web/design` `web/lib` 下 `var(--<token>)` 的**出现次数逐个 token 相等**，且 `git`-无关地按文件内容比对——`web/` 下除 `tokens/colors.css` 之外**零字节改动**。这一条不成立就说明有人在组件里写死了色值，那正是换板要防的事",
+        "**两条通道与优先级一条不改**：`@media (prefers-color-scheme: dark)` 与 `[data-theme=\"dark\"]` 声明同一组值，且 `[data-theme]` 写在 media 之后（`test_dark_palette.py` 的既有四条判据 MUST 全绿，NEVER 为了换板去改它们）",
+        "先红后绿：`test_palette_v4.py` MUST 在换板前实测为红"
+      ],
+      "context_refs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "tests/v041/test_dark_palette.py",
+        "tools/visual_assert.py",
+        "docs/trace/DARK-01.md"
+      ],
+      "depends_on": [
+        "DEC-060-LANDING"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "PAL-02",
+      "title": "判据跟着裁决重新瞄准：色相族方向 + 那两个冻结色号（只有这两处会红）",
+      "milestone": "W15",
+      "inputs": [
+        "tests/v041/test_dark_palette.py",
+        "tests/v041/test_theme_really_switches.py"
+      ],
+      "outputs": [
+        "tests/v041/test_dark_palette.py",
+        "tests/v041/test_theme_really_switches.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_dark_palette.py tests/v041/test_theme_really_switches.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "**先把「会红的到底有几处」核成实测**：换板后全跑一次 `pytest tests/v041 -q`，把红的逐条列进 trace。steward 静态清点的结论是**只有两处**（`test_dark_palette.py::test_the_dark_palette_keeps_the_paper_and_ink_hue_family` 的 `b >= r`，以及 `test_theme_really_switches.py:57-58` 的 `FROZEN_FG/FROZEN_BG`）。实测多出第三处 → MUST 停下按 `gauges_follow_the_ruling` 分辨，NEVER 顺手改绿",
+        "**色相族判据改的是方向，意图一个字不动**：那条判据守的是「暗纸没退化成中性灰或纯黑，仍看得出色相」——`max-min >= 4` 这半条**原样保留**（v4 暗纸 `#191612` 实测 max-min=7）；变的只是族的方向：`b >= r`（青绿族）→ `r >= b`（暖族，实测 r=25 ≥ b=18）。改动理由 MUST 在 docstring 里点名 DEC-060，并写明改前那半条守的是「纸与墨」那块板",
+        "**`FROZEN_FG/FROZEN_BG` 是历史证物，NEVER 直接改成新色号**：那两行冻的是 `EYE-02` 那个洞的原形（两主题量到一位不差的同一组数）。改法是把它们**降级成历史注释里的字面量**，判据本身改成从 `tokens/colors.css` 现场解析——这样它守的是「两主题量到的颜色对 MUST 不同」这件事本身，而不是 2026-08-04 那天的两个数。docstring MUST 保留原始那两行数据作为洞的原形记录",
+        "**阴性对照**：把 colors.css 的暗色 `--paper` 临时改成明色同值（**改在内存里，NEVER 动真文件**），两条判据 MUST 当场变红——证明重新瞄准之后它们仍然咬得住",
+        "**其余判据一条不动**：`test_hotspot_card_format.py` / `test_ds_bundle_wired.py` 这一族从 token 现场解析期望值（`_hex_to_rgb(tokens[\"--surface\"])`），换板后自动跟着走，MUST 保持全绿且**零改动**——动了它们就说明换板碰坏了别的东西"
+      ],
+      "context_refs": [
+        "tests/v041/test_dark_palette.py",
+        "tests/v041/test_theme_really_switches.py",
+        "docs/blocked/EYE-02-TWO-THEMES-MEASURES-ONE.md"
+      ],
+      "depends_on": [
+        "PAL-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "PAL-03",
+      "title": "换板后重新取证：屏上真的是 v4 那块板（复用既有取证脚本）",
+      "milestone": "W15",
+      "inputs": [
+        "tools/ui_probe_wb_layout.py",
+        "scripts/ui_probe.py",
+        ".ui-probe/"
+      ],
+      "outputs": [
+        ".ui-probe/",
+        "tests/v041/test_palette_onscreen.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_palette_onscreen.py tests/v041/test_eye04.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "**先数清楚要重拍哪些**：`.ui-probe/` 下现有 134 张 png 与 30 份 json，而**有判据在读它们的是 47 个测试文件**。本卡 MUST 先跑出「哪些产物有判据在读」的清单写进 trace，**有判据读的全部重拍**；没有判据读的旧图 MUST 在同目录留一行说明它是换板前的，NEVER 留着当现状（旧板的图与新板的图混在一个目录里，下一个人无从分辨）",
+        "**取证脚本复用，NEVER 另写一套**：走 `scripts/ui_probe.py` 与 `tools/ui_probe_*.py` 既有的视口矩阵（三视口 × 两主题）。两套脚本会给出两组数，而那时没人知道该信哪一组",
+        "**正向判据 · 屏上量到的就是 token 里的值**：真浏览器起真栈（先核 :3000 与 :8000 的 PID 与启动时间），对每个主题各取一屏，实测 `getComputedStyle(body).backgroundColor` == `tokens[\"--paper\"]` 归一到 rgb 之后逐字相等；明暗两次量到的值 MUST 不同",
+        "**正向判据 · 换板是看得见的**：同一屏同一主题的换板前后截图 MUST 字节不同（`FB-01`/`EYE-03` 记过反面：主题开关什么都没改时，两张图逐字节相同）",
+        "**四条老线一条不掉**：一行药丸导航条 · 铺满（横向占比 ≥0.9）· 零横向溢出 · 零控制台报错，六张截图逐张过（`test_eye04.py` 既有口径，NEVER 放宽）",
+        "截图与数一起落盘（`report.json`）：只有图的话，下一个人无从判断它当时算不算合格。判据 MUST 断言每张 png 字节数 >10KB——0 字节的文件也叫「在盘上」"
+      ],
+      "context_refs": [
+        "tests/v041/test_eye04.py",
+        "docs/trace/EYE-04.md",
+        "scripts/ui_probe.py"
+      ],
+      "depends_on": [
+        "PAL-02"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "PLZ-COMBO-01",
+      "title": "广场 Combo 栏吸收 v4：假设输入框进栏 + 三态提示逐字照抄",
+      "milestone": "W15",
+      "inputs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "web/components/plaza/PlazaCards.tsx",
+        "web/app/combo/page.tsx",
+        "flint/topic/create.py",
+        "flint/api/errors.py"
+      ],
+      "outputs": [
+        "web/components/plaza/PlazaCards.tsx",
+        "web/messages/zh.json",
+        "web/messages/en.json",
+        "tests/v041/test_plaza_combo_bar.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_plaza_combo_bar.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "**改前实况先写进 trace**：`plaza-combo-bar` 这条栏**已经存在**（`PlazaCards.tsx:204`），已有已选计数、建组合按钮、`need_two` 提示。v4 比现网多的只有两样：**假设输入框进同一条栏**，与**三态提示**（v4 第 524 行：`还需 N 张卡` → `关联假设必填` → `就绪 · 生成 5~8 个候选主题`）。本卡只补这两样，**NEVER 重写这条栏**",
+        "**这一屏选的是热点簇，而端点吃的是证据卡——这条坑已经有人踩过，NEVER 再踩一次**：`PlazaCards.tsx:173-175` 与 `app/combo/page.tsx` 都写明了这件事（`POST /projects/combo` 的 `card_ids` 是**证据卡** id，一个热点底下可能有好几张）。假设输入框进栏之后，提交仍 MUST 走 `?clusters=` 那条既有路到 `/combo` 屏选证据卡，**NEVER 把簇 id 当 `card_ids` 直接发出去**——那些 id 在 `evidence_cards` 里一条都查不到，而屏上会显示成一次正常的失败",
+        "**正向判据 · 三态提示显示的是数据源里的值**：选 0 张 → 栏上印的字与「从上方卡片加入 2~5 张」逐字相同；选 1 张 → 印「还需 1 张卡」且那个 1 == `2 - selected.length`；选 2 张而假设为空 → 印「关联假设必填」；选 2 张且假设非空 → 印就绪那一句。四态逐个 parametrize，缺一种即红",
+        "**正向判据 · 按钮的可点性与三态同源**：`disabled` MUST 在「选中数 <2」与「假设为空白」两种情形下都为真，且**光标形态与底色跟着变**（v4：`cursor: not-allowed` + `background: var(--panel2)` + `color: var(--sub)`）。阴性对照 = 把假设填上一个空格，按钮 MUST 仍不可点（后端 `EMPTY_HYPOTHESIS_MESSAGE` 走的是 `strip()` 口径，前端 MUST 与它同口径，NEVER 各判各的）",
+        "**上限 5 也要在屏上说得出**：选到第 6 张时 MUST 说明为什么加不进去（`flint/topic/create.py:67` 的 `_COMBO_MIN`~`_COMBO_MAX`），NEVER 静默忽略这一次点击",
+        "文案走 i18n key，zh/en 两份同时补（`tools/i18n_key_defined.mjs` 在扫）；颜色全部走 `_ds` token，裸色值 0"
+      ],
+      "context_refs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "web/components/plaza/PlazaCards.tsx",
+        "flint/api/errors.py"
+      ],
+      "depends_on": [
+        "PAL-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "JUDGE-TAB-01",
+      "title": "判定台五 tab 互链带（屏内导航条，不新建路由、不动 7 入口）",
+      "milestone": "W15",
+      "inputs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "web/app/gate/[id]/page.tsx",
+        "web/app/jobs/[id]/page.tsx",
+        "web/app/projects/[id]/proposal/page.tsx",
+        "web/app/deliverables/[id]/pack/page.tsx"
+      ],
+      "outputs": [
+        "web/components/judge-tabs/JudgeTabs.tsx",
+        "web/messages/zh.json",
+        "web/messages/en.json",
+        "tests/v041/test_judge_tabs.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_judge_tabs.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "**改前实况**：v4 的判定台是一屏五 tab（`主题列表 / Gate① 判定 / 作业进度 / 受众选择 / vibe_pack`，v4 第 477 行）；本仓这五件是五条独立路由，**彼此之间今天没有一条互链**（只有 `app/projects/[id]/page.tsx` 那个枢纽屏各链一次）。本卡加的是**一条屏内导航条**，`NAV_ITEMS` 与 29 条路由**一条不动**（DEC-060 第二条）",
+        "**正向判据 · 五个 tab 指向的是既有路由且都打得开**：五条 `href` 逐条断言指向 `/projects/{id}/topics` · `/gate/{id}` · `/jobs/{id}` · `/projects/{id}/proposal` · `/deliverables/{id}/pack`，真栈逐条取一次 MUST 都不是 404；当前所在那一条 MUST 带 `aria-current`（读屏的人靠它知道自己在哪）",
+        "**未就绪的 tab MUST 说得出为什么，NEVER 静默灰掉**：还没有 deliverable 时 vibe_pack 那一条不可点——屏上 MUST 印出它在等什么（照 `PackViewer` 既有口径：`not_generated` 是「还没生成」而不是 404，也不是一个空的九章骨架）。这一条的阴性对照 = 造一个没有 deliverable 的项目，那一条 MUST 印出说明文字而不是消失",
+        "**id 从哪来 MUST 是可追的，NEVER 猜**：五条路由要的 id 不是同一个（project / job / deliverable 各一种）。拿不到某一个 id 时那一条 tab 走「未就绪」那条路，**NEVER 拼一个 id 出来**——`DEC-012` 拒绝猜 verdictJob 是同一条纪律",
+        "**七个导航入口一个不多一个不少**：`test_shell_nav.py` 既有判据 MUST 保持全绿且零改动。本卡加的条在屏内，`.app-shell__nav-link` 那个既有钩子一个字不动",
+        "视觉照 v4 的 tab 形态（第 477 行那组），颜色全部走 `_ds` token，裸色值 0；文案走 i18n key，zh/en 两份同时补"
+      ],
+      "context_refs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "web/components/shell/AppShell.tsx",
+        "tests/v041/test_shell_nav.py",
+        "web/components/pack-viewer/PackViewer.tsx"
+      ],
+      "depends_on": [
+        "PAL-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "AUD-PACK-01",
+      "title": "受众选择与 vibe_pack 两屏：对齐 v4 的说明文字并正向取证（语义已成立，NEVER 重写）",
+      "milestone": "W15",
+      "inputs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "web/app/projects/[id]/proposal/page.tsx",
+        "web/components/pack-viewer/PackViewer.tsx",
+        "flint/api/compose.py",
+        "flint/compose/audience.py"
+      ],
+      "outputs": [
+        "web/messages/zh.json",
+        "web/messages/en.json",
+        "tests/v041/test_audience_pack_v4.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_audience_pack_v4.py tests/v041/test_audience_and_intervention_screens.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "**改前实况先写进 trace，本卡 NEVER 重写这两屏**：受众选择的三条语义**今天已经成立**——无默认（`useState<Audience|null>(null)`）· 强制单选（`type=\"radio\" name=\"audience\"`）· 不选不能提交（`disabled={audience === null || …}`）；后端 `flint/api/compose.py:39` 是 `Literal[\"human_reader\",\"ai_executor\"]`，**缺字段即 pydantic 422**。vibe_pack 查看器（`PackViewer.tsx`）也已经是只读清单形态、带 `for_ai_context=false` 标记、`not_generated` 不冒充空骨架",
+        "**正向判据 · 422 是实测出来的，不是读出来的**：真栈发一次 `POST /projects/{id}/proposal` 且请求体**不带 `audience` 字段**，实测状态码 == 422；再发一次带 `audience=\"ai_executor\"` 的，实测 != 422。两次都断言，只断言前者的话「这个端点永远 422」也会绿",
+        "**本卡真正要补的是 v4 的说明文字**：两张受众卡各自的一句话说明（v4 第 249 行 vibe_pack 那句、以及给人读那一侧对应的一句）· 未选时按钮上印「选择受众后才能提交」（v4 第 542 行）· 选定后按钮文案随受众变（human → 生成计划书那一句、ai → 生成执行包那一句）。三处逐字照抄进 i18n，zh/en 两份同时补",
+        "**「两版互链」这句 MUST 先核再决定做不做**：v4 第 257 行写着「任一受众生成后可再生成另一版本 · 钉同一 ledger 版本 · 两版互链（`sibling_deliverable_id`）」。**先在冻结件里核 `sibling_deliverable_id` 这个字段存不存在**：存在则把互链做出来并断言两版指向同一 ledger 版本；不存在则**NEVER 在前端编一个出来**，改为开 `docs/blocked/` 单据记明这是设计稿超出冻结件的一处，本卡其余部分照做",
+        "**vibe_pack 与报告 MUST 长得明显不同**（技术约束清单第 31 条，`PackViewer` 文件头的原话）：正向断言正文用固定宽度字体、九章逐条列出、`audience=ai_executor` 徽标在屏上印得出来（v4 第 265 行）——这三样都 MUST 量到，NEVER 只断言组件渲染成功",
+        "**导出门禁文案先核后动**：`app/deliverables/[id]/export/page.tsx` 已按蓝本落了 409 `EXPORT_BLOCKED` + `blocking_block_ids` 逐条 + `--rust` 三处之一。v4 第 317 行那句（`zip = CLAUDE.md 形态渲染 + tasks.json + contracts/ 副本 · 门禁：blocking review 清零 + DagValidator 通过 + verify 覆盖率 100% · RegistryValidator 不可用 → 「依赖校验暂不可用，执行包暂缓导出」`）MUST 与既有实现**逐条对照**：已实现的一个字不改，未实现的那条（RegistryValidator 不可用时的措辞）**先核后端有没有这条通道**，没有则开单，NEVER 在前端印一句后端做不到的话"
+      ],
+      "context_refs": [
+        "前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html",
+        "web/app/projects/[id]/proposal/page.tsx",
+        "web/components/pack-viewer/PackViewer.tsx",
+        "contracts/models.py"
+      ],
+      "depends_on": [
+        "PAL-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "SHIP-15",
+      "title": "第 15 批收尾：五条门 + 完成态报告",
+      "milestone": "W15",
+      "inputs": [
+        "docs/progress-v041.jsonl",
+        "docs/trace/"
+      ],
+      "outputs": [
+        "docs/V041-BATCH15-COMPLETION.md",
+        "docs/FLINT-V041-B15-DONE"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "ruff check . && mypy --strict flint && pytest -q && cd web && npx tsc --noEmit && npm test -- --run",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "五条门全绿：ruff · mypy · pytest · tsc · vitest。**收工四步的顺序不可倒**：先写 trace 与台账 → 再跑五条门 → 最后只改完成态报告里的数字。全局门跑完之后 **NEVER 再动任何被判据读的文件**（第 9 批 owner 复跑抓到的那条：贴出 `0 failed` 之后又动了三张 `docs/blocked/`，复跑变成 `2 failed`）",
+        "完成态报告首节 = **换板对照**：16 个 token 的改前值 / 改后值 / 来源（v4 哪个变量，或「按线压过的最小改动量」并附实测比值），一行一个",
+        "报告第二节 = **本批红过的逐条点名归属**：哪几条是判据钉着旧板（PAL-02 那两处）、哪几条是换板真碰坏了东西、哪几条是判据自己的缺陷。三类分开数",
+        "报告第三节 = **工单四项的兑现对照**：逐项写「工单原话 / 仓里实况 / 本批做了什么」，其中三项在开工前就已建成——这一节 MUST 说清楚它们是**早已存在**而不是本批做的，NEVER 把既有成果记成本批产出",
+        "`docs/FLINT-V041-B15-DONE` 落盘；台账 ts MUST 是真 `date -u` UTC"
+      ],
+      "context_refs": [
+        "docs/V041-BATCH13-COMPLETION.md",
+        "docs/progress-v041.jsonl"
+      ],
+      "depends_on": [
+        "DEC-060-LANDING",
+        "PAL-01",
+        "PAL-02",
+        "PAL-03",
+        "PLZ-COMBO-01",
+        "JUDGE-TAB-01",
+        "AUD-PACK-01"
+      ],
+      "blocked_by": null
+    }
+  ]
+}

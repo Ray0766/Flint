@@ -1,0 +1,22 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-057",
+ "source": "github",
+ "url": "https://api.github.com/search/repositories?q=brain-computer+interface+archived+discontinued&per_page=3",
+ "method": "GET",
+ "requested_at_utc": "2026-08-10T23:27:18.188268+00:00",
+ "status": 200,
+ "headers": {
+  "date": "Mon, 10 Aug 2026 23:27:18 GMT",
+  "content-type": "application/json; charset=utf-8",
+  "server": "github.com",
+  "x-ratelimit-limit": "10",
+  "x-ratelimit-remaining": "7",
+  "x-ratelimit-reset": "1786404497",
+  "content-length": "72"
+ },
+ "body_head": "{\"total_count\":0,\"incomplete_results\":false,\"items\":[]}",
+ "body_bytes": 55,
+ "spent_before_this": 25,
+ "budget": 40
+}

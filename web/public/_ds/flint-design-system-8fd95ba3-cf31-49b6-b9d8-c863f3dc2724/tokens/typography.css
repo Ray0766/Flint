@@ -1,0 +1,23 @@
+:root{
+--font-display:"Smiley Sans Oblique","Smiley Sans","得意黑","Noto Sans SC",sans-serif; /* 只用于首屏大字与页面级标题 */
+--font-body:Inter,"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+--font-mono:"IBM Plex Mono","JetBrains Mono",ui-monospace,monospace; /* 一切带出处的数值 + tabular-nums */
+/* 字阶 12/13/14/16/20/25/31/48/72/112 */
+--fs-12:12px;--fs-13:13px;--fs-14:14px;--fs-16:16px;--fs-20:20px;--fs-25:25px;--fs-31:31px;--fs-48:48px;--fs-72:72px;--fs-112:112px;
+--text-ui:var(--fs-14);--text-longform:var(--fs-16);--text-label:var(--fs-12);--text-section:var(--fs-20);--text-page:var(--fs-25);
+/* 行高 */
+--lh-ui:1.6; /* @kind other */
+--lh-longform:1.8; /* @kind other */
+--lh-display:1.15; /* @kind other */
+/* 字距：中文正文 0；仅全大写英文标签 0.04em */
+--ls-body:0; /* @kind other */
+--ls-caps:0.04em; /* @kind other */
+--measure-longform:34em; /* @kind other */
+/* TITLE-01（owner 2026-08-11「标题做大」）：**屏头标题与品牌字各一档**。
+   两档都用 clamp 随视口缩放——改前它们在 1920 与 390 上一样大（31 / 20），
+   大屏上小得像个小标签，小屏上又挤。
+   下界照卡面（24 / 20），上界照蓝本主标那一档（56 / 32）。
+   **NEVER 在组件里写死 px**：写死之后下一次调档没人找得到它。 */
+--text-screen-title:clamp(24px, 2.6vw, 48px); /* @kind other 屏头 h1 */
+--text-wordmark:clamp(20px, 1.6vw, 30px); /* @kind other 顶栏品牌字 */
+}

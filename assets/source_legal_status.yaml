@@ -1,0 +1,60 @@
+# K2-01 实测：各源 robots.txt 判读结果（harness/probe_robots.py 生成）
+# 服务条款（tos_url）只记地址不记结论——条款是人读的，结论属 owner/法务面，
+# 见 docs/blocked/K2-COMPLIANCE-BEFORE-LAUNCH.md。
+entries:
+- source_id: gtrends
+  robots_url: https://trends.google.com/robots.txt
+  probe_path: /trends/api/dailytrends
+  state: allowed
+  evidence: 该 agent 有 2 条规则，没有一条命中这条路径（HTTP 200，93 字节）
+  probed_on: &id001 2026-08-04
+  tos_url: https://policies.google.com/terms
+- source_id: weibo
+  robots_url: https://s.weibo.com/robots.txt
+  probe_path: /top/summary
+  state: allowed
+  evidence: 该文件里没有适用于本 agent 的规则组（只针对具名爬虫）（HTTP 200，9152 字节）
+  probed_on: *id001
+  tos_url: https://weibo.com/signup/v5/protocol
+- source_id: ghtrend
+  robots_url: https://api.github.com/robots.txt
+  probe_path: /search/repositories
+  state: allowed
+  evidence: HTTP 404：该主机没有 robots.txt，按 RFC 9309 §2.3.1.4（unavailable status）全放行
+  probed_on: *id001
+  tos_url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+- source_id: arxiv
+  robots_url: https://export.arxiv.org/robots.txt
+  probe_path: /api/query
+  state: disallowed
+  evidence: 'Disallow: /（HTTP 200，26 字节）'
+  probed_on: *id001
+  tos_url: https://info.arxiv.org/help/api/tou.html
+- source_id: google_trends_api
+  robots_url: https://trends.google.com/robots.txt
+  probe_path: /trends/api/dailytrends
+  state: allowed
+  evidence: 该 agent 有 2 条规则，没有一条命中这条路径（HTTP 200，93 字节）
+  probed_on: *id001
+  tos_url: https://policies.google.com/terms
+- source_id: yahoo_jp_realtime
+  robots_url: https://search.yahoo.co.jp/robots.txt
+  probe_path: /realtime
+  state: allowed
+  evidence: 该 agent 有 15 条规则，没有一条命中这条路径（HTTP 200，1836 字节）
+  probed_on: *id001
+  tos_url: https://about.yahoo.co.jp/common/terms/
+- source_id: naver_datalab
+  robots_url: https://openapi.naver.com/robots.txt
+  probe_path: /v1/datalab/search
+  state: disallowed
+  evidence: 'Disallow: /（HTTP 200，25 字节）'
+  probed_on: *id001
+  tos_url: https://policy.naver.com/policy/service_en.html
+- source_id: reddit_data_api
+  robots_url: https://www.reddit.com/robots.txt
+  probe_path: /api/v1/
+  state: disallowed
+  evidence: 'Disallow: /（HTTP 200，538 字节）'
+  probed_on: *id001
+  tos_url: https://redditinc.com/policies/data-api-terms

@@ -1,0 +1,12 @@
+{
+  "_source_of_truth": "flint/region/by_source_region.py#SYNTHESIS_BLACKLIST (REGION-08)",
+  "patterns": [
+    "综合各[国方]",
+    "总的来说",
+    "总体而言",
+    "各方(普遍|一致)?认为",
+    "\\boverall\\b.{0,20}\\bconsensus\\b",
+    "\\bin general\\b.{0,20}\\bagree",
+    "两国(立场)?一致"
+  ]
+}

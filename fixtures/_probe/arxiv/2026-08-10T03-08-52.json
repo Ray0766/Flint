@@ -1,0 +1,21 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "arxiv",
+ "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI&max_results=5",
+ "requested_at_utc": "2026-08-10T03:08:52.860768+00:00",
+ "status": 200,
+ "final_url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI&max_results=5",
+ "redirects": [],
+ "headers": {
+  "content-length": "11590",
+  "server": "Google Frontend",
+  "content-type": "application/atom+xml; charset=utf-8"
+ },
+ "body_head": "<?xml version='1.0' encoding='UTF-8'?>\n<feed xmlns:opensearch=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:arxiv=\"http://arxiv.org/schemas/atom\" xmlns=\"http://www.w3.org/2005/Atom\">\n  <id>https://arxiv.org/api/j4ShPnxK1RZ7CVZFXb6yX7hLn+U</id>\n  <title>arXiv Query: search_query=cat:cs.AI&amp;id_list=&amp;start=0&amp;max_results=5</title>\n  <updated>2026-08-10T03:08:53Z</updated>\n  <link href=\"https://arxiv.org/api/query?search_query=cat:cs.AI&amp;start=0&amp;max_results=5&amp;id_list=\" type=\"application/atom+xml\"/>\n  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>\n  <opensearch:totalResults>193472</opensearch:totalResults>\n  <opensearch:startIndex>0</opensearch:startIndex>\n  <entry>\n    <id>http://arxiv.org/abs/2012.12104v1</id>\n    <title>A Deep Reinforcement Learning Approach for Ramp Metering Based on Traffic Video Data</title>\n    <updated>2020-12-09T05:08:41Z</updated>\n    <link href=\"https://arxiv.org/abs/2012.12104v1\" rel=\"alternate\" type=\"text/html\"/>\n    <link href=\"https://arxiv.org/pdf/2012.12104v1\" rel=\"related\" type=\"application/pdf\" title=\"pdf\"/>\n    <summary>Ramp metering that uses traffic signals to regulate vehicle flows from the on-ramps has been widely implemented to improve vehicle mobility of the freeway. Previous studies generally update signal timings in real-time based on predefined traffic measures collected by point detectors, such as traffic volumes and occupancies. Comparing with point detectors, traffic cameras-which have been increasingly deployed on road networks-could cover larger areas and provide more detailed traffic information. In this work, we propose a deep reinforcement learning (DRL) method to explore the potential of traffic video data in improving the efficiency of ramp metering. The proposed method uses traffic video frames as inputs and learns the optimal control strategies directly from the high-dimensional visual inputs. A real-world case study demonstrates that, in comparison with a state-of-the-practice method, the proposed DRL method results in 1) lower travel",
+ "body_bytes": 11590,
+ "sent_user_agent": "flint-cn05-probe/1.0 (contract check; DEC-052)",
+ "left_allowed_hosts": [],
+ "method": "GET",
+ "cookie_names": []
+}

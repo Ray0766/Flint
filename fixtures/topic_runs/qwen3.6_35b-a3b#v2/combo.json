@@ -1,0 +1,37 @@
+[
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-832\",\"object\":\"chat.completion\",\"created\":1785446844,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校招生办与新能源基建项目组的跨域决策辅助工作台，集成录取数据洞察与组件技术评估模块\\\",\\n  \\\"target_user_tag\\\": \\\"B端机构运营者（教育/能源行业）\\\",\\n  \\\"form_factor_tag\\\": \\\"本地 Agent\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"2026年6月29日，高考录取结果公布与钙钛矿组件技术进展同时成为热点，为跨行业数据聚合工具提供了现成的内容入口与时机窗口。\\\",\\n    \\\"evidences\\\": [\\n      {\\n        \\\"event\\\": \\\"高考录取结果相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-000\\\"\\n      },\\n      {\\n        \\\"event\\\": \\\"钙钛矿组件相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-001\\\"\\n      }\\n    ]\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"志愿填报辅助\\\",\\n      \\\"高校分数线分析\\\",\\n      \\\"录取概率预测\\\",\\n      \\\"考生数据看板\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光伏技术迭代\\\",\\n      \\\"组件效率评估\\\",\\n      \\\"新能源基建选型\\\",\\n      \\\"钙钛矿产业化进度\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1128,\"completion_tokens\":368,\"total_tokens\":1496}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-987\",\"object\":\"chat.completion\",\"created\":1785446846,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校招生办与新能源基建项目组的跨域决策辅助工作台，集成录取数据洞察与组件技术评估模块\\\",\\n  \\\"target_user_tag\\\": \\\"B端机构决策者（教育/能源行业）\\\",\\n  \\\"form_factor_tag\\\": \\\"本地 Agent\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"2026年6月29日关键节点密集，多领域数据同步更新为跨域分析提供了实时素材基础。\\\",\\n    \\\"evidences\\\": [\\n      {\\n        \\\"event\\\": \\\"高考录取结果发布\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-000\\\"\\n      },\\n      {\\n        \\\"event\\\": \\\"钙钛矿组件相关动态更新\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-001\\\"\\n      }\\n    ]\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"志愿填报策略\\\",\\n      \\\"高校分数线分析\\\",\\n      \\\"考生数据画像\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光伏技术迭代\\\",\\n      \\\"新能源基建评估\\\",\\n      \\\"组件效率参数\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1128,\"completion_tokens\":335,\"total_tokens\":1463}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-845\",\"object\":\"chat.completion\",\"created\":1785446848,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向新高考选科与新能源产业交叉领域的决策辅助工作台，整合录取数据洞察与钙钛矿技术趋势分析\\\",\\n  \\\"target_user_tag\\\": \\\"高敏信息差群体（新高考考生/家长及新能源行业从业者）\\\",\\n  \\\"form_factor_tag\\\": \\\"本地 Agent\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"2026年6月29日，高考录取结果公布与钙钛矿组件技术进展同时成为公众关注焦点，为跨领域信息整合提供了天然的时间窗口。\\\",\\n    \\\"evidences\\\": [\\n      {\\n        \\\"event\\\": \\\"高考录取结果相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-000\\\"\\n      },\\n      {\\n        \\\"event\\\": \\\"钙钛矿组件相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-001\\\"\\n      }\\n    ]\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"志愿填报策略\\\",\\n      \\\"位次换算\\\",\\n      \\\"专业前景分析\\\",\\n      \\\"平行志愿规则\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光伏技术迭代\\\",\\n      \\\"转换效率突破\\\",\\n      \\\"产业化进程\\\",\\n      \\\"下一代电池技术\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1128,\"completion_tokens\":367,\"total_tokens\":1495}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-736\",\"object\":\"chat.completion\",\"created\":1785446849,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校招生办与新能源基建企业的多源异构数据自动化比对与可视化工作台\\\",\\n  \\\"target_user_tag\\\": \\\"B端机构运营人员（非技术背景）\\\",\\n  \\\"form_factor_tag\\\": \\\"本地 Agent\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"2026年6月29日，高考录取结果公布与钙钛矿组件产业动态同时进入高关注度窗口，机构急需跨领域数据整合工具以应对突发信息流。\\\",\\n    \\\"evidences\\\": [\\n      {\\n        \\\"event\\\": \\\"高考录取结果相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-000\\\"\\n      },\\n      {\\n        \\\"event\\\": \\\"钙钛矿组件相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-001\\\"\\n      }\\n    ]\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"志愿填报辅助\\\",\\n      \\\"分数线查询\\\",\\n      \\\"录取概率分析\\\",\\n      \\\"高校招生数据\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光伏效率监测\\\",\\n      \\\"新能源基建进度\\\",\\n      \\\"组件产能数据\\\",\\n      \\\"绿色能源投资指标\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1128,\"completion_tokens\":358,\"total_tokens\":1486}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-54\",\"object\":\"chat.completion\",\"created\":1785446851,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"one_liner\\\": \\\"面向高校招生办与新能源基建企业的多模态数据清洗与结构化工作台\\\",\\n  \\\"target_user_tag\\\": \\\"B2B 机构端（非个人消费者）\\\",\\n  \\\"form_factor_tag\\\": \\\"本地 Agent\\\",\\n  \\\"why_now\\\": {\\n    \\\"claim\\\": \\\"2026年6月29日，高考录取结果公布与钙钛矿组件产业动态同时进入高关注窗口，机构对异构数据的实时处理需求激增。\\\",\\n    \\\"evidences\\\": [\\n      {\\n        \\\"event\\\": \\\"高考录取结果相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-000\\\"\\n      },\\n      {\\n        \\\"event\\\": \\\"钙钛矿组件相关话题热度上升\\\",\\n        \\\"event_date\\\": \\\"2026-06-29\\\",\\n        \\\"citation_id\\\": \\\"card-20260629-c-20260629-001\\\"\\n      }\\n    ]\\n  },\\n  \\\"keyword_mapping\\\": {\\n    \\\"高考录取结果\\\": [\\n      \\\"志愿填报数据清洗\\\",\\n      \\\"高校招生统计\\\",\\n      \\\"录取名单结构化\\\"\\n    ],\\n    \\\"钙钛矿组件\\\": [\\n      \\\"光伏组件参数提取\\\",\\n      \\\"新能源基建数据录入\\\",\\n      \\\"技术规格书解析\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1128,\"completion_tokens\":344,\"total_tokens\":1472}}\n"
+ }
+]

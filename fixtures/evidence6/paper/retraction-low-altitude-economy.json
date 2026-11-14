@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.retractions.example/search?q=low+altitude+economy",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"retractions\": [{\"title\": \"RETRACTED: low altitude economy breakthrough claims\", \"original_doi\": \"10.5555/low-altitude-economy.retracted.1\", \"url\": \"https://retractions.example/low-altitude-economy/1\", \"date\": \"2026-05-20\", \"reason\": \"data fabrication\"}]}"
+ }
+]

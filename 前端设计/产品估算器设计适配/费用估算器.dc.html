@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/fonts/fonts.css">
+  <style>
+    body{margin:0;background:#EDEEE6;}
+    a{color:#FF5656;text-decoration:none;}
+    a:hover{color:#FF7A7A;text-decoration:underline;}
+    input[type=range]{width:100%;accent-color:#FF5656;cursor:pointer;}
+  </style>
+</helmet>
+<section id="calculator-section" data-screen-label="费用估算器" style="background:#EDEEE6;color:#1B2A2E;padding:112px 64px;font-family:Inter,'Noto Sans SC',sans-serif;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#5C6B6F;margin-bottom:16px;">试试报告费用估算器</div>
+      <h2 style="font-size:48px;font-weight:400;margin:0;line-height:1.2;">在你的预算内，拿到可信的深度报告</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:0;border-radius:16px;overflow:hidden;">
+      <div style="background:#F4F5EE;padding:48px;">
+        <div style="padding-bottom:32px;">
+          <h3 style="font-size:18px;font-weight:500;margin:0 0 20px;">你需要哪类服务？</h3>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <sc-for list="{{ services }}" as="opt" hint-placeholder-count="3">
+              <div onClick="{{ opt.onClick }}" style="display:flex;align-items:center;gap:12px;cursor:pointer;">
+                <div style="{{ opt.circleStyle }}">
+                  <sc-if value="{{ opt.active }}" hint-placeholder-val="{{ false }}"><div style="width:8px;height:8px;border-radius:50%;background:#FF5656;"></div></sc-if>
+                </div>
+                <span style="font-size:15px;color:#2A3A3E;">{{ opt.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:32px 0;border-top:1px solid rgba(27,42,46,0.12);">
+          <h3 style="font-size:18px;font-weight:500;margin:0 0 24px;">线索数量：<span style="color:#FF5656;">{{ pages }} 条</span></h3>
+          <input type="range" min="1" max="{{ pagesMax }}" step="1" value="{{ pages }}" onChange="{{ onPagesChange }}">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#5C6B6F;margin-top:8px;font-family:'IBM Plex Mono',monospace;">
+            <span>1</span><span>{{ pagesMax }}</span>
+          </div>
+        </div>
+        <div style="padding:32px 0;border-top:1px solid rgba(27,42,46,0.12);">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <sc-for list="{{ addons }}" as="ad" hint-placeholder-count="2">
+              <div onClick="{{ ad.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div style="{{ ad.boxStyle }}">
+                    <sc-if value="{{ ad.checked }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5L4.5 9L10 3" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+                  </div>
+                  <span style="font-size:15px;color:#2A3A3E;">{{ ad.label }}</span>
+                </div>
+                <span style="font-size:14px;color:#FF5656;white-space:nowrap;font-family:'IBM Plex Mono',monospace;">{{ ad.price }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding-top:32px;border-top:1px solid rgba(27,42,46,0.12);">
+          <h3 style="font-size:18px;font-weight:500;margin:0 0 20px;">需要多快拿到？</h3>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <sc-for list="{{ timelines }}" as="tl" hint-placeholder-count="3">
+              <div onClick="{{ tl.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div style="{{ tl.circleStyle }}">
+                    <sc-if value="{{ tl.active }}" hint-placeholder-val="{{ false }}"><div style="width:8px;height:8px;border-radius:50%;background:#FF5656;"></div></sc-if>
+                  </div>
+                  <span style="font-size:15px;color:#2A3A3E;">{{ tl.label }}</span>
+                </div>
+                <span style="font-size:14px;color:#FF5656;white-space:nowrap;font-family:'IBM Plex Mono',monospace;">{{ tl.price }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="padding:48px;border:1px solid rgba(27,42,46,0.15);border-radius:0 16px 16px 0;min-height:718px;box-sizing:border-box;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 8px;">费用估算</h3>
+        <p style="font-size:14px;color:#5C6B6F;margin:0 0 32px;line-height:1.7;">根据你的选择实时估算，并与市面常见报价对比。</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <sc-if value="{{ showComparison }}" hint-placeholder-val="{{ true }}">
+            <div style="background:rgba(27,42,46,0.06);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+              <div style="font-size:14px;color:#5C6B6F;">典型咨询机构最低收费</div>
+              <div style="font-size:36px;font-weight:700;font-variant-numeric:tabular-nums;">{{ agencyPrice }}</div>
+              <div style="font-size:14px;color:#5C6B6F;">+ 周期冗长，附加费用多</div>
+            </div>
+            <div style="background:rgba(27,42,46,0.06);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+              <div style="font-size:14px;color:#5C6B6F;">普通自由分析师最低收费</div>
+              <div style="font-size:36px;font-weight:700;font-variant-numeric:tabular-nums;">{{ freelancerPrice }}</div>
+              <div style="font-size:14px;color:#5C6B6F;">+ 反复沟通，交付不稳定</div>
+            </div>
+          </sc-if>
+          <div style="background:linear-gradient(to right,#EC4899,#F97316);color:#FFFFFF;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+            <div style="font-size:14px;color:rgba(255,255,255,0.9);">使用 Flint 燧石</div>
+            <div style="font-size:48px;font-weight:700;font-variant-numeric:tabular-nums;">{{ yourPrice }}</div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.9);">省下预算、时间与折腾</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;¥&quot;,&quot;$&quot;],&quot;default&quot;:&quot;¥&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;设置&quot;},&quot;pagesMax&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:30,&quot;min&quot;:10,&quot;max&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;设置&quot;},&quot;showComparison&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;设置&quot;}}">
+class Component extends DCLogic {
+  state = { serviceType: 'both', pages: 5, needContent: false, needSEO: false, timeline: 'regular' };
+  calc() {
+    const { serviceType, pages, needContent, needSEO, timeline } = this.state;
+    const base = { design: { b: 399, p: 100 }, development: { b: 199, p: 100 }, both: { b: 499, p: 200 } }[serviceType];
+    let total = Math.max(base.b, base.b + (pages - 1) * base.p);
+    if (needContent) total += pages * 50;
+    if (needSEO) total += pages * 50;
+    if (timeline === 'rush') total += pages * 100;
+    if (timeline === 'fast') total += pages * 25;
+    return total;
+  }
+  agency() { const { serviceType, pages } = this.state; return 8000 + (pages - 1) * (serviceType === 'both' ? 1000 : 400); }
+  freelancer() { const { serviceType, pages } = this.state; return 3000 + (pages - 1) * (serviceType === 'both' ? 500 : 200); }
+  renderVals() {
+    const cur = this.props.currency ?? '¥';
+    const fmt = n => cur + n.toLocaleString();
+    const st = this.state;
+    const circle = a => ({ width: 20, height: 20, borderRadius: '50%', border: '2px solid ' + (a ? '#FF5656' : '#9AA5A0'), display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxSizing: 'border-box' });
+    const box = c => ({ width: 20, height: 20, borderRadius: 4, border: '2px solid ' + (c ? '#FF5656' : '#9AA5A0'), background: c ? '#FF5656' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxSizing: 'border-box' });
+    const services = [['design', '仅可行性判定'], ['development', '仅深度报告'], ['both', '判定 + 深度报告']].map(([k, label]) => ({
+      key: k, label, active: st.serviceType === k, circleStyle: circle(st.serviceType === k), onClick: () => this.setState({ serviceType: k })
+    }));
+    const addons = [['needContent', '需要为数值补全溯源标注'], ['needSEO', '需要专家人工复核结论']].map(([k, label]) => ({
+      key: k, label, checked: st[k], boxStyle: box(st[k]), price: '+' + cur + '50/条', onToggle: () => this.setState({ [k]: !st[k] })
+    }));
+    const timelines = [['rush', '7 天内交付', '+' + cur + '100/条'], ['fast', '14 天内交付', '+' + cur + '25/条'], ['regular', '常规节奏（按排期沟通）', '']].map(([k, label, price]) => ({
+      key: k, label, price, active: st.timeline === k, circleStyle: circle(st.timeline === k), onClick: () => this.setState({ timeline: k })
+    }));
+    return {
+      pages: st.pages,
+      pagesMax: this.props.pagesMax ?? 30,
+      services, addons, timelines,
+      onPagesChange: e => this.setState({ pages: +e.target.value }),
+      yourPrice: fmt(this.calc()),
+      agencyPrice: fmt(this.agency()),
+      freelancerPrice: fmt(this.freelancer()),
+      showComparison: this.props.showComparison ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

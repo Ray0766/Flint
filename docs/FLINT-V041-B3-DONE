@@ -1,0 +1,9 @@
+v0.4.1 第 3 批收工 · 2026-08-05
+
+24 / 25 verified（NET-03 在第 2 批按 DEC-033① 记 skipped_by_owner，本批 25 张里它算已处置）
+1 张 blocked：SHIP-03 —— DEC-031 的出口判据「backend_not_assembled 归零」实测 10 条，
+归零只有「补鉴权」或「lambda: owner 挂上去」两条路，后者是安全洞，本批维持 WIRE-01 的拒绝。
+
+完成态报告：docs/V041-BATCH3-COMPLETION.md
+机读进度：docs/progress-v041.jsonl
+要 owner 定的：见报告 §5 的 11 条（#1 鉴权是最短的一条路）

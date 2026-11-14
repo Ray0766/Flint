@@ -1,0 +1,32 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Environment files (only the template is tracked)
+.env
+.env.*
+!.env.example
+
+# Machine-local run artifacts: regenerate with scripts/ui_probe.py and scripts/pdf_probe.py
+.ui-probe/
+.pdf-probe/
+
+# Per-machine Claude Code permissions
+.claude/settings.local.json
+
+# Manual backups superseded by git history
+tasks.json.bak-*
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,9 @@
+{
+ "principle": "B8",
+ "title": "name_display 派生且次要",
+ "source": "docs/PRINCIPLES-v04.md",
+ "raw": "卡片主标题显示英文译名、原名收进 tooltip。",
+ "counter_examples": [
+  "卡片主标题显示英文译名、原名收进 tooltip"
+ ]
+}

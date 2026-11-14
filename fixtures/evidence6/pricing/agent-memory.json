@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://www.vendor-agent-memory.example/pricing",
+  "status_code": 200,
+  "content_type": "text/html; charset=utf-8",
+  "body_text": "<html><body><h1>Pricing</h1><div class='plan'><h2>Enterprise plan</h2><p>Contact us for a quote tailored to your team.</p><a href='/sales'>Contact sales</a></div><!-- agent memory --></body></html>"
+ }
+]

@@ -1,0 +1,1 @@
+{"model": "qwen3.6:27b", "answer_rate": 0.5387596899224806, "answer_verdict": "report_only", "ratio_worst": 0.5887850467289718, "ratio_meets_line": false, "calls": 345}

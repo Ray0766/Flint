@@ -1,0 +1,6 @@
+第 10 批收工 2026-08-11
+12/12 verified · 0 blocked
+pytest 5140 passed, 2 skipped / 0 failed · ruff · mypy 320 · tsc 0 · vitest 858
+广场显真词面（录制当日 · CN 区 125 卡 · 合成词 0 个）
+对账器 backend_unused_by_frontend 21 → 16，剩下 16 条逐条判过、一条排除都没有
+每日定时真实采集**没有**接上（DEC-052 明写不含）

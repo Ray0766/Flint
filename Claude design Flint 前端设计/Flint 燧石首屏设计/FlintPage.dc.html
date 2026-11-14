@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/styles.css">
+<style>
+@keyframes flintUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes flintSettle{from{opacity:0;transform:translateY(18px) rotate(0deg)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="container-type:inline-size;background:var(--paper);background-image:var(--tex-paper-strong);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.6;overflow:hidden">
+  <header data-screen-label="页头" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;padding:clamp(16px,2cqw,24px) clamp(20px,3.6cqw,48px);border-bottom:1px solid var(--rule)">
+    <div style="font-family:var(--font-display);font-size:25px;color:var(--ink)">Flint 燧石</div>
+    <nav style="display:flex;align-items:center;flex-wrap:wrap;gap:clamp(14px,1.8cqw,24px)">
+      <a href="#how" style="font-size:14px">它怎么工作</a>
+      <a href="#honest" style="font-size:14px">诚实的证据</a>
+      <a href="#who" style="font-size:14px">给谁用</a>
+      <button style="font-family:var(--font-body);font-weight:600;font-size:13px;line-height:1.2;padding:6px 14px;border-radius:var(--r-data);background:var(--sulfur);color:var(--ink);border:1px solid var(--ink);box-shadow:2px 2px 0 rgba(27,42,46,.18);cursor:pointer;transition:background .15s,box-shadow .1s,transform .05s" style-hover="background:#DFAD2B" style-active="transform:translate(2px,2px);box-shadow:0 0 0 rgba(27,42,46,.18)">开始使用</button>
+    </nav>
+  </header>
+
+  <sc-if value="{{ heroCard }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Hero·判定卡" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(480px,100%),1fr));gap:clamp(32px,4cqw,56px);align-items:center;max-width:1280px;margin:0 auto;box-sizing:border-box;padding:clamp(40px,5.5cqw,80px) clamp(20px,3.6cqw,48px) clamp(48px,6.6cqw,96px)">
+    <div>
+      <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;line-height:1.5;letter-spacing:0.02em;background:var(--sulfur-soft);color:var(--ink);border:1px solid rgba(232,185,60,.8);box-shadow:var(--shadow-sticker);transform:rotate(-1.2deg);animation:flintUp .45s cubic-bezier(.2,.7,.2,1) both">TOPIC-0801-04 · 今晨 09:12 判定</span>
+      <h1 style="font-family:var(--font-display);font-weight:400;font-size:clamp(40px,5.9cqw,84px);line-height:1.15;letter-spacing:0;margin:18px 0 0;color:var(--ink);animation:flintUp .5s cubic-bezier(.2,.7,.2,1) .1s both">敢说「<span style="background:linear-gradient(transparent 62%,var(--sulfur) 62% 94%,transparent 94%)">不知道</span>」，<br>结论才值钱。</h1>
+      <p style="font-size:16px;line-height:1.8;color:var(--ink-2);max-width:30em;margin:24px 0 0;animation:flintUp .5s cubic-bezier(.2,.7,.2,1) .2s both">Flint 每天从四个源采集热点，把你的想法推到可行性判定。证据够，给结论，带引用；证据不够，就写「证据不足」，缺了什么，一条条列给你。</p>
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:16px;margin-top:32px;animation:flintUp .5s cubic-bezier(.2,.7,.2,1) .3s both">
+        <button style="font-family:var(--font-body);font-weight:600;font-size:15px;line-height:1.2;padding:13px 26px;border-radius:var(--r-data);background:var(--sulfur);color:var(--ink);border:1px solid var(--ink);box-shadow:2px 2px 0 rgba(27,42,46,.18);cursor:pointer;transition:background .15s,box-shadow .1s,transform .05s" style-hover="background:#DFAD2B" style-active="transform:translate(2px,2px);box-shadow:0 0 0 rgba(27,42,46,.18)">开始使用</button>
+        <a href="#honest" style="font-size:14px;font-weight:600">看一份完整判定</a>
+      </div>
+      <p style="font-family:var(--font-mono);font-size:13px;color:var(--ink-2);margin:28px 0 0;animation:flintUp .5s cubic-bezier(.2,.7,.2,1) .4s both">判定只有四种：可行 · 有条件可行 · 证据不足 · 不可行。<br>不打分，不装懂。</p>
+    </div>
+    <div style="position:relative;justify-self:center;width:min(560px,100%);animation:flintSettle .55s cubic-bezier(.2,.7,.2,1) .45s both">
+      <svg aria-hidden="true" width="72" height="72" viewBox="0 0 72 72" fill="none" style="position:absolute;top:-30px;left:-22px;pointer-events:none">
+        <path d="M30 40 L40 26 M42 44 L58 39 M38 54 L50 62 M24 30 L20 14" stroke="var(--sulfur)" stroke-width="4" stroke-linecap="round"></path>
+        <circle cx="33" cy="45" r="6.5" fill="var(--sulfur)"></circle>
+      </svg>
+      <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);box-shadow:var(--shadow-sticker);transform:rotate(-0.8deg);padding:clamp(18px,2cqw,28px);box-sizing:border-box">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 16px">
+          <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">VERDICT · TOPIC-0801-04</span>
+          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3)">2026-08-01 09:12</span>
+        </div>
+        <p style="font-size:18px;line-height:1.5;font-weight:500;margin:12px 0 0;color:var(--ink)">主题：给独立播客的「热点 → 选题」订阅工具</p>
+        <div style="margin-top:16px;border:1.5px dashed var(--ink-2);border-radius:6px 3px 7px 4px / 4px 7px 3px 6px;padding:14px 16px;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px 16px">
+          <span style="display:inline-flex;align-items:center;gap:10px"><span style="display:inline-block;width:12px;height:0;border-top:1.5px dashed var(--ink-2)"></span><span style="font-size:clamp(25px,2.2cqw,31px);font-weight:700;line-height:1.2;color:var(--ink)">证据不足</span></span>
+          <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)">证据 9 · 已证 4 · 推测 5</span>
+        </div>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px">
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;color:var(--ink-3)">四分类</span>
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3);border:1px solid var(--rule);border-radius:var(--r-data);padding:2px 8px">可行</span>
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3);border:1px solid var(--rule);border-radius:var(--r-data);padding:2px 8px">有条件可行</span>
+          <span style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);border:1.5px dashed var(--ink-2);border-radius:6px 3px 7px 4px / 4px 7px 3px 6px;padding:2px 8px">证据不足</span>
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3);border:1px solid var(--rule);border-radius:var(--r-data);padding:2px 8px">不可行</span>
+        </div>
+        <div style="height:1px;background:var(--rule);margin:18px 0 14px"></div>
+        <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">缺什么 · GAPS 3</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline">
+            <span style="font-family:var(--font-mono);font-size:12px;color:var(--indigo)">GAP-01</span>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink)">付费意愿无数据 —— 相关讨论 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">41</span> 条<sup style="font-family:var(--font-mono);font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:2px">[1]</sup>，没有一条谈到价格。</p>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline">
+            <span style="font-family:var(--font-mono);font-size:12px;color:var(--indigo)">GAP-02</span>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink)">竞品收入不可证 —— 只有创始人自述，<span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3)">⚠ 接口未提供出处</span>。</p>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline">
+            <span style="font-family:var(--font-mono);font-size:12px;color:var(--indigo)">GAP-03</span>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink)">样本窗口太短 —— 证据只覆盖 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">14</span> 天<sup style="font-family:var(--font-mono);font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:2px">[2]</sup>，看不出趋势。</p>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 16px;margin-top:18px;border-top:1px solid var(--rule);padding-top:14px">
+          <span style="font-size:13px;color:var(--ink-2)">补上任何一条，判定自动重跑。</span>
+          <a href="#honest" style="font-size:13px;font-weight:600">查看完整判定</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ heroContrast }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Hero·同题对照" style="max-width:1160px;margin:0 auto;box-sizing:border-box;padding:clamp(40px,5.5cqw,80px) clamp(20px,3.6cqw,48px) clamp(48px,6.6cqw,96px);text-align:center">
+    <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;line-height:1.5;letter-spacing:0.02em;background:var(--paper-2);color:var(--ink-2);border:1px solid var(--rule);box-shadow:var(--shadow-sticker);transform:rotate(-1deg)">同题对照 · 2026-08-01</span>
+    <h1 style="font-family:var(--font-display);font-weight:400;font-size:clamp(40px,6.2cqw,88px);line-height:1.15;margin:18px 0 0;color:var(--ink)">同一个问题，<span style="background:linear-gradient(transparent 62%,var(--sulfur) 62% 94%,transparent 94%)">两种回答</span>。</h1>
+    <p style="font-size:16px;line-height:1.8;color:var(--ink-2);margin:16px auto 0;max-width:32em">问题：「热点驱动的播客选题工具，值得做吗？」</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:24px;margin-top:40px;text-align:left">
+      <div style="background:var(--surface);background-image:var(--tex-halftone);border:1px solid var(--rule);border-radius:var(--r-card);padding:clamp(18px,2cqw,28px);transform:rotate(0.4deg);color:var(--ink-2)">
+        <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">工具 A · 回答</div>
+        <p style="font-size:17px;line-height:1.8;margin:14px 0 0">「该市场前景广阔，用户需求强烈，建议尽快入场，抢占先机。」</p>
+        <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-3);margin-top:20px;border-top:1px solid var(--rule);padding-top:12px">引用 0 · 依据 未说明 · 缺口 未检查</div>
+      </div>
+      <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);box-shadow:var(--shadow-sticker);padding:clamp(18px,2cqw,28px);transform:rotate(-0.5deg)">
+        <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">FLINT · VERDICT</div>
+        <div style="display:inline-flex;align-items:center;gap:10px;margin-top:14px;border:1.5px dashed var(--ink-2);border-radius:6px 3px 7px 4px / 4px 7px 3px 6px;padding:8px 14px"><span style="display:inline-block;width:12px;height:0;border-top:1.5px dashed var(--ink-2)"></span><span style="font-size:20px;font-weight:700;color:var(--ink)">证据不足</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+          <p style="margin:0;font-size:14px;line-height:1.6"><span style="font-family:var(--font-mono);font-size:12px;color:var(--indigo)">GAP-01</span> 付费意愿无数据 —— 讨论 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">41</span> 条<sup style="font-family:var(--font-mono);font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:2px">[1]</sup>，无一谈价。</p>
+          <p style="margin:0;font-size:14px;line-height:1.6"><span style="font-family:var(--font-mono);font-size:12px;color:var(--indigo)">GAP-02</span> 竞品收入不可证 —— <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3)">⚠ 接口未提供出处</span>。</p>
+          <p style="margin:0;font-size:14px;line-height:1.6"><span style="font-family:var(--font-mono);font-size:12px;color:var(--indigo)">GAP-03</span> 样本只有 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">14</span> 天<sup style="font-family:var(--font-mono);font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:2px">[2]</sup>。</p>
+        </div>
+        <div style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2);margin-top:18px;border-top:1px solid var(--rule);padding-top:12px">引用 6 · 已证 3 · 缺口 3 —— 补齐缺口，判定重跑。</div>
+      </div>
+    </div>
+    <p style="font-size:16px;color:var(--ink-2);margin:36px 0 0">永远自信的回答，帮不了你排除方向。缺口清单可以。</p>
+    <div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px;margin-top:20px">
+      <button style="font-family:var(--font-body);font-weight:600;font-size:15px;line-height:1.2;padding:13px 26px;border-radius:var(--r-data);background:var(--sulfur);color:var(--ink);border:1px solid var(--ink);box-shadow:2px 2px 0 rgba(27,42,46,.18);cursor:pointer;transition:background .15s,box-shadow .1s,transform .05s" style-hover="background:#DFAD2B" style-active="transform:translate(2px,2px);box-shadow:0 0 0 rgba(27,42,46,.18)">要第二种回答</button>
+      <a href="#honest" style="font-size:14px;font-weight:600">看一份样例报告</a>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ heroVoid }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Hero·缺口清单" style="max-width:960px;margin:0 auto;box-sizing:border-box;padding:clamp(40px,5.5cqw,80px) clamp(20px,3.6cqw,48px) clamp(48px,6.6cqw,96px)">
+    <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;line-height:1.5;letter-spacing:0.02em;background:var(--sulfur-soft);color:var(--ink);border:1px solid rgba(232,185,60,.8);box-shadow:var(--shadow-sticker);transform:rotate(-1.2deg)">TOPIC-0801-04 · 判定：证据不足</span>
+    <h1 style="font-family:var(--font-display);font-weight:400;font-size:clamp(42px,6.6cqw,96px);line-height:1.15;margin:18px 0 0;color:var(--ink)">缺的不是信心，<br>是<span style="background:linear-gradient(transparent 62%,var(--sulfur) 62% 94%,transparent 94%)">三条证据</span>。</h1>
+    <p style="font-size:16px;line-height:1.8;color:var(--ink-2);margin:20px 0 0;max-width:32em">Flint 不填平缺口，它把缺口量出来。每个缺口保留形状，补上一条，判定重跑一次。</p>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:36px">
+      <div style="position:relative;background:var(--paper-2);background-image:var(--tex-press);box-shadow:var(--emboss);border:1px solid var(--rule);border-radius:var(--r-data);padding:20px 24px 20px 46px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 16px">
+        <span aria-hidden="true" style="position:absolute;left:12px;top:10px;bottom:10px;width:8px;background-image:repeating-linear-gradient(180deg,var(--ink-3) 0 1px,transparent 1px 8px);opacity:0.5"></span>
+        <span style="font-size:clamp(17px,1.8cqw,20px);color:var(--ink)"><span style="font-family:var(--font-mono);font-size:13px;color:var(--indigo);margin-right:12px">GAP-01</span>付费意愿 —— 无数据</span>
+        <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">待补充</span>
+      </div>
+      <div style="position:relative;background:var(--paper-2);background-image:var(--tex-press);box-shadow:var(--emboss);border:1px solid var(--rule);border-radius:var(--r-data);padding:20px 24px 20px 46px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 16px">
+        <span aria-hidden="true" style="position:absolute;left:12px;top:10px;bottom:10px;width:8px;background-image:repeating-linear-gradient(180deg,var(--ink-3) 0 1px,transparent 1px 8px);opacity:0.5"></span>
+        <span style="font-size:clamp(17px,1.8cqw,20px);color:var(--ink)"><span style="font-family:var(--font-mono);font-size:13px;color:var(--indigo);margin-right:12px">GAP-02</span>竞品收入 —— 接口未提供出处</span>
+        <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">待补充</span>
+      </div>
+      <div style="position:relative;background:var(--paper-2);background-image:var(--tex-press);box-shadow:var(--emboss);border:1px solid var(--rule);border-radius:var(--r-data);padding:20px 24px 20px 46px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 16px">
+        <span aria-hidden="true" style="position:absolute;left:12px;top:10px;bottom:10px;width:8px;background-image:repeating-linear-gradient(180deg,var(--ink-3) 0 1px,transparent 1px 8px);opacity:0.5"></span>
+        <span style="font-size:clamp(17px,1.8cqw,20px);color:var(--ink)"><span style="font-family:var(--font-mono);font-size:13px;color:var(--indigo);margin-right:12px">GAP-03</span>样本窗口 —— 仅 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">14</span> 天</span>
+        <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">待补充</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:16px;margin-top:36px">
+      <button style="font-family:var(--font-body);font-weight:600;font-size:15px;line-height:1.2;padding:13px 26px;border-radius:var(--r-data);background:var(--sulfur);color:var(--ink);border:1px solid var(--ink);box-shadow:2px 2px 0 rgba(27,42,46,.18);cursor:pointer;transition:background .15s,box-shadow .1s,transform .05s" style-hover="background:#DFAD2B" style-active="transform:translate(2px,2px);box-shadow:0 0 0 rgba(27,42,46,.18)">把缺口量出来</button>
+      <a href="#honest" style="font-size:14px;font-weight:600">看一份完整判定</a>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ showBody }}" hint-placeholder-val="{{ true }}">
+  <div>
+  <section id="how" data-screen-label="它怎么工作" style="background:var(--paper-2);background-image:var(--tex-paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+    <div style="max-width:1280px;margin:0 auto;box-sizing:border-box;padding:clamp(48px,6.6cqw,96px) clamp(20px,3.6cqw,48px)">
+      <h2 style="font-family:var(--font-display);font-weight:400;font-size:clamp(31px,3.3cqw,48px);line-height:1.15;margin:0;color:var(--ink)">六步，从热点到计划书。</h2>
+      <p style="font-size:16px;line-height:1.8;color:var(--ink-2);margin:14px 0 0;max-width:34em">前两步 Flint 自动做。第三步是你的。后面三步，每一步都带引用。</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:clamp(32px,4cqw,64px);margin-top:clamp(28px,3cqw,48px);align-items:start">
+        <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px">
+          <li style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--indigo);border:1px solid var(--indigo);border-radius:var(--r-data);width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:var(--surface)">01</span>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">采集</div><p style="margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ink-2)">每天 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">09:00</span>，从 Google Trends、微博热搜、GitHub Trending、arXiv 抓取热点，原样留存出处与时间戳。</p></div>
+          </li>
+          <li style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--indigo);border:1px solid var(--indigo);border-radius:var(--r-data);width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:var(--surface)">02</span>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">聚簇</div><p style="margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ink-2)">相近热点归成热点簇，沉淀为一张张证据卡。</p></div>
+          </li>
+          <li style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;background:var(--indigo-soft);background-image:var(--tex-note);border:1px solid rgba(46,74,125,.35);border-radius:var(--r-card);padding:14px 16px;margin-left:-16px">
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--surface);background:var(--indigo);border:1px solid var(--indigo);border-radius:var(--r-data);width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center">03</span>
+            <div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-size:16px;font-weight:600;color:var(--ink)">写一句关联假设</span><span style="display:inline-block;padding:2px 10px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--surface);color:var(--indigo);border:1px solid rgba(46,74,125,.35);transform:rotate(1deg)">这步你来</span></div><p style="margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ink-2)">跨簇挑几张证据卡，写下你猜的关联。Flint 不替你想。</p></div>
+          </li>
+          <li style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--indigo);border:1px solid var(--indigo);border-radius:var(--r-data);width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:var(--surface)">04</span>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">主题</div><p style="margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ink-2)">由假设生成候选主题，标明各自依赖哪些证据卡。</p></div>
+          </li>
+          <li style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--indigo);border:1px solid var(--indigo);border-radius:var(--r-data);width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:var(--surface)">05</span>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">判定</div><p style="margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ink-2)">对主题跑四分类可行性判定，全程带引用；证据不足就停在缺口清单。</p></div>
+          </li>
+          <li style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--indigo);border:1px solid var(--indigo);border-radius:var(--r-data);width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:var(--surface)">06</span>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">报告与计划书</div><p style="margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ink-2)">产出深度报告与项目计划书，可直接交给 AI 执行。</p></div>
+          </li>
+        </ol>
+        <div style="justify-self:center;display:flex;flex-direction:column;gap:20px;align-items:center">
+          <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:360px">
+            <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--paper);color:var(--ink-2);border:1px solid var(--rule);box-shadow:var(--shadow-sticker);transform:rotate(-1deg)">Google Trends</span>
+            <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--indigo-soft);color:var(--indigo);border:1px solid rgba(46,74,125,.35);box-shadow:var(--shadow-sticker);transform:rotate(1deg)">微博热搜</span>
+            <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--paper);color:var(--ink-2);border:1px solid var(--rule);box-shadow:var(--shadow-sticker);transform:rotate(0.6deg)">GitHub Trending</span>
+            <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--indigo-soft);color:var(--indigo);border:1px solid rgba(46,74,125,.35);box-shadow:var(--shadow-sticker);transform:rotate(-0.8deg)">arXiv</span>
+          </div>
+          <svg aria-hidden="true" width="360" height="300" viewBox="0 0 360 300" fill="none" style="max-width:100%;height:auto">
+            <rect x="24" y="30" width="96" height="66" rx="4" fill="var(--surface)" stroke="var(--indigo)" stroke-width="2" transform="rotate(-3 72 63)"></rect>
+            <path d="M38 52 h66 M38 66 h48" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" opacity="0.45" transform="rotate(-3 72 63)"></path>
+            <rect x="140" y="18" width="96" height="66" rx="4" fill="var(--surface)" stroke="var(--indigo)" stroke-width="2" transform="rotate(2 188 51)"></rect>
+            <path d="M154 40 h66 M154 54 h40" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" opacity="0.45" transform="rotate(2 188 51)"></path>
+            <rect x="252" y="34" width="88" height="60" rx="4" fill="var(--surface)" stroke="var(--indigo)" stroke-width="2" transform="rotate(-1.5 296 64)"></rect>
+            <path d="M266 56 h56 M266 70 h36" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" opacity="0.45" transform="rotate(-1.5 296 64)"></path>
+            <path d="M72 104 C 90 150, 160 132, 182 158 M188 92 C 186 118, 182 136, 182 158 M292 102 C 268 134, 210 138, 182 158" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 7" fill="none"></path>
+            <path d="M176 166 l-12 8 M196 150 l14 -10 M198 172 l16 4 M170 148 l-14 -6" stroke="var(--sulfur)" stroke-width="4" stroke-linecap="round"></path>
+            <circle cx="184" cy="160" r="7" fill="var(--sulfur)"></circle>
+            <path d="M184 176 C 184 196, 184 202, 184 214" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M178 206 l6 10 6 -10" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+            <rect x="118" y="222" width="132" height="64" rx="4" fill="var(--surface)" stroke="var(--ink)" stroke-width="2" transform="rotate(-1 184 254)"></rect>
+            <path d="M132 244 h104 M132 258 h72" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" opacity="0.4" transform="rotate(-1 184 254)"></path>
+            <rect x="262" y="240" width="66" height="28" rx="2" fill="none" stroke="var(--indigo)" stroke-width="2" transform="rotate(-6 295 254)"></rect>
+            <text x="272" y="259" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--indigo)" transform="rotate(-6 295 254)">已证 ■</text>
+          </svg>
+          <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">四个源 · 每天 09:00 · 证据卡 → 火花 → 报告</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="honest" data-screen-label="诚实的证据" style="max-width:1280px;margin:0 auto;box-sizing:border-box;padding:clamp(48px,6.6cqw,96px) clamp(20px,3.6cqw,48px)">
+    <h2 style="font-family:var(--font-display);font-weight:400;font-size:clamp(31px,3.3cqw,48px);line-height:1.15;margin:0;color:var(--ink)">给你看，不是告诉你。</h2>
+    <p style="font-size:16px;line-height:1.8;color:var(--ink-2);margin:14px 0 0;max-width:34em">下面三块，是报告里真实的样子。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px;margin-top:clamp(28px,3cqw,48px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);padding:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">REPORT · 摘录</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:var(--r-data);border:1px solid var(--indigo);font-family:var(--font-mono);font-size:12px;color:var(--indigo)"><span style="display:inline-block;width:7px;height:7px;background:var(--indigo)"></span>已证</span>
+          </div>
+          <p style="font-size:15px;line-height:1.8;margin:14px 0 0;color:var(--ink)">播客工具的付费讨论在涨：本周 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">128</span> 条<sup style="font-family:var(--font-mono);font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:2px">[3]</sup>，上周 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">74</span> 条<sup style="font-family:var(--font-mono);font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:2px">[3]</sup>；头部竞品定价 <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums">¥68/月</span><sup style="font-family:var(--font-mono);font-size:11px;color:var(--indigo);text-decoration:underline;text-underline-offset:2px">[4]</sup>。</p>
+        </div>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ink-2)">每个数字都带角标。点开角标，是来源、编号和时间戳。</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);padding:24px">
+          <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">CHANNELS · 三通道</span>
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px 12px;align-items:center;margin-top:14px">
+            <span style="display:inline-block;width:7px;height:7px;background:var(--indigo)"></span>
+            <span style="font-size:13px;color:var(--ink-2)">事实 · 本周提及</span>
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink);text-align:right">1,204 <span style="font-size:12px;color:var(--ink-2)">条</span></span>
+            <span style="display:inline-block;width:7px;height:7px;border:1.5px solid var(--indigo);box-sizing:border-box"></span>
+            <span style="font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule);padding-top:10px">价格 · 竞品月费</span>
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink);text-align:right;border-top:1px solid var(--rule);padding-top:10px">¥68</span>
+            <span style="display:inline-flex;gap:2px"><span style="display:inline-block;width:4px;height:11px;border:1.5px solid var(--indigo);border-right:none;box-sizing:border-box"></span><span style="display:inline-block;width:4px;height:11px;border:1.5px solid var(--indigo);border-left:none;box-sizing:border-box"></span></span>
+            <span style="font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule);padding-top:10px">涉我 · 你关注的簇</span>
+            <span style="font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink);text-align:right;border-top:1px solid var(--rule);padding-top:10px">3 <span style="font-size:12px;color:var(--ink-2)">个</span></span>
+          </div>
+        </div>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ink-2)">事实、价格、涉我，三种通道分开列。数字等宽对齐，不混着说。</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="position:relative;min-height:158px;background:var(--paper-2);background-image:var(--tex-press);box-shadow:var(--emboss);border:1px solid var(--rule);border-radius:var(--r-data);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px 16px 16px 32px;box-sizing:border-box">
+          <span aria-hidden="true" style="position:absolute;left:10px;top:8px;bottom:8px;width:8px;background-image:repeating-linear-gradient(180deg,var(--ink-3) 0 1px,transparent 1px 8px);opacity:0.5"></span>
+          <span style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)">资料缺口</span>
+          <span style="font-size:13px;color:var(--ink-2);text-align:center;max-width:26em">竞品收入数据缺失，暂无法判定。</span>
+          <a href="#cta" style="font-size:13px">补充资料</a>
+        </div>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ink-2)">缺的地方保留形状。Flint 不用生成文字填平它。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="who" data-screen-label="给谁用" style="background:var(--paper-2);background-image:var(--tex-paper);border-top:1px solid var(--rule)">
+    <div style="max-width:1280px;margin:0 auto;box-sizing:border-box;padding:clamp(48px,6.6cqw,96px) clamp(20px,3.6cqw,48px)">
+      <h2 style="font-family:var(--font-display);font-weight:400;font-size:clamp(31px,3.3cqw,48px);line-height:1.15;margin:0;color:var(--ink)">不是没想法的人。</h2>
+      <p style="font-size:16px;line-height:1.8;color:var(--ink-2);margin:14px 0 0;max-width:34em">是想法太多、不知道押哪个的人。</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:24px;margin-top:clamp(28px,3cqw,48px)">
+        <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);padding:28px 24px">
+          <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--sulfur-soft);color:var(--ink);border:1px solid rgba(232,185,60,.8);box-shadow:var(--shadow-sticker);transform:rotate(-1deg)">创业者</span>
+          <p style="font-size:20px;line-height:1.6;font-weight:500;margin:16px 0 0;color:var(--ink)">「想法有五个，敢押的没有一个。」</p>
+          <p style="font-size:14px;line-height:1.6;color:var(--ink-2);margin:14px 0 0;border-top:1px solid var(--rule);padding-top:14px">押注之前，先看哪个判定站得住、缺口有多深。</p>
+        </div>
+        <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);padding:28px 24px">
+          <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--indigo-soft);color:var(--indigo);border:1px solid rgba(46,74,125,.35);box-shadow:var(--shadow-sticker);transform:rotate(0.8deg)">研究者</span>
+          <p style="font-size:20px;line-height:1.6;font-weight:500;margin:16px 0 0;color:var(--ink)">「热点天天冒，值得跟的问题在哪？」</p>
+          <p style="font-size:14px;line-height:1.6;color:var(--ink-2);margin:14px 0 0;border-top:1px solid var(--rule);padding-top:14px">从 arXiv 与大众趋势的交叉里挑问题，证据卡当索引。</p>
+        </div>
+        <div style="background:var(--surface);background-image:var(--tex-paper);border:1px solid var(--rule);border-radius:var(--r-card);padding:28px 24px">
+          <span style="display:inline-block;padding:3px 12px;border-radius:var(--r-tag);font-family:var(--font-mono);font-size:12px;background:var(--moss-soft);color:var(--moss);border:1px solid rgba(107,122,90,.4);box-shadow:var(--shadow-sticker);transform:rotate(-0.6deg)">独立开发者</span>
+          <p style="font-size:20px;line-height:1.6;font-weight:500;margin:16px 0 0;color:var(--ink)">「只有周末能写代码，方向错了赔不起。」</p>
+          <p style="font-size:14px;line-height:1.6;color:var(--ink-2);margin:14px 0 0;border-top:1px solid var(--rule);padding-top:14px">判定通过再动手，拿到的是一份能直接开工的计划书。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" data-screen-label="收尾CTA" style="border-top:1px solid var(--rule);text-align:center;padding:clamp(56px,7cqw,112px) clamp(20px,3.6cqw,48px)">
+    <h2 style="font-family:var(--font-display);font-weight:400;font-size:clamp(31px,3.6cqw,48px);line-height:1.15;margin:0;color:var(--ink)">下一个想法，先敲一下。</h2>
+    <p style="font-size:16px;line-height:1.8;color:var(--ink-2);margin:16px auto 0;max-width:30em">证据够，你拿到判定；证据不够，你拿到缺口清单。两样都有用。</p>
+    <div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px;margin-top:28px">
+      <button style="font-family:var(--font-body);font-weight:600;font-size:15px;line-height:1.2;padding:13px 26px;border-radius:var(--r-data);background:var(--sulfur);color:var(--ink);border:1px solid var(--ink);box-shadow:2px 2px 0 rgba(27,42,46,.18);cursor:pointer;transition:background .15s,box-shadow .1s,transform .05s" style-hover="background:#DFAD2B" style-active="transform:translate(2px,2px);box-shadow:0 0 0 rgba(27,42,46,.18)">开始使用</button>
+      <a href="#honest" style="font-size:14px;font-weight:600">看一份样例报告</a>
+    </div>
+    <p style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin:20px 0 0">免费开始 · 证据不足时，Flint 会直说</p>
+  </section>
+
+  <footer data-screen-label="页脚" style="border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 24px;padding:32px clamp(20px,3.6cqw,48px)">
+    <span style="font-family:var(--font-display);font-size:20px;color:var(--ink-2)">Flint 燧石</span>
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3)">四源 → 热点簇 → 假设 → 主题 → 判定 → 报告</span>
+  </footer>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;hero&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;card&quot;,&quot;options&quot;:[&quot;card&quot;,&quot;contrast&quot;,&quot;void&quot;],&quot;tsType&quot;:&quot;\&quot;card\&quot;|\&quot;contrast\&quot;|\&quot;void\&quot;&quot;,&quot;section&quot;:&quot;Hero 方向&quot;},&quot;heroOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero 方向&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const hero = this.props.hero ?? "card";
+    return {
+      heroCard: hero === "card",
+      heroContrast: hero === "contrast",
+      heroVoid: hero === "void",
+      showBody: !(this.props.heroOnly ?? false),
+    };
+  }
+}
+</script>
+</body>
+</html>

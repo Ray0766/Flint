@@ -1,0 +1,76 @@
+template_id: startup
+locale: zh-CN
+audience: human_reader
+sections:
+- section_id: one_liner
+  ratio:
+    share: 0.05
+    unit: words
+    min_words: 150
+    max_words: 450
+  check_questions:
+  - 一句话是否含用户与形态？
+  charts: []
+- section_id: problem
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 痛点是否有一手证据？
+  charts: []
+- section_id: solution
+  ratio:
+    share: 0.2
+    unit: words
+    min_words: 600
+    max_words: 1800
+  check_questions:
+  - 方案是否与竞品差异化？
+  charts: []
+- section_id: market_size
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 规模数字是否全挂出处？
+  charts: []
+- section_id: go_to_market
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 首批用户路径是否具体？
+  charts: []
+- section_id: business_model
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 定价是否引 PriceBook？
+  charts: []
+- section_id: team
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 团队是否走 ProfileRef？
+  charts: []
+- section_id: financials
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 预算是否全 PriceCell？
+  charts: []

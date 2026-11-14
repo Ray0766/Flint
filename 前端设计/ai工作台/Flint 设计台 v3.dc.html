@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;height:100%}
+body{--bg:#f2ede4;--panel:#faf7f1;--panel2:#ece5d7;--ink:#26221c;--sub:#867b67;--line:#ded4c2;--accent:#d1531f;--accent-soft:#f6ded0;--ok:#4f7d43;--bad:#b03a2e;--warn:#a3701c;--warn-soft:rgba(180,130,40,.14);--unk:#8f8574;--shadow:0 1px 2px rgba(60,45,25,.06),0 10px 28px rgba(60,45,25,.09)}
+body[data-theme="dark"]{--bg:#191612;--panel:#211d17;--panel2:#2c261d;--ink:#ede5d7;--sub:#9a8e7d;--line:#393226;--accent:#e8763a;--accent-soft:#43301f;--ok:#7fae72;--bad:#d4695e;--warn:#c99a4a;--warn-soft:rgba(200,155,75,.16);--unk:#93887a;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.4)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+button,textarea,input,select{font-family:inherit}
+@keyframes spin{to{transform:rotate(360deg)}}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}::-webkit-scrollbar-track{background:transparent}
+</style>
+</helmet>
+<div data-screen-label="Flint 设计台 v3" style="height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans','PingFang SC','Microsoft YaHei',sans-serif;overflow:hidden">
+  <div style="display:flex;align-items:center;gap:12px;height:56px;padding:0 18px;background:var(--panel);border-bottom:1px solid var(--line);flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+      <div style="width:20px;height:20px;background:var(--accent);clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)"></div>
+      <div style="font-family:'Smiley Sans','得意黑','IBM Plex Sans',sans-serif;font-size:19px;font-weight:700;letter-spacing:.5px">燧石 <span style="color:var(--accent)">Flint</span></div>
+      <div style="width:1px;height:18px;background:var(--line)"></div>
+      <div style="font-size:13px;font-weight:600">{{ t.studio }}</div>
+      <div style="font-size:12px;color:var(--sub);background:var(--panel2);padding:3px 10px;border-radius:14px;white-space:nowrap">{{ t.workbench }}「{{ topicName }}」</div>
+    </div>
+    <div style="flex:1"></div>
+    <select value="{{ region }}" onChange="{{ onRegion }}" style="padding:6px 8px;font-size:12px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:8px;cursor:pointer">
+      <option value="CN">CN 中国</option><option value="US">US 美国</option><option value="JP">JP 日本</option><option value="GB">GB 英国</option>
+    </select>
+    <select value="{{ lang }}" onChange="{{ onLang }}" style="padding:6px 8px;font-size:12px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:8px;cursor:pointer">
+      <option value="zh">中文</option><option value="en">English</option>
+    </select>
+    <button onClick="{{ toggleTheme }}" style="padding:7px 13px;font-size:12.5px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap;flex-shrink:0">{{ themeBtnLabel }}</button>
+    <button onClick="{{ share }}" style="padding:7px 13px;font-size:12.5px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap;flex-shrink:0">{{ t.share }}</button>
+    <button onClick="{{ exportHtml }}" style="padding:7px 16px;font-size:12.5px;border:none;background:{{ exportBg }};color:#fff;font-weight:600;border-radius:8px;cursor:pointer;white-space:nowrap;flex-shrink:0">{{ t.export }}</button>
+  </div>
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:66px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:12.5px;padding:8px 18px;border-radius:20px;z-index:50;box-shadow:var(--shadow);max-width:70vw">{{ toast }}</div>
+  </sc-if>
+  <div style="display:flex;flex:1;min-height:0">
+    <div style="width:{{ sideW }}px;flex-shrink:0;background:var(--panel);display:flex;min-height:0">
+      <div style="width:{{ cardsW }}px;flex-shrink:0;display:flex;flex-direction:column;min-height:0;min-width:0">
+      <div style="display:flex;gap:2px;padding:10px 10px 0 10px;border-bottom:1px solid var(--line);flex-shrink:0">
+        <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="3">
+          <button onClick="{{ tb.onClick }}" style="flex:1;padding:9px 0 8px;font-size:12.5px;border:none;cursor:pointer;border-radius:7px 7px 0 0;background:{{ tb.bg }};color:{{ tb.color }};font-weight:{{ tb.weight }};border-bottom:2px solid {{ tb.line }};white-space:nowrap">{{ tb.label }}</button>
+        </sc-for>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:8px;box-sizing:border-box">
+        <sc-if value="{{ showCards }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:11.5px;color:var(--sub);line-height:1.5;padding:0 2px 2px">{{ t.cardsIntro }}</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1px;margin-top:2px">{{ t.clusterGroup }}</div>
+          <sc-for list="{{ clusterCards }}" as="k" hint-placeholder-count="3">
+            <div draggable="{{ true }}" onDragStart="{{ k.onDrag }}" onClick="{{ k.onAdd }}" style="padding:10px 11px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;cursor:grab" style-hover="border-color:var(--accent)">
+              <div style="display:flex;align-items:center;gap:6px">
+                <div style="font-size:13px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ k.name }}</div>
+                <div style="font-size:10px;font-weight:700;color:{{ k.vColor }};background:{{ k.vBg }};padding:2px 7px;border-radius:9px;white-space:nowrap">{{ k.verdict }}</div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:5px;font-size:11px;color:var(--sub)">
+                <div>{{ k.scores }}</div><div style="flex:1"></div><div>{{ k.region }}</div>
+              </div>
+            </div>
+          </sc-for>
+          <div style="font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1px;margin-top:6px">{{ t.evidenceGroup }}</div>
+          <sc-for list="{{ evidenceCards }}" as="e" hint-placeholder-count="3">
+            <div draggable="{{ true }}" onDragStart="{{ e.onDrag }}" onClick="{{ e.onAdd }}" style="display:flex;align-items:center;gap:8px;padding:9px 11px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;cursor:grab" style-hover="border-color:var(--accent)">
+              <div style="font-size:12.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ e.title }}</div>
+              <div style="font-size:10.5px;color:{{ e.srcColor }};background:{{ e.srcBg }};padding:2px 7px;border-radius:10px;white-space:nowrap">{{ e.src }}</div>
+            </div>
+          </sc-for>
+          <div style="font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1px;margin-top:6px">{{ t.cloudTitle }}</div>
+          <div style="font-size:11px;color:var(--sub);line-height:1.5;padding:0 2px">{{ t.cloudHint }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px 7px;align-items:center;padding:8px 9px;background:var(--panel2);border:1px solid var(--line);border-radius:9px">
+            <sc-for list="{{ cloudWords }}" as="w" hint-placeholder-count="0">
+              <button onClick="{{ w.onPick }}" style="border:1px solid {{ w.border }};background:{{ w.bg }};color:{{ w.color }};font-size:{{ w.size }}px;font-weight:{{ w.weight }};padding:2px 8px;border-radius:12px;cursor:pointer;line-height:1.5;white-space:nowrap" style-hover="border-color:var(--accent)">{{ w.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ showTemplates }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:11.5px;color:var(--sub);line-height:1.5;padding:0 2px 2px">{{ t.tplIntro }}</div>
+          <sc-for list="{{ templatesView }}" as="tp" hint-placeholder-count="2">
+            <div style="padding:10px 11px;border:1px solid var(--line);border-radius:9px;background:var(--panel2)">
+              <div style="font-size:13px;font-weight:600">{{ tp.name }}</div>
+              <div style="font-size:11px;color:var(--sub);margin-top:3px">{{ tp.meta }}</div>
+            </div>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ showHistory }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:11.5px;color:var(--sub);line-height:1.5;padding:0 2px 2px">{{ t.cpIntro }}</div>
+          <sc-for list="{{ checkpointsView }}" as="v" hint-placeholder-count="3">
+            <div onClick="{{ v.onClick }}" style="display:flex;gap:10px;cursor:pointer">
+              <div style="display:flex;flex-direction:column;align-items:center;width:12px;flex-shrink:0">
+                <div style="width:10px;height:10px;border-radius:50%;background:{{ v.dotBg }};border:2px solid {{ v.dotBorder }};margin-top:3px;box-sizing:border-box"></div>
+                <div style="width:2px;flex:1;background:var(--line);margin-top:3px"></div>
+              </div>
+              <div style="padding-bottom:14px;min-width:0">
+                <div style="font-size:12.5px;font-weight:{{ v.weight }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ v.label }}</div>
+                <div style="font-size:11px;color:var(--sub);margin-top:2px">{{ v.meta }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </sc-if>
+      </div>
+      </div>
+      <div onMouseDown="{{ startRowDrag }}" title="{{ t.dragResize }}" style="width:7px;cursor:col-resize;flex-shrink:0;border-left:1px solid var(--line);box-sizing:border-box" style-hover="background:var(--accent-soft)"></div>
+      <div style="flex:1;display:flex;flex-direction:column;min-width:0;min-height:0">
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px 6px;flex-shrink:0">
+        <div style="font-size:12.5px;font-weight:700">{{ t.chat }}</div>
+        <div style="font-size:10.5px;color:var(--sub)">{{ t.chatHint }}</div>
+      </div>
+      <div ref="{{ chatRef }}" style="flex:1;overflow-y:auto;padding:6px 12px 12px;display:flex;flex-direction:column;gap:10px;min-height:0">
+        <sc-for list="{{ messagesView }}" as="m" hint-placeholder-count="1">
+          <div style="display:flex;justify-content:{{ m.justify }}">
+            <div style="max-width:88%;padding:8px 12px;font-size:12.5px;line-height:1.55;background:{{ m.bg }};color:{{ m.color }};border:1px solid {{ m.border }};border-radius:{{ m.radius }};white-space:pre-wrap">{{ m.text }}</div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ generating }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex"><div style="padding:8px 13px;font-size:12.5px;background:var(--panel2);border:1px solid var(--line);border-radius:14px 14px 14px 4px;color:var(--sub)">…</div></div>
+        </sc-if>
+      </div>
+      <div onDragOver="{{ onDragOver }}" onDrop="{{ onDrop }}" style="margin:0 12px;border:1.5px dashed {{ trayBorder }};border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;min-height:36px;align-items:center;background:var(--panel2);flex-shrink:0">
+        <sc-if value="{{ trayEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:12px;color:var(--sub);padding:2px 4px">{{ t.dropHint }}</div>
+        </sc-if>
+        <sc-for list="{{ trayView }}" as="c" hint-placeholder-count="1">
+          <div style="display:flex;align-items:center;gap:4px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600;padding:4px 6px 4px 10px;border-radius:14px;max-width:100%">
+            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px">{{ c.label }}</span>
+            <button onClick="{{ c.onRemove }}" style="border:none;background:none;color:var(--accent);cursor:pointer;font-size:13px;padding:0 3px;line-height:1;flex-shrink:0">×</button>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+        <textarea value="{{ inputVal }}" onChange="{{ onInput }}" onKeyDown="{{ onInputKey }}" placeholder="{{ t.placeholder }}" rows="2" style="resize:none;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--ink);font-size:12.5px;line-height:1.5;outline:none"></textarea>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          <select value="{{ tplId }}" onChange="{{ onTpl }}" title="{{ t.tplPick }}" style="padding:5px 6px;font-size:11px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:7px;cursor:pointer;max-width:130px;font-weight:600">
+            <option value="generic">{{ t.tpl_generic }}</option><option value="startup">{{ t.tpl_startup }}</option><option value="engineering">{{ t.tpl_engineering }}</option><option value="grant">{{ t.tpl_grant }}</option><option value="thesis">{{ t.tpl_thesis }}</option>
+          </select>
+          <select value="{{ model }}" onChange="{{ onModel }}" style="padding:5px 6px;font-size:11px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:7px;cursor:pointer;max-width:104px">
+            <option value="haiku">Claude Haiku</option><option value="sonnet">Claude Sonnet</option><option value="qwen">Qwen3-14B 本地</option>
+          </select>
+          <sc-for list="{{ effortBtns }}" as="eb" hint-placeholder-count="3">
+            <button onClick="{{ eb.onClick }}" style="padding:5px 8px;font-size:11px;border:1px solid {{ eb.border }};background:{{ eb.bg }};color:{{ eb.color }};border-radius:7px;cursor:pointer;white-space:nowrap">{{ eb.label }}</button>
+          </sc-for>
+          <div style="flex:1"></div>
+          <button onClick="{{ send }}" disabled="{{ generating }}" style="padding:7px 16px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:12.5px;font-weight:600;cursor:pointer;opacity:{{ sendOpacity }};white-space:nowrap">{{ sendLabel }}</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div onMouseDown="{{ startColDrag }}" title="{{ t.dragResize }}" style="width:7px;cursor:col-resize;flex-shrink:0;border-left:1px solid var(--line);box-sizing:border-box" style-hover="background:var(--accent-soft)"></div>
+    <div style="flex:1;display:flex;flex-direction:column;min-width:0;position:relative">
+      <div style="min-height:44px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:6px 14px;box-sizing:border-box;border-bottom:1px solid var(--line);background:var(--panel);flex-shrink:0;min-width:0">
+        <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:1;min-width:36px;max-width:200px">{{ activeCpLabel }}</div>
+        <div title="{{ checkTip }}" style="font-size:10.5px;font-weight:700;color:{{ checkColor }};background:{{ checkBg }};padding:2px 8px;border-radius:9px;white-space:nowrap;flex-shrink:0">{{ checkLabel }}</div>
+        <sc-if value="{{ hasReviewChip }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:10.5px;font-weight:700;color:var(--warn);background:var(--warn-soft);padding:2px 8px;border-radius:9px;white-space:nowrap;flex-shrink:0">{{ reviewChip }}</div>
+        </sc-if>
+        <div style="flex:1"></div>
+        <sc-for list="{{ deviceBtns }}" as="d" hint-placeholder-count="2">
+          <button onClick="{{ d.onClick }}" style="padding:5px 11px;font-size:11.5px;border:1px solid {{ d.border }};background:{{ d.bg }};color:{{ d.color }};border-radius:7px;cursor:pointer;white-space:nowrap;flex-shrink:0">{{ d.label }}</button>
+        </sc-for>
+        <button onClick="{{ toggleTweaks }}" style="padding:5px 11px;font-size:11.5px;border:1px solid {{ tweaksBtnBorder }};background:{{ tweaksBtnBg }};color:{{ tweaksBtnColor }};border-radius:7px;cursor:pointer;margin-left:4px;white-space:nowrap;flex-shrink:0">{{ t.tweaks }}</button>
+        <button onClick="{{ solidify }}" title="{{ t.solidifyFull }}" style="padding:5px 11px;font-size:11.5px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-weight:600;border-radius:7px;cursor:pointer;white-space:nowrap;flex-shrink:0">{{ t.solidify }}</button>
+      </div>
+      <div ref="{{ canvasRef }}" style="flex:1;overflow-y:auto;padding:24px;background-image:radial-gradient(var(--line) 1px, transparent 1px);background-size:18px 18px">
+        <sc-if value="{{ noDoc }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:460px;margin:8vh auto 0;background:var(--panel);border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center">
+            <div style="width:26px;height:26px;background:var(--accent);clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%);margin:0 auto 14px"></div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:8px">{{ t.emptyTitle }}</div>
+            <div style="font-size:12.5px;color:var(--sub);line-height:1.7">{{ t.emptyBody }}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px">
+              <sc-for list="{{ tplChips }}" as="tc" hint-placeholder-count="5">
+                <button onClick="{{ tc.onPick }}" style="padding:6px 12px;font-size:12px;border:1px solid {{ tc.border }};background:{{ tc.bg }};color:{{ tc.color }};border-radius:16px;cursor:pointer;font-weight:{{ tc.weight }};white-space:nowrap">{{ tc.label }}</button>
+              </sc-for>
+            </div>
+            <div style="font-size:11px;color:var(--sub);margin-top:10px;line-height:1.6">{{ tplSecsPreview }}</div>
+            <button onClick="{{ loadDemo }}" style="margin-top:16px;padding:8px 18px;font-size:12.5px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:9px;cursor:pointer;white-space:nowrap" style-hover="border-color:var(--accent);color:var(--accent)">{{ t.loadDemo }}</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasDoc }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:16px;align-items:flex-start;justify-content:center">
+            <sc-if value="{{ navVisible }}" hint-placeholder-val="{{ false }}">
+            <div style="position:sticky;top:0;width:138px;flex-shrink:0;display:flex;flex-direction:column;gap:1px;padding:10px 7px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)">
+              <div style="font-size:10.5px;font-weight:700;color:var(--sub);letter-spacing:1px;padding:0 7px 7px">{{ t.navTitle }}</div>
+              <sc-for list="{{ sectionNav }}" as="n" hint-placeholder-count="5">
+                <button onClick="{{ n.onNav }}" title="{{ n.tip }}" style="display:flex;align-items:center;gap:7px;padding:6px 7px;border:none;background:transparent;color:var(--ink);font-size:12px;border-radius:7px;cursor:pointer;text-align:left;width:100%;box-sizing:border-box" style-hover="background:var(--panel2)">
+                  <span style="width:7px;height:7px;border-radius:50%;background:{{ n.dot }};flex-shrink:0"></span>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0">{{ n.label }}</span>
+                </button>
+              </sc-for>
+            </div>
+            </sc-if>
+            <div style="flex:0 1 {{ previewWidth }};min-width:0;display:flex;flex-direction:column;gap:22px;transition:flex-basis .3s">
+              <sc-for list="{{ sectionsView }}" as="sec" hint-placeholder-count="0">
+                <div ref="{{ sec.secRef }}" style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:baseline;gap:8px;padding:0 2px;min-width:0">
+                    <div style="font-size:13.5px;font-weight:700;white-space:nowrap">{{ sec.label }}</div>
+                    <div style="font-size:11px;color:var(--sub);white-space:nowrap">{{ sec.meta }}</div>
+                    <div style="flex:1"></div>
+                    <div title="{{ t.checkQTip }}" style="font-size:11px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0">☑ {{ sec.checkQ }}</div>
+                  </div>
+                  <sc-for list="{{ sec.blocks }}" as="b" hint-placeholder-count="0">
+                    <div style="background:var(--panel);border:1px solid {{ b.borderColor }};border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+                      <div style="display:flex;align-items:center;gap:7px;padding:6px 10px;border-bottom:1px solid var(--line);min-width:0">
+                        <div style="font-size:10.5px;font-weight:700;color:{{ b.typeColor }};background:{{ b.typeBg }};padding:2px 8px;border-radius:9px;white-space:nowrap">{{ b.typeLabel }}</div>
+                        <div style="font-size:10.5px;color:var(--sub);border:1px solid var(--line);padding:1.5px 7px;border-radius:9px;white-space:nowrap">{{ b.authorLabel }}</div>
+                        <sc-if value="{{ b.review }}" hint-placeholder-val="{{ false }}">
+                          <button onClick="{{ b.onReview }}" style="font-size:10.5px;font-weight:700;color:var(--warn);background:var(--warn-soft);border:1px solid var(--warn);padding:1.5px 8px;border-radius:9px;cursor:pointer;white-space:nowrap">{{ t.reviewBadge }} {{ b.reviewCaret }}</button>
+                        </sc-if>
+                        <div style="flex:1"></div>
+                        <sc-if value="{{ b.busy }}" hint-placeholder-val="{{ false }}">
+                          <div style="width:13px;height:13px;border:2px solid var(--accent-soft);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite"></div>
+                        </sc-if>
+                        <button onClick="{{ b.onUp }}" title="{{ t.moveUp }}" style="border:1px solid var(--line);background:none;color:var(--sub);cursor:pointer;font-size:12px;padding:0 6px;line-height:1.6;border-radius:7px" style-hover="color:var(--accent);border-color:var(--accent)">↑</button>
+                        <button onClick="{{ b.onDown }}" title="{{ t.moveDown }}" style="border:1px solid var(--line);background:none;color:var(--sub);cursor:pointer;font-size:12px;padding:0 6px;line-height:1.6;border-radius:7px" style-hover="color:var(--accent);border-color:var(--accent)">↓</button>
+                        <button onClick="{{ b.onProtect }}" title="{{ b.protectTip }}" style="font-size:10.5px;color:{{ b.protectColor }};background:none;border:1px solid {{ b.protectBorder }};padding:1.5px 8px;border-radius:9px;cursor:pointer;white-space:nowrap">{{ b.protectLabel }}</button>
+                      </div>
+                      <sc-if value="{{ b.reviewOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="padding:9px 12px;background:var(--warn-soft);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                          <div style="font-size:12px;color:var(--warn);font-weight:600">{{ b.reviewReason }}</div>
+                          <div style="font-size:11px;color:var(--sub)">{{ b.reviewSev }}</div>
+                          <div style="flex:1"></div>
+                          <button onClick="{{ b.onReviewRegen }}" style="padding:4px 11px;font-size:11.5px;border:none;background:var(--accent);color:#fff;border-radius:7px;cursor:pointer;font-weight:600">{{ t.btnRegen }}</button>
+                          <button onClick="{{ b.onReviewKeep }}" style="padding:4px 11px;font-size:11.5px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:7px;cursor:pointer">{{ t.btnKeep }}</button>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ b.isGap }}" hint-placeholder-val="{{ false }}">
+                        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;background:var(--panel2)">
+                          <div style="font-size:12.5px;font-weight:700;color:var(--bad)">{{ t.gapTitle }}：{{ b.gapMissing }}</div>
+                          <div style="font-size:11.5px;color:var(--sub)">{{ t.gapHint }}</div>
+                          <div style="display:flex;gap:6px;flex-wrap:wrap">
+                            <sc-for list="{{ b.gapSources }}" as="g" hint-placeholder-count="2">
+                              <button onClick="{{ g.onInject }}" style="padding:4px 11px;font-size:11.5px;border:1px dashed var(--accent);background:var(--panel);color:var(--accent);border-radius:14px;cursor:pointer" style-hover="background:var(--accent-soft)">+ {{ g.name }}</button>
+                            </sc-for>
+                          </div>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ b.hasFrame }}" hint-placeholder-val="{{ false }}">
+                        <iframe title="block" ref="{{ b.frameRef }}" style="width:100%;border:none;display:block;background:#fff;height:120px;pointer-events:{{ iframePE }}"></iframe>
+                      </sc-if>
+                      <sc-if value="{{ b.canAnnotate }}" hint-placeholder-val="{{ false }}">
+                        <div style="display:flex;gap:6px;padding:8px 10px;border-top:1px solid var(--line);background:var(--panel2)">
+                          <input value="{{ b.promptVal }}" onChange="{{ b.onPrompt }}" onKeyDown="{{ b.onKey }}" placeholder="{{ t.blockPromptPh }}" style="flex:1;min-width:0;padding:7px 10px;font-size:12.5px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);outline:none">
+                          <button onClick="{{ b.onRegen }}" disabled="{{ b.busy }}" style="padding:7px 13px;font-size:12px;border:none;background:var(--accent);color:#fff;border-radius:8px;cursor:pointer;font-weight:600;white-space:nowrap;opacity:{{ b.btnOpacity }};flex-shrink:0">{{ t.regenBlock }}</button>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ b.hasNote }}" hint-placeholder-val="{{ false }}">
+                        <div style="padding:7px 12px;font-size:11.5px;color:var(--sub);background:var(--panel2);border-top:1px solid var(--line)">{{ b.footNote }}</div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ generating }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:44px;left:0;right:0;bottom:0;background:rgba(25,20,14,.32);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;z-index:10">
+          <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 30px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)">
+            <div style="width:24px;height:24px;border:3px solid var(--accent-soft);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite"></div>
+            <div style="font-size:13.5px;font-weight:600">{{ t.generatingLabel }}</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ tweaksOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:52px;right:14px;width:238px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:14px;z-index:20;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="font-size:13px;font-weight:700;flex:1">{{ t.tweaks }}</div>
+            <button onClick="{{ resetTweaks }}" style="border:none;background:none;color:var(--sub);font-size:11.5px;cursor:pointer;padding:2px">{{ t.reset }}</button>
+            <button onClick="{{ toggleTweaks }}" style="border:none;background:none;color:var(--sub);font-size:15px;cursor:pointer;padding:0 2px;line-height:1">×</button>
+          </div>
+          <div style="font-size:10.5px;color:var(--sub);line-height:1.5;margin-top:-6px">{{ t.tweaksNote }}</div>
+          <div>
+            <div style="font-size:11.5px;color:var(--sub);margin-bottom:6px">{{ t.accent }}</div>
+            <div style="display:flex;gap:8px">
+              <sc-for list="{{ accentSwatches }}" as="s" hint-placeholder-count="4">
+                <button onClick="{{ s.onPick }}" style="width:24px;height:24px;border-radius:50%;background:{{ s.color }};border:2px solid {{ s.ring }};cursor:pointer;padding:0"></button>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;font-size:11.5px;color:var(--sub);margin-bottom:4px"><div style="flex:1">{{ t.radius }}</div><div>{{ radiusLabel }}</div></div>
+            <input type="range" min="0" max="24" value="{{ radiusVal }}" onChange="{{ onRadius }}" style="width:100%;accent-color:var(--accent)">
+          </div>
+          <div>
+            <div style="display:flex;font-size:11.5px;color:var(--sub);margin-bottom:4px"><div style="flex:1">{{ t.fontScale }}</div><div>{{ fontLabel }}</div></div>
+            <input type="range" min="88" max="118" value="{{ fontVal }}" onChange="{{ onFont }}" style="width:100%;accent-color:var(--accent)">
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;system&quot;,&quot;options&quot;:[&quot;system&quot;,&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;偏好&quot;},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;zh&quot;,&quot;options&quot;:[&quot;zh&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;偏好&quot;},&quot;defaultTemplate&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;generic&quot;,&quot;options&quot;:[&quot;generic&quot;,&quot;startup&quot;,&quot;engineering&quot;,&quot;grant&quot;,&quot;thesis&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;偏好&quot;}}">
+class Component extends DCLogic {
+  state = {
+    lang: 'zh', theme: 'light', region: 'CN', tab: 'cards', input: '', tray: [],
+    generating: false, tweaksOpen: false, toast: '', previewWidth: '860px',
+    sideW: 600, cardsW: 250, resizing: false,
+    model: 'haiku', effort: 'std', template: 'generic',
+    tweaks: { accent: null, radius: null, fontScale: 100 },
+    blockPrompts: {}, blockBusy: {}, reviewOpen: {}, cloudSel: [],
+    clusters: [
+      { id: 'c1', zh: '方言语音标注平台', en: 'Dialect speech annotation', scores: 'weibo 71 · gtrends 58', region: 'CN', verdict: 'C' },
+      { id: 'c2', zh: '会议纪要摘要工具', en: 'Meeting minutes summarizer', scores: 'gtrends 84 · ghtrend 77', region: 'CN', verdict: 'B' },
+      { id: 'c3', zh: '脑机接口写作助手', en: 'BCI writing assistant', scores: 'arxiv 63 · weibo 80', region: 'CN', verdict: 'A' },
+      { id: 'c4', zh: '社区虚拟电厂聚合', en: 'Community VPP aggregation', scores: 'gtrends 41 · arxiv 22', region: 'CN', verdict: 'D' }
+    ],
+    evidences: [
+      { id: 'e1', zh: '#方言保护# 话题阅读 1.2 亿', en: '#DialectPreservation# 120M reads', src: 'weibo' },
+      { id: 'e2', zh: 'arXiv 低资源语音标注综述', en: 'arXiv low-resource speech annotation survey', src: 'arxiv' },
+      { id: 'e3', zh: 'label-studio 周增 star 1.4k', en: 'label-studio +1.4k stars/wk', src: 'ghtrend' },
+      { id: 'e4', zh: '「会议纪要 AI」搜索量 +120%', en: '"AI meeting notes" search +120%', src: 'gtrends' }
+    ],
+    templates: [{ id: 't1', name: '计划书封面 · 通用', ver: 'v2', time: '08-05' }, { id: 't2', name: '热点周报卡片', ver: 'v1', time: '08-09' }],
+    doc: null, checkpoints: [], activeCpId: null,
+    messages: [{ role: 'assistant', key: 'welcome' }]
+  };
+  startDrag(e, axis) {
+    e.preventDefault();
+    const start = e.clientX;
+    const base = axis === 'x' ? this.state.sideW : this.state.cardsW;
+    this.setState({ resizing: true });
+    document.body.style.userSelect = 'none';
+    const move = (ev) => {
+      const d = ev.clientX - start;
+      if (axis === 'x') this.setState({ sideW: Math.min(Math.round(window.innerWidth * 0.55), Math.max(380, base + d)) });
+      else this.setState({ cardsW: Math.min(this.state.sideW - 240, Math.max(140, base + d)) });
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up);
+      document.body.style.userSelect = '';
+      this.setState({ resizing: false });
+    };
+    window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  }
+  componentDidMount() {
+    this._secEls = {};
+    const pref = this.props.defaultTheme ?? 'system';
+    const dark = pref === 'dark' || (pref === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+    const sw = Math.max(380, Math.min(600, Math.round(window.innerWidth * 0.42)));
+    this.setState({
+      theme: dark ? 'dark' : 'light', lang: this.props.defaultLang ?? 'zh', template: this.props.defaultTemplate ?? 'generic',
+      sideW: sw, cardsW: Math.min(250, sw - 240), winW: window.innerWidth
+    });
+    document.body.dataset.theme = dark ? 'dark' : '';
+    this._onResize = () => {
+      const w = window.innerWidth;
+      this.setState(st => ({ winW: w, sideW: Math.min(st.sideW, Math.round(w * 0.55)), cardsW: Math.min(st.cardsW, Math.min(st.sideW, Math.round(w * 0.55)) - 240) }));
+    };
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._onResize); }
+  componentDidUpdate() {
+    if (this._chat && this._lastMsgCount !== this.state.messages.length) { this._lastMsgCount = this.state.messages.length; this._chat.scrollTop = this._chat.scrollHeight; }
+  }
+  t() { return I18N[this.state.lang]; }
+  now() { const d = new Date(); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+  cardById(id) { return this.state.clusters.find(c => c.id === id) || this.state.evidences.find(e => e.id === id); }
+  cardLabel(id) { const c = this.cardById(id); return c ? (this.state.lang === 'zh' ? c.zh : c.en) : ''; }
+  showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), 2600); }
+  addTray(id) { if (!id || !this.cardById(id)) return; this.setState(s => s.tray.includes(id) ? null : { tray: [...s.tray, id] }); }
+  activeCp() { return this.state.checkpoints.find(c => c.id === this.state.activeCpId) || this.state.checkpoints[0]; }
+  buildTweakCss() {
+    const { accent, radius, fontScale } = this.state.tweaks; let css = '';
+    if (accent) css += `.btn,button{background:${accent}!important;border-color:${accent}!important}a{color:${accent}!important}`;
+    if (radius != null) css += `.btn,button,.card{border-radius:${radius}px!important}`;
+    if (fontScale !== 100) css += `html{font-size:${fontScale}%}`;
+    return css;
+  }
+  mockChecks() { return { contrast: 'passed', slots: 'unreported', i18n: Math.random() < 0.3 ? 'failed' : 'passed' }; }
+  failedChecks(cp) { const t = this.t(); return Object.entries(cp.checks).filter(([, v]) => v === 'failed').map(([k]) => t['ck_' + k]); }
+  allBlocks(doc) { return (doc && doc.sections ? doc.sections : []).flatMap(sec => sec.blocks); }
+  findBlock(id) { for (const sec of (this.state.doc ? this.state.doc.sections : [])) { const b = sec.blocks.find(x => x.id === id); if (b) return { sec, b }; } return null; }
+  blockingReviews(doc) { return this.allBlocks(doc).filter(b => b.needsReview && b.reviewSeverity === 'blocking').length; }
+  isProtected(b) { return b.locked || b.userModified || b.author === 'user'; }
+  parseDoc(html) {
+    const lang = this.state.lang, tpl = TPLS[this.state.template];
+    const css = (html.match(/<style[\s\S]*?<\/style>/g) || []).join('\n');
+    const ts = Date.now(); let n = 0;
+    const sections = tpl.secs.map(sec => {
+      const sid = sec[0];
+      const m = html.match(new RegExp('<part id="' + sid + '">([\\s\\S]*?)</part>'));
+      let blocks = [];
+      if (m) {
+        const re = /<block type="(\w+)"([^>]*)>([\s\S]*?)<\/block>/g; let bm;
+        while ((bm = re.exec(m[1]))) {
+          const type = BT[bm[1]] ? bm[1] : 'paragraph';
+          const blk = { id: 'b' + ts + '_' + (n++), type, html: bm[3].trim(), author: 'system', locked: type === 'declaration', userModified: false, needsReview: false, reviewReason: null, reviewSeverity: null };
+          if (type === 'gap_notice') blk.gap = { missing: (bm[2].match(/missing="([^"]*)"/) || [])[1] || '—', sources: ((bm[2].match(/sources="([^"]*)"/) || [])[1] || '').split(/[,，、]/).map(x => x.trim()).filter(Boolean) };
+          blocks.push(blk);
+        }
+        if (!blocks.length && m[1].trim()) blocks = [{ id: 'b' + ts + '_' + (n++), type: 'paragraph', html: m[1].trim(), author: 'system', locked: false, userModified: false, needsReview: false, reviewReason: null, reviewSeverity: null }];
+      }
+      if (!blocks.length) blocks = [{ id: 'b' + ts + '_' + (n++), type: 'gap_notice', html: '', author: 'system', locked: false, userModified: false, needsReview: false, reviewReason: null, reviewSeverity: null, gap: { missing: (lang === 'zh' ? '本章节无内容返回' : 'No content returned'), sources: [lang === 'zh' ? '在对话框补充材料' : 'Add material in chat'] } }];
+      return { sid, blocks };
+    });
+    const d = new Date();
+    sections[0].blocks.push({ id: 'b' + ts + '_decl', type: 'declaration', html: '<p class="decl">' + (lang === 'zh' ? '声明：本文档由燧石 Flint 自动生成 · 模板 ' + tpl.zh + ' · ' + d.toISOString().slice(0, 10) + ' · 事实均走 Fact/PriceCell 通道' : 'Declaration: auto-generated by Flint · template ' + tpl.en + ' · ' + d.toISOString().slice(0, 10)) + '</p>', author: 'system', locked: true, userModified: false, needsReview: false, reviewReason: null, reviewSeverity: null });
+    return { css, sections };
+  }
+  cloneDoc(doc) { return JSON.parse(JSON.stringify(doc)); }
+  pushCheckpoint(label, doc, checks) {
+    const cpid = 'cp' + Date.now();
+    this.setState(s => ({
+      doc: this.cloneDoc(doc),
+      checkpoints: [...s.checkpoints, { id: cpid, label, time: this.now(), doc: this.cloneDoc(doc), checks: checks || this.mockChecks() }],
+      activeCpId: cpid
+    }));
+  }
+  patchBlock(id, patch) {
+    const doc = this.cloneDoc(this.state.doc);
+    for (const sec of doc.sections) { const i = sec.blocks.findIndex(b => b.id === id); if (i >= 0) { sec.blocks[i] = { ...sec.blocks[i], ...patch }; break; } }
+    return doc;
+  }
+  assembleHtml(doc) {
+    const body = doc.sections.map(sec => '<section data-section="' + sec.sid + '">' + sec.blocks.filter(b => b.type !== 'gap_notice').map(b => b.html).join('\n') + '</section>').join('\n');
+    return '<!doctype html><html><head><meta charset="utf-8">' + doc.css + '</head><body style="margin:0">' + body + '</body></html>';
+  }
+  llmBody(sys, content) {
+    const maxTok = { fast: 6000, std: 12000, fine: 20000 }[this.state.effort];
+    const body = { system: sys, messages: [{ role: 'user', content }], max_tokens: maxTok };
+    if (this.state.model === 'sonnet') body.model = 'claude-sonnet-4-5';
+    return body;
+  }
+  send() {
+    if (this.state.generating) return;
+    const text = this.state.input.trim(), chips = this.state.tray.slice();
+    if (!text && !chips.length) return;
+    this.generate(text, chips);
+  }
+  tplPrompt() {
+    const lang = this.state.lang, tpl = TPLS[this.state.template];
+    const secsDesc = tpl.secs.map(sec => '<part id="' + sec[0] + '">（' + (lang === 'zh' ? sec[1] : sec[2]) + '，' + sec[4] + (lang === 'zh' ? ' 字全文档口径，样板压缩到每章 80~200 字' : ' words full-doc; compress to 80-200 per section for the mock') + '）').join('、');
+    return lang === 'zh'
+      ? '你是「燧石 Flint」的计划书生成器，按固定模板输出分块文档。先用一两句中文说明思路，然后输出一个 ```html 代码块，严格结构：先一个 <style>（共享样式：body 背景与字体、h1/h2、表格、.cite 引用、.price 价格、.decl 声明），然后按顺序输出全部章节：' + secsDesc + '。每章用 <part id="…">…</part> 包裹，内部是 1~3 个 <block type="heading|paragraph|table|chart|citation_list">…</block>，block 内是纯 HTML 内容（不要 section 包装）。市场与预算数字加 class="price" 并注明通道（如 PriceCell）。某章资料不足时绝不注水编造，改为输出 <block type="gap_notice" missing="缺什么" sources="来源1,来源2"></block>。不引用外部资源、不用脚本。'
+      : 'You are the Flint plan-document generator with a FIXED template. One short sentence, then a ```html code block: first one <style> (shared styles: body, h1/h2, tables, .cite, .price, .decl), then ALL sections in order: ' + secsDesc + '. Wrap each section in <part id="…">…</part> containing 1-3 <block type="heading|paragraph|table|chart|citation_list">…</block> with plain HTML inside. Mark market/budget figures class="price" with channel (PriceCell). If a section lacks material, do NOT pad — emit <block type="gap_notice" missing="…" sources="a,b"></block>. No external resources, no scripts.';
+  }
+  async generate(text, chipIds) {
+    const { lang, doc } = this.state, t = this.t();
+    const cards = chipIds.map(id => this.cardById(id)).filter(Boolean);
+    const labels = cards.map(c => lang === 'zh' ? c.zh : c.en);
+    const shown = ((labels.length ? '【' + labels.join(' · ') + '】 ' : '') + (text || '')).trim() || labels.join(' · ');
+    this.setState(s => ({ messages: [...s.messages, { role: 'user', text: shown }], generating: true, tray: [], input: '' }));
+    let content = '';
+    if (cards.length) {
+      content += (lang === 'zh' ? '工作台卡片组合：\n' : 'Workbench cards:\n');
+      for (const c of cards) content += `- ${lang === 'zh' ? c.zh : c.en}${c.scores ? '（' + c.scores + '，判定 ' + (c.verdict || '') + '）' : c.src ? '（来源 ' + c.src + '）' : ''}\n`;
+    }
+    if (this.state.cloudSel.length) {
+      const words = CLOUD.filter(w => this.state.cloudSel.includes(w.id)).map(w => lang === 'zh' ? w.zh : w.en);
+      content += (lang === 'zh' ? '方向关键词（用户点选，计划书须围绕展开）：' : 'Direction keywords (user-picked, the plan must center on them): ') + words.join('、') + '\n';
+    }
+    content += text || (lang === 'zh' ? '请基于以上热点/证据卡片按模板生成计划书样板。' : 'Generate the templated plan mock from these cards.');
+    const modifying = !cards.length && doc;
+    if (modifying) content += (lang === 'zh' ? '\n\n当前文档（在此基础上大改，返回完整新文档，注意 author=user 或用户改过的块内容要原样保留）：\n' : '\n\nCurrent document (revise; keep user-authored/modified block content verbatim):\n') + this.assembleHtml(doc).slice(0, 7000);
+    try {
+      const res = await window.claude.complete(this.llmBody(this.tplPrompt(), content));
+      const m = res.match(/```html\s*([\s\S]*?)```/);
+      const reply = res.replace(/```html[\s\S]*?```/, '').trim() || t.genFallback;
+      this.setState(s => ({ generating: false, messages: [...s.messages, { role: 'assistant', text: reply }] }));
+      if (m) {
+        const parsed = this.parseDoc(m[1]);
+        if (modifying) {
+          const olds = this.allBlocks(doc).filter(b => this.isProtected(b) && !b.locked);
+          for (const ob of olds) { const sec = parsed.sections.find(x => doc.sections.find(os => os.blocks.some(bb => bb.id === ob.id) && os.sid === x.sid)); if (sec) sec.blocks.push(this.cloneDoc(ob)); }
+        }
+        const label = modifying ? t.modLabel + (text ? '：' + text.slice(0, 14) : '') : labels.join(' × ').slice(0, 24) || text.slice(0, 24);
+        this.pushCheckpoint(label, parsed);
+      }
+    } catch (e) {
+      this.setState(s => ({ generating: false, messages: [...s.messages, { role: 'assistant', text: t.errMsg }] }));
+    }
+  }
+  async regenBlock(id, autoPrompt) {
+    const { lang, doc } = this.state, t = this.t();
+    const prompt = (autoPrompt || this.state.blockPrompts[id] || '').trim();
+    const found = this.findBlock(id);
+    if (!prompt || !found || this.state.blockBusy[id]) return;
+    if (this.isProtected(found.b) && !autoPrompt) { this.showToast(t.protectedToast); return; }
+    this.setState(s => ({ blockBusy: { ...s.blockBusy, [id]: true } }));
+    const sys = lang === 'zh'
+      ? '你是「燧石 Flint」的文档生成器。用户对一个块提出批注，只重写这个块。返回一个 <block type="heading|paragraph|table|chart|citation_list">…</block> 片段（类型可按批注调整）：不要代码围栏、不要 style 标签、不要其他块、不要解释。只用共享样式已有 class 或内联样式。'
+      : 'You are the Flint document generator. The user annotated ONE block; rewrite only it. Return a single <block type="…">…</block> fragment: no fences, no style tag, no prose. Use only existing classes or inline styles.';
+    const content = (lang === 'zh' ? '共享样式：\n' : 'Shared styles:\n') + doc.css.slice(0, 3000)
+      + (lang === 'zh' ? '\n\n所在章节：' : '\n\nSection: ') + found.sec.sid
+      + (lang === 'zh' ? '\n\n当前块（type=' : '\n\nCurrent block (type=') + found.b.type + '）：\n<block type="' + found.b.type + '">' + found.b.html + '</block>'
+      + (lang === 'zh' ? '\n\n批注：' : '\n\nAnnotation: ') + prompt;
+    try {
+      const res = await window.claude.complete(this.llmBody(sys, content));
+      const m = res.match(/<block type="(\w+)"[^>]*>([\s\S]*?)<\/block>/);
+      if (m) {
+        const newDoc = this.patchBlock(id, { html: m[2].trim(), type: BT[m[1]] ? m[1] : found.b.type, needsReview: false, reviewReason: null, reviewSeverity: null });
+        this.setState(s => ({ blockBusy: { ...s.blockBusy, [id]: false }, blockPrompts: { ...s.blockPrompts, [id]: '' }, reviewOpen: { ...s.reviewOpen, [id]: false } }));
+        this.pushCheckpoint(t.blockEdit + '：' + this.secLabel(found.sec.sid), newDoc, this.activeCp().checks);
+        this.showToast(t.blockDone);
+      } else {
+        this.setState(s => ({ blockBusy: { ...s.blockBusy, [id]: false } }));
+        this.showToast(t.errMsg);
+      }
+    } catch (e) {
+      this.setState(s => ({ blockBusy: { ...s.blockBusy, [id]: false } }));
+      this.showToast(t.errMsg);
+    }
+  }
+  moveBlock(id, dir) {
+    const doc = this.cloneDoc(this.state.doc);
+    for (let i = 0; i < doc.sections.length; i++) {
+      const j = doc.sections[i].blocks.findIndex(b => b.id === id);
+      if (j < 0) continue;
+      const [blk] = doc.sections[i].blocks.splice(j, 1);
+      let ni = i, nj = j + dir;
+      if (nj < 0) { if (i === 0) { doc.sections[i].blocks.splice(j, 0, blk); return; } ni = i - 1; nj = doc.sections[ni].blocks.length; }
+      else if (nj > doc.sections[i].blocks.length) { if (i === doc.sections.length - 1) { doc.sections[i].blocks.splice(j, 0, blk); return; } ni = i + 1; nj = 0; }
+      doc.sections[ni].blocks.splice(nj, 0, blk);
+      this.setState({ doc });
+      return;
+    }
+  }
+  secLabel(sid) { const sec = TPLS[this.state.template].secs.find(x => x[0] === sid); return sec ? (this.state.lang === 'zh' ? sec[1] : sec[2]) : sid; }
+  loadDemo() {
+    const t = this.t();
+    this.setState({ template: 'generic' });
+    this.pushCheckpoint(t.demoLabel, DEMO_DOC, { contrast: 'passed', slots: 'unreported', i18n: 'passed' });
+    this.showToast(t.demoToast);
+  }
+  renderVals() {
+    const s = this.state, t = this.t(), lang = s.lang;
+    const active = this.activeCp();
+    const doc = s.doc;
+    const tpl = TPLS[s.template];
+    const tweakCss = this.buildTweakCss();
+    const V = { A: [t.vA, 'var(--bad)', 'rgba(176,58,46,.12)'], B: [t.vB, 'var(--warn)', 'var(--warn-soft)'], C: [t.vC, 'var(--ok)', 'rgba(90,140,75,.14)'], D: [t.vD, 'var(--unk)', 'rgba(140,130,110,.15)'] };
+    const tabs = [['cards', t.cards], ['templates', t.templates], ['history', t.history]].map(([key, label]) => ({
+      key, label, onClick: () => this.setState({ tab: key }),
+      bg: s.tab === key ? 'var(--panel2)' : 'transparent', color: s.tab === key ? 'var(--ink)' : 'var(--sub)',
+      weight: s.tab === key ? 600 : 500, line: s.tab === key ? 'var(--accent)' : 'transparent'
+    }));
+    const clusterCards = s.clusters.map(k => ({
+      id: k.id, name: lang === 'zh' ? k.zh : k.en, scores: k.scores, region: k.region,
+      verdict: V[k.verdict][0], vColor: V[k.verdict][1], vBg: V[k.verdict][2],
+      onDrag: (e) => { e.dataTransfer.setData('text/plain', k.id); e.dataTransfer.effectAllowed = 'copy'; },
+      onAdd: () => this.addTray(k.id)
+    }));
+    const evidenceCards = s.evidences.map(e => ({
+      id: e.id, title: lang === 'zh' ? e.zh : e.en, src: e.src,
+      srcColor: (SRC_STYLE[e.src] || SRC_STYLE.gtrends)[0], srcBg: (SRC_STYLE[e.src] || SRC_STYLE.gtrends)[1],
+      onDrag: (ev) => { ev.dataTransfer.setData('text/plain', e.id); ev.dataTransfer.effectAllowed = 'copy'; },
+      onAdd: () => this.addTray(e.id)
+    }));
+    const templatesView = s.templates.map(tp => ({ id: tp.id, name: tp.name, meta: tp.ver + ' · ' + tp.time + ' · ' + t.tplRegistered }));
+    const checkpointsView = s.checkpoints.slice().reverse().map(v => {
+      const isActive = v.id === s.activeCpId;
+      const fails = this.failedChecks(v).length;
+      return {
+        id: v.id, label: v.label, meta: v.time + (fails ? ' · ' + fails + ' ' + t.ckFailShort : ' · ' + t.ckOkShort),
+        dotBg: isActive ? 'var(--accent)' : 'var(--panel)', dotBorder: isActive ? 'var(--accent)' : 'var(--sub)', weight: isActive ? 700 : 500,
+        onClick: () => {
+          if (v.id === s.activeCpId) return;
+          this.pushCheckpoint(t.restoredFrom + ' ' + v.label.slice(0, 16), v.doc, v.checks);
+          this.showToast(t.restoreToast);
+        }
+      };
+    });
+    const messagesView = s.messages.map((m, i) => ({
+      id: i, justify: m.role === 'user' ? 'flex-end' : 'flex-start',
+      bg: m.role === 'user' ? 'var(--accent)' : 'var(--panel2)', color: m.role === 'user' ? '#fff' : 'var(--ink)',
+      border: m.role === 'user' ? 'var(--accent)' : 'var(--line)',
+      radius: m.role === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
+      text: m.key ? t[m.key] : m.text
+    }));
+    const trayView = s.tray.map(id => ({ id, label: this.cardLabel(id), onRemove: () => this.setState(st => ({ tray: st.tray.filter(x => x !== id) })) }));
+    const deviceBtns = [[t.desktop, '860px'], [t.mobile, '390px']].map(([label, w]) => ({
+      label, onClick: () => this.setState({ previewWidth: w }),
+      bg: s.previewWidth === w ? 'var(--accent-soft)' : 'var(--panel2)', color: s.previewWidth === w ? 'var(--accent)' : 'var(--sub)',
+      border: s.previewWidth === w ? 'var(--accent)' : 'var(--line)'
+    }));
+    const effortBtns = [['fast', t.effortFast], ['std', t.effortStd], ['fine', t.effortFine]].map(([key, label]) => ({
+      label, onClick: () => this.setState({ effort: key }),
+      bg: s.effort === key ? 'var(--accent-soft)' : 'var(--panel2)', color: s.effort === key ? 'var(--accent)' : 'var(--sub)',
+      border: s.effort === key ? 'var(--accent)' : 'var(--line)'
+    }));
+    const cloudWords = CLOUD.map(w => {
+      const sel = s.cloudSel.includes(w.id);
+      return {
+        id: w.id, label: lang === 'zh' ? w.zh : w.en,
+        size: 10 + w.w, weight: w.w >= 6 ? 700 : w.w >= 4 ? 600 : 500,
+        color: sel ? 'var(--accent)' : w.w >= 6 ? 'var(--ink)' : 'var(--sub)',
+        bg: sel ? 'var(--accent-soft)' : 'transparent',
+        border: sel ? 'var(--accent)' : 'transparent',
+        onPick: () => this.setState(st => ({ cloudSel: st.cloudSel.includes(w.id) ? st.cloudSel.filter(x => x !== w.id) : [...st.cloudSel, w.id] }))
+      };
+    });
+    const tplChips = Object.keys(TPLS).map(k => ({
+      key: k, label: lang === 'zh' ? TPLS[k].zh : TPLS[k].en,
+      onPick: () => this.setState({ template: k }),
+      border: s.template === k ? 'var(--accent)' : 'var(--line)', bg: s.template === k ? 'var(--accent-soft)' : 'var(--panel2)',
+      color: s.template === k ? 'var(--accent)' : 'var(--sub)', weight: s.template === k ? 700 : 500
+    }));
+    const tplSecsPreview = (lang === 'zh' ? '固定章节：' : 'Fixed sections: ') + tpl.secs.map(x => lang === 'zh' ? x[1] : x[2]).join(' → ');
+    const RR = { fact_changed: t.rr_fact_changed, fact_removed: t.rr_fact_removed, fact_disputed: t.rr_fact_disputed };
+    const sectionsView = (doc ? doc.sections : []).map(sec => {
+      const spec = tpl.secs.find(x => x[0] === sec.sid) || [sec.sid, sec.sid, sec.sid, 0, '', ''];
+      return {
+        sid: sec.sid, label: lang === 'zh' ? spec[1] : spec[2],
+        meta: spec[3] + '% · ' + spec[4] + ' ' + t.wordsUnit,
+        checkQ: spec[5],
+        secRef: (el) => { if (!this._secEls) this._secEls = {}; this._secEls[sec.sid] = el; },
+        blocks: sec.blocks.map(b => {
+          const bt = BT[b.type] || BT.paragraph;
+          const prot = this.isProtected(b);
+          const isGap = b.type === 'gap_notice';
+          const canAnnotate = !prot && !isGap;
+          const note = b.locked ? t.noteLocked : b.author === 'user' ? t.noteUserBlock : b.userModified ? t.noteUserMod : isGap ? t.noteGap : '';
+          return {
+            id: b.id,
+            typeLabel: lang === 'zh' ? bt[0] : bt[1], typeColor: bt[2], typeBg: bt[3],
+            authorLabel: b.author === 'user' ? t.authorUser : t.authorSys,
+            borderColor: b.needsReview ? (b.reviewSeverity === 'blocking' ? 'var(--bad)' : 'var(--warn)') : 'var(--line)',
+            review: b.needsReview, reviewOpen: !!s.reviewOpen[b.id] && b.needsReview,
+            reviewCaret: s.reviewOpen[b.id] ? '▴' : '▾',
+            reviewReason: RR[b.reviewReason] || '', reviewSev: b.reviewSeverity === 'blocking' ? t.sev_blocking : t.sev_advisory,
+            onReview: () => this.setState(st => ({ reviewOpen: { ...st.reviewOpen, [b.id]: !st.reviewOpen[b.id] } })),
+            onReviewRegen: () => this.regenBlock(b.id, lang === 'zh' ? '该块引用的事实已变化或移除，请基于章节上下文重写，剔除失效事实，其余结论保守化。' : 'A referenced fact changed/was removed; rewrite conservatively without it.'),
+            onReviewKeep: () => { const nd = this.patchBlock(b.id, { needsReview: false, reviewReason: null, reviewSeverity: null }); this.pushCheckpoint(t.btnKeep + '：' + this.secLabel(sec.sid), nd, active ? active.checks : this.mockChecks()); this.showToast(t.keepToast); },
+            protectLabel: b.locked ? t.lockedChip : (b.userModified ? t.unprotect : t.protect),
+            protectTip: b.locked ? t.noteLocked : t.protectTipTxt,
+            protectColor: prot ? 'var(--accent)' : 'var(--sub)', protectBorder: prot ? 'var(--accent)' : 'var(--line)',
+            onProtect: () => {
+              if (b.locked) { this.showToast(t.lockedToast); return; }
+              if (b.author === 'user') { this.showToast(t.noteUserBlock); return; }
+              const nd = this.patchBlock(b.id, { userModified: !b.userModified });
+              this.setState({ doc: nd });
+            },
+            isGap, hasFrame: !isGap,
+            gapMissing: isGap ? (b.gap ? b.gap.missing : '—') : '',
+            gapSources: isGap && b.gap ? b.gap.sources.map(name => ({ name, onInject: () => this.showToast(t.injectToast) })) : [],
+            frameRef: (() => {
+              const docHtml = '<!doctype html><html><head><meta charset="utf-8">' + (doc ? doc.css : '') + (tweakCss ? '<style>' + tweakCss + '</style>' : '') + '</head><body style="margin:0">' + b.html + '</body></html>';
+              return (el) => {
+                if (!el || el.__doc === docHtml) return;
+                el.__doc = docHtml;
+                el.onload = () => { try { const d = el.contentDocument; if (d && d.body) el.style.height = Math.min(Math.max(d.body.scrollHeight + 4, 48), 1200) + 'px'; } catch (err) {} };
+                el.srcdoc = docHtml;
+              };
+            })(),
+            promptVal: s.blockPrompts[b.id] || '', busy: !!s.blockBusy[b.id],
+            btnOpacity: s.blockBusy[b.id] ? 0.5 : 1,
+            canAnnotate, hasNote: !canAnnotate && !!note, footNote: note,
+            onPrompt: (e) => this.setState(st => ({ blockPrompts: { ...st.blockPrompts, [b.id]: e.target.value } })),
+            onKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.regenBlock(b.id); } },
+            onRegen: () => this.regenBlock(b.id),
+            onUp: () => this.moveBlock(b.id, -1),
+            onDown: () => this.moveBlock(b.id, 1)
+          };
+        })
+      };
+    });
+    const sectionNav = sectionsView.map(sec => {
+      const src = doc.sections ? doc.sections.find(x => x.sid === sec.sid) : null;
+      const bs = src ? src.blocks : [];
+      const dot = bs.some(b => b.needsReview && b.reviewSeverity === 'blocking') ? 'var(--bad)'
+        : bs.some(b => b.needsReview) ? 'var(--warn)'
+        : bs.some(b => b.type === 'gap_notice') ? 'var(--unk)' : 'var(--ok)';
+      return {
+        label: sec.label, dot, tip: sec.checkQ,
+        onNav: () => { const el = this._secEls && this._secEls[sec.sid], c = this._canvas; if (el && c) c.scrollTo({ top: el.getBoundingClientRect().top - c.getBoundingClientRect().top + c.scrollTop - 14, behavior: 'smooth' }); }
+      };
+    });
+    const CK = { passed: ['var(--ok)', 'rgba(90,140,75,.14)'], failed: ['var(--bad)', 'rgba(176,58,46,.14)'], unreported: ['var(--unk)', 'rgba(140,130,110,.15)'] };
+    const ckEntries = active ? Object.entries(active.checks) : [];
+    const vals = ckEntries.map(([, v]) => v);
+    const worst = vals.includes('failed') ? 'failed' : vals.includes('unreported') ? 'unreported' : 'passed';
+    const passedN = vals.filter(v => v === 'passed').length;
+    const checkLabel = vals.length ? (lang === 'zh' ? '检查 ' : 'Checks ') + passedN + '/' + vals.length + (lang === 'zh' ? ' 通过' : ' passed') : t.noDocShort;
+    const checkTip = ckEntries.map(([k, v]) => t['ck_' + k] + '：' + t['ckv_' + v]).join(' · ');
+    const blockingN = doc ? this.blockingReviews(doc) : 0;
+    const reviewN = doc ? this.allBlocks(doc).filter(b => b.needsReview).length : 0;
+    const fails = active ? this.failedChecks(active) : [];
+    if (blockingN) fails.push(t.reviewBlockExport);
+    const accentSwatches = ['#d1531f', '#3b6fd3', '#2f9e6b', '#8a56c9'].map(c => ({
+      color: c, ring: s.tweaks.accent === c ? 'var(--ink)' : 'var(--line)',
+      onPick: () => this.setState(st => ({ tweaks: { ...st.tweaks, accent: st.tweaks.accent === c ? null : c } }))
+    }));
+    const firstTray = s.tray.map(id => this.state.clusters.find(c => c.id === id)).find(Boolean);
+    return {
+      t, lang, region: s.region,
+      topicName: lang === 'zh' ? '方言语音标注平台' : 'Dialect annotation',
+      onRegion: (e) => this.setState({ region: e.target.value }),
+      onLang: (e) => this.setState({ lang: e.target.value }),
+      themeBtnLabel: s.theme === 'dark' ? t.lightMode : t.darkMode,
+      toggleTheme: () => { const th = s.theme === 'dark' ? 'light' : 'dark'; this.setState({ theme: th }); document.body.dataset.theme = th === 'dark' ? 'dark' : ''; },
+      share: () => { try { navigator.clipboard.writeText(location.href); } catch (e) {} this.showToast(t.shareToast); },
+      exportBg: fails.length ? 'var(--unk)' : 'var(--accent)',
+      exportHtml: () => {
+        if (!doc) { this.showToast(t.needDoc); return; }
+        if (fails.length) { this.showToast(t.exportBlocked + fails.join('、')); return; }
+        const blob = new Blob([this.assembleHtml(doc)], { type: 'text/html' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = 'flint-plan.html'; a.click();
+        this.showToast(t.exportToast);
+      },
+      solidify: () => {
+        if (!active) { this.showToast(t.needDoc); return; }
+        if (fails.length) { this.showToast(t.solidifyBlocked + fails.join('、')); return; }
+        const d = new Date();
+        this.setState(st => ({ templates: [...st.templates, { id: 'tp' + Date.now(), name: active.label.slice(0, 18), ver: 'v1', time: String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0') }] }));
+        this.showToast(t.solidifyToast);
+      },
+      toast: s.toast, hasToast: !!s.toast,
+      tabs, showCards: s.tab === 'cards', showTemplates: s.tab === 'templates', showHistory: s.tab === 'history',
+      sideW: s.sideW, cardsW: s.cardsW, noDoc: !doc, hasDoc: !!doc, iframePE: s.resizing ? 'none' : 'auto',
+      navVisible: ((s.winW || window.innerWidth) - s.sideW - 55) >= 520,
+      startColDrag: (e) => this.startDrag(e, 'x'), startRowDrag: (e) => this.startDrag(e, 'y'),
+      clusterCards, evidenceCards, templatesView, checkpointsView, messagesView, trayView, cloudWords,
+      sectionsView, sectionNav, tplChips, tplSecsPreview,
+      tplId: s.template, onTpl: (e) => { this.setState({ template: e.target.value }); if (doc) this.showToast(t.tplSwitchToast); },
+      loadDemo: () => this.loadDemo(),
+      canvasRef: (el) => { this._canvas = el; },
+      activeCpLabel: active ? active.label : '—',
+      checkLabel, checkTip, checkColor: CK[worst][0], checkBg: CK[worst][1],
+      hasReviewChip: reviewN > 0, reviewChip: reviewN + ' ' + t.reviewChipTxt + (blockingN ? ' · ' + blockingN + ' ' + t.blockingShort : ''),
+      deviceBtns, previewWidth: s.previewWidth,
+      toggleTweaks: () => this.setState({ tweaksOpen: !s.tweaksOpen }),
+      tweaksBtnBg: s.tweaksOpen ? 'var(--accent-soft)' : 'var(--panel2)',
+      tweaksBtnColor: s.tweaksOpen ? 'var(--accent)' : 'var(--sub)',
+      tweaksBtnBorder: s.tweaksOpen ? 'var(--accent)' : 'var(--line)',
+      tweaksOpen: s.tweaksOpen, accentSwatches,
+      radiusVal: s.tweaks.radius == null ? 10 : s.tweaks.radius,
+      radiusLabel: s.tweaks.radius == null ? '—' : s.tweaks.radius + 'px',
+      onRadius: (e) => this.setState(st => ({ tweaks: { ...st.tweaks, radius: +e.target.value } })),
+      fontVal: s.tweaks.fontScale, fontLabel: s.tweaks.fontScale + '%',
+      onFont: (e) => this.setState(st => ({ tweaks: { ...st.tweaks, fontScale: +e.target.value } })),
+      resetTweaks: () => this.setState({ tweaks: { accent: null, radius: null, fontScale: 100 } }),
+      generating: s.generating,
+      model: s.model, onModel: (e) => this.setState({ model: e.target.value }), effortBtns,
+      chatRef: (el) => { this._chat = el; },
+      onDragOver: (e) => e.preventDefault(),
+      onDrop: (e) => { e.preventDefault(); this.addTray(e.dataTransfer.getData('text/plain')); },
+      trayEmpty: s.tray.length === 0, trayBorder: s.tray.length ? 'var(--accent)' : 'var(--line)',
+      inputVal: s.input, onInput: (e) => this.setState({ input: e.target.value }),
+      onInputKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.send(); } },
+      send: () => this.send(),
+      sendLabel: s.tray.length ? (lang === 'zh' ? `组合 ${s.tray.length} 张卡 · ${TPLS[s.template][lang]}` : `Weave ${s.tray.length} · ${TPLS[s.template].en}`) : t.send,
+      sendOpacity: s.generating ? 0.5 : 1
+    };
+  }
+}
+
+const SRC_STYLE = {
+  gtrends: ['#3f7286', 'rgba(63,114,134,.14)'], weibo: ['#b34f2c', 'rgba(179,79,44,.14)'],
+  ghtrend: ['#5a5f6e', 'rgba(90,95,110,.14)'], arxiv: ['#75823f', 'rgba(117,130,63,.16)']
+};
+const BT = {
+  heading: ['标题', 'Heading', '#3b6fd3', 'rgba(59,111,211,.12)'],
+  paragraph: ['段落', 'Paragraph', '#5a5f6e', 'rgba(90,95,110,.12)'],
+  table: ['表格', 'Table', '#75823f', 'rgba(117,130,63,.14)'],
+  chart: ['图表', 'Chart', '#8a56c9', 'rgba(138,86,201,.12)'],
+  declaration: ['声明', 'Declaration', '#8f8574', 'rgba(140,130,110,.15)'],
+  quality_card: ['质量卡', 'Quality card', '#3f7286', 'rgba(63,114,134,.14)'],
+  citation_list: ['引用', 'Citations', '#a3701c', 'rgba(180,130,40,.14)'],
+  gap_notice: ['缺口', 'Gap', '#b03a2e', 'rgba(176,58,46,.12)']
+};
+// 章节表来自附件 assets/templates/*.yaml：[sid, zh, en, share%, 'min–max', check_question]
+const TPLS = {
+  generic: { zh: '通用计划书', en: 'Generic plan', secs: [
+    ['summary', '摘要', 'Summary', 10, '300–900', '结论与档位是否一句话可读？'],
+    ['opportunity', '机会', 'Opportunity', 20, '600–1800', '机会陈述是否全部挂证据？'],
+    ['market', '市场', 'Market', 20, '600–1800', '市场数字是否全部走 Fact/PriceCell 通道？'],
+    ['competition', '竞品', 'Competition', 15, '450–1350', '竞品强度是否与 signal 对齐？'],
+    ['plan', '计划', 'Plan', 20, '600–1800', '里程碑是否可验证？'],
+    ['budget', '预算', 'Budget', 10, '300–900', '预算格是否全部 PriceCell？'],
+    ['risks', '风险', 'Risks', 5, '150–450', '风险是否含证伪面？']
+  ] },
+  startup: { zh: '创业计划', en: 'Startup', secs: [
+    ['one_liner', '一句话', 'One-liner', 5, '150–450', '一句话是否含用户与形态？'],
+    ['problem', '痛点', 'Problem', 15, '450–1350', '痛点是否有一手证据？'],
+    ['solution', '方案', 'Solution', 20, '600–1800', '方案是否与竞品差异化？'],
+    ['market_size', '市场规模', 'Market size', 15, '450–1350', '规模数字是否全挂出处？'],
+    ['go_to_market', '获客路径', 'Go to market', 15, '450–1350', '首批用户路径是否具体？'],
+    ['business_model', '商业模式', 'Business model', 10, '300–900', '定价是否引 PriceBook？'],
+    ['team', '团队', 'Team', 10, '300–900', '团队是否走 ProfileRef？'],
+    ['financials', '财务', 'Financials', 10, '300–900', '预算是否全 PriceCell？']
+  ] },
+  engineering: { zh: '工程方案', en: 'Engineering', secs: [
+    ['goal', '目标', 'Goal', 10, '300–900', '目标是否可验收？'],
+    ['architecture', '架构', 'Architecture', 25, '750–2250', '选型是否过 registry 校验？'],
+    ['milestones', '里程碑', 'Milestones', 25, '750–2250', '里程碑是否有 verify 手段？'],
+    ['resources', '资源', 'Resources', 15, '450–1350', '算力估算是否引 PriceBook？'],
+    ['risks', '风险', 'Risks', 15, '450–1350', '技术风险是否含证伪证据？'],
+    ['budget', '预算', 'Budget', 10, '300–900', '预算格是否全部 PriceCell？']
+  ] },
+  grant: { zh: '基金申请', en: 'Grant', secs: [
+    ['significance', '立项意义', 'Significance', 15, '450–1350', '意义陈述是否挂权威证据？'],
+    ['innovation', '创新点', 'Innovation', 15, '450–1350', '创新点是否与文献对照？'],
+    ['approach', '研究方案', 'Approach', 25, '750–2250', '技术路线是否含备选？'],
+    ['feasibility', '可行性', 'Feasibility', 15, '450–1350', '可行性是否引 track_record？'],
+    ['team_resources', '团队与资源', 'Team & resources', 10, '300–900', '团队与设备是否走 ProfileRef？'],
+    ['budget_justification', '预算论证', 'Budget justification', 15, '450–1350', '预算依据是否全 PriceCell？'],
+    ['timeline', '时间表', 'Timeline', 5, '150–450', '进度是否与资助期对齐？']
+  ] },
+  thesis: { zh: '论文开题', en: 'Thesis', secs: [
+    ['abstract', '摘要', 'Abstract', 8, '240–720', '贡献点是否可证伪？'],
+    ['related_work', '相关工作', 'Related work', 22, '660–1980', '引用是否覆盖近三年？'],
+    ['method', '方法', 'Method', 25, '750–2250', '方法与基线差异是否明确？'],
+    ['evaluation_plan', '评估计划', 'Evaluation plan', 20, '600–1800', '指标与数据集是否可获得？'],
+    ['timeline', '时间线', 'Timeline', 15, '450–1350', '节点是否与学制对齐？'],
+    ['resources', '资源', 'Resources', 10, '300–900', '设备是否在 Profile 资产内？']
+  ] }
+};
+const I18N = {
+  zh: {
+    studio: 'AI 设计台', workbench: '工作台', cards: '素材', templates: '模板', history: '检查点', chat: '对话',
+    chatHint: '大改走这里 · 小改用块旁的批注',
+    share: '分享', export: '导出', darkMode: '夜间', lightMode: '白天',
+    cardsIntro: '来自热点工作台图谱的真实卡片（goldset 语料）。拖到下方组合区，或点击添加。',
+    clusterGroup: '热点卡', evidenceGroup: '证据卡',
+    tplIntro: '已固化并注册的模板（示例内容已替换为插槽）。',
+    tplRegistered: '已注册', cpIntro: '检查点 = 文档快照。点击旧检查点恢复——恢复会新建检查点，不破坏历史。',
+    dropHint: '把热点卡 / 证据卡拖到这里组合', placeholder: '大改：描述整份文档要怎么变，或组合卡片…',
+    send: '发送',
+    welcome: '你好！挑热点卡/证据卡进组合区，选一个模板（决定固定章节），点「组合」生成计划书。文档按模板章节固定拆分，章节内是类型块（标题/段落/表格/引用…）；每块可单独批注重生成，锁定或你改过的块受保护。黄标 = 引用事实变了，需复审。',
+    dragResize: '拖动调整大小', needDoc: '还没有文档：先选热点卡组合生成，或载入示例', noDocShort: '未生成',
+    emptyTitle: '从热点开始', emptyBody: '左侧挑热点卡 / 证据卡加入组合区。文档按所选模板的固定章节生成——资料不足的章节不注水，只报缺口。',
+    generatingLabel: '正在按模板生成文档…', tweaks: '微调', tweaksNote: '快路径：只 patch CSS 变量，不重建画布。',
+    accent: '强调色', radius: '圆角', fontScale: '字号', reset: '重置',
+    desktop: '桌面', mobile: '移动', solidify: '固化', solidifyFull: '固化为模板（G3：示例内容替换为插槽后注册）',
+    shareToast: '分享链接已复制', exportToast: '已导出 HTML 文档',
+    exportBlocked: '导出被闸门阻塞：', solidifyBlocked: '固化校验未通过：', solidifyToast: '已固化并注册到模板库 v1',
+    restoreToast: '已恢复为新检查点', restoredFrom: '恢复自',
+    genFallback: '文档已生成，看看画布。', errMsg: '生成失败，请稍后再试。', modLabel: '对话大改',
+    blockPromptPh: '批注这一块，只重生成本块…', regenBlock: '改这块', blockEdit: '块修改', blockDone: '块已更新',
+    effortFast: '快', effortStd: '标准', effortFine: '精',
+    vA: 'A 不可行', vB: 'B 红海', vC: 'C 机会', vD: 'D 证据不足',
+    ck_contrast: '对比度', ck_slots: '插槽', ck_i18n: 'i18n',
+    ckv_passed: '通过', ckv_failed: '失败', ckv_unreported: '未报',
+    ckFailShort: '项失败', ckOkShort: '检查通过',
+    navTitle: '章节', wordsUnit: '字', checkQTip: '章节自检问题（来自模板规则表）',
+    tpl_generic: '通用计划书', tpl_startup: '创业计划', tpl_engineering: '工程方案', tpl_grant: '基金申请', tpl_thesis: '论文开题',
+    tplPick: '模板决定固定章节结构', tplSwitchToast: '模板已切换，下次生成按新章节结构',
+    loadDemo: '载入示例文档', demoLabel: '示例：方言语音标注平台', demoToast: '已载入示例（含复审 / 锁定 / 缺口块）',
+    authorSys: '系统', authorUser: '用户',
+    protect: '保护', unprotect: '已保护 ✓', lockedChip: '锁定',
+    protectTipTxt: '标记为「我改过」：regenerate / 大改不得改写',
+    noteLocked: '系统声明块：regenerate / 大改一律不改写',
+    noteUserMod: '你改过这一块：重生成受保护，点「已保护 ✓」可解除',
+    noteUserBlock: '用户创建的块：AI 不会改写',
+    noteGap: '缺资料章节不注水：补充任一来源后在对话框重生成',
+    gapTitle: '资料缺口', gapHint: '补充以下任一即可解锁本章生成：',
+    reviewBadge: '需复审', rr_fact_changed: '引用事实已更新', rr_fact_removed: '引用事实已从台账移除', rr_fact_disputed: '引用事实被质疑',
+    sev_blocking: '阻断导出', sev_advisory: '建议复审',
+    btnRegen: '重生成', btnKeep: '确认保留', keepToast: '已确认保留（标记 speculative）',
+    reviewChipTxt: '块需复审', blockingShort: '阻断', reviewBlockExport: '复审未处理',
+    injectToast: '已加入检索队列（原型）', lockedToast: '声明块恒锁定，不可解除',
+    cloudTitle: '方向词云', cloudHint: '点选关键词收窄计划书方向，生成时随卡片一起发给 AI。',
+    moveUp: '上移（到顶会移入上一章节）', moveDown: '下移（到底会移入下一章节）',
+    protectedToast: '该块受保护：解除保护后才能批注重生成'
+  },
+  en: {
+    studio: 'Design Studio', workbench: 'Workbench', cards: 'Cards', templates: 'Templates', history: 'Checkpoints', chat: 'Chat',
+    chatHint: 'Big changes here · annotate blocks for small ones',
+    share: 'Share', export: 'Export', darkMode: 'Dark', lightMode: 'Light',
+    cardsIntro: 'Real cards from the hotspot workbench (goldset corpus). Drag into the tray, or click to add.',
+    clusterGroup: 'Hotspot cards', evidenceGroup: 'Evidence cards',
+    tplIntro: 'Solidified, registered templates (sample content replaced by slots).',
+    tplRegistered: 'registered', cpIntro: 'Checkpoint = document snapshot. Restoring creates a NEW checkpoint — history is never destroyed.',
+    dropHint: 'Drag hotspot / evidence cards here', placeholder: 'Big change: describe how the whole document should change…',
+    send: 'Send',
+    welcome: 'Pick hotspot/evidence cards, choose a template (it fixes the section structure), then Weave. The document splits into fixed sections of typed blocks (heading/paragraph/table/citations…). Annotate any block to regenerate just it; locked and user-modified blocks are protected. Yellow = a referenced fact changed, needs review.',
+    dragResize: 'Drag to resize', needDoc: 'No document yet: combine cards or load the sample', noDocShort: 'no doc',
+    emptyTitle: 'Start from hotspots', emptyBody: 'Pick cards on the left. The document follows the chosen template\'s fixed sections — sections lacking material report a gap instead of padding.',
+    generatingLabel: 'Generating from template…', tweaks: 'Tweaks', tweaksNote: 'Fast path: patches CSS variables only, never rebuilds the canvas.',
+    accent: 'Accent', radius: 'Radius', fontScale: 'Type scale', reset: 'Reset',
+    desktop: 'Desktop', mobile: 'Mobile', solidify: 'Solidify', solidifyFull: 'Solidify as template (G3)',
+    shareToast: 'Share link copied', exportToast: 'HTML document exported',
+    exportBlocked: 'Export blocked by gate: ', solidifyBlocked: 'Solidify validation failed: ', solidifyToast: 'Solidified and registered as v1',
+    restoreToast: 'Restored as a new checkpoint', restoredFrom: 'Restored from',
+    genFallback: 'Document generated — check the canvas.', errMsg: 'Generation failed, please retry.', modLabel: 'Chat revision',
+    blockPromptPh: 'Annotate this block — regenerates only this block…', regenBlock: 'Redo', blockEdit: 'Block edit', blockDone: 'Block updated',
+    effortFast: 'Fast', effortStd: 'Std', effortFine: 'Fine',
+    vA: 'A infeasible', vB: 'B red ocean', vC: 'C opportunity', vD: 'D insufficient',
+    ck_contrast: 'Contrast', ck_slots: 'Slots', ck_i18n: 'i18n',
+    ckv_passed: 'passed', ckv_failed: 'failed', ckv_unreported: 'unreported',
+    ckFailShort: 'failed', ckOkShort: 'checks passed',
+    navTitle: 'SECTIONS', wordsUnit: 'words', checkQTip: 'Section check question (from template rules)',
+    tpl_generic: 'Generic plan', tpl_startup: 'Startup', tpl_engineering: 'Engineering', tpl_grant: 'Grant', tpl_thesis: 'Thesis',
+    tplPick: 'Template fixes the section structure', tplSwitchToast: 'Template switched — next generation uses it',
+    loadDemo: 'Load sample document', demoLabel: 'Sample: dialect annotation platform', demoToast: 'Sample loaded (with review / locked / gap blocks)',
+    authorSys: 'system', authorUser: 'user',
+    protect: 'Protect', unprotect: 'Protected ✓', lockedChip: 'Locked',
+    protectTipTxt: 'Mark as user-modified: regenerate never rewrites it',
+    noteLocked: 'System declaration block — never rewritten by regenerate',
+    noteUserMod: 'You modified this block — protected from regenerate; click "Protected ✓" to release',
+    noteUserBlock: 'User-authored block — AI never rewrites it',
+    noteGap: 'Gaps are never padded — add a source, then regenerate in chat',
+    gapTitle: 'Data gap', gapHint: 'Add any of these to unlock this section:',
+    reviewBadge: 'Review', rr_fact_changed: 'Referenced fact updated', rr_fact_removed: 'Referenced fact removed from ledger', rr_fact_disputed: 'Referenced fact disputed',
+    sev_blocking: 'blocks export', sev_advisory: 'advisory',
+    btnRegen: 'Regenerate', btnKeep: 'Keep', keepToast: 'Kept — marked speculative',
+    reviewChipTxt: 'need review', blockingShort: 'blocking', reviewBlockExport: 'unresolved review',
+    injectToast: 'Queued for retrieval (mock)', lockedToast: 'Declaration blocks stay locked',
+    cloudTitle: 'DIRECTION CLOUD', cloudHint: 'Pick keywords to narrow the plan\'s direction — sent to the AI with your cards.',
+    moveUp: 'Move up (crosses into previous section at top)', moveDown: 'Move down (crosses into next section at bottom)',
+    protectedToast: 'Block protected — release protection to annotate'
+  }
+};
+const CLOUD = [
+  { id: 'w1', zh: '方言语料', en: 'dialect corpus', w: 9 },
+  { id: 'w2', zh: '语音标注', en: 'speech annotation', w: 8 },
+  { id: 'w3', zh: '众包质检', en: 'crowd QA', w: 7 },
+  { id: 'w4', zh: '低资源', en: 'low-resource', w: 7 },
+  { id: 'w5', zh: '数据集', en: 'dataset', w: 6 },
+  { id: 'w6', zh: '车载语音', en: 'automotive voice', w: 6 },
+  { id: 'w7', zh: '客服质检', en: 'call-center QA', w: 5 },
+  { id: 'w8', zh: '版权合规', en: 'IP compliance', w: 5 },
+  { id: 'w9', zh: '付费 PoC', en: 'paid PoC', w: 4 },
+  { id: 'w10', zh: '粤语', en: 'Cantonese', w: 4 },
+  { id: 'w11', zh: 'ASR 预标', en: 'ASR pre-label', w: 4 },
+  { id: 'w12', zh: '定价 PriceBook', en: 'PriceBook pricing', w: 4 },
+  { id: 'w13', zh: '采集成本', en: 'collection cost', w: 3 },
+  { id: 'w14', zh: '双盲抽检', en: 'double-blind QA', w: 3 },
+  { id: 'w15', zh: '月更数据', en: 'monthly refresh', w: 3 },
+  { id: 'w16', zh: 'arXiv 综述', en: 'arXiv survey', w: 2 },
+  { id: 'w17', zh: '微博热度', en: 'weibo heat', w: 2 }
+];
+const DEMO_CSS = `<style>body{margin:0;font-family:'IBM Plex Sans','PingFang SC',sans-serif;background:#fdfbf6;color:#26221c;padding:16px 26px;line-height:1.65}h1{font-size:25px;margin:2px 0 4px}p{margin:5px 0;font-size:13.5px}.eyebrow{font-size:11px;letter-spacing:3px;color:#d1531f;font-weight:700}.sub{font-size:12px;color:#867b67}table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{border:1px solid #e4dac6;padding:7px 10px;text-align:left}th{background:#f4eee1}.price{color:#3f7286;font-weight:600}.decl{font-size:12px;color:#867b67;margin:0}ul{margin:4px 0;padding-left:18px;font-size:12.5px;line-height:1.8}.cite{color:#3f7286}</style>`;
+const _db = (id, type, html, extra) => Object.assign({ id, type, html, author: 'system', locked: type === 'declaration', userModified: false, needsReview: false, reviewReason: null, reviewSeverity: null }, extra || {});
+const DEMO_DOC = {
+  css: DEMO_CSS,
+  sections: [
+    { sid: 'summary', blocks: [
+      _db('d1', 'heading', '<div class="eyebrow">FLINT · 项目计划书</div><h1>方言语音标注平台</h1><div class="sub">2026-08-12 · 判定 C 机会 · 模板 generic</div>'),
+      _db('d2', 'paragraph', '<p>结论：方言语音标注当前判定为 <b>C 机会</b>——refute 检索已执行（hit_rate 0.72 ≥ θ_rel），竞品覆盖达标且无 strong/unknown 竞品，有 1 条对齐通过的支持证据 <span class="cite">[E-02]</span>。建议以「低资源方言数据集众包 + 质检」切入。</p>'),
+      _db('d3', 'declaration', '<p class="decl">声明：本文档由燧石 Flint 自动生成 · 判定依据 goldset 规则（A&gt;B&gt;C&gt;D 顺序判定）· 市场数字均走 Fact/PriceCell 通道 · 证据快照 2026-08-12。</p>')
+    ] },
+    { sid: 'opportunity', blocks: [
+      _db('d4', 'paragraph', '<p>#方言保护# 话题微博阅读 1.2 亿次并持续增长 <span class="cite">[E-01]</span>；低资源语音标注方向 arXiv 近三月新增 37 篇 <span class="cite">[E-02]</span>。车载语音与客服质检两类买方对方言语料出现明确询价。</p>', { needsReview: true, reviewReason: 'fact_changed', reviewSeverity: 'advisory' }),
+      _db('d5', 'citation_list', '<ul><li class="cite">[E-01] #方言保护# 阅读数快照 · weibo · 2026-08-10</li><li class="cite">[E-02] arXiv: Low-resource Speech Annotation Survey · 2026-07</li><li class="cite">[E-03] label-studio 周增 star 1.4k · ghtrend · 2026-08-09</li></ul>')
+    ] },
+    { sid: 'market', blocks: [
+      _db('d6', 'paragraph', '<p>国内语音数据服务市场按 PriceBook 口径约 <span class="price">¥42 亿（2025 · Fact#F-118）</span>；方言细分占比不足 5%，但为各细分中年增速最高。</p>'),
+      _db('d7', 'table', '<table><tr><th>细分</th><th>2025 规模</th><th>年增速</th><th>通道</th></tr><tr><td>普通话标注</td><td class="price">¥31.2 亿</td><td>+8%</td><td>PriceCell</td></tr><tr><td>方言标注</td><td class="price">¥1.9 亿</td><td>+34%</td><td>PriceCell</td></tr><tr><td>多语混合</td><td class="price">¥6.4 亿</td><td>+15%</td><td>PriceCell</td></tr></table>')
+    ] },
+    { sid: 'competition', blocks: [
+      _db('d8', 'paragraph', '<p>主要竞品为两家中型数据服务商，强度均为 moderate（各命中 1 个 signal：active_last_12m），无 strong 竞品。原引用的「竞品 X 融资记录」事实已从台账移除，本块结论待复核。</p>', { needsReview: true, reviewReason: 'fact_removed', reviewSeverity: 'blocking' })
+    ] },
+    { sid: 'plan', blocks: [
+      _db('d9', 'paragraph', '<p>M1：粤语 + 吴语两个方言包打样，找 2 家车载语音客户做付费 PoC；M2：扩闽南语，接入众包质检双盲流程；M3：挂接 source_registry 自动回采，形成月更数据集。</p>', { userModified: true }),
+      _db('d10', 'paragraph', '<p><b>备注（用户添加）：</b>优先接洽的两家客户为 A 汽车与 B 客服 SaaS，联系人在 CRM。</p>', { author: 'user' })
+    ] },
+    { sid: 'budget', blocks: [
+      _db('d11', 'table', '<table><tr><th>科目</th><th>金额</th><th>依据</th></tr><tr><td>众包标注费</td><td class="price">¥48 万</td><td>PriceBook#PB-07</td></tr><tr><td>质检抽样</td><td class="price">¥9 万</td><td>PriceBook#PB-11</td></tr><tr><td>算力（ASR 预标）</td><td class="price">¥6 万</td><td>PriceBook#PB-03</td></tr></table>')
+    ] },
+    { sid: 'risks', blocks: [
+      _db('d12', 'paragraph', '<p>证伪面：若方言语料采集合规成本超过众包费用的 30%，单包毛利转负（refute 检索关键词：方言 数据 版权 诉讼）。</p>'),
+      _db('d13', 'gap_notice', '', { gap: { missing: '方言数据采集的法律合规意见', sources: ['source_legal_status 登记表', '上传法务备忘', '检索：数据合规判例'] } })
+    ] }
+  ]
+};
+</script>
+</body>
+</html>

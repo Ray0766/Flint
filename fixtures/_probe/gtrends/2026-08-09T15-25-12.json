@@ -1,0 +1,18 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "gtrends",
+ "url": "https://trends.google.com/trending/rss?geo=CN&hl=zh-CN",
+ "requested_at_utc": "2026-08-09T15:25:12.741488+00:00",
+ "status": 400,
+ "final_url": "https://trends.google.com/trending/rss?geo=CN&hl=zh-CN",
+ "redirects": [],
+ "headers": {
+  "content-type": "text/html; charset=utf-8",
+  "server": "ESF"
+ },
+ "body_head": "<html lang=\"zh-CN\" dir=ltr><meta charset=utf-8><meta name=viewport content=\"initial-scale=1, minimum-scale=1, width=device-width\"><title>Error 400 (请求无效)!!1</title><style nonce=\"8fyKya_MbmeJ-7qIuWPIiA\">*{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{color:#222;text-align:unset;margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px;}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}pre{white-space:pre-wrap;}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}</style><main id=\"af-error-container\" role=\"main\"><a href=//www.google.com><span id=logo aria-label=Google role=img></span></a><p><b>400.</b> <ins>出现错误。</ins><p>服务器无法处理该请求，因为其格式不正确。请勿重新提交该请求。 <ins>这就是我们所知道的全部信息。</ins></main>",
+ "body_bytes": 1719,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": []
+}

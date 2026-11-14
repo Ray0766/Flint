@@ -1,0 +1,297 @@
+{
+ "card": "JUDGE-05",
+ "built_at": "2026-08-04",
+ "note": "口径对齐总账的机读面；人读面见 docs/口径对齐总账-v041.md",
+ "entries": [
+  {
+   "path": "assets/prod_caliber/deepseek_judge/claude-sonnet-5.json",
+   "verdict": "usable",
+   "judge": "deepseek-chat",
+   "judged_at": "2026-08-04",
+   "bank_version": "v1.0",
+   "comparable": true,
+   "note": "JUDGE-03 在新尺子下判的，三份同判官同题库，内部可比"
+  },
+  {
+   "path": "assets/prod_caliber/deepseek_judge/gemma4_31b.json",
+   "verdict": "usable",
+   "judge": "deepseek-chat",
+   "judged_at": "2026-08-04",
+   "bank_version": "v1.0",
+   "comparable": true,
+   "note": "JUDGE-03 在新尺子下判的，三份同判官同题库，内部可比"
+  },
+  {
+   "path": "assets/prod_caliber/deepseek_judge/qwen3.6_27b.json",
+   "verdict": "usable",
+   "judge": "deepseek-chat",
+   "judged_at": "2026-08-04",
+   "bank_version": "v1.0",
+   "comparable": true,
+   "note": "JUDGE-03 在新尺子下判的，三份同判官同题库，内部可比"
+  },
+  {
+   "path": "assets/prod_caliber/unified_judge/claude-sonnet-5.json",
+   "verdict": "rejudge",
+   "judge": "claude-sonnet-5",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "判官是 claude-sonnet-5，与新基线的 deepseek-chat 不是同一把尺子；数值不可与新值相减",
+   "realigned_to": "assets/prod_caliber/deepseek_judge/claude-sonnet-5.json"
+  },
+  {
+   "path": "assets/prod_caliber/unified_judge/gemma4_31b.json",
+   "verdict": "rejudge",
+   "judge": "claude-sonnet-5",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "判官是 claude-sonnet-5，与新基线的 deepseek-chat 不是同一把尺子；数值不可与新值相减",
+   "realigned_to": "assets/prod_caliber/deepseek_judge/gemma4_31b.json"
+  },
+  {
+   "path": "assets/prod_caliber/unified_judge/qwen3.6_27b.json",
+   "verdict": "rejudge",
+   "judge": "claude-sonnet-5",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "判官是 claude-sonnet-5，与新基线的 deepseek-chat 不是同一把尺子；数值不可与新值相减",
+   "realigned_to": "assets/prod_caliber/deepseek_judge/qwen3.6_27b.json"
+  },
+  {
+   "path": "assets/prod_caliber/claude-sonnet-5.json",
+   "verdict": "rejudge",
+   "judge": "self（各模型判自己）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "自评：判官与被判者同源，M4 §6.1 已判定跨家不可比、绝对 0.90 线作废",
+   "realigned_to": "assets/prod_caliber/deepseek_judge/claude-sonnet-5.json"
+  },
+  {
+   "path": "assets/prod_caliber/gemma4_31b.json",
+   "verdict": "rejudge",
+   "judge": "self（各模型判自己）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "自评：判官与被判者同源，M4 §6.1 已判定跨家不可比、绝对 0.90 线作废",
+   "realigned_to": "assets/prod_caliber/deepseek_judge/gemma4_31b.json"
+  },
+  {
+   "path": "assets/prod_caliber/qwen3.6_27b.json",
+   "verdict": "rejudge",
+   "judge": "self（各模型判自己）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "自评：判官与被判者同源，M4 §6.1 已判定跨家不可比、绝对 0.90 线作废",
+   "realigned_to": "assets/prod_caliber/deepseek_judge/qwen3.6_27b.json"
+  },
+  {
+   "path": "assets/prod_caliber/claude-sonnet-5.thinkoff-repairoff.json",
+   "verdict": "rejudge",
+   "judge": "self（output_config.format）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "自评且配置与主跑批不同（thinking/repair 关），旧值既不可与新基线比也不可与主跑批比",
+   "realigned_to": "assets/deepseek_realign/claude-sonnet-5.thinkoff-repairoff.json"
+  },
+  {
+   "path": "assets/prod_caliber/qwen3_30b.json",
+   "verdict": "rejudge",
+   "judge": "self（各模型判自己）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "自评：判官与被判者同源，与新基线不是同一把尺子",
+   "realigned_to": "assets/deepseek_realign/qwen3_30b.json"
+  },
+  {
+   "path": "assets/prod_caliber/v3_no_spec/gemma4_31b.json",
+   "verdict": "rejudge",
+   "judge": "self（各模型判自己）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "自评，且组稿走的是 v3 无 spec 口径，与主跑批的被判物不同",
+   "realigned_to": "assets/deepseek_realign/v3_no_spec__gemma4_31b.json"
+  },
+  {
+   "path": "assets/prod_caliber/qwen3_30b.v3-backup.json",
+   "verdict": "historical",
+   "judge": "self（各模型判自己）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "与 qwen3_30b.json 的组稿产物逐字节相同（备份件），重判它等于把同一批样本再买一次",
+   "duplicate_of": "assets/prod_caliber/qwen3_30b.json"
+  },
+  {
+   "path": "assets/prod_caliber/v3_no_spec/qwen3_30b.json",
+   "verdict": "historical",
+   "judge": "self（各模型判自己）",
+   "judged_at": "2026-07-28",
+   "bank_version": "v1.0",
+   "comparable": false,
+   "why_not": "与 qwen3_30b.json 的组稿产物逐字节相同（no_spec 变体对该模型没产生差异），重判是重复花钱",
+   "duplicate_of": "assets/prod_caliber/qwen3_30b.json"
+  },
+  {
+   "path": "assets/prod_caliber/gemma4_26b.json",
+   "verdict": "historical",
+   "judge": "unknown",
+   "judged_at": "2026-07-28",
+   "bank_version": "unknown",
+   "comparable": false,
+   "why_not": "文件里没有 compositions——被判的东西已经不在盘上，无从重判，只能作历史"
+  },
+  {
+   "path": "assets/goldcases/goldcases.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "构造时（fixture 脚本）",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "fixtures/_generate_goldcases.py 构造的期望值，不是判官判出来的——它是基准本身"
+  },
+  {
+   "path": "assets/golddocs/golddocs.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "构造时（fixture 脚本）",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "fixtures/_generate_golddocs.py 构造的期望值，同上"
+  },
+  {
+   "path": "assets/gauge_map.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "每次跑 tools/gauge_map.py",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "确定性工具算出来的映射表，重跑即重现，与判官无关"
+  },
+  {
+   "path": "assets/gate1_live/scripted.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "构造时（脚本化演练）",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "脚本化的 Gate① 演练件，verdict 是写死的剧本不是判定结论"
+  },
+  {
+   "path": "assets/topic_caliber/card_corpus.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/claude-sonnet-5.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/deepseek-chat.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/deepseek-r1_32b#v2.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/gpt-4o-mini.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/gpt-oss_120b#v2.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/gpt-oss_20b#v2.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/llama4_scout#v2.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/qwen3.6_27b#v1b.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/qwen3.6_27b#v2.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/qwen3.6_27b.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  },
+  {
+   "path": "assets/topic_caliber/qwen3.6_35b-a3b#v2.json",
+   "verdict": "usable",
+   "judge": "none",
+   "judged_at": "2026-07 生成时",
+   "bank_version": "n/a",
+   "comparable": true,
+   "note": "主题产出的生成侧记录（generations / schema_misses / cost），没有判官参与"
+  }
+ ]
+}

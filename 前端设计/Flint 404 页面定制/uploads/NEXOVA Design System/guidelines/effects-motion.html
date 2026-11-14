@@ -1,0 +1,11 @@
+<!-- @dsCard group="Effects" viewport="700x150" name="Radius & Motion" subtitle="Pills everywhere; 200ms color fades, 400ms ease-out staggers" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:var(--nx-space-900);font-family:var(--nx-font-sans);color:#fff;padding:22px 28px;display:flex;gap:36px;align-items:center}
+.chip{display:flex;flex-direction:column;gap:8px;align-items:center;font-size:10px;color:var(--nx-text-dim);letter-spacing:.05em}
+.r{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25)}
+.m{font-size:11px;color:var(--nx-text-body);line-height:1.7}</style></head><body>
+<div class="chip"><div class="r" style="width:120px;height:40px;border-radius:var(--nx-radius-pill)"></div>pill 9999</div>
+<div class="chip"><div class="r" style="width:80px;height:40px;border-radius:0 0 var(--nx-radius-panel) var(--nx-radius-panel)"></div>panel 16</div>
+<div class="chip"><div class="r" style="width:80px;height:40px;border-radius:var(--nx-radius-input)"></div>input 6</div>
+<div class="m">hover 200ms color fade · icons 300ms rotate/scale cross-fade<br>menu 400ms ease-out, items stagger +50ms from 350ms<br>fade + 12px rise; no bounces</div>
+</body></html>

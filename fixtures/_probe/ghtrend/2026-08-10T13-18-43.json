@@ -1,0 +1,21 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "ghtrend",
+ "url": "https://api.github.com/search/repositories?q=created:>2026-08-03&sort=stars&order=desc&per_page=15",
+ "requested_at_utc": "2026-08-10T13:18:43.846021+00:00",
+ "status": 200,
+ "final_url": "https://api.github.com/search/repositories?q=created:%3E2026-08-03&sort=stars&order=desc&per_page=15",
+ "redirects": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "server": "github.com",
+  "x-ratelimit-remaining": "9"
+ },
+ "body_head": "{\"total_count\":1906999,\"incomplete_results\":false,\"items\":[{\"id\":1323511527,\"node_id\":\"R_kgDOTuMu5w\",\"name\":\"human-writing\",\"full_name\":\"KKKKhazix/human-writing\",\"private\":false,\"owner\":{\"login\":\"KKKKhazix\",\"id\":239590580,\"node_id\":\"U_kgDODkfctA\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/239590580?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/KKKKhazix\",\"html_url\":\"https://github.com/KKKKhazix\",\"followers_url\":\"https://api.github.com/users/KKKKhazix/followers\",\"following_url\":\"https://api.github.com/users/KKKKhazix/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/KKKKhazix/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/KKKKhazix/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/KKKKhazix/subscriptions\",\"organizations_url\":\"https://api.github.com/users/KKKKhazix/orgs\",\"repos_url\":\"https://api.github.com/users/KKKKhazix/repos\",\"events_url\":\"https://api.github.com/users/KKKKhazix/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/KKKKhazix/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/KKKKhazix/human-writing\",\"description\":\"让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。\",\"fork\":false,\"url\":\"https://api.github.com/repos/KKKKhazix/human-writing\",\"forks_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/forks\",\"keys_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/teams\",\"hooks_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/hooks\",\"issue_events_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/events\",\"assignees_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/KKKKhazix/human-writing/b",
+ "body_bytes": 84403,
+ "sent_user_agent": "flint-cn07-probe/1.0 (window fix; DEC-052)",
+ "left_allowed_hosts": [],
+ "method": "GET",
+ "cookie_names": []
+}

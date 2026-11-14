@@ -1,0 +1,19 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-057",
+ "source": "arxiv",
+ "url": "https://export.arxiv.org/api/query?search_query=all:brain-computer+interface&max_results=3",
+ "method": "GET",
+ "requested_at_utc": "2026-08-10T23:27:17.850840+00:00",
+ "status": 200,
+ "headers": {
+  "content-length": "7039",
+  "server": "Google Frontend",
+  "content-type": "application/atom+xml; charset=utf-8",
+  "date": "Mon, 10 Aug 2026 23:27:18 GMT"
+ },
+ "body_head": "<?xml version='1.0' encoding='UTF-8'?>\n<feed xmlns:opensearch=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:arxiv=\"http://arxiv.org/schemas/atom\" xmlns=\"http://www.w3.org/2005/Atom\">\n  <id>https://arxiv.org/api/uwhBrglfuPTmEGM6t0dC1NYsrZQ</id>\n  <title>arXiv Query: search_query=all:brain-computer OR all:interface&amp;id_list=&amp;start=0&amp;max_results=3</title>\n  <updated>2026-08-10T23:27:12Z</updated>\n  <link href=\"https://arxiv.org/api/query?search_query=all:brain-computer+OR+all:interface&amp;start=0&amp;max_results=3&amp;id_list=\" type=\"application/atom+xml\"/>\n  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>\n  <opensearch:totalResults>64138</opensearch:totalResults>\n  <opensearch:startIndex>0</opensearch:startIndex>\n  <entry>\n    <id>http://arxiv.org/abs/2411.09211v1</id>\n    <title>Dynamic Neural Communication: Convergence of Computer Vision and Brain-Computer Interface</title>\n    <updated>2024-11-14T06:15:05Z</updated>\n    <link href=\"https://arxiv.org/abs/2411.09211v1\" rel=\"alternate\" type=\"text/html\"/>\n    <link href=\"https://arxiv.org/pdf/2411.09211v1\" rel=\"related\" type=\"application/pdf\" title=\"pdf\"/>\n    <summary>Interpreting human neural signals to decode static speech intentions such as text or images and dynamic speech intentions such as audio or video is showing great potential as an innovative communication tool. Human communication accompanies various features, such as articulatory movements, facial expressions, and internal speech, all of which are reflected in neural signals. However, most studies only generate short or fragmented outputs, while providing informative communication by leveraging various features from neural signals remains challenging. In this study, we introduce a dynamic neural communication method that leverages current computer vision and brain-computer interface technologies. Our approach captures the user's intentions from neural signals and decodes visemes in short time steps to produce dynamic visual outputs. The results demonstrate the potential to rapidly captu",
+ "body_bytes": 7039,
+ "spent_before_this": 13,
+ "budget": 40
+}

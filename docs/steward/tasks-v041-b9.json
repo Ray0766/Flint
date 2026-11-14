@@ -1,0 +1,633 @@
+{
+ "spec_version": "v0.4.1-batch9",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward @2026-08-09",
+ "note": "第9批 = 接通。owner 2026-08-09 五条：接口全接上 · 右上角地区语言下拉 · 白天夜间切换 · 只做中国区 · 多源多区推迟下一版。根因清点：八张表从没建过（favorites/share_links/prefs/templates/workbenches/graph_nodes/graph_edges/cluster_verdicts），收藏入台固化判定显示「未提供」是持久层缺失不是接线没做。CN-01 是红线卡，准备到位后等 owner 在场点一次。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B9-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。**例外**：FIX-19 已获 owner 明确许可动 v0.4 封版件 AnalysisView.tsx，边界只限「加类名与样式」。",
+  "network": "**CN-01 是唯一涉及真实网络的卡，且 MUST 停下等 owner 在场点一次，NEVER 自行触发。** 其余一律 NEVER 真实网络 / 真实 API key / 付费调用。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。playwright 恒在项目外 C:\\pwenv。",
+  "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8。",
+  "stale_process": "打真栈之前 MUST 先核 :8000 的 PID 与启动时间——旧进程已经冒充过两次判据的对象。",
+  "migrations": "本批有四张迁移卡（PERSIST-01~04），迁移号从 0023 起顺序编，NEVER 跳号也 NEVER 撞号；每张的 upgrade 与 downgrade 都要跑通。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "DEC-045-LANDING",
+   "title": "裁决落地：owner 2026-08-09 的五条",
+   "milestone": "W9",
+   "inputs": [
+    "docs/steward/连跑工单-v041-第9批.md#2",
+    "DECISIONS-v04.md"
+   ],
+   "outputs": [
+    "DECISIONS-v04.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_decisions_landed.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "DEC-045 本版只做中国区内容；**不同地区用不同信息源推迟到下一版**（owner 原话）。九区的既有能力保留不拆，广场默认与唯一有内容的区都是 CN",
+    "DEC-046 地区与语言选择移到页面右上角，下拉直选；`/settings/locale` 那一屏保留为详情页",
+    "DEC-047 补白天/夜间切换：`_ds` 的暗色板 DARK-01 早就建好，**全仓零处切换控件**（实查 data-theme / toggleTheme / ThemeToggle 均 0 命中），今天只能靠系统偏好",
+    "DEC-048 八张缺表一次建齐（favorites · share_links · prefs · templates · workbenches · graph_nodes · graph_edges · cluster_verdicts）——收藏 / 入台 / 固化 / 热点判定显示「未提供」的根因是持久层从没建，不是接线没做",
+    "DEC-049 活入口走甲：广场多选卡片建组合",
+    "五条都写明来由与影响面；追加式写入，NEVER 回改既有 DEC 行"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "PERSIST-01",
+   "title": "持久层①：收藏 · 分享 · 偏好三表建齐，三族接真存储",
+   "milestone": "W9",
+   "inputs": [
+    "flint/fav/store.py",
+    "flint/api/favorites.py",
+    "flint/api/share.py",
+    "flint/api/settings.py"
+   ],
+   "outputs": [
+    "migrations/versions/",
+    "flint/",
+    "tests/v041/test_persist_fav_share_prefs.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_persist_fav_share_prefs.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实测：favorites / share_links / prefs 三张表**都不存在**（pg_tables 实查），所以 GET /favorites 回 not_provided、收藏按下去存不住。flint/fav/store.py:35 自述「内存实现；SQL 实现随 E2 的 favorites 表接入」——本卡就是那个接入",
+    "迁移建三表，号接 0022，NEVER 跳号；upgrade 与 downgrade 都跑通",
+    "三族从内存件换成 SQL 实现：收藏能存能读能删、分享链接能生成能失效、偏好能存能回读",
+    "**not_provided 那一态保留但不再触发**：判据断言接上之后 GET /favorites 回真列表（空库时是空列表且 status 为已查过），NEVER 让「查过了是空的」与「没查过」再合并",
+    "快照陈旧标记（Favorite.snapshot_stale）只能由 Revalidator 置 True（§6-H1），本卡 NEVER 自己置",
+    "鉴权照 AUTH-03 口径；收藏与分享是写操作，越权 403"
+   ],
+   "context_refs": [
+    "flint/fav/store.py",
+    "docs/blocked/WIRE-03-EMPTY-FROM-A-STORE-THAT-HAS-NO-DATABASE.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "PERSIST-02",
+   "title": "持久层②：工作台三表 + POST /workbenches——入台今天拿不到 ok",
+   "milestone": "W9",
+   "inputs": [
+    "flint/api/",
+    "web/components/plaza/cardActions.ts",
+    "docs/blocked/MAIN-CHAIN-HAS-NO-LIVE-ENTRANCE.md"
+   ],
+   "outputs": [
+    "migrations/versions/",
+    "flint/",
+    "tests/v041/test_workbench_persist.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_workbench_persist.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实测：workbenches / graph_nodes / graph_edges 三张表**都不存在**；对账器 frontend_wants_missing_backend = 1，那一条就是 POST /workbenches——前端已接完，实测回框架 404，**入台永远拿不到 ok**",
+    "迁移建三表 + 建端点并装配：建工作台 → 返回 graph_id。NAV-03 的前端只认这一个名字，NEVER 改前端去迁就别的字段名",
+    "幂等：同一热点重复入台 NEVER 建出第二个工作台",
+    "入台成功后 /workbenches/[id] 真能打开并看到刚入台的那个热点——判据打真栈走一遍，NEVER 只断言端点回 200",
+    "接完之后可达性尺子里「路接上了而走不通」那一行消失"
+   ],
+   "context_refs": [
+    "docs/blocked/MAIN-CHAIN-HAS-NO-LIVE-ENTRANCE.md",
+    "docs/trace/NAV-03.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "PERSIST-03",
+   "title": "持久层③：模板表 + template_solidify——最后一个没消费者的作业",
+   "milestone": "W9",
+   "inputs": [
+    "flint/design/solidify.py",
+    "flint/jobs/dispatch.py",
+    "flint/api/design.py"
+   ],
+   "outputs": [
+    "migrations/versions/",
+    "flint/",
+    "tests/v041/test_template_persist.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_template_persist.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "实测：templates 表不存在 → GET /design/templates 回 not_provided → 设计工作台的「固化为模板」恒置灰。dispatch.py 的 UnwiredKindReason **只剩 template_solidify 这一条**",
+    "迁移建表 + 接消费者，从 UnwiredKindReason 移进 WIREABLE_KINDS——**移完那个表就空了**",
+    "「固化为模板」按下去真提交并落库，走既有 SSE 通道；固化成功后模板列表里看得到",
+    "DESIGN-03 的四态口径不倒：not_checked / not_provided / down / ok 四态各自成一态",
+    "LLM 恒 fixture 回放，respx 护栏断言零真实出网",
+    "分派表仍覆盖判别联合全部成员（IncompleteDispatchTable 判据不倒）"
+   ],
+   "context_refs": [
+    "flint/jobs/dispatch.py",
+    "docs/trace/DESIGN-03.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "PERSIST-04",
+   "title": "持久层④：cluster→判定关系表——分析屏永远说「还没判定」的根因",
+   "milestone": "W9",
+   "inputs": [
+    "flint/jobs/gate1.py",
+    "web/views/analysis/AnalysisView.tsx",
+    "docs/blocked/HOTSPOT-03.md"
+   ],
+   "outputs": [
+    "migrations/versions/",
+    "flint/",
+    "tests/v041/test_cluster_verdict_link.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_cluster_verdict_link.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实测：cluster_verdicts 表不存在。热点分析屏对每一个热点永远只会说「还没有过 Gate① 判定」——**owner 刚点进去看的就是这一屏**",
+    "迁移建关系表；gate1 作业收尾时记下它判的是哪个 cluster。**contracts/ 一字不动**——Job 无 cluster 字段这件事保持原样，关系落在关系表里",
+    "读法：分析屏按 cluster_id 查最新一条判定，不再依赖 URL 上的 ?verdictJob=。**猜 job id 那条路一并删掉**——现在有真相可查了",
+    "一个热点多次判定时取最新一条（steward 定的默认，owner 可改），NEVER 随机显示其中一条",
+    "四态不倒：没判过仍是「未判定」，读失败仍是「读失败」，两者 NEVER 合并"
+   ],
+   "context_refs": [
+    "docs/blocked/HOTSPOT-03.md",
+    "docs/trace/NAV-02.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHELL-01",
+   "title": "外壳①：地区与语言下拉挪到右上角（DEC-046）",
+   "milestone": "W9",
+   "inputs": [
+    "web/components/shell/AppShell.tsx",
+    "web/components/region-switch/",
+    "web/components/locale-settings/"
+   ],
+   "outputs": [
+    "web/components/shell/",
+    "tests/v041/test_shell_locale_dropdowns.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_shell_locale_dropdowns.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 2026-08-09：地区与语言做到页面右上角，**直接下拉选择**。当前两者只在 /settings/locale 那一屏里",
+    "复用既有件：RegionSwitch 与 LocaleSettings 的取值与写回口径 NEVER 另写一份；九区清单仍从 GET /settings/locale 的 options 取",
+    "切地区 NEVER 改语言，切语言 NEVER 改热点集合（PRINCIPLES#A3 两条轴），两条各有判据",
+    "选择要存得住：刷新后仍是上次选的（PERSIST-01 的 prefs 表），NEVER 只存在内存里",
+    "/settings/locale 保留为详情屏，两处显示同一个值——判据断言两处一致，NEVER 各存一份",
+    "移动视口 390px 下顶栏不溢出（FIX-05/06 的既有判据不倒）"
+   ],
+   "context_refs": [
+    "docs/前端功能说明-v2.md#2.13",
+    "docs/trace/NAV-04.md"
+   ],
+   "depends_on": [
+    "PERSIST-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHELL-02",
+   "title": "外壳②：白天/夜间切换——板早就建好，全仓零处切换控件（DEC-047）",
+   "milestone": "W9",
+   "inputs": [
+    "web/components/shell/AppShell.tsx",
+    "web/public/_ds/",
+    "docs/trace/DARK-01.md"
+   ],
+   "outputs": [
+    "flint/",
+    "migrations/versions/",
+    "web/components/shell/",
+    "tests/v041/test_theme_toggle.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_theme_toggle.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实查：全仓非测试文件里 data-theme / toggleTheme / ThemeToggle **零命中**。DARK-01 建了暗色板与双通道（prefers-color-scheme 与 data-theme），**但没有任何控件能让用户切**——今天只能跟着系统偏好走",
+    "右上角加切换控件，三态：跟随系统 / 白天 / 夜间。**「跟随系统」MUST 是一个显式选项**，NEVER 把它和「白天」混成一个",
+    "显式选择压过系统偏好（DARK-01 已实现的优先级），判据两个方向各断言一次",
+    "选择要存得住：刷新后仍是上次选的（prefs 表），NEVER 只存在内存里",
+    "DARK-02 的 theme-switches 判据不倒：两主题量到同一组颜色仍判红",
+    "首帧 NEVER 闪白再变暗——判据断言首帧就是最终主题"
+   ],
+   "context_refs": [
+    "docs/trace/DARK-01.md",
+    "docs/trace/DARK-02.md"
+   ],
+   "depends_on": [
+    "PERSIST-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CN-01",
+   "title": "中国区①：真实源抓取一次——红线卡，**需 owner 在场点一次**",
+   "milestone": "W9",
+   "inputs": [
+    "flint/sources/weibo.py",
+    "flint/sources/gtrends.py",
+    "fixtures/",
+    "docs/blocked/E2E-REALSOURCE.md"
+   ],
+   "outputs": [
+    "fixtures/",
+    "docs/",
+    "tests/v041/test_cn_real_ingest.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_cn_real_ingest.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 2026-08-09：「界面上还有很多保留着热点话题字样的没替换成真正的热点内容」「先做中国区的内容」。当前广场那 193 条来自 fixtures/weibo/*.json 的录制夹具（`热搜话题NN` 是夹具里的合成词面）",
+    "**本卡是红线卡**：`worker.md` §7 的事前必审四类之一是「真实源抓取的首次授权」。DEC-022 已授权 B 档抓取的**纪律形态**（抓完必录 fixtures），欠的是**首次实跑需 owner 在场**（E2E-REALSOURCE 单）。**worker MUST 把一切准备到位后停下等 owner 点，NEVER 自行触发**",
+    "准备到位的定义：抓取脚本可一条命令跑、录制路径与 fixtures 命名已定、限速与 429/5xx/ParseDrift 三类错误处置已接、合规状态照实记录（K2-01 的 RECORD_ONLY 口径不变）",
+    "owner 点过之后：跑 CN 两源（weibo + gtrends CN），**抓完必录 fixtures**，并把当日数据灌进 demo 库",
+    "**NEVER 编造词面**：抓不到的源如实缺，广场上那一行照 PLAZA-03 的既有降级态显示",
+    "跑完后广场上 NEVER 再出现 `热搜话题NN` 这种合成词——判据全库扫描该模式，命中即红"
+   ],
+   "context_refs": [
+    "docs/blocked/E2E-REALSOURCE.md",
+    "docs/上线前合规手续清单.md",
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CN-02",
+   "title": "中国区②：本版只做中国区，多源多区推迟（DEC-045）",
+   "milestone": "W9",
+   "inputs": [
+    "flint/api/views.py",
+    "web/app/plaza/",
+    "docs/"
+   ],
+   "outputs": [
+    "flint/",
+    "web/",
+    "docs/",
+    "tests/v041/test_cn_only_scope.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_cn_only_scope.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 2026-08-09：「不同地区不同信息源的问题下一个版本再解决。这个版本先做中国区的内容」",
+    "广场默认区为 CN；其余八区与未归区**保留在筛选器里但如实说明本版无内容**，NEVER 悄悄隐藏——隐藏之后用户不知道这个能力存在，而它下一版就要用",
+    "九区的既有能力（REGION-08~12 建的列、query、分列）**一律保留不拆**：本版是收窄呈现，NEVER 删代码",
+    "推迟这件事落成机读记录（形如 legal_policy 的 RECORD_ONLY），写明触发条件是「下一版」，NEVER 只留在对话里",
+    "判据断言：默认视图是 CN；切到无内容的区显示的是「本版暂无该区内容」而不是空态或错误态——三者 NEVER 混"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md",
+    "docs/trace/REGION-11.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "CN-03",
+   "title": "点头之前的两处：灌库命令能整行粘贴 + 广场落在库里有数据的最新那天",
+   "milestone": "W9",
+   "inputs": [
+    "fixtures/_record_cn_real.py",
+    "flint/jobs/ingest.py",
+    "web/app/plaza/page.tsx",
+    "docs/blocked/E2E-REALSOURCE.md"
+   ],
+   "outputs": [
+    "fixtures/_record_cn_real.py",
+    "web/app/plaza/page.tsx",
+    "tests/v041/test_cn03_preflight.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_cn03_preflight.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "实况（steward 2026-08-09 实查）：`fixtures/_record_cn_real.py` 文件头第 33~37 行那条灌库命令**贴上去跑不了**——`DAY` 未定义（NameError），且 `run_daily_ingest(job_id, day: date, deps)` 第二参要 `date` 而那条传 `{'day': ...}` 字典；仓里另外三个调用点（`harness/replay30.py:139` · `harness/drill7.py:90` · `flint/jobs/worker_main.py:196`）**全传 `date`**",
+    "改成一条在 Windows PowerShell 里**能整行粘贴**的命令（NEVER 用反斜杠续行——那是 POSIX shell 的写法，在 PowerShell 里当场断句）",
+    "那条命令 MUST 在**既有夹具日**上真跑一次并把逐字输出留进 trace（`fixtures/{weibo,gtrends,ghtrend,arxiv}/` 有 2026-06-24 起 34 天，回放灌库可重来）。判据 MUST 打的是命令文本本身：第二参解析出来 MUST 是 `date` 类型、且文件头里 NEVER 再出现未定义的自由变量",
+    "为什么这一条压在红线之前：录制不可逆、灌库可重来——灌库那一步失败时，人最可能做的事就是再抓一次，而再抓一次就是再一次真实外网抓取",
+    "实况：广场默认日期写死在 `web/app/plaza/page.tsx:65`（`params.get(\"day\") ?? \"2026-07-04\"`）。改成落在**库里有数据的最新那一天**；一天都取不到时才回落到一个明说的兜底，NEVER 让屏上安静地显示另一天的数据",
+    "URL 显式带 `?day=` 时仍以 URL 为准（`REGION-10` 同一条纪律：URL 是当前视图的真相），两个方向各断言一次",
+    "阴性对照：库里灌进一个比 `2026-07-04` 更新的日子之后，判据断言广场首屏取的是**那一天**——NEVER 只断言「代码里没有那个字面量」，那句话在改成另一个字面量之后也成立",
+    "本卡 NEVER 动 `assets/screen_graph.json` 与逐屏组件声明（那是 `ENTRY-05` 的面）；`CN-01` 的 verified 状态 NEVER 回滚；`docs/blocked/E2E-REALSOURCE.md` **保持 open**——它钉的是「等 owner 点一次头」，本卡没有把那一次点头做掉",
+    "收尾 MUST 把最终那条灌库命令**逐字**贴进完成态报告与 trace，owner 要拿它与 `--owner-is-here` 连着跑"
+   ],
+   "context_refs": [
+    "fixtures/_record_cn_real.py",
+    "docs/trace/CN-01.md",
+    "docs/trace/CN-02.md",
+    "docs/blocked/E2E-REALSOURCE.md"
+   ],
+   "depends_on": [
+    "CN-01",
+    "CN-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "ENTRY-04",
+   "title": "接通：广场多选卡片建组合——项目族的活入口（DEC-049）",
+   "milestone": "W9",
+   "inputs": [
+    "web/app/plaza/",
+    "flint/api/combo.py",
+    "web/app/combo/"
+   ],
+   "outputs": [
+    "web/app/",
+    "web/components/",
+    "tests/v041/test_plaza_multiselect_combo.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_plaza_multiselect_combo.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "广场加多选态：选中两张或更多卡片 → 建组合入口出现 → 进 /combo 并带上所选 card_ids",
+    "多选 NEVER 干扰既有单击：点卡片主体仍进热点分析（DEC-042），多选走独立的选择控件；两者各有判据",
+    "空假设由服务端判（EMPTY_HYPOTHESIS，FIX-10 已统一成一个码），前端预检话术与之逐字一致",
+    "建成之后落到 /projects/[id]——**这一步就是 6 座孤岛的入口**，NEVER 用假链接顶替",
+    "选中态在切区/切页时的行为写明并有判据：NEVER 悄悄清空用户已选的卡"
+   ],
+   "context_refs": [
+    "docs/blocked/MAIN-CHAIN-HAS-NO-LIVE-ENTRANCE.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "ENTRY-05",
+   "title": "接通：孤岛清零 + 三个空表",
+   "milestone": "W9",
+   "inputs": [
+    "tools/check_reachability.py",
+    "tools/check_fe_be_parity.py",
+    "flint/jobs/dispatch.py"
+   ],
+   "outputs": [
+    "tools/",
+    "assets/screen_graph.json",
+    "tests/v041/test_reachability.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_reachability.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "当前实测：23 屏 · 入口 6 · 走得到 15 · **孤岛 6**（全是项目族）+ 1 条「路接上了而走不通」",
+    "本批接完之后 MUST 同时成立三个空表：可达性**孤岛 0** · 对账器 frontend_wants_missing_backend **0** · 分派表 UnwiredKindReason **空**",
+    "仍走不到的逐条在图里标明理由并**保留红**——写理由不顶红（第 8 批 NAV-01 原话）",
+    "主链路从顶栏一路走到导出，逐跳留图，每一跳的 id 从上一屏 DOM 取，NEVER 硬编"
+   ],
+   "context_refs": [
+    "docs/trace/NAV-01.md"
+   ],
+   "depends_on": [
+    "PERSIST-02",
+    "PERSIST-03",
+    "ENTRY-04"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-18",
+   "title": "缺陷：热点分析屏缺来源分列——第 8 批 NAV-02 的 acceptance③④ 没做",
+   "milestone": "W9",
+   "inputs": [
+    "web/app/clusters/",
+    "web/components/plaza/ClusterSourceLines.tsx"
+   ],
+   "outputs": [
+    "web/app/clusters/",
+    "tests/v041/test_analysis_source_columns.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_analysis_source_columns.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "NAV-02 卡面 ③④ 要求解析界面有三样（判定 · 证据概览 · **来源分列**），实查 page.tsx 与 AnalysisView 里 SourceColumns / ClusterSourceLines **均 0 处**，trace 未提、未开单",
+    "**修法不需要动封版件**：承载屏里把 <AnalysisView/> 与 <ClusterSourceLines/> 并排渲染即可",
+    "复用既有件，NEVER 另写一份；FIX-17 给 SourceColumns 加的可见署名一并生效",
+    "text 槽契约是**原文而非译文**；缺词面的源另起一行如实说「原话没查到」，NEVER 塞占位串",
+    "判据取渲染后的可见文本并打真栈"
+   ],
+   "context_refs": [
+    "docs/trace/NAV-02.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-19",
+   "title": "缺陷：AnalysisView 全组件零 className——owner 已准动这个封版件",
+   "milestone": "W9",
+   "inputs": [
+    "docs/blocked/ANALYSIS-VIEW-HAS-NO-CLASSNAMES.md",
+    "web/views/analysis/AnalysisView.tsx"
+   ],
+   "outputs": [
+    "web/views/analysis/",
+    "web/app/globals.css",
+    "tests/v041/test_analysis_view_styled.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_analysis_view_styled.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "**owner 2026-08-09 明确许可动这个 v0.4 封版件**（worker.md §9.2 / DEC-021 的例外，逐字记入 trace）。它是 23 屏里唯一一屏 styled: []",
+    "**许可的边界**：只加类名与样式，NEVER 改判定语义、NEVER 动四态逻辑、NEVER 改任何既有判据",
+    "类名走 _ds token，**NEVER 写死颜色与字号**（UI-01 三条判据的射程）",
+    "GAUGE-15 的声明里这一屏的 styled 从 [] 改成实际类名",
+    "关闭 docs/blocked/ANALYSIS-VIEW-HAS-NO-CLASSNAMES.md"
+   ],
+   "context_refs": [
+    "docs/blocked/ANALYSIS-VIEW-HAS-NO-CLASSNAMES.md"
+   ],
+   "depends_on": [
+    "FIX-18"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-20",
+   "title": "缺陷：匿名走网络仍回 200——steward 重起两次都没收口",
+   "milestone": "W9",
+   "inputs": [
+    "docs/blocked/DEREF-PROBE-HIT-A-STALE-BACKEND.md",
+    "harness/demo_server.py",
+    "flint/api/deref.py"
+   ],
+   "outputs": [
+    "harness/",
+    "flint/api/",
+    "tests/v041/test_anon_deref_over_network.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_anon_deref_over_network.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "FIX-16 的进程内证据是对的（anon → 422），steward 也复验了那三个根因。**但走网络打仍是 200**：重起后端两次（PID 已核新鲜、create_deref_app 源码 Header() 必填），匿名 GET /facts/{id} 依然 200",
+    "差别在 harness/demo_server.py 走 create_app 而不是 create_deref_app——**第一件事是把这个差别查清楚并写进 trace，NEVER 先改再解释**",
+    "判据打**真网络**（起栈 + httpx），不是 TestClient：这条只在网络那一层看得见",
+    "收口后匿名 MUST 回 422/401；带真实身份（demo-user）仍 200",
+    "**NEVER 把必填头改成可选**来让判据变绿——那之后谁都能读任何项目的事实",
+    "关闭 docs/blocked/DEREF-PROBE-HIT-A-STALE-BACKEND.md"
+   ],
+   "context_refs": [
+    "docs/blocked/DEREF-PROBE-HIT-A-STALE-BACKEND.md",
+    "docs/trace/FIX-16.md"
+   ],
+   "depends_on": [
+    "DEC-045-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-09",
+   "title": "收尾：第 9 批完成态报告 + 出口全局门",
+   "milestone": "W9",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b9.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH9-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041 -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "全局门五条全绿并逐字贴出（pytest MUST 带 PYTHONIOENCODING=utf-8）：ruff · mypy --strict flint · pytest -q · npm test -- --run · npx tsc --noEmit。**pytest MUST 零 failed**",
+    "出口判据五个：可达性**孤岛 0** · frontend_wants_missing_backend **0** · UnwiredKindReason **空表** · 八张表全部建成且对应族不再回 not_provided · 全库扫描无 `热搜话题NN` 这类合成词（若 CN-01 已由 owner 点过）",
+    "**本批是「接通」批**：报告 MUST 逐条回答「哪个功能今天点得到了、点下去会发生什么、哪些仍点不到、点不到的卡在谁那里」——owner 要拿它对着产品一步一步改",
+    "**CN-01 若仍在等 owner 在场**，报告 MUST 把它单列并写明「准备到位、等一次点头」，NEVER 混在未解决清单里一笔带过",
+    "剩余 open 单逐条列名，owner 面与工程面分开列",
+    "补记 `SHIP-09` 自己漏掉的 `started`（第 9 批收工时只记了 `blocked`，`tests/v041/test_ledger_pairing_v041.py` 当场判红：未配对事件 `('SHIP-09','blocked')`）——这正是 `SHIP-09` 给 `SHELL-02` 补过的同一条，写明是补记",
+    "收工报告里 pytest 的红 MUST **逐条点名归属**（写清每一条归哪张卡或哪张单），NEVER 按族小结之后写一句「逐条有主」——第 9 批那句话漏掉的就是不属于任何族的那一条"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH8-COMPLETION.md"
+   ],
+   "depends_on": [
+    "ENTRY-05",
+    "PERSIST-04",
+    "SHELL-01",
+    "SHELL-02",
+    "CN-02",
+    "FIX-19",
+    "FIX-20",
+    "CN-03"
+   ],
+   "blocked_by": null
+  }
+ ],
+ "steward_corrections": [
+  {
+   "on": "2026-08-09",
+   "by": "steward",
+   "card": "PERSIST-02",
+   "what": "outputs `flint/api/` 改为 `flint/`",
+   "why": "worker 收工时提的卡面订正：同族 PERSIST-01/03/04 写的都是 `flint/`，而 PERSIST-02 落地面含 `flint/repo/` 与 `flint/graph/`，`flint/api/` 圈不住。**这是事后对齐，不是当时的授权面**——当时 worker 是照 DEC-051 的执行指令做的。"
+  },
+  {
+   "on": "2026-08-09",
+   "by": "steward",
+   "card": "ENTRY-05",
+   "what": "outputs 增加 `tools/`",
+   "why": "worker 收工时提的卡面订正：它改了 inputs 里的 `tools/check_fe_be_parity.py`，因为那把尺子报的两条（`runner.submit` 的 payload 被当成响应 / `/projects/combo` 三个字段读的是虚构形状）**是尺子自己的 bug**。改尺子而不写进 outputs，下一个人会以为那两条是代码改出来的。"
+  },
+  {
+   "on": "2026-08-09",
+   "by": "steward",
+   "card": "SHELL-02",
+   "what": "outputs 增加 `migrations/versions/` 与 `flint/`",
+   "why": "**steward 主动加的第三条，owner 可划掉**：DEC-050 已经授权扩这两处，而卡面还停在扩之前的两项。卡面与裁决对不上时，下一个人读卡面会以为 SHELL-02 越界了。"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "arxiv",
+ "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI+AND+submittedDate:[202608090000+TO+202608092359]&max_results=50",
+ "requested_at_utc": "2026-08-10T03:08:16.143965+00:00",
+ "status": 200,
+ "final_url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI+AND+submittedDate:[202608090000+TO+202608092359]&max_results=50",
+ "redirects": [],
+ "headers": {
+  "content-length": "794",
+  "server": "Google Frontend",
+  "content-type": "application/atom+xml; charset=utf-8"
+ },
+ "body_head": "<?xml version='1.0' encoding='UTF-8'?>\n<feed xmlns:opensearch=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:arxiv=\"http://arxiv.org/schemas/atom\" xmlns=\"http://www.w3.org/2005/Atom\">\n  <id>https://arxiv.org/api/nBnTFMBsycyv6YwZkt3U1I27/ZY</id>\n  <title>arXiv Query: search_query=cat:cs.AI AND submittedDate:\"202608090000 TO 202608092359\"&amp;id_list=&amp;start=0&amp;max_results=50</title>\n  <updated>2026-08-10T03:08:16Z</updated>\n  <link href=\"https://arxiv.org/api/query?search_query=cat:cs.AI+AND+submittedDate:%22202608090000+TO+202608092359%22&amp;start=0&amp;max_results=50&amp;id_list=\" type=\"application/atom+xml\"/>\n  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>\n  <opensearch:totalResults>0</opensearch:totalResults>\n  <opensearch:startIndex>0</opensearch:startIndex>\n</feed>\n",
+ "body_bytes": 794,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": [],
+ "method": "GET",
+ "cookie_names": []
+}

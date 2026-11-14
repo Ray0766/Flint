@@ -1,0 +1,98 @@
+# K1-01：九区源站候选清单（**待 owner 人审**，NEVER 自动装载）
+#
+# 这张表是**调研结论**，不是启用清单：
+#   · 每条 `enabled: false`——owner 没人审之前，一条都不启用；
+#   · 每条 `fetch_legal_status: unknown`——K2 未决前这是唯一诚实的填法，
+#     而 `unknown` 在 REGION-07 的门里**不放行抓取**（这张表填完也还不能抓）；
+#   · `flint/region/registry.py#load_seed_registry()` **仍然返回空表**，
+#     它的原话是「实现里 NEVER 内置任何真实站点」——本卡不碰那条。
+#
+# 字段名与 `contracts_v04/models_v04.py#SourceEntry` 逐字对齐，另加两个出处字段：
+#   `source_url`（调研出处链接）· `researched_on`（调研日期）。
+# 准入打分 `admission` 对照 `docs/source_admission_v04.md#二`：
+#   data_availability（数据可得性）· update_frequency（更新频率）· structure_stability（结构稳定性）
+#   取值 pass / weak / fail；**任一 fail 或 weak 都要写 note 说明为什么仍列**。
+#
+# 完整调研记录（含未找到公开端点的区）见 `docs/源站清单-v041.md`。
+
+version: 1
+generated_by: K1-01
+researched_on: 2026-08-04
+status: candidate_pending_owner_review
+
+entries:
+  - source_id: google_trends_api
+    region: US            # 见 docs 的「多区源怎么落表」未决问题：本轮按注册地落 US
+    country: US
+    name_native: Google Trends
+    homepage: https://trends.google.com/
+    authority_tier: official
+    fetch_legal_status: unknown
+    enabled: false
+    source_url: https://developers.google.com/search/apis/trends
+    researched_on: 2026-08-04
+    admission:
+      data_availability: weak
+      update_frequency: pass
+      structure_stability: weak
+      note: >-
+        官方 API 仍在 alpha：配额受限、端点集有限、需 Google Cloud 认证。
+        「可定位」过关，「稳定」打问号——alpha 期的端点形态可能变。
+        仍列的理由：它是**唯一**能按地区参数取数的官方趋势源，九区里多数区靠它兜底。
+
+  - source_id: yahoo_jp_realtime
+    region: JP
+    country: JP
+    name_native: Yahoo!リアルタイム検索
+    homepage: https://search.yahoo.co.jp/realtime
+    authority_tier: mainstream
+    fetch_legal_status: unknown
+    enabled: false
+    source_url: https://promo-search.yahoo.co.jp/realtime/buzz/
+    researched_on: 2026-08-04
+    admission:
+      data_availability: pass
+      update_frequency: pass
+      structure_stability: weak
+      note: >-
+        LINEヤフー 官方页面写明提供排行信息 API（面向合作方），但公开文档未给出
+        自助申请入口与端点契约——接入路径需 owner 侧联系，属 K2 面。
+
+  - source_id: naver_datalab
+    region: KR
+    country: KR
+    name_native: 네이버 데이터랩
+    homepage: https://datalab.naver.com/
+    authority_tier: official
+    fetch_legal_status: unknown
+    enabled: false
+    source_url: https://github.com/naver/naver-openapi-guide/blob/master/sample/php/APIExamDatalabTrend.php
+    researched_on: 2026-08-04
+    admission:
+      data_availability: pass
+      update_frequency: pass
+      structure_stability: pass
+      note: >-
+        三项均过：端点 https://openapi.naver.com/v1/datalab/search 有官方示例代码，
+        参数契约明确（startDate/endDate/timeUnit/keywordGroups）。需 CLIENT ID +
+        SECRET（Naver Developers 自助注册）——key 由 owner 在运行环境配置，NEVER 入仓。
+
+  - source_id: reddit_data_api
+    region: US
+    country: US
+    name_native: Reddit
+    homepage: https://www.reddit.com/
+    authority_tier: community
+    fetch_legal_status: unknown
+    enabled: false
+    source_url: https://developers.reddit.com/
+    researched_on: 2026-08-04
+    admission:
+      data_availability: fail
+      update_frequency: pass
+      structure_stability: pass
+      note: >-
+        **可得性判 fail**：自助注册已关闭，新 OAuth 令牌需人工审批（公开资料称 2–4 周）；
+        免费档仅限**非商业**用途，而 Flint 是商用 MVP（S1）——商用需另签合作协议。
+        仍列的理由：它是英语区社群热度的主要来源之一，且这条「拿不到」本身就是
+        owner 要看的结论（要不要走商务流程）。

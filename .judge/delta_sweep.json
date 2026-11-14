@@ -1,0 +1,1 @@
+{"pairs": 60, "same": 14, "different": 46, "best_delta": 0.961, "best_acc": 0.7666666666666667, "best_f1": 0.2222222222222222, "tp": 2, "fp": 2, "fn": 12, "tn": 44, "floor_now": 0.05, "quantile_now": 0.1}

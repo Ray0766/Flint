@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.funding.example/orgs?q=agent+memory",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"organizations\": [{\"name\": \"Agent Memory Labs 0\", \"last_round\": \"Seed\", \"raised_usd\": 5000000, \"url\": \"https://funding.example/agent-memory/0\"}, {\"name\": \"Agent Memory Labs 1\", \"last_round\": \"Series B\", \"raised_usd\": 10000000, \"url\": \"https://funding.example/agent-memory/1\"}, {\"name\": \"Agent Memory Labs 2\", \"last_round\": \"Seed\", \"raised_usd\": 15000000, \"url\": \"https://funding.example/agent-memory/2\"}]}"
+ }
+]

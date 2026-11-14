@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/CjzYuagePS6XxWyyNJm+LIXH/10</id>
+  <title>arXiv Query: search_query=all:brain-computer OR all:interface OR all:failed OR all:replication&amp;id_list=&amp;start=0&amp;max_results=3</title>
+  <updated>2026-08-10T23:27:17Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:brain-computer+OR+(all:interface+OR+(all:failed+OR+all:replication))&amp;start=0&amp;max_results=3&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>
+  <opensearch:totalResults>133235</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2411.09211v1</id>
+    <title>Dynamic Neural Communication: Convergence of Computer Vision and Brain-Computer Interface</title>
+    <updated>2024-11-14T06:15:05Z</updated>
+    <link href="https://arxiv.org/abs/2411.09211v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.09211v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Interpreting human neural signals to decode static speech intentions such as text or images and dynamic speech intentions such as audio or video is showing great potential as an innovative communication tool. Human communication accompanies various features, such as articulatory movements, facial expressions, and internal speech, all of which are reflected in neural signals. However, most studies only generate short or fragmented outputs, while providing informative communication by leveraging various features from neural signals remains challenging. In this study, we introduce a dynamic neural communication method that leverages current computer vision and brain-computer interface technologies. Our approach captures the user's intentions from neural signals and decodes visemes in short time steps to produce dynamic visual outputs. The results demonstrate the potential to rapidly capture and reconstruct lip movements during natural speech attempts from human neural signals, enabling dynamic neural communication through the convergence of computer vision and brain--computer interface.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-14T06:15:05Z</published>
+    <arxiv:comment>4 pages, 2 figures, 1 table, Name of Conference: International Conference on Brain-Computer Interface</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Ji-Ha Park</name>
+    </author>
+    <author>
+      <name>Seo-Hyun Lee</name>
+    </author>
+    <author>
+      <name>Soowon Kim</name>
+    </author>
+    <author>
+      <name>Seong-Whan Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.06753v2</id>
+    <title>Towards Neurohaptics: Brain-Computer Interfaces for Decoding Intuitive Sense of Touch</title>
+    <updated>2020-12-20T13:23:54Z</updated>
+    <link href="https://arxiv.org/abs/2012.06753v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.06753v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Noninvasive brain-computer interface (BCI) is widely used to recognize users' intentions. Especially, BCI related to tactile and sensation decoding could provide various effects on many industrial fields such as manufacturing advanced touch displays, controlling robotic devices, and more immersive virtual reality or augmented reality. In this paper, we introduce haptic and sensory perception-based BCI systems called neurohaptics. It is a preliminary study for a variety of scenarios using actual touch and touch imagery paradigms. We designed a novel experimental environment and a device that could acquire brain signals under touching designated materials to generate natural touch and texture sensations. Through the experiment, we collected the electroencephalogram (EEG) signals with respect to four different texture objects. Seven subjects were recruited for the experiment and evaluated classification performances using machine learning and deep learning approaches. Hence, we could confirm the feasibility of decoding actual touch and touch imagery on EEG signals to develop practical neurohaptics.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-12T08:08:47Z</published>
+    <arxiv:comment>Submitted IEEE The 9th International Winter Conference on Brain-Computer Interface</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Jeong-Hyun Cho</name>
+    </author>
+    <author>
+      <name>Ji-Hoon Jeong</name>
+    </author>
+    <author>
+      <name>Myoung-Ki Kim</name>
+    </author>
+    <author>
+      <name>Seong-Whan Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.03533v1</id>
+    <title>Domain Generalization for Session-Independent Brain-Computer Interface</title>
+    <updated>2020-12-07T08:47:42Z</updated>
+    <link href="https://arxiv.org/abs/2012.03533v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.03533v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The inter/intra-subject variability of electroencephalography (EEG) makes the practical use of the brain-computer interface (BCI) difficult. In general, the BCI system requires a calibration procedure to acquire subject/session-specific data to tune the model every time the system is used. This problem is recognized as a major obstacle to BCI, and to overcome it, an approach based on domain generalization (DG) has recently emerged. The main purpose of this paper is to reconsider how the zero-calibration problem of BCI for a realistic situation can be overcome from the perspective of DG tasks. In terms of the realistic situation, we have focused on creating an EEG classification framework that can be applied directly in unseen sessions, using only multi-subject/-session data acquired previously. Therefore, in this paper, we tested four deep learning models and four DG algorithms through leave-one-session-out validation. Our experiment showed that deeper and larger models were effective in cross-session generalization performance. Furthermore, we found that none of the explicit DG algorithms outperformed empirical risk minimization. Finally, by comparing the results of fine-tuning using subject-specific data, we found that subject-specific data may deteriorate unseen session classification performance due to inter-session variability.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-07T08:47:42Z</published>
+    <arxiv:comment>Submitted IEEE The 9th International Winter Conference on Brain-Computer Interface</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Dong-Kyun Han</name>
+    </author>
+    <author>
+      <name>Ji-Hoon Jeong</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,124 @@
+{
+ "model": "gpt-4o-mini",
+ "card_ids": [
+  "card-20260629-c-20260629-000",
+  "card-20260629-c-20260629-001"
+ ],
+ "hypothesis": "把两个不同热点的方法迁移到同一落地场景，做一个可复用工作台",
+ "delta": 0.9778643488821877,
+ "degraded": true,
+ "dropped_conflicts": [
+  [
+   "topic-caliber-1",
+   "topic-caliber-2"
+  ]
+ ],
+ "regen_rounds": 3,
+ "generations": 5,
+ "topics": [
+  {
+   "topic_id": "topic-caliber-1",
+   "one_liner": "开发一个高考录取结果分析平台，利用钙钛矿组件的技术提升数据处理效率。",
+   "target_user_tag": "高考学生及家长",
+   "form_factor_tag": "SaaS",
+   "why_now_claim": "随着高考录取结果的发布，学生和家长对数据分析的需求急剧上升。",
+   "why_now_evidences": [
+    {
+     "event": "2023年高考录取结果公布",
+     "event_date": "2023-07-01",
+     "citation_id": "card-20260629-c-20260629-000"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "数据分析",
+     "学生录取",
+     "教育科技"
+    ],
+    "钙钛矿组件": [
+     "新材料",
+     "能源效率",
+     "技术创新"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-3",
+   "one_liner": "开发一个基于高考录取结果分析的钙钛矿组件优化平台，提升教育资源配置效率。",
+   "target_user_tag": "教育机构",
+   "form_factor_tag": "SaaS",
+   "why_now_claim": "随着高考录取结果的透明化，教育机构亟需利用数据分析优化资源配置。",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果公布",
+     "event_date": "2023-06-25",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件技术进步",
+     "event_date": "2023-07-15",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "数据分析",
+     "教育资源配置"
+    ],
+    "钙钛矿组件": [
+     "技术优化",
+     "可再生能源"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-4",
+   "one_liner": "构建一个高考录取结果分析平台，利用钙钛矿组件的技术提升数据处理效率和准确性。",
+   "target_user_tag": "教育工作者",
+   "form_factor_tag": "SaaS",
+   "why_now_claim": "随着高考录取结果的公布，教育行业对数据分析的需求急剧上升。",
+   "why_now_evidences": [
+    {
+     "event": "2023年高考录取结果公布",
+     "event_date": "2023-07-01",
+     "citation_id": "card-20260629-c-20260629-000"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "数据分析",
+     "教育技术"
+    ],
+    "钙钛矿组件": [
+     "新材料",
+     "能源效率"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-5",
+   "one_liner": "构建一个高考录取结果分析平台，利用钙钛矿组件的创新技术提升数据处理效率。",
+   "target_user_tag": "高考生及其家长",
+   "form_factor_tag": "SaaS",
+   "why_now_claim": "随着高考录取结果的公布，家长和学生对数据分析的需求急剧增加。",
+   "why_now_evidences": [],
+   "speculative": true,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "数据分析",
+     "录取趋势"
+    ],
+    "钙钛矿组件": [
+     "创新技术",
+     "高效处理"
+    ]
+   }
+  }
+ ],
+ "cost_usd": 0.001,
+ "schema_misses": 0,
+ "pipeline": "batch"
+}

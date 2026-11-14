@@ -1,0 +1,2079 @@
+{
+ "source_model": "claude-sonnet-5",
+ "judge_model": "deepseek-chat",
+ "judged_at": "2026-08-04T07:47:59.890141+00:00",
+ "bank_version": "v1.0",
+ "source_sha256": "cb46701cae0353ea35015f9e2757feb12d2fd379a6d71ca0069b7c191164c792",
+ "caliber": "deepseek 重判既有产出（只重判、不重跑组稿）；report_only",
+ "questions": 258,
+ "judged": 256,
+ "answered_count": 144,
+ "unavailable": 2,
+ "rate": 0.5625,
+ "records": [
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "summary",
+   "question_id": "generic/summary/q1",
+   "question": "本节写明这个项目服务的具体使用者是谁？",
+   "answered": true,
+   "answer": "面向语言学研究机构与AI语音企业，提供中低档标准化服务"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "summary",
+   "question_id": "generic/summary/q2",
+   "question": "本节明确排除在范围之外的是哪些内容？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "summary",
+   "question_id": "generic/summary/q3",
+   "question": "本节把哪些条件列为结论成立的前提？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "opportunity",
+   "question_id": "generic/opportunity/q1",
+   "question": "按本节，这个机会为何是现在出现而非更早？",
+   "answered": true,
+   "answer": "从语言消亡的紧迫性看，联合国教科文组织认为全球约七千种语言中近半数面临消失风险（Fact-1），而中国境内汉语方言片区数量众多，不少弱势方言的青年使用者占比已降至三成以下（Fact-2）。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "opportunity",
+   "question_id": "generic/opportunity/q2",
+   "question": "本节指出当前替代做法的不足具体在哪里？",
+   "answered": true,
+   "answer": "当前市场上高质量、结构化标注的方言语音数据供给严重不足，多数标注平台仍聚焦普通话及少数强势方言，对弱势方言和地方腔调的覆盖近乎空白（Fact-4）。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "opportunity",
+   "question_id": "generic/opportunity/q3",
+   "question": "本节用什么量化描述刻画机会的规模或紧迫程度？",
+   "answered": true,
+   "answer": "从语言消亡的紧迫性看，联合国教科文组织认为全球约七千种语言中近半数面临消失风险（Fact-1），而中国境内汉语方言片区数量众多，不少弱势方言的青年使用者占比已降至三成以下（Fact-2）。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "market",
+   "question_id": "generic/market/q1",
+   "question": "本节把市场口径界定在哪个范围（人群、地区或细分）？",
+   "answered": true,
+   "answer": "团队计划优先覆盖粤语、闽南语、吴语、西南官话等使用人群基数较大、商业需求较明确的方言片区，逐步扩展至覆盖长尾方言，形成难以被简单复制的语料资源壁垒与标注流程护城河，从而在方言语音数据这一垂直赛道上建立起先发优势与规模效应，并为后续向多语种、跨境方言数据服务延伸预留战略空间。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "market",
+   "question_id": "generic/market/q2",
+   "question": "按本节，初期可实际触达的部分与总体市场如何区分？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "market",
+   "question_id": "generic/market/q3",
+   "question": "本节把哪些因素列为市场变化的驱动力？",
+   "answered": true,
+   "answer": "从需求侧看，主流互联网大厂与人工智能创业公司在语音技术上的军备竞赛尚未停歇，模型训练对高质量、多样化语音语料的渴求处于历史高位。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "competition",
+   "question_id": "generic/competition/q1",
+   "question": "本节点名了哪些具体竞品或替代做法？",
+   "answered": true,
+   "answer": "从竞争格局看，可分为三类玩家：通用语音标注工具厂商、大型云服务商附带的语音数据服务，以及零散的众包标注平台。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "competition",
+   "question_id": "generic/competition/q2",
+   "question": "按本节，在什么条件下本项目会输给对手？",
+   "answered": true,
+   "answer": "综合来看，通用工具厂商体量大但转型慢，云服务商资源强但优先级低，众包平台灵活但质量弱，三者均未在方言标注这一细分赛道形成稳固壁垒。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "competition",
+   "question_id": "generic/competition/q3",
+   "question": "本节把差异落在哪些可观察的产品能力上？",
+   "answered": true,
+   "answer": "与上述三类竞品相比，本项目差异化优势体现在两方面。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "plan",
+   "question_id": "generic/plan/q1",
+   "question": "本节说明各阶段之间存在哪些先后依赖？",
+   "answered": true,
+   "answer": "方言语音标注平台的建设采取三阶段推进的方式，每一阶段都设定可验证的交付物与明确的验收标准，避免里程碑流于形式化的时间节点，确保项目组、投资方与合作机构能够基于客观数据对进展做出判断。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "plan",
+   "question_id": "generic/plan/q2",
+   "question": "本节把哪一步标为最不确定或风险最高？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "plan",
+   "question_id": "generic/plan/q3",
+   "question": "各阶段的产出物在本节分别是什么？",
+   "answered": true,
+   "answer": "第一阶段为期六周，目标是完成最小可用系统的搭建，涵盖音频上传、标注界面、标注结果导出三个核心模块，并为后续阶段的功能扩展预留接口。\n第二阶段为期八周，重点在于扩充方言覆盖范围与优化标注质量控制机制，是整个项目承上启下的关键环节。\n第三阶段为期十周，聚焦系统的规模化部署与商业化准备，是项目从内部验证走向对外服务的转折点。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "budget",
+   "question_id": "generic/budget/q1",
+   "question": "本节各项支出分别对应哪项具体工作？",
+   "answered": true,
+   "answer": "其中人力成本占比最大，约为六十五万元（PriceCell-3），涵盖标注规范制定、平台开发、方言语音数据采集协调及质量审核等岗位薪酬。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "budget",
+   "question_id": "generic/budget/q2",
+   "question": "按本节，支出在时间上如何分布或发生在哪个阶段？",
+   "answered": true,
+   "answer": "总预算初步设定为一百二十万元人民币（PriceCell-2），覆盖为期十二个月的建设周期。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "budget",
+   "question_id": "generic/budget/q3",
+   "question": "占比最大的一项支出是什么，本节给的理由是什么？",
+   "answered": true,
+   "answer": "其中人力成本占比最大，约为六十五万元（PriceCell-3），涵盖标注规范制定、平台开发、方言语音数据采集协调及质量审核等岗位薪酬。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "risks",
+   "question_id": "generic/risks/q1",
+   "question": "本节把哪些风险归为可控、哪些归为不可控？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "risks",
+   "question_id": "generic/risks/q2",
+   "question": "本节为各条风险给出的可观察触发信号是什么？",
+   "answered": true,
+   "answer": "以上风险均设定了可观测、可核验的触发阈值，便于动态监控与及时纠偏。"
+  },
+  {
+   "composition_id": "golddoc-generic-plain",
+   "section_id": "risks",
+   "question_id": "generic/risks/q3",
+   "question": "本节提到缓解措施本身要付出什么代价？",
+   "answered": true,
+   "answer": "返工成本预计增加预算8%（PriceCell-1）。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "summary",
+   "question_id": "generic/summary/q1",
+   "question": "本节写明这个项目服务的具体使用者是谁？",
+   "answered": true,
+   "answer": "产品形态分为三档，面向不同规模团队分层设计。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "summary",
+   "question_id": "generic/summary/q2",
+   "question": "本节明确排除在范围之外的是哪些内容？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "summary",
+   "question_id": "generic/summary/q3",
+   "question": "本节把哪些条件列为结论成立的前提？",
+   "answered": true,
+   "answer": "结论：本项目在基础版、专业版、企业版三档产品形态支撑下，以87%的摘要准确率与每千字12秒的处理效率（Fact-2、Fact-3）作为核心竞争力，配合99元至29800元的分层定价体系（PriceCell-1、PriceCell-3），可有效满足从个人用户到大型企业的差异化需求，具备清晰市场切入路径与良好商业化可行性，建议按三档并行推进方式尽快启动开发工作。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "opportunity",
+   "question_id": "generic/opportunity/q1",
+   "question": "按本节，这个机会为何是现在出现而非更早？",
+   "answered": true,
+   "answer": "技术成熟度与市场需求的同步演进，构成了当前入场的窗口期机会，晚入场者将面临更高的用户习惯迁移成本。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "opportunity",
+   "question_id": "generic/opportunity/q2",
+   "question": "本节指出当前替代做法的不足具体在哪里？",
+   "answered": true,
+   "answer": "当前企业与团队每周产生的会议数量持续增长，而会议记录的整理、传播与检索却普遍依赖人工完成，这一环节已成为组织协作链条中的明显瓶颈，也是跨部门协同经常被忽视却代价高昂的隐性成本来源（Fact-1）。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "opportunity",
+   "question_id": "generic/opportunity/q3",
+   "question": "本节用什么量化描述刻画机会的规模或紧迫程度？",
+   "answered": true,
+   "answer": "据统计，知识型员工平均每周参加会议的时间占工作总时长的比例已超过三分之一（Fact-2），而其中相当一部分会议内容在结束后并未得到有效沉淀，导致决策依据流失、任务追踪困难、跨部门协同成本上升。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "market",
+   "question_id": "generic/market/q1",
+   "question": "本节把市场口径界定在哪个范围（人群、地区或细分）？",
+   "answered": true,
+   "answer": "目标客户群体方面，首要聚焦50至500人规模的中小型企业，这类企业对会议效率工具的付费意愿较强，且决策链条相对短，试用转化周期平均为21天（Fact-8），有利于项目在早期快速验证商业模式。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "market",
+   "question_id": "generic/market/q2",
+   "question": "按本节，初期可实际触达的部分与总体市场如何区分？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "market",
+   "question_id": "generic/market/q3",
+   "question": "本节把哪些因素列为市场变化的驱动力？",
+   "answered": true,
+   "answer": "这一细分市场的高速增长，主要由三类驱动因素支撑：一是企业对知识管理与信息留存的重视程度持续提升，尤其是在跨部门协作日益频繁的背景下；二是AI语音识别与自然语言处理技术的成熟，使自动化摘要的准确率大幅提高，用户信任度随之增强；三是企业对员工时间成本的敏感度不断增加，据调研，知识工作者平均每周花在会议相关整理工作上的时间约为4.5小时（Fact-7），若能通过工具将其压缩至1小时以内，将带来显著的人力成本节约，进而提升整体组织效率。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "competition",
+   "question_id": "generic/competition/q1",
+   "question": "本节点名了哪些具体竞品或替代做法？",
+   "answered": true,
+   "answer": "第一类竞争者是大型云厂商和办公套件厂商内置的会议摘要功能，部分视频会议平台已将转写、摘要、待办事项提取作为基础功能捆绑在订阅套餐中，用户无需额外付费即可使用（Fact-2）。第二类竞争者是独立的会议智能创业公司，这类产品近两三年获得显著融资支持，部分头部玩家已完成数轮融资，估值达数亿美元级别（Fact-4）。第三类竞争者是开源或半开源的语音转写加摘要工具链，用户可自行组合语音识别模型与大语言模型搭建定制化流程。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "competition",
+   "question_id": "generic/competition/q2",
+   "question": "按本节，在什么条件下本项目会输给对手？",
+   "answered": true,
+   "answer": "综合来看，本项目团队过去在自然语言处理与语音识别方向积累了一定项目经验，尤其在中文口语化文本的结构化处理上有实践积累，这为切入中文场景下的差异化定位提供了基础（Profile-1）。结合竞品格局判断，正面迎战头部会议智能公司的全功能覆盖并不现实，资源投入和资历积累都不足以支撑（Profile-2）。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "competition",
+   "question_id": "generic/competition/q3",
+   "question": "本节把差异落在哪些可观察的产品能力上？",
+   "answered": true,
+   "answer": "更合理的策略是聚焦中文语境下的会议摘要精度与行动项提取准确率，同时以更友好的价格带切入中小团队和个人专业用户市场，形成错位竞争。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "plan",
+   "question_id": "generic/plan/q1",
+   "question": "本节说明各阶段之间存在哪些先后依赖？",
+   "answered": true,
+   "answer": "会议纪要摘要工具的落地路径分为四个可验证的里程碑，每个里程碑均设定明确的交付物、验收标准、责任团队与时间节点，确保项目进度可被客观核查，避免出现无法量化的模糊表述。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "plan",
+   "question_id": "generic/plan/q2",
+   "question": "本节把哪一步标为最不确定或风险最高？",
+   "answered": true,
+   "answer": "该里程碑的可验证性体现在测试报告的可复核性——第三方可通过相同测试集重新验证识别准确率数据，也可核对测试环境与样本构成是否与报告描述一致。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "plan",
+   "question_id": "generic/plan/q3",
+   "question": "各阶段的产出物在本节分别是什么？",
+   "answered": true,
+   "answer": "第一个里程碑是需求确认与技术选型，周期为两周（Profile-1，团队三名工程师均具备两年以上自然语言处理项目经验）。交付物包括需求规格说明书、语音转写与摘要生成的技术方案对比报告，以及供应商初步评估清单。第二个里程碑是核心功能开发，周期为六周。交付物为可运行的最小可行产品（MVP），包含录音上传、自动转写、关键信息提取与摘要生成四大模块，并附带接口文档与部署说明。第三个里程碑是内测与优化，周期为四周。邀请20家企业客户进行内测（Fact-4，覆盖互联网、金融、教育三个行业），收集用户反馈并迭代产品功能与交互细节。第四个里程碑是正式上线与商业化，周期为两周。交付物为公开发布的产品版本、配套的定价方案及上线宣传物料。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "budget",
+   "question_id": "generic/budget/q1",
+   "question": "本节各项支出分别对应哪项具体工作？",
+   "answered": true,
+   "answer": "在人力成本方面，核心开发团队预计投入3人月，按平均人力成本单价1.5万元/人月计算（PriceCell-1），合计人力支出为4.5万元（PriceCell-2）。其中包括1名后端工程师负责语音转写与NLP接口对接，1名前端工程师负责界面与交互实现，以及0.5人月的产品经理协调需求与测试（PriceCell-3）。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "budget",
+   "question_id": "generic/budget/q2",
+   "question": "按本节，支出在时间上如何分布或发生在哪个阶段？",
+   "answered": true,
+   "answer": "综合以上各项，项目总预算汇总如下：人力成本4.5万元（PriceCell-2），技术服务成本0.21万元（PriceCell-10），基础设施成本0.075万元（PriceCell-12加PriceCell-13），测试运维预留0.5万元（PriceCell-14），总计约5.285万元（PriceCell-15）。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "budget",
+   "question_id": "generic/budget/q3",
+   "question": "占比最大的一项支出是什么，本节给的理由是什么？",
+   "answered": true,
+   "answer": "人力成本4.5万元（PriceCell-2），技术服务成本0.21万元（PriceCell-10），基础设施成本0.075万元（PriceCell-12加PriceCell-13），测试运维预留0.5万元（PriceCell-14），总计约5.285万元（PriceCell-15）。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "risks",
+   "question_id": "generic/risks/q1",
+   "question": "本节把哪些风险归为可控、哪些归为不可控？",
+   "answered": true,
+   "answer": "本节把哪些风险归为可控、哪些归为不可控？"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "risks",
+   "question_id": "generic/risks/q2",
+   "question": "本节为各条风险给出的可观察触发信号是什么？",
+   "answered": true,
+   "answer": "证伪标准：若连续三周抽样测试中，人工核对准确率低于85%（Fact-2），则判定风险已发生，需暂停对外承诺并回退至\"人工校对+工具辅助\"模式。"
+  },
+  {
+   "composition_id": "golddoc-generic-channels",
+   "section_id": "risks",
+   "question_id": "generic/risks/q3",
+   "question": "本节提到缓解措施本身要付出什么代价？",
+   "answered": true,
+   "answer": "第三项风险是成本超支：语音转写API按分钟计费，预估单位成本0.8元/分钟（PriceCell-1），若实际用量超预测30%以上，全年成本或突破预算15万元（PriceCell-2）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "abstract",
+   "question_id": "thesis/abstract/q1",
+   "question": "本节写明所解决问题此前的困难在哪里？",
+   "answered": true,
+   "answer": "当前主流地磁勘探设备灵敏度普遍在10 pT/√Hz量级（Fact-1），而金刚石NV色心量子磁力仪理论灵敏度可达1 pT/√Hz以下（Fact-2）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "abstract",
+   "question_id": "thesis/abstract/q2",
+   "question": "本节把工作的适用范围或成立前提界定为什么？",
+   "answered": true,
+   "answer": "本节把工作的适用范围或成立前提界定为什么？"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "abstract",
+   "question_id": "thesis/abstract/q3",
+   "question": "本节用什么可衡量的改进来说明结果的意义？",
+   "answered": true,
+   "answer": "其二，在选定的500平方公里试验区（Fact-4）内，将深部隐伏矿体探测深度从现有的300米（Fact-5）提升至500米以上（Fact-6），该结论将通过后续钻探比对验证，若钻探结果与预测异常区偏差超过50米（Fact-7）即视为未达标。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "related_work",
+   "question_id": "thesis/related_work/q1",
+   "question": "本节把已有工作分成哪几类？",
+   "answered": true,
+   "answer": "本节把已有工作分成哪几类？"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "related_work",
+   "question_id": "thesis/related_work/q2",
+   "question": "本节指出已有工作共同的未解问题是什么？",
+   "answered": true,
+   "answer": "然而，现有产品在环境适应性、连续工作稳定性及数据处理算法的智能化程度方面仍存在明显短板，尤其是在高温高湿、强振动等复杂野外工况下，设备的漂移误差控制与自动化标定能力尚待提升（Fact-6），这也是当前量子传感地质勘探技术从实验室走向规模化商用过程中亟需突破的关键瓶颈。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "related_work",
+   "question_id": "thesis/related_work/q3",
+   "question": "本工作与最接近的一条已有工作分界在哪里？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "method",
+   "question_id": "thesis/method/q1",
+   "question": "本节列出方法成立所依赖的假设有哪些？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "method",
+   "question_id": "thesis/method/q2",
+   "question": "本节关键步骤的输入与输出分别是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "method",
+   "question_id": "thesis/method/q3",
+   "question": "按本节，方法在什么情形下会失效？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "evaluation_plan",
+   "question_id": "thesis/evaluation_plan/q1",
+   "question": "按本节，如何判定结果支持还是推翻假设？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "evaluation_plan",
+   "question_id": "thesis/evaluation_plan/q2",
+   "question": "本节设置了哪些对照、消融或参照？",
+   "answered": true,
+   "answer": "验证方式为在已知地质剖面的试验场地进行钻孔对照，将量子传感数据反演结果与实际钻孔取芯数据逐层比对，深度偏差不超过3%即视为达标（Fact-4）"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "evaluation_plan",
+   "question_id": "thesis/evaluation_plan/q3",
+   "question": "多个指标冲突时本节给的取舍原则是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "timeline",
+   "question_id": "thesis/timeline/q1",
+   "question": "各阶段的产出物在本节分别是什么？",
+   "answered": true,
+   "answer": "第一阶段为期六个月（Fact-5），对应第一学年秋季至寒假期间，主要任务是完成量子传感器核心部件的选型与实验室搭建。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "timeline",
+   "question_id": "thesis/timeline/q2",
+   "question": "本节说明阶段之间存在哪些先后依赖？",
+   "answered": true,
+   "answer": "综上，四个阶段合计二十四个月，各节点均与学制安排精准对齐，保障项目执行与人才培养目标同步实现（Fact-1）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "timeline",
+   "question_id": "thesis/timeline/q3",
+   "question": "本节把哪个环节标为最可能延期？",
+   "answered": true,
+   "answer": "第四阶段为期四个月（Fact-8），为收尾阶段，涵盖第二学年寒假至第三学年秋季学期开学前，主要完成成果总结、论文撰写与结题材料准备。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "resources",
+   "question_id": "thesis/resources/q1",
+   "question": "本节各项资源分别用于哪个阶段？",
+   "answered": true,
+   "answer": "综合来看，本项目所需的设备、算力、软件许可与人力资源均已具备或已在可控预算范围内落实，能够支撑项目从野外数据采集、传输处理到最终地质建模与成果输出的全流程实施，资源就绪度较高，具备启动实施的现实基础。"
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "resources",
+   "question_id": "thesis/resources/q2",
+   "question": "本节把哪一项列为获取难度最高？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-plain",
+   "section_id": "resources",
+   "question_id": "thesis/resources/q3",
+   "question": "资源不足时本节给出的替代方案是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "abstract",
+   "question_id": "thesis/abstract/q1",
+   "question": "本节写明所解决问题此前的困难在哪里？",
+   "answered": true,
+   "answer": "传统老化评估依赖固定应力筛选（Burn-in）与经验寿命模型，难以覆盖实际路况下多因子耦合退化路径，导致失效预测偏差普遍超过30%（Fact-2）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "abstract",
+   "question_id": "thesis/abstract/q2",
+   "question": "本节把工作的适用范围或成立前提界定为什么？",
+   "answered": true,
+   "answer": "本节把工作的适用范围或成立前提界定为车规级芯片在高温、高湿、强振动及电气应力叠加作用下的老化失效，是导致整车电子系统可靠性下降的核心因素之一（Fact-1）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "abstract",
+   "question_id": "thesis/abstract/q3",
+   "question": "本节用什么可衡量的改进来说明结果的意义？",
+   "answered": true,
+   "answer": "项目核心贡献具备明确可证伪性：其一，构建融合物理机理与数据驱动的混合退化模型，声称在标准车规测试集（AEC-Q100 Grade 1）上将RUL预测误差控制在12%以内（Fact-3），可通过第三方加速老化实验验证或证伪；其二，提出轻量化在线推断算法，声称在资源受限MCU（主频不超过200MHz、RAM不超过256KB）上实现毫秒级响应（Fact-4），该性能边界可通过实际硬件部署测试复现或推翻。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "related_work",
+   "question_id": "thesis/related_work/q1",
+   "question": "本节把已有工作分成哪几类？",
+   "answered": true,
+   "answer": "车规芯片的老化预测研究近年来随着新能源汽车与自动驾驶芯片可靠性需求的提升而快速发展，形成了从物理失效机理建模、加速寿命测试到数据驱动预测的多条技术路线，并逐步渗透到芯片设计、验证与整车健康管理各环节。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "related_work",
+   "question_id": "thesis/related_work/q2",
+   "question": "本节指出已有工作共同的未解问题是什么？",
+   "answered": true,
+   "answer": "尽管上述工作在机理建模与数据方法上均取得进展，现有研究仍存在明显局限：其一，多数模型依赖实验室加速测试数据，与真实路况下多变、非平稳的应力谱存在差异，导致预测模型在实车场景下泛化能力不足（Fact-12）；其二，现有片上监测方案多聚焦单一失效机制，难以对多机制耦合老化联合建模，且缺乏统一的多源信号融合框架；其三，数据驱动模型可解释性不足，难以满足车规级功能安全认证对预测依据可追溯性的要求，也为后续审计与责任追溯带来困难（Fact-13）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "related_work",
+   "question_id": "thesis/related_work/q3",
+   "question": "本工作与最接近的一条已有工作分界在哪里？",
+   "answered": true,
+   "answer": "这些局限正是本项目的切入点：本团队在车规芯片可靠性建模与嵌入式健康监测系统开发方面已有多年积累（Profile-1），计划在现有研究基础上构建融合多机制物理模型与轻量化深度学习的混合预测框架，并结合实车运行数据进行验证，以弥补现有方法在真实场景适应性与可解释性上的不足，为车规芯片全生命周期健康管理提供可落地的技术支撑。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "method",
+   "question_id": "thesis/method/q1",
+   "question": "本节列出方法成立所依赖的假设有哪些？",
+   "answered": true,
+   "answer": "本节列出方法成立所依赖的假设有哪些？"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "method",
+   "question_id": "thesis/method/q2",
+   "question": "本节关键步骤的输入与输出分别是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "method",
+   "question_id": "thesis/method/q3",
+   "question": "按本节，方法在什么情形下会失效？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "evaluation_plan",
+   "question_id": "thesis/evaluation_plan/q1",
+   "question": "按本节，如何判定结果支持还是推翻假设？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "evaluation_plan",
+   "question_id": "thesis/evaluation_plan/q2",
+   "question": "本节设置了哪些对照、消融或参照？",
+   "answered": true,
+   "answer": "在评估方法论上，本项目采用分层交叉验证策略，将数据集按芯片批次、工况温度区间与使用场景三个维度分层，确保测试集与训练集在分布上具有代表性差异，从而更真实地反映模型在未知工况下的泛化能力，降低过拟合风险。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "evaluation_plan",
+   "question_id": "thesis/evaluation_plan/q3",
+   "question": "多个指标冲突时本节给的取舍原则是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "timeline",
+   "question_id": "thesis/timeline/q1",
+   "question": "各阶段的产出物在本节分别是什么？",
+   "answered": true,
+   "answer": "第一阶段为期3个月（Fact-3），对应秋季学期前半段，主要完成车规芯片老化机理调研、现有加速老化测试标准梳理，以及实验平台搭建。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "timeline",
+   "question_id": "thesis/timeline/q2",
+   "question": "本节说明阶段之间存在哪些先后依赖？",
+   "answered": true,
+   "answer": "整体来看，四个阶段的节点安排充分考虑了学期与假期的交替规律：耗时最长、需要连续观测的老化实验被安排在寒假的完整时间块内，而需要与课程协调、可分段推进的调研与建模工作则分布于学期中（Fact-9）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "timeline",
+   "question_id": "thesis/timeline/q3",
+   "question": "本节把哪个环节标为最可能延期？",
+   "answered": true,
+   "answer": "整体来看，四个阶段的节点安排充分考虑了学期与假期的交替规律：耗时最长、需要连续观测的老化实验被安排在寒假的完整时间块内，而需要与课程协调、可分段推进的调研与建模工作则分布于学期中（Fact-9）。"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "resources",
+   "question_id": "thesis/resources/q1",
+   "question": "本节各项资源分别用于哪个阶段？",
+   "answered": true,
+   "answer": "本节各项资源分别用于哪个阶段？"
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "resources",
+   "question_id": "thesis/resources/q2",
+   "question": "本节把哪一项列为获取难度最高？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-thesis-channels",
+   "section_id": "resources",
+   "question_id": "thesis/resources/q3",
+   "question": "资源不足时本节给出的替代方案是什么？",
+   "answered": true,
+   "answer": "后续将根据测试样本规模扩大，评估是否需就老化箱产能进行短期外部租赁补充（Fact-3），以应对峰值测试需求，确保项目进度不受设备瓶颈制约。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "one_liner",
+   "question_id": "startup/one_liner/q1",
+   "question": "按本节，这个产品面向企业还是面向个人，依据是什么？",
+   "answered": true,
+   "answer": "面向新能源汽车运营商、储能系统集成商与电池回收企业的「退役电池梯次检测」智能检测终端，采用一体化硬件设备结合云端数据平台的产品形态，为退役动力电池提供快速、精准的剩余价值评估与安全分级服务。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "one_liner",
+   "question_id": "startup/one_liner/q2",
+   "question": "本节说明在此之前用户是如何将就解决的？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "one_liner",
+   "question_id": "startup/one_liner/q3",
+   "question": "本节给出的可验证具体承诺是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "problem",
+   "question_id": "startup/problem/q1",
+   "question": "本节描述该痛点当前被如何将就处理？",
+   "answered": true,
+   "answer": "当前行业普遍采用的检测方式，仍以人工抽检结合基础容量测试为主。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "problem",
+   "question_id": "startup/problem/q2",
+   "question": "本节用什么数据刻画痛点的发生频率或严重程度？",
+   "answered": true,
+   "answer": "据行业调研反馈，一条人工检测产线的单日处理能力普遍不足两百只电池模组（Fact-3），而头部几家电池回收企业的年设计处理能力之和已超过五十万吨（Fact-4），检测环节的产能缺口显而易见。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "problem",
+   "question_id": "startup/problem/q3",
+   "question": "按本节，谁在为这个问题付出成本？",
+   "answered": true,
+   "answer": "从成本结构看，检测环节的低效同样在侵蚀行业本就微薄的利润空间。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "solution",
+   "question_id": "startup/solution/q1",
+   "question": "本节描述用户实际使用的流程分哪几步？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "solution",
+   "question_id": "startup/solution/q2",
+   "question": "本节把核心技术或工程难点指在哪里？",
+   "answered": true,
+   "answer": "退役电池梯次检测面临的核心痛点在于：现有检测方案多依赖离线抽检与人工判断，检测周期长、通量低，难以应对退役电池规模化流入带来的分选压力（Fact-1）。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "solution",
+   "question_id": "startup/solution/q3",
+   "question": "按本节，哪些部分自建、哪些依赖外部？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "market_size",
+   "question_id": "startup/market_size/q1",
+   "question": "本节把市场口径的边界划在哪里？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "market_size",
+   "question_id": "startup/market_size/q2",
+   "question": "本节如何区分总体市场与初期可触达市场？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "market_size",
+   "question_id": "startup/market_size/q3",
+   "question": "本节规模估算的推导路径是怎样的？",
+   "answered": true,
+   "answer": "综合退役规模的持续扩大、检测刚需的确定性、以及行业供给端的相对稀缺，退役电池梯次检测市场正处于规模快速释放的窗口期，具备清晰的长期增长逻辑与广阔的商业化空间。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "go_to_market",
+   "question_id": "startup/go_to_market/q1",
+   "question": "本节对获客成本或获客效率的预期是多少？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "go_to_market",
+   "question_id": "startup/go_to_market/q2",
+   "question": "按本节，首批用户与规模化阶段的获取方式有何不同？",
+   "answered": true,
+   "answer": "首批用户路径遵循从近到远、从简单到复杂的原则展开。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "go_to_market",
+   "question_id": "startup/go_to_market/q3",
+   "question": "本节把渠道上最大的不确定性指在哪里？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "business_model",
+   "question_id": "startup/business_model/q1",
+   "question": "按本节，付费方与使用方是否为同一主体，依据是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "business_model",
+   "question_id": "startup/business_model/q2",
+   "question": "本节说明收入随用户规模增长如何变化？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "business_model",
+   "question_id": "startup/business_model/q3",
+   "question": "本节列出的主要成本项是什么，随规模如何变化？",
+   "answered": true,
+   "answer": "本节列出的主要成本项是什么，随规模如何变化？"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "team",
+   "question_id": "startup/team/q1",
+   "question": "本节写明团队与本项目直接相关的经验是什么？",
+   "answered": true,
+   "answer": "本团队核心成员由三人构成，均具备电池检测与工程实施背景（Profile-1）。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "team",
+   "question_id": "startup/team/q2",
+   "question": "本节指出当前缺失的关键角色或能力是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "team",
+   "question_id": "startup/team/q3",
+   "question": "本节如何划分成员之间的分工边界？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "financials",
+   "question_id": "startup/financials/q1",
+   "question": "本节把资金主要分配到哪些用途？",
+   "answered": true,
+   "answer": "项目总投入预算为186万元（PriceCell-1），涵盖设备采购、场地改造、人员薪酬及运营维护四大板块，覆盖周期为十二个月。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "financials",
+   "question_id": "startup/financials/q2",
+   "question": "按本节，这笔资金可支撑多长时间？",
+   "answered": true,
+   "answer": "项目总投入预算为186万元（PriceCell-1），涵盖设备采购、场地改造、人员薪酬及运营维护四大板块，覆盖周期为十二个月。"
+  },
+  {
+   "composition_id": "golddoc-startup-plain",
+   "section_id": "financials",
+   "question_id": "startup/financials/q3",
+   "question": "本节说明哪些关键假设变化会改变财务结果？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "one_liner",
+   "question_id": "startup/one_liner/q1",
+   "question": "按本节，这个产品面向企业还是面向个人，依据是什么？",
+   "answered": true,
+   "answer": "面向缺电、限电频发地区的农村与城郊家庭用户，我们提供一款壁挂式户用储能电池一体机，将电芯、BMS与逆变器集成于同一箱体，用户可自行安装于室外墙面或庭院储物间，无需额外配电房或专业施工队。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "one_liner",
+   "question_id": "startup/one_liner/q2",
+   "question": "本节说明在此之前用户是如何将就解决的？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "one_liner",
+   "question_id": "startup/one_liner/q3",
+   "question": "本节给出的可验证具体承诺是什么？",
+   "answered": true,
+   "answer": "面向缺电、限电频发地区的农村与城郊家庭用户，我们提供一款壁挂式户用储能电池一体机，将电芯、BMS与逆变器集成于同一箱体，用户可自行安装于室外墙面或庭院储物间，无需额外配电房或专业施工队。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "problem",
+   "question_id": "startup/problem/q1",
+   "question": "本节描述该痛点当前被如何将就处理？",
+   "answered": true,
+   "answer": "传统的解决方案——如小型汽油发电机——不仅噪音大、需要人工值守和燃料储备，其运行成本也不低，燃油发电的单位发电成本普遍在1.5元/度以上（PriceCell-3），且存在明显的碳排放与安全隐患。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "problem",
+   "question_id": "startup/problem/q2",
+   "question": "本节用什么数据刻画痛点的发生频率或严重程度？",
+   "answered": true,
+   "answer": "中国户用储能市场近三年出货量年均增长率超过40%（Fact-4），欧洲户用储能渗透率已在部分国家超过15%（Fact-5）"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "problem",
+   "question_id": "startup/problem/q3",
+   "question": "按本节，谁在为这个问题付出成本？",
+   "answered": true,
+   "answer": "家庭用户正面临一个日益突出的矛盾：电力使用需求与电网供给节奏之间的错配。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "solution",
+   "question_id": "startup/solution/q1",
+   "question": "本节描述用户实际使用的流程分哪几步？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "solution",
+   "question_id": "startup/solution/q2",
+   "question": "本节把核心技术或工程难点指在哪里？",
+   "answered": true,
+   "answer": "本节把核心技术或工程难点指在哪里？"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "solution",
+   "question_id": "startup/solution/q3",
+   "question": "按本节，哪些部分自建、哪些依赖外部？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "market_size",
+   "question_id": "startup/market_size/q1",
+   "question": "本节把市场口径的边界划在哪里？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "market_size",
+   "question_id": "startup/market_size/q2",
+   "question": "本节如何区分总体市场与初期可触达市场？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "market_size",
+   "question_id": "startup/market_size/q3",
+   "question": "本节规模估算的推导路径是怎样的？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "go_to_market",
+   "question_id": "startup/go_to_market/q1",
+   "question": "本节对获客成本或获客效率的预期是多少？",
+   "answered": null,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "go_to_market",
+   "question_id": "startup/go_to_market/q2",
+   "question": "按本节，首批用户与规模化阶段的获取方式有何不同？",
+   "answered": null,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "go_to_market",
+   "question_id": "startup/go_to_market/q3",
+   "question": "本节把渠道上最大的不确定性指在哪里？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "business_model",
+   "question_id": "startup/business_model/q1",
+   "question": "按本节，付费方与使用方是否为同一主体，依据是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "business_model",
+   "question_id": "startup/business_model/q2",
+   "question": "本节说明收入随用户规模增长如何变化？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "business_model",
+   "question_id": "startup/business_model/q3",
+   "question": "本节列出的主要成本项是什么，随规模如何变化？",
+   "answered": true,
+   "answer": "本节列出的主要成本项是电芯采购成本（PriceCell-4：每kWh约780元）、BMS及PCS模块成本（PriceCell-5：约1200元/套），随规模变化体现在三档产品容量（5kWh、10kWh、15kWh）对应的零售价（8999元、15999元、21999元）上，成本随容量增加而上升。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "team",
+   "question_id": "startup/team/q1",
+   "question": "本节写明团队与本项目直接相关的经验是什么？",
+   "answered": true,
+   "answer": "我们的核心团队由7人组成（Profile-1），成员均来自动力电池与储能系统研发一线，平均行业从业年限超过8年（Profile-2）。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "team",
+   "question_id": "startup/team/q2",
+   "question": "本节指出当前缺失的关键角色或能力是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "team",
+   "question_id": "startup/team/q3",
+   "question": "本节如何划分成员之间的分工边界？",
+   "answered": true,
+   "answer": "团队负责人此前在某电池系统集成企业主导过户用及工商业储能产品的电芯选型、BMS设计与PACK结构开发工作，累计参与交付项目超过40个（Profile-3），覆盖磷酸铁锂电芯从280Ah到314Ah的多代产品迭代（Profile-4）。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "financials",
+   "question_id": "startup/financials/q1",
+   "question": "本节把资金主要分配到哪些用途？",
+   "answered": true,
+   "answer": "研发投入首年预算为280万元（PriceCell-16），主要用于电芯选型验证、BMS算法优化及安规认证；市场推广费用预算150万元（PriceCell-17）；渠道建设与合作伙伴激励预算120万元（PriceCell-18）；行政与人员成本预算180万元（PriceCell-19）。"
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "financials",
+   "question_id": "startup/financials/q2",
+   "question": "按本节，这笔资金可支撑多长时间？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-startup-channels",
+   "section_id": "financials",
+   "question_id": "startup/financials/q3",
+   "question": "本节说明哪些关键假设变化会改变财务结果？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "goal",
+   "question_id": "engineering/goal/q1",
+   "question": "按本节，目标达成后使用者的行为会发生什么具体变化？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "goal",
+   "question_id": "engineering/goal/q2",
+   "question": "本节明确排除在本次范围外的目标是哪些？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "goal",
+   "question_id": "engineering/goal/q3",
+   "question": "多个目标冲突时本节给的优先级是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "architecture",
+   "question_id": "engineering/architecture/q1",
+   "question": "本节描述主要组件之间的数据流向是怎样的？",
+   "answered": true,
+   "answer": "整体架构设计以\"末端执行—感知反馈—上位控制\"三层解耦为核心原则，各层之间通过标准化接口通信，既保证了系统在复杂果园环境下的鲁棒性与可维护性，也为后续功能迭代与部件升级预留了充分空间，避免因单一模块变更而牵动整体系统重构。"
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "architecture",
+   "question_id": "engineering/architecture/q2",
+   "question": "本节把该架构的主要瓶颈或单点指在哪里？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "architecture",
+   "question_id": "engineering/architecture/q3",
+   "question": "本节提到被放弃的替代架构是什么，放弃理由为何？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "milestones",
+   "question_id": "engineering/milestones/q1",
+   "question": "各里程碑的前置依赖在本节分别是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "milestones",
+   "question_id": "engineering/milestones/q2",
+   "question": "本节指出的关键路径或最长链是哪条？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "milestones",
+   "question_id": "engineering/milestones/q3",
+   "question": "某个里程碑失败时本节说明后续如何调整？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "resources",
+   "question_id": "engineering/resources/q1",
+   "question": "按本节，资源需求随规模如何变化？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "resources",
+   "question_id": "engineering/resources/q2",
+   "question": "本节如何区分一次性投入与持续开销？",
+   "answered": true,
+   "answer": "在硬件层面，执行器主体依赖六轴机械臂、末端柔性夹爪、深度视觉相机与移动底盘四类核心部件。"
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "resources",
+   "question_id": "engineering/resources/q3",
+   "question": "本节给出的资源获取周期或前置时间是多久？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "risks",
+   "question_id": "engineering/risks/q1",
+   "question": "本节把哪些风险归为技术风险、哪些归为交付风险？",
+   "answered": true,
+   "answer": "**技术风险**是首要挑战。"
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "risks",
+   "question_id": "engineering/risks/q2",
+   "question": "本节为各条风险给出的可观察触发信号是什么？",
+   "answered": true,
+   "answer": "为了证伪这一乐观结果，团队额外在阴天、逆光、果实密集遮挡三种非理想工况下补测，成功率分别下降至61%、54%与49%（Fact-2），暴露出视觉识别模块在低对比度场景下的显著短板。"
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "risks",
+   "question_id": "engineering/risks/q3",
+   "question": "本节提到缓解措施本身要付出什么代价？",
+   "answered": true,
+   "answer": "团队计划通过租赁模式与分期付款方案降低客户初期投入门槛，但该商业模式尚未经过实际市场验证，存在需求测算偏差的风险。"
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "budget",
+   "question_id": "engineering/budget/q1",
+   "question": "本节各项支出分别对应哪个具体工作项？",
+   "answered": true,
+   "answer": "研发阶段预计投入87万元（PriceCell-1），其中末端执行器机械设计占32万元（PriceCell-2），力反馈与视觉识别系统占28万元（PriceCell-3），控制算法与嵌入式开发占27万元（PriceCell-4）。"
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "budget",
+   "question_id": "engineering/budget/q2",
+   "question": "按本节，支出在时间上如何分布？",
+   "answered": true,
+   "answer": "研发阶段预计投入87万元（PriceCell-1），其中末端执行器机械设计占32万元（PriceCell-2），力反馈与视觉识别系统占28万元（PriceCell-3），控制算法与嵌入式开发占27万元（PriceCell-4）。制造阶段预算为45万元（PriceCell-5），涵盖首批十台原型机的物料采购（22万元，PriceCell-6）与加工装配费用（15万元，PriceCell-7），另留8万元（PriceCell-8）作为工艺调整弹性资金。测试阶段预算为36万元（PriceCell-10），包括果园实地测试场地租赁与协调费用12万元（PriceCell-11）、损耗果实赔偿与保险9万元（PriceCell-12）、数据采集与算法迭代人力成本15万元（PriceCell-13）。量产准备阶段预算为28万元（PriceCell-14），用于生产线适配性改造与首批量产工装夹具的开发，其中工装夹具费用18万元（PriceCell-15），产线调试与验收10万元（PriceCell-16）。"
+  },
+  {
+   "composition_id": "golddoc-engineering-plain",
+   "section_id": "budget",
+   "question_id": "engineering/budget/q3",
+   "question": "占比最大的一项支出是什么，本节给的理由是什么？",
+   "answered": true,
+   "answer": "研发阶段预计投入87万元（PriceCell-1），其中末端执行器机械设计占32万元（PriceCell-2），力反馈与视觉识别系统占28万元（PriceCell-3），控制算法与嵌入式开发占27万元（PriceCell-4）。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "goal",
+   "question_id": "engineering/goal/q1",
+   "question": "按本节，目标达成后使用者的行为会发生什么具体变化？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "goal",
+   "question_id": "engineering/goal/q2",
+   "question": "本节明确排除在本次范围外的目标是哪些？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "goal",
+   "question_id": "engineering/goal/q3",
+   "question": "多个目标冲突时本节给的优先级是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "architecture",
+   "question_id": "engineering/architecture/q1",
+   "question": "本节描述主要组件之间的数据流向是怎样的？",
+   "answered": true,
+   "answer": "各层之间通过标准化接口通信，层间职责边界清晰，确保系统在功能扩展、模块替换与长期维护过程中具备足够的灵活性与稳定性。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "architecture",
+   "question_id": "engineering/architecture/q2",
+   "question": "本节把该架构的主要瓶颈或单点指在哪里？",
+   "answered": true,
+   "answer": "调度服务器采用双机热备架构，单节点故障切换时间控制在200毫秒以内（Fact-8），保障了系统的高可用性，避免因单点故障导致整体作业停滞。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "architecture",
+   "question_id": "engineering/architecture/q3",
+   "question": "本节提到被放弃的替代架构是什么，放弃理由为何？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "milestones",
+   "question_id": "engineering/milestones/q1",
+   "question": "各里程碑的前置依赖在本节分别是什么？",
+   "answered": true,
+   "answer": "第一阶段为原理样机验证，周期为八周（Fact-1）。第二阶段为工程化定型，周期为十二周（Fact-5）。第三阶段为小批量试产与客户试点，周期为十周（Fact-9）。第四阶段为认证与合规，周期为八周（Fact-14）。第五阶段为量产爬坡，周期为十六周（Fact-15）。第六阶段为规模化交付与运营支持，为持续性阶段，首个考核周期设定为二十周（Fact-19）。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "milestones",
+   "question_id": "engineering/milestones/q2",
+   "question": "本节指出的关键路径或最长链是哪条？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "milestones",
+   "question_id": "engineering/milestones/q3",
+   "question": "某个里程碑失败时本节说明后续如何调整？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "resources",
+   "question_id": "engineering/resources/q1",
+   "question": "按本节，资源需求随规模如何变化？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "resources",
+   "question_id": "engineering/resources/q2",
+   "question": "本节如何区分一次性投入与持续开销？",
+   "answered": true,
+   "answer": "综合来看，本项目在硬件采购、场地资源与人力配置三方面已完成初步测算，算力估算已引用 PriceBook 报价体系进行成本校核（PriceCell-1、PriceCell-3），并预留合理冗余以应对不确定性。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "resources",
+   "question_id": "engineering/resources/q3",
+   "question": "本节给出的资源获取周期或前置时间是多久？",
+   "answered": true,
+   "answer": "测试周期预计 6 周（Fact-5），期间需保证基地日均可用测试时长不低于 8 小时（Fact-6），以确保算法迭代节奏与项目里程碑对齐，避免场地资源不足导致进度延误。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "risks",
+   "question_id": "engineering/risks/q1",
+   "question": "本节把哪些风险归为技术风险、哪些归为交付风险？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "risks",
+   "question_id": "engineering/risks/q2",
+   "question": "本节为各条风险给出的可观察触发信号是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "risks",
+   "question_id": "engineering/risks/q3",
+   "question": "本节提到缓解措施本身要付出什么代价？",
+   "answered": true,
+   "answer": "为应对这一风险，团队计划引入至少两家国产替代供应商进行并行验证，但国产方案在负载精度上与进口方案相比仍存在约7%的差距（Fact-5），短期内难以完全替代。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "budget",
+   "question_id": "engineering/budget/q1",
+   "question": "本节各项支出分别对应哪个具体工作项？",
+   "answered": true,
+   "answer": "硬件采购预算为158万元（PriceCell-2），其中机器人本体及底盘制造占72万元（PriceCell-3），激光雷达、深度相机等传感器模块占41万元（PriceCell-4），工控机、驱动器及电池组等电气部件占30万元（PriceCell-5），充电桩与备件储备占15万元（PriceCell-6）。"
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "budget",
+   "question_id": "engineering/budget/q2",
+   "question": "按本节，支出在时间上如何分布？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-engineering-channels",
+   "section_id": "budget",
+   "question_id": "engineering/budget/q3",
+   "question": "占比最大的一项支出是什么，本节给的理由是什么？",
+   "answered": true,
+   "answer": "硬件采购预算为158万元（PriceCell-2），其中机器人本体及底盘制造占72万元（PriceCell-3），激光雷达、深度相机等传感器模块占41万元（PriceCell-4），工控机、驱动器及电池组等电气部件占30万元（PriceCell-5），充电桩与备件储备占15万元（PriceCell-6）。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "significance",
+   "question_id": "grant/significance/q1",
+   "question": "按本节，不做这件事会带来什么后果？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "significance",
+   "question_id": "grant/significance/q2",
+   "question": "本节指认的受益方具体是谁？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "significance",
+   "question_id": "grant/significance/q3",
+   "question": "本节把影响的时间尺度界定为近期还是长期？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "innovation",
+   "question_id": "grant/innovation/q1",
+   "question": "按本节，该创新点此前为何未被做成？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "innovation",
+   "question_id": "grant/innovation/q2",
+   "question": "本节把创新界定在方法层面还是应用层面？",
+   "answered": true,
+   "answer": "本节把创新界定在方法层面还是应用层面？"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "innovation",
+   "question_id": "grant/innovation/q3",
+   "question": "若创新点被证明无效，本节指出的剩余价值是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "approach",
+   "question_id": "grant/approach/q1",
+   "question": "本节给出主路线切换到备选路线的条件是什么？",
+   "answered": true,
+   "answer": "因此仅作为主路线硬件供应链受阻、关键光学元器件交期延长或量产良率不达标时的降级备份方案，用以保证产品交付的连续性。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "approach",
+   "question_id": "grant/approach/q2",
+   "question": "各步骤的产出物在本节分别是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "approach",
+   "question_id": "grant/approach/q3",
+   "question": "本节把技术上最不确定的一步指在哪里？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "feasibility",
+   "question_id": "grant/feasibility/q1",
+   "question": "本节列举了哪些已完成的前期工作作为依据？",
+   "answered": true,
+   "answer": "团队在过去三年中已完成两代原型机的迭代，第二代原型的随机数生成速率达到200 Mbps（Fact-2），足以支撑云端多租户并发调用的吞吐需求。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "feasibility",
+   "question_id": "grant/feasibility/q2",
+   "question": "本节指出尚未验证的关键环节是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "feasibility",
+   "question_id": "grant/feasibility/q3",
+   "question": "本节的可行性判断依赖哪些外部条件？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "team_resources",
+   "question_id": "grant/team_resources/q1",
+   "question": "本节各成员承担的具体工作分别是什么？",
+   "answered": true,
+   "answer": "团队负责人主导过基于真空态涨落测量的量子随机数发生器原理样机搭建，具备从光路设计、探测器选型到后端提取算法的完整技术栈经验（Profile-2）。核心技术成员曾参与国家级密码应用课题研究，熟悉随机数检测标准与安全评估流程，能够确保云服务输出满足国密及NIST统计检测规范（Profile-3）。团队另设云计算与分布式系统工程师，负责将硬件产生的随机数流通过安全通道接入云端服务集群，实现高并发场景下的稳定调用与弹性扩容（Profile-4）。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "team_resources",
+   "question_id": "grant/team_resources/q2",
+   "question": "本节指出当前缺失的能力或岗位是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "team_resources",
+   "question_id": "grant/team_resources/q3",
+   "question": "本节如何建立设备与任务之间的对应关系？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "budget_justification",
+   "question_id": "grant/budget_justification/q1",
+   "question": "本节为各项预算给出的必要性理由是什么？",
+   "answered": true,
+   "answer": "综上所述，本项目预算编制基于真实市场报价、团队历史交付经验与行业公开基准数据，各分项预算均可追溯、可核验，逻辑清晰、层次分明。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "budget_justification",
+   "question_id": "grant/budget_justification/q2",
+   "question": "本节金额的估算依据是什么？",
+   "answered": true,
+   "answer": "综上所述，本项目预算编制基于真实市场报价、团队历史交付经验与行业公开基准数据，各分项预算均可追溯、可核验，逻辑清晰、层次分明。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "budget_justification",
+   "question_id": "grant/budget_justification/q3",
+   "question": "占比最大的一项预算是什么，本节如何论证其合理性？",
+   "answered": true,
+   "answer": "上述硬件合计168万元（PriceCell-6），占总预算的58.7%（PriceCell-7），是本项目预算的最大构成部分，体现了硬件为核心的技术路线特征。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "timeline",
+   "question_id": "grant/timeline/q1",
+   "question": "各阶段的交付物在本节分别是什么？",
+   "answered": true,
+   "answer": "第一至第三月完成硬件量子熵源选型、API接口规范制定及安全审计方案设计（Fact-3）。第四至第六月为核心开发阶段，搭建硬件与云端对接链路，完成后端服务、身份认证及计费模块开发（Fact-4），预算占比百分之四十（PriceCell-1），主要用于硬件采购与研发人员薪酬（Profile-1）。第七至第九月开展系统集成与内测，邀请十家种子客户参与测试（Fact-5），优化随机数吞吐率与接口稳定性，目标每秒一千万比特（Fact-6），预算占比百分之三十（PriceCell-2）。第十至第十一月完成第三方安全认证与合规审查并启动小规模商用发布（Fact-7），预算占比百分之二十（PriceCell-3）。第十二月总结评估、发布正式版本并提交结题报告（Fact-8），预留百分之十预算作为应急与收尾支出（PriceCell-4）。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "timeline",
+   "question_id": "grant/timeline/q2",
+   "question": "本节说明阶段之间存在哪些依赖关系？",
+   "answered": true,
+   "answer": "第一至第三月完成硬件量子熵源选型、API接口规范制定及安全审计方案设计（Fact-3）。第四至第六月为核心开发阶段，搭建硬件与云端对接链路，完成后端服务、身份认证及计费模块开发（Fact-4），预算占比百分之四十（PriceCell-1），主要用于硬件采购与研发人员薪酬（Profile-1）。第七至第九月开展系统集成与内测，邀请十家种子客户参与测试（Fact-5），优化随机数吞吐率与接口稳定性，目标每秒一千万比特（Fact-6），预算占比百分之三十（PriceCell-2）。第十至第十一月完成第三方安全认证与合规审查并启动小规模商用发布（Fact-7），预算占比百分之二十（PriceCell-3）。第十二月总结评估、发布正式版本并提交结题报告（Fact-8），预留百分之十预算作为应急与收尾支出（PriceCell-4）。"
+  },
+  {
+   "composition_id": "golddoc-grant-plain",
+   "section_id": "timeline",
+   "question_id": "grant/timeline/q3",
+   "question": "本节安排的缓冲在哪里，或把哪个环节标为最可能延期？",
+   "answered": true,
+   "answer": "风险预留期设置于第十一月末（Fact-9），确保各阶段按期交付，与资助方验收节点保持一致。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "significance",
+   "question_id": "grant/significance/q1",
+   "question": "按本节，不做这件事会带来什么后果？",
+   "answered": true,
+   "answer": "这不仅拖慢了设计迭代速度，也削弱了国产工具在实际生产环境中的竞争力。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "significance",
+   "question_id": "grant/significance/q2",
+   "question": "本节指认的受益方具体是谁？",
+   "answered": true,
+   "answer": "从市场需求角度分析，国内集成电路设计企业数量近年保持较快增长，中小设计公司和高校实验室对定制化、轻量级EDA工具功能的需求尤为迫切，但这类用户往往缺乏自行开发插件的能力和资源（Fact-5）。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "significance",
+   "question_id": "grant/significance/q3",
+   "question": "本节把影响的时间尺度界定为近期还是长期？",
+   "answered": true,
+   "answer": "国产EDA厂商若继续依赖单一封闭的功能迭代模式，将难以在中长期与具备成熟生态优势的国际厂商竞争。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "innovation",
+   "question_id": "grant/innovation/q1",
+   "question": "按本节，该创新点此前为何未被做成？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "innovation",
+   "question_id": "grant/innovation/q2",
+   "question": "本节把创新界定在方法层面还是应用层面？",
+   "answered": true,
+   "answer": "本节把创新界定在方法层面还是应用层面？"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "innovation",
+   "question_id": "grant/innovation/q3",
+   "question": "若创新点被证明无效，本节指出的剩余价值是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "approach",
+   "question_id": "grant/approach/q1",
+   "question": "本节给出主路线切换到备选路线的条件是什么？",
+   "answered": true,
+   "answer": "若首批验证数据显示云端协同插件的活跃度显著低于预期，将触发备选方案的资源倾斜决策，转向纯本地化插件包的重点推广，以保障项目整体的技术路线韧性与商业交付的确定性；反之，若云端协同插件反馈良好，则加大云端SDK与协议层的投入，加速第二、第三层级插件的孵化节奏。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "approach",
+   "question_id": "grant/approach/q2",
+   "question": "各步骤的产出物在本节分别是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "approach",
+   "question_id": "grant/approach/q3",
+   "question": "本节把技术上最不确定的一步指在哪里？",
+   "answered": true,
+   "answer": "技术路线的备选方案主要体现在两个层面，用以对冲主路线推进过程中可能出现的外部阻力。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "feasibility",
+   "question_id": "grant/feasibility/q1",
+   "question": "本节列举了哪些已完成的前期工作作为依据？",
+   "answered": true,
+   "answer": "团队核心成员此前曾主导过3款EDA相关工具插件的研发与商业化落地，其中2款已实现累计超过5000家企业用户的覆盖（Profile-1），验证了团队在插件开发、渠道打通与客户服务方面的完整能力闭环，而非从零起步的空想项目。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "feasibility",
+   "question_id": "grant/feasibility/q2",
+   "question": "本节指出尚未验证的关键环节是什么？",
+   "answered": true,
+   "answer": "综合团队的既往成功交付记录、行业增长的确定性趋势、技术原型的已验证可行性以及审慎测算的成本回收路径，本项目在技术、市场与财务三个维度均具备可执行的现实基础，风险可控且具备清晰的阶段性验证节点，整体可行性充分。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "feasibility",
+   "question_id": "grant/feasibility/q3",
+   "question": "本节的可行性判断依赖哪些外部条件？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "team_resources",
+   "question_id": "grant/team_resources/q1",
+   "question": "本节各成员承担的具体工作分别是什么？",
+   "answered": true,
+   "answer": "团队核心由三人构成，负责国产EDA插件市场产品的设计、研发与商务拓展（Profile-1）。主导人具备五年半导体工具链软件开发经验，曾在两家EDA相关企业担任研发骨干，主导过插件化架构的商用产品交付（Profile-2）。技术合伙人专注编译器与版图算法方向，硕士阶段研究方向即为集成电路设计自动化工具优化，发表过相关领域论文两篇（Profile-3）。商务负责人此前在半导体产业链上市公司从事生态合作与渠道管理工作三年，积累了与国产EDA厂商、晶圆厂及高校实验室对接的资源网络（Profile-4）。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "team_resources",
+   "question_id": "grant/team_resources/q2",
+   "question": "本节指出当前缺失的能力或岗位是什么？",
+   "answered": true,
+   "answer": "后续随插件用户规模扩大，团队计划引入一名专职测试工程师，并逐步扩充云端算力资源，扩张节奏将严格与用户增长及收入验证情况挂钩，避免资源前置投入过快（Profile-8）。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "team_resources",
+   "question_id": "grant/team_resources/q3",
+   "question": "本节如何建立设备与任务之间的对应关系？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "budget_justification",
+   "question_id": "grant/budget_justification/q1",
+   "question": "本节为各项预算给出的必要性理由是什么？",
+   "answered": true,
+   "answer": "本项目预算编制以国产EDA插件市场产品化落地为核心目标，覆盖研发、运营、渠道及运维四大板块，采用市场比价与内部核算相结合的方式确定各项支出，确保资金使用可追溯、可核验。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "budget_justification",
+   "question_id": "grant/budget_justification/q2",
+   "question": "本节金额的估算依据是什么？",
+   "answered": true,
+   "answer": "本项目预算编制以国产EDA插件市场产品化落地为核心目标，覆盖研发、运营、渠道及运维四大板块，采用市场比价与内部核算相结合的方式确定各项支出，确保资金使用可追溯、可核验。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "budget_justification",
+   "question_id": "grant/budget_justification/q3",
+   "question": "占比最大的一项预算是什么，本节如何论证其合理性？",
+   "answered": true,
+   "answer": "综合以上各项，项目总预算合计560万元（PriceCell-11），资金分配充分考虑了研发、运营、渠道及风险应对的均衡性，且每一项数字均有明确出处支撑，确保预算既能满足产品从研发到市场落地的实际需求，又具备执行层面的可操作性与可控性，为项目稳健推进奠定坚实基础。"
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "timeline",
+   "question_id": "grant/timeline/q1",
+   "question": "各阶段的交付物在本节分别是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "timeline",
+   "question_id": "grant/timeline/q2",
+   "question": "本节说明阶段之间存在哪些依赖关系？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-grant-channels",
+   "section_id": "timeline",
+   "question_id": "grant/timeline/q3",
+   "question": "本节安排的缓冲在哪里，或把哪个环节标为最可能延期？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S1_charter",
+   "question_id": "vibe_pack/S1_charter/q1",
+   "question": "本章写明本包要交付的最终产物是什么？",
+   "answered": true,
+   "answer": "产品形态上，引擎须以API与插件双通道交付：API面向已有系统集成，插件面向Office、飞书文档等主流办公场景直接调用（Fact-1）。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S1_charter",
+   "question_id": "vibe_pack/S1_charter/q2",
+   "question": "按本章，执行者在什么条件下算完成？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S1_charter",
+   "question_id": "vibe_pack/S1_charter/q3",
+   "question": "本章界定不属于本次范围的是哪些内容？",
+   "answered": true,
+   "answer": "产品不能采取\"一刀切\"通用词库策略，须支持行业词典的独立配置与版本管理，确保医疗术语纠错不会误用法律语境规则。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S2_invariants",
+   "question_id": "vibe_pack/S2_invariants/q1",
+   "question": "本章为各条不变量规定的违反时处理动作是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S2_invariants",
+   "question_id": "vibe_pack/S2_invariants/q2",
+   "question": "本章说明这些不变量由什么手段强制执行？",
+   "answered": true,
+   "answer": "以上六项不变量构成本引擎的底线约束，贯穿需求分析、模型训练、上线部署与运维各阶段，任何团队成员在决策时MUST优先核对本节内容，确保项目边界不被突破，风险始终可控。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S2_invariants",
+   "question_id": "vibe_pack/S2_invariants/q3",
+   "question": "两条不变量相互冲突时本章给的优先级是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S3_contracts",
+   "question_id": "vibe_pack/S3_contracts/q1",
+   "question": "本章指明不允许修改的是哪些内容？",
+   "answered": true,
+   "answer": "本节规定的契约内容分为输入契约、输出契约、错误处理契约与服务水位契约四个部分，任何一部分的缺失都将导致责任边界模糊，进而引发纠纷。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S3_contracts",
+   "question_id": "vibe_pack/S3_contracts/q2",
+   "question": "按本章，类型或接口不够用时执行者该怎么办？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S3_contracts",
+   "question_id": "vibe_pack/S3_contracts/q3",
+   "question": "本章把契约的权威来源点名到哪个文件？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S4_decision_log",
+   "question_id": "vibe_pack/S4_decision_log/q1",
+   "question": "本章为各条决策记录的被否决替代方案是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S4_decision_log",
+   "question_id": "vibe_pack/S4_decision_log/q2",
+   "question": "按本章，决策在什么条件下可被推翻？",
+   "answered": true,
+   "answer": "若需求变更导致预算超支超过10%，MUST触发预算重审流程；NEVER允许项目负责人单方面挪用测试预留资金填补人力缺口。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S4_decision_log",
+   "question_id": "vibe_pack/S4_decision_log/q3",
+   "question": "本章如何建立决策与其影响模块之间的对应关系？",
+   "answered": true,
+   "answer": "以上四项决策构成本项目边界约束，后续方案设计须与此保持一致，如有冲突以本节为准，任何变更须更新本日志并重新评审。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S5_task_dag",
+   "question_id": "vibe_pack/S5_task_dag/q1",
+   "question": "本章如何表达任务之间的前置依赖？",
+   "answered": true,
+   "answer": "每个任务单元均标注前置依赖、产出物、验收标准与负责角色，MUST 满足无环性约束，即任一任务节点不得直接或间接依赖其自身的下游产出，任何试图引入反向依赖的变更申请都将在评审阶段被直接驳回，以保证整体拓扑排序的可计算性与调度确定性。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S5_task_dag",
+   "question_id": "vibe_pack/S5_task_dag/q2",
+   "question": "本章指出的关键路径或最长链是哪条？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S5_task_dag",
+   "question_id": "vibe_pack/S5_task_dag/q3",
+   "question": "本章为单个任务规定的完成判据落到什么可执行检查动作？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S6_context_manifest",
+   "question_id": "vibe_pack/S6_context_manifest/q1",
+   "question": "按本章，每个任务应装载哪些文件？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S6_context_manifest",
+   "question_id": "vibe_pack/S6_context_manifest/q2",
+   "question": "本章给单次装载量规定的上限或预算是多少？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S6_context_manifest",
+   "question_id": "vibe_pack/S6_context_manifest/q3",
+   "question": "本章如何让装载清单与具体任务的对应关系可查？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S7_verification",
+   "question_id": "vibe_pack/S7_verification/q1",
+   "question": "本章如何区分机器可判与需人工判定的验收？",
+   "answered": true,
+   "answer": "验证结果的判定标准清晰量化：单元测试覆盖率、场景准确率、灰度误纠率三项指标 MUST 同时达标方可视为验证通过，任一指标未达标 NEVER 视为整体通过，须启动对应环节的修复流程。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S7_verification",
+   "question_id": "vibe_pack/S7_verification/q2",
+   "question": "按本章，验证失败时的回退动作是什么？",
+   "answered": true,
+   "answer": "若任一行业子集准确率跌破该线，NEVER 允许该版本进入灰度阶段，须回退至术语库补充与模型微调环节。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S7_verification",
+   "question_id": "vibe_pack/S7_verification/q3",
+   "question": "本章规定测试需覆盖到什么程度才算通过？",
+   "answered": true,
+   "answer": "单元测试覆盖率、场景准确率、灰度误纠率三项指标 MUST 同时达标方可视为验证通过，任一指标未达标 NEVER 视为整体通过，须启动对应环节的修复流程。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S8_progress_ledger",
+   "question_id": "vibe_pack/S8_progress_ledger/q1",
+   "question": "本章规定每条记录必须包含哪些字段？",
+   "answered": true,
+   "answer": "台账每周五更新，MUST 包含风险项、阻塞项与下周计划三部分，缺失任一部分视为不合格，需次日补齐，NEVER 允许连续两周不合格而不触发复盘会议。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S8_progress_ledger",
+   "question_id": "vibe_pack/S8_progress_ledger/q2",
+   "question": "按本章，新会话如何据此恢复工作现场？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S8_progress_ledger",
+   "question_id": "vibe_pack/S8_progress_ledger/q3",
+   "question": "本章对记录只增不改这一性质是如何规定的？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S9_escalation",
+   "question_id": "vibe_pack/S9_escalation/q1",
+   "question": "本章枚举必须上报而不得自行决定的情形有哪些？",
+   "answered": true,
+   "answer": "本章MUST条款：当术语纠错引擎在生产环境出现连续误判、置信度异常波动或用户申诉超过阈值时，系统MUST在15分钟内触发一级升级（Fact-1），由值班算法工程师介入排查；若一级响应未能在2小时内定位根因，MUST自动触发二级升级（Fact-2），通知项目技术负责人与客户对接人同步介入。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S9_escalation",
+   "question_id": "vibe_pack/S9_escalation/q2",
+   "question": "按本章，上报时需要提交哪些材料？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-plain",
+   "section_id": "S9_escalation",
+   "question_id": "vibe_pack/S9_escalation/q3",
+   "question": "等待裁决期间本章要求执行者做什么？",
+   "answered": true,
+   "answer": "本章MUST条款：当术语纠错引擎在生产环境出现连续误判、置信度异常波动或用户申诉超过阈值时，系统MUST在15分钟内触发一级升级（Fact-1），由值班算法工程师介入排查；若一级响应未能在2小时内定位根因，MUST自动触发二级升级（Fact-2），通知项目技术负责人与客户对接人同步介入。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S1_charter",
+   "question_id": "vibe_pack/S1_charter/q1",
+   "question": "本章写明本包要交付的最终产物是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S1_charter",
+   "question_id": "vibe_pack/S1_charter/q2",
+   "question": "按本章，执行者在什么条件下算完成？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S1_charter",
+   "question_id": "vibe_pack/S1_charter/q3",
+   "question": "本章界定不属于本次范围的是哪些内容？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S2_invariants",
+   "question_id": "vibe_pack/S2_invariants/q1",
+   "question": "本章为各条不变量规定的违反时处理动作是什么？",
+   "answered": true,
+   "answer": "上述条款共同构成语料生命周期中不可协商的底线，任何环节的例外都 NEVER 被允许，唯有如此才能保证方言语料授权分发体系长期可信运行。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S2_invariants",
+   "question_id": "vibe_pack/S2_invariants/q2",
+   "question": "本章说明这些不变量由什么手段强制执行？",
+   "answered": true,
+   "answer": "上述条款共同构成语料生命周期中不可协商的底线，任何环节的例外都 NEVER 被允许，唯有如此才能保证方言语料授权分发体系长期可信运行。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S2_invariants",
+   "question_id": "vibe_pack/S2_invariants/q3",
+   "question": "两条不变量相互冲突时本章给的优先级是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S3_contracts",
+   "question_id": "vibe_pack/S3_contracts/q1",
+   "question": "本章指明不允许修改的是哪些内容？",
+   "answered": true,
+   "answer": "核心的三方权利义务界定及数据安全底线条款不可变更。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S3_contracts",
+   "question_id": "vibe_pack/S3_contracts/q2",
+   "question": "按本章，类型或接口不够用时执行者该怎么办？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S3_contracts",
+   "question_id": "vibe_pack/S3_contracts/q3",
+   "question": "本章把契约的权威来源点名到哪个文件？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S4_decision_log",
+   "question_id": "vibe_pack/S4_decision_log/q1",
+   "question": "本章为各条决策记录的被否决替代方案是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S4_decision_log",
+   "question_id": "vibe_pack/S4_decision_log/q2",
+   "question": "按本章，决策在什么条件下可被推翻？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S4_decision_log",
+   "question_id": "vibe_pack/S4_decision_log/q3",
+   "question": "本章如何建立决策与其影响模块之间的对应关系？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S5_task_dag",
+   "question_id": "vibe_pack/S5_task_dag/q1",
+   "question": "本章如何表达任务之间的前置依赖？",
+   "answered": true,
+   "answer": "各阶段之间存在严格的前置依赖关系，任何下游任务的启动都必须以上游任务的验收通过为门槛条件，这一约束是 MUST 级别，NEVER 允许跳过验收环节直接进入下一阶段施工，团队内部对此已形成统一的执行共识与文档留痕机制，相关会议纪要与验收单据均纳入项目管理系统统一编号存档，便于后续审计追溯。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S5_task_dag",
+   "question_id": "vibe_pack/S5_task_dag/q2",
+   "question": "本章指出的关键路径或最长链是哪条？",
+   "answered": true,
+   "answer": "整体任务图的关键路径贯穿采集确权、清洗标注、封装测试与安全审计四个节点，任一节点延误都将等比例传导至终端分发时间，团队 MUST 每两周召开一次跨阶段协调会以监控关键路径进度，NEVER 允许任务状态更新滞后超过五个工作日，确保十九个子任务的依赖关系在执行层面得到刚性落实，并为后续项目复盘留存完整的过程数据支撑，形成可持续优化的项目管理闭环。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S5_task_dag",
+   "question_id": "vibe_pack/S5_task_dag/q3",
+   "question": "本章为单个任务规定的完成判据落到什么可执行检查动作？",
+   "answered": true,
+   "answer": "本章为单个任务规定的完成判据落到什么可执行检查动作？"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S6_context_manifest",
+   "question_id": "vibe_pack/S6_context_manifest/q1",
+   "question": "按本章，每个任务应装载哪些文件？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S6_context_manifest",
+   "question_id": "vibe_pack/S6_context_manifest/q2",
+   "question": "本章给单次装载量规定的上限或预算是多少？",
+   "answered": true,
+   "answer": "本期试点预算 45 万元（PriceCell-1）"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S6_context_manifest",
+   "question_id": "vibe_pack/S6_context_manifest/q3",
+   "question": "本章如何让装载清单与具体任务的对应关系可查？",
+   "answered": true,
+   "answer": "清单版本须可追溯，MUST 为每次更新生成版本号与变更摘要，并保留至少 3 个历史版本供审计（Fact-3）；NEVER 允许覆盖式更新导致历史版本丢失。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S7_verification",
+   "question_id": "vibe_pack/S7_verification/q1",
+   "question": "本章如何区分机器可判与需人工判定的验收？",
+   "answered": true,
+   "answer": "以上四类条款——来源核验时限、原始音频访问限制、单条处理成本、核验人员资历——分别对应可追溯的台账记录、分发日志、财务系统、履历表四种客观数据源，每类判定均为非此即彼的二元结果，不依赖主观解释，从而保证本章所有 MUST/NEVER 条款具备可执行的可判定性。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S7_verification",
+   "question_id": "vibe_pack/S7_verification/q2",
+   "question": "按本章，验证失败时的回退动作是什么？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S7_verification",
+   "question_id": "vibe_pack/S7_verification/q3",
+   "question": "本章规定测试需覆盖到什么程度才算通过？",
+   "answered": true,
+   "answer": "判定方法：抽取任意一条已分发语料，能否在授权台账中查到对应发音人授权书编号与核验时间戳，查得即为通过，查不到即为不通过，不存在中间状态。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S8_progress_ledger",
+   "question_id": "vibe_pack/S8_progress_ledger/q1",
+   "question": "本章规定每条记录必须包含哪些字段？",
+   "answered": true,
+   "answer": "台账 MUST 包含以下字段：任务编号、方言点名称、采集时长、转写完成度、授权状态、分发批次、验收人。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S8_progress_ledger",
+   "question_id": "vibe_pack/S8_progress_ledger/q2",
+   "question": "按本章，新会话如何据此恢复工作现场？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S8_progress_ledger",
+   "question_id": "vibe_pack/S8_progress_ledger/q3",
+   "question": "本章对记录只增不改这一性质是如何规定的？",
+   "answered": true,
+   "answer": "台账存储于版本化数据库，历史记录 MUST 可追溯，NEVER 允许覆盖删除已提交状态记录。"
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S9_escalation",
+   "question_id": "vibe_pack/S9_escalation/q1",
+   "question": "本章枚举必须上报而不得自行决定的情形有哪些？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S9_escalation",
+   "question_id": "vibe_pack/S9_escalation/q2",
+   "question": "按本章，上报时需要提交哪些材料？",
+   "answered": false,
+   "answer": null
+  },
+  {
+   "composition_id": "golddoc-vibe_pack-channels",
+   "section_id": "S9_escalation",
+   "question_id": "vibe_pack/S9_escalation/q3",
+   "question": "等待裁决期间本章要求执行者做什么？",
+   "answered": true,
+   "answer": "等待裁决期间，运营团队须保持冻结状态，不得擅自恢复分发，且所有沟通须以书面记录为准。"
+  }
+ ]
+}

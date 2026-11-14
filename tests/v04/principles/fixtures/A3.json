@@ -1,0 +1,11 @@
+{
+ "principle": "A3",
+ "title": "语言与地区正交",
+ "source": "docs/PRINCIPLES-v04.md",
+ "raw": "切 region=JP 时把界面变日文（日文不在语言集）；lang=en 时把 CN 热点集合过滤成英文源；用 Accept-Language 推导 region。",
+ "counter_examples": [
+  "切 region=JP 时把界面变日文（日文不在语言集）",
+  "lang=en 时把 CN 热点集合过滤成英文源",
+  "用 Accept-Language 推导 region"
+ ]
+}

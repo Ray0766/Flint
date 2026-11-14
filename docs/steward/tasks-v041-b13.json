@@ -1,0 +1,235 @@
+{
+ "spec_version": "v0.4.1-batch9",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward 2026-08-11（第 13 批 · owner 看屏后的三条视觉意见）",
+ "note": "owner 2026-08-11 看第一屏后给三条：①顶栏做成一个横栏、用他给的 Anime Navbar 样式；②标题做大；③主体铺满整个屏幕、内容放大。**steward 实查后发现前两条同根**：`--measure-longform: 34em` 是长文行长的排版 token，却被 `globals.css:141,207` 当成应用外壳宽度——主体因此被卡在窄栏里，顶栏 9 个控件在 34em 里放不下才折成三四行。owner 另定两条：吉祥物**照蓝本做全**；亮/暗**两主题各一套**药丸条配色。**本批的判据一律正向**（MUST 长成那样 + 实测数值），因为 `UI-01~11` 那次全禁止性判据全绿而屏是错的。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B13-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "blueprint": "风格来源唯一锚点 = `前端设计/Anime navbar live demo/Anime Navbar.dc.html`（owner 2026-08-11 指定）。**照它做，NEVER 自创一版**；蓝本没写而本仓需要的（减动效、中文字体、双主题）逐条在 trace 写明是补的。",
+  "positive_criteria": "**本批判据一律正向**：每条 MUST 是「这一屏/这个元素 MUST 长成什么样」并带**实测数值**（computed style / getBoundingClientRect），NEVER 只写「NEVER 空转」这类禁止性判据。由来：`UI-01~11` 挂的四条禁止性判据全绿，而那一屏是个 4072px 的裸 `<ul><li>`。",
+  "real_browser": "视觉判据 MUST 打真浏览器真栈（playwright 恒在项目外 C:\\pwenv，:3000），NEVER 用组件快照冒充整屏。",
+  "network": "本批 NEVER 真实网络。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。蓝本用了 Google Fonts 的 Manrope——**NEVER 引外链字体**（CI 不联网、且外链字体是第三方请求）；用本仓既有字体档，字体差异写进 trace。",
+  "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8。",
+  "stale_process": "打真栈之前 MUST 先核 :3000 与 :8000 的 PID 与启动时间。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "WIDTH-01",
+   "title": "③铺满：长文行长 token 被当成了应用容器宽度",
+   "milestone": "W13",
+   "inputs": [
+    "web/app/globals.css",
+    "web/public/_ds/.../tokens/typography.css",
+    "web/components/shell/AppShell.tsx",
+    "web/components/shell/Screen.tsx"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_width_fullbleed.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_width_fullbleed.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "根因（steward 实查）：`--measure-longform: 34em` 定义在 `_ds/.../tokens/typography.css:15`，那是**长文最佳行长**的排版 token；而 `globals.css:141` 与 `:207` 拿它当 `.app-shell__inner` 与 `.app-shell__body` 的 `max-inline-size`——**广场是卡片网格，不是长文**。owner 三条意见（顶栏挤成三行 / 主体窄 / 内容小）里前两条同根",
+    "**正向判据（MUST 长成那样，NEVER 只写禁止性判据）**：1920×1080 视口下，主体内容区实测宽度 （`getBoundingClientRect().width`，playwright 真浏览器）**≥ 视口宽 × 0.9**；1440 与 390 两个视口各再断言一次（390 下 MUST 无横向溢出）",
+    "`--measure-longform` 本身**一个字不改**——它对**正文段落**是对的。要改的是「谁在用它」：长文容器（报告正文、计划书正文）照旧用它；应用外壳与网格屏换成一个新的容器宽度 token，两者在 CSS 里各自命名，NEVER 共用一个",
+    "阴性对照：把外壳的容器宽度改回 `--measure-longform` → 判据 MUST 红且报出实测宽度与阈值",
+    "报告正文那一屏 MUST 仍然是长文行长——判据两个方向各断言一次（网格屏宽、正文屏窄），NEVER 让「铺满」把正文也拉成满屏（那会让长文难读，是把一个错换成另一个错）"
+   ],
+   "context_refs": [
+    "前端设计/Anime navbar live demo/Anime Navbar.dc.html"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "NAV-ANIME-01",
+   "title": "①顶栏：照蓝本做成顶部居中的药丸浮动条（含跟随发光块，两主题各一套）",
+   "milestone": "W13",
+   "inputs": [
+    "web/components/shell/AppShell.tsx",
+    "web/components/shell/LocaleControls.tsx",
+    "web/components/shell/ThemeControl.tsx",
+    "前端设计/Anime navbar live demo/Anime Navbar.dc.html"
+   ],
+   "outputs": [
+    "web/components/shell/",
+    "web/app/globals.css",
+    "tests/v041/test_nav_anime.py",
+    "web/__tests__/"
+   ],
+   "cycles": 3,
+   "estimate_days": 1.5,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_nav_anime.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "风格来源逐字锚定：`前端设计/Anime navbar live demo/Anime Navbar.dc.html`。**照它做**，NEVER 自创一版",
+    "**形态正向判据**（playwright 量 computed style，全部 MUST 成立）：`position: fixed` · 顶部居中（左右外边距差 ≤2px）· `border-radius` 解析后 ≥ 999px（药丸）· `backdrop-filter` 含 `blur` · 有 1px 描边与投影",
+    "**跟随发光块**：切换当前页之后，发光块的 `left` / `width` 与当前项的 `offsetLeft` / `offsetWidth` **相等（±1px）**——这一条是蓝本的核心机制（`measure()` 实测每个 tab 的矩形），判据 MUST 真切换再量",
+    "**字体加载后重测**：蓝本用 `document.fonts.ready.then(measure)`。中文字体加载慢，不重测发光块会错位——判据 MUST 模拟慢字体（延迟 fonts.ready）后仍断言对齐。**这一条 NEVER 省**：它在英文蓝本上看不出来，在中文界面上是必现",
+    "**两主题各一套**（owner 2026-08-10 选）：暗底照蓝本（半透明黑 + 白字）；亮底用半透明白 + 深色字 + 更轻的投影。沿用 `DARK-02` 的既有判据形状——**两主题量到同一组颜色仍判红**",
+    "**响应式**：视口 <768 时文字标签 `display:none`、图标 `display:inline-flex`（蓝本 `isMobile` 那一路），两个方向各断言一次",
+    "顶栏那 6 个导航项 + 地区 + 主题 + 语言三个控件 MUST 在 1920 下**渲染成一行**（所有项的 `offsetTop` 相等）——owner 的「做成一个横栏」就是这一条；放不下时的收纳方式写进 trace，NEVER 靠缩字号硬塞",
+    "既有导航语义**一条不改**：6 个入口、`/share/[token]` 仍是唯一豁免屏、可达性三个空表继续成立（`ENTRY-05` 的判据一条都不许倒）"
+   ],
+   "context_refs": [
+    "前端设计/Anime navbar live demo/Anime Navbar.dc.html",
+    "docs/trace/SHELL-01.md",
+    "docs/trace/DARK-02.md"
+   ],
+   "depends_on": [
+    "WIDTH-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "NAV-ANIME-02",
+   "title": "①顶栏续：吉祥物照蓝本做全（owner 2026-08-10 选「要，照蓝本做全」）",
+   "milestone": "W13",
+   "inputs": [
+    "web/components/shell/",
+    "前端设计/Anime navbar live demo/Anime Navbar.dc.html"
+   ],
+   "outputs": [
+    "web/components/shell/",
+    "tests/v041/test_nav_mascot.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_nav_mascot.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "风格来源：`前端设计/Anime navbar live demo/Anime Navbar.dc.html` 第 56~71 行那一块。owner 明确要**照蓝本做全**",
+    "**位置正向判据**：吉祥物水平中心 = 当前项中心（±2px），且切换当前页之后**跟过去**（真切换再量）",
+    "四种交互动画逐条有判据：hover 时扭动（`mWiggle`）· 眨眼（`mBlink`）· 尾巴跳（`mTailHop`）· 冒星星（`sparklePop`）；不 hover 时是漂浮（`mBob`）与尾巴轻摆（`mTailBob`）。判据打 computed style 的 `animation-name`，NEVER 只断言「类名在」",
+    "**尊重系统的减动效偏好**：`prefers-reduced-motion: reduce` 时全部动画 MUST 停（吉祥物仍在位、仍跟随，只是不动）——蓝本没有这一条，是本仓补的；阴性对照：开着减动效仍在动 → 判据红",
+    "两主题下吉祥物都看得清（暗底白脸、亮底要有描边或换色），沿用 `DARK-02` 判据形状",
+    "吉祥物 `pointer-events: none`（蓝本原话），NEVER 让它挡住任何可点区域——判据断言它下面的导航项仍可点"
+   ],
+   "context_refs": [
+    "前端设计/Anime navbar live demo/Anime Navbar.dc.html"
+   ],
+   "depends_on": [
+    "NAV-ANIME-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TITLE-01",
+   "title": "②标题做大：屏头标题与品牌字号分级",
+   "milestone": "W13",
+   "inputs": [
+    "web/components/shell/Screen.tsx",
+    "web/app/globals.css",
+    "web/public/_ds/"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_title_scale.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_title_scale.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 意见：「标题做大」。实况：`.screen__title` 与 `.app-shell__wordmark` 今天走 `_ds` 的排版档，在 1920 下偏小（蓝本主标是 56px）",
+    "**正向判据**：1920 视口下 `h1.screen__title` 的 computed `font-size` **≥ 40px**、品牌字 `.app-shell__wordmark` **≥ 28px**；390 视口下两者按比例缩小但 MUST ≥ 24px / 20px",
+    "字号 MUST 走 `_ds` 的排版档位（新增档位也写进 `_ds` 的 token），**NEVER 在组件里写死 px**——写死之后下一次调档没人找得到它",
+    "阴性对照：把字号改回原档 → 判据红并报出实测值"
+   ],
+   "context_refs": [
+    "docs/trace/DS-01.md"
+   ],
+   "depends_on": [
+    "WIDTH-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "EYE-04",
+   "title": "看屏取证：三条意见逐条对着截图验收",
+   "milestone": "W13",
+   "inputs": [
+    "web/",
+    "tests/v041/"
+   ],
+   "outputs": [
+    "docs/怎么测-v041.md",
+    ".ui-probe/",
+    "tests/v041/test_eye04.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_eye04.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "**这一条是本批的防空转闸**：`UI-01~11` 那次四条判据全绿而广场是个 4072px 的裸列表——禁止性判据挡得住做错，挡不住没做。本卡逐条**正向**取证",
+    "三个视口（1920 / 1440 / 390）× 两主题（亮 / 暗）共 6 张截图，逐张落 `.ui-probe/eye04/`，文件名写明视口与主题",
+    "每张截图 MUST 同时满足：顶栏是一行药丸条 · 主体宽度 ≥ 视口 × 0.9（390 除外）· 无横向溢出 · 零控制台报错",
+    "截图 MUST 是**真浏览器**打真栈（:3000），NEVER 用组件快照冒充——组件快照证明不了「整屏长成那样」",
+    "`docs/怎么测-v041.md` 补一节「界面」：owner 打开哪一屏、该看到什么形状、看着不对时该看哪张截图"
+   ],
+   "context_refs": [
+    "docs/怎么测-v041.md"
+   ],
+   "depends_on": [
+    "NAV-ANIME-01",
+    "NAV-ANIME-02",
+    "TITLE-01",
+    "WIDTH-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-13",
+   "title": "本批收尾",
+   "milestone": "W13",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b13.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH13-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_ledger_pairing_v041.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "五条全局门逐字贴出；pytest 的红逐条点名归属，NEVER 按族小结",
+    "顺序写死：先写 trace 与台账 → 再跑五条门 → 最后只改完成态报告的数字",
+    "blocked 也要有 started；每张卡的 started 与终态成对",
+    "报告首节 = **三条意见的兑现对照**：owner 说的原话 / 做成了什么 / 哪张截图为证",
+    "把 6 张截图的路径逐一列出，owner 不用翻目录"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH12-COMPLETION.md"
+   ],
+   "depends_on": [
+    "EYE-04"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

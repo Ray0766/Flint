@@ -1,0 +1,21 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "arxiv",
+ "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI+AND+submittedDate:[202608020000+TO+202608022359]&max_results=5",
+ "requested_at_utc": "2026-08-10T03:08:53.464710+00:00",
+ "status": 200,
+ "final_url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI+AND+submittedDate:[202608020000+TO+202608022359]&max_results=5",
+ "redirects": [],
+ "headers": {
+  "content-length": "11578",
+  "server": "Google Frontend",
+  "content-type": "application/atom+xml; charset=utf-8"
+ },
+ "body_head": "<?xml version='1.0' encoding='UTF-8'?>\n<feed xmlns:opensearch=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:arxiv=\"http://arxiv.org/schemas/atom\" xmlns=\"http://www.w3.org/2005/Atom\">\n  <id>https://arxiv.org/api/cnje+OXreWC1+dJt0PvlomF/52Q</id>\n  <title>arXiv Query: search_query=cat:cs.AI AND submittedDate:\"202608020000 TO 202608022359\"&amp;id_list=&amp;start=0&amp;max_results=5</title>\n  <updated>2026-08-10T03:08:53Z</updated>\n  <link href=\"https://arxiv.org/api/query?search_query=cat:cs.AI+AND+submittedDate:%22202608020000+TO+202608022359%22&amp;start=0&amp;max_results=5&amp;id_list=\" type=\"application/atom+xml\"/>\n  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>\n  <opensearch:totalResults>120</opensearch:totalResults>\n  <opensearch:startIndex>0</opensearch:startIndex>\n  <entry>\n    <id>http://arxiv.org/abs/2608.01521v1</id>\n    <title>MineGrad: Gradient Inversion Attacks on LoRA Fine-Tuning</title>\n    <updated>2026-08-02T22:18:34Z</updated>\n    <link href=\"https://arxiv.org/abs/2608.01521v1\" rel=\"alternate\" type=\"text/html\"/>\n    <link href=\"https://arxiv.org/pdf/2608.01521v1\" rel=\"related\" type=\"application/pdf\" title=\"pdf\"/>\n    <summary>Parameter-efficient fine-tuning (PEFT), such as low-rank adaptation (LoRA), has recently been adopted in federated learning to reduce communication and computation costs. In this setup, users download a pretrained model from the server prior to fine-tuning, and then fine-tune lightweight LoRA modules locally while keeping the pretrained model frozen, sharing only the gradients of the fine-tuning parameters with the server. Despite its growing popularity, robustness of federated fine-tuning against an adversarial server remains underexplored, where the server maliciously tampers with the training protocol to breach the privacy of users' data. In this work, we investigate gradient inversion attacks on LoRA fine-tuning. We propose an analytical attack that enables a malicious server to recover private user data by leveraging a poisoned pretrained model and fine-tuning param",
+ "body_bytes": 11578,
+ "sent_user_agent": "flint-cn05-probe/1.0 (contract check; DEC-052)",
+ "left_allowed_hosts": [],
+ "method": "GET",
+ "cookie_names": []
+}

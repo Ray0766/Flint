@@ -1,0 +1,15 @@
+:root{
+/* 间距 4/8/12/16/24/32/48/64/96/160 */
+--sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--sp-8:64px;--sp-9:96px;--sp-10:160px;
+/* 圆角：2 表格与数据面 / 8 卡片、贴纸 / 999 仅标签纸 */
+--r-data:2px;--r-card:8px;--r-tag:999px;
+/* 投影：极淡，仅贴纸与浮层 */
+--shadow-sticker:0 1px 2px rgba(27,42,46,.10);
+--shadow-overlay:0 8px 32px rgba(27,42,46,.16),0 2px 6px rgba(27,42,46,.08);
+--emboss:inset 1px 1.5px 3px rgba(27,42,46,.09),inset -1px -1px 2px rgba(255,255,255,.65); /* @kind shadow */
+/* WIDTH-01：**容器宽度**档。与 typography.css 的 `--measure-longform` 各自命名——
+   那一个是「长文一行最多多少字才好读」（排版事实），这一个是「应用外壳有多宽」（布局决定）。
+   合用一个的结果实测过：广场被收进 34em≈476px，一张 520px 的卡都放不下。 */
+--width-app:1760px; /* @kind other 应用外壳与网格屏的上限。1920 视口下实测 1760/1920=0.92（owner「铺满整个屏幕」的落点，判据阈值 0.9）；1440 视口下由 100vw-2*sp5 接管，实测 1392/1440=0.97。仍留一个上限而不是纯 100vw：超宽屏上一行排 8 张卡读起来是一条横带，而卡片网格的可读上限就在这一带 */
+--width-app-inset:min(var(--width-app), calc(100vw - 2 * var(--sp-5))); /* @kind other 收进视口，NEVER 横向溢出 */
+}

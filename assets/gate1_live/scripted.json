@@ -1,0 +1,81 @@
+{
+ "steps": [
+  "plan",
+  "retrieve",
+  "judge",
+  "validate"
+ ],
+ "retrieved_docs": [
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2506.06962v3"
+  },
+  {
+   "source_id": "arxiv",
+   "kind": "paper",
+   "url": "http://arxiv.org/abs/2504.13684v1"
+  },
+  {
+   "source_id": "github",
+   "kind": "repo",
+   "url": "https://github.com/HKUDS/LightRAG"
+  },
+  {
+   "source_id": "github",
+   "kind": "repo",
+   "url": "https://github.com/microsoft/graphrag"
+  }
+ ],
+ "support_claims": [
+  {
+   "claim": "方向「检索增强生成」存在市场支持证据",
+   "doc_id": "doc-025a7c2ead5e"
+  }
+ ],
+ "pinned_citations": [
+  {
+   "doc_url": "http://arxiv.org/abs/2506.06962v3",
+   "quote_span": "We introduce Autoregressive Retrieval Augmentation (AR-RAG), a novel paradigm that enhances image generation by autoregressively incorporating knearest neighbor retrievals at the patch level."
+  }
+ ],
+ "verdict": {
+  "all_satisfied": [
+   "C_opportunity"
+  ],
+  "competitors": [],
+  "constraints_checked": {
+   "demoted_by_alignment": false,
+   "gap_count": 0,
+   "order": [
+    "A_infeasible",
+    "B_red_ocean",
+    "C_opportunity",
+    "D_insufficient"
+   ],
+   "rule_a": {
+    "blocked_pending_optin": false,
+    "satisfied": false,
+    "used_user_evidence_only": false
+   },
+   "rule_b": {
+    "by_count": false,
+    "by_strength": false,
+    "reachable_count": 0,
+    "satisfied": false,
+    "strong_names": []
+   },
+   "rule_c": {
+    "blocking_competitors": [],
+    "failed_conditions": [],
+    "satisfied": true
+   }
+  },
+  "gaps": [],
+  "key_citation_ids": [
+   "doc-025a7c2ead5e"
+  ],
+  "rationale_fact_ids": [],
+  "verdict": "C_opportunity"
+ }
+}

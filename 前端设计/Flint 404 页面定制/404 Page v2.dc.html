@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/typography.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/texture.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/base.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/styles.css">
+<script src="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/_ds_bundle.js"></script>
+<style>
+body{margin:0}a{color:var(--indigo)}a:hover{color:var(--ink)}
+@keyframes fl-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fl-in{from{opacity:0}to{opacity:1}}
+@keyframes fl-stamp{from{opacity:0;transform:rotate(7deg) scale(1.5)}60%{opacity:1;transform:rotate(7deg) scale(.96)}to{opacity:1;transform:rotate(7deg) scale(1)}}
+@keyframes fl-sheet{from{opacity:0;transform:translateX(-50%) rotate(0deg)}to{opacity:1;transform:translateX(-50%) rotate(-2.5deg)}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</helmet>
+<div data-screen-label="404" style="min-height:100vh; box-sizing:border-box; display:flex; flex-direction:column; overflow:hidden; background:var(--paper); background-image:var(--tex-paper-strong); color:var(--ink); font-family:var(--font-body);">
+  <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+    <header style="display:flex; align-items:center; justify-content:space-between; padding:24px 64px; animation:fl-in .5s ease-out both;">
+      <a href="{{ homeHref }}" style="font-family:var(--font-display); font-size:25px; color:var(--ink); text-decoration:none;">Flint 燧石</a>
+      <nav style="display:flex; align-items:center; gap:24px;">
+        <a href="#" style="font-size:14px; color:var(--ink-2); text-decoration:none;" style-hover="color:var(--ink); box-shadow:inset 0 -2px 0 var(--sulfur);">它怎么工作</a>
+        <a href="#" style="font-size:14px; color:var(--ink-2); text-decoration:none;" style-hover="color:var(--ink); box-shadow:inset 0 -2px 0 var(--sulfur);">如实原则</a>
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" size="sm" hint-size="auto,34px">开始使用</x-import>
+      </nav>
+    </header>
+  </sc-if>
+  <main style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px 24px 64px;">
+    <h1 style="font-family:var(--font-display); font-weight:400; font-size:clamp(31px, 3.4vw, 48px); line-height:1.15; margin:0; color:var(--ink); animation:fl-rise .55s ease-out .05s both;">你要找的这一页，<span style="background:linear-gradient(transparent 62%, var(--sulfur) 62% 94%, transparent 94%);">不在这本册子里</span>。</h1>
+    <p style="font-size:16px; line-height:1.8; color:var(--ink-2); max-width:32em; margin:14px 0 0; animation:fl-rise .55s ease-out .15s both;">已核对目录与索引——该地址可能已移动，或从未装订。</p>
+    <div style="position:relative; margin:8px 0 40px; animation:fl-rise .6s ease-out .25s both;">
+      <div style="position:absolute; left:50%; top:12%; width:112%; height:82%; transform:translateX(-50%) rotate(-2.5deg); background:var(--paper-2); background-image:var(--tex-note); border:1px solid var(--rule); border-radius:8px; box-shadow:0 2px 8px rgba(27,42,46,.10); animation:fl-sheet .7s ease-out .3s both;">
+        <div style="position:absolute; top:-13px; left:28px;">
+          <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" tone="indigo" rotate="-2" hint-size="auto,28px">资料缺口</x-import>
+        </div>
+      </div>
+      <div style="position:relative; font-family:var(--font-display); font-weight:400; font-size:clamp(160px, 24vw, 300px); line-height:1.05; letter-spacing:-0.02em; color:var(--ink); user-select:none; padding:0 24px;">4<span style="color:var(--indigo);">0</span>4</div>
+      <svg width="96" height="96" viewBox="0 0 96 96" fill="none" aria-hidden="true" style="position:absolute; top:-6px; left:-30px; overflow:visible; animation:fl-in .4s ease-out .8s both;">
+        <path d="M46 44 l13 -22 M55 51 l24 -9 M53 62 l18 13 M37 42 l-5 -24" stroke="var(--sulfur)" stroke-width="6" stroke-linecap="round"></path>
+        <circle cx="45" cy="52" r="10" fill="var(--sulfur)"></circle>
+      </svg>
+      <div style="position:absolute; top:2%; right:-38px; transform:rotate(7deg); border:3px solid var(--indigo); border-radius:4px; padding:8px 14px 10px; color:var(--indigo); mix-blend-mode:multiply; background:transparent; animation:fl-stamp .5s ease-out .75s both;">
+        <div style="font-family:var(--font-display); font-size:25px; line-height:1.15;">未装订</div>
+        <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.04em; margin-top:2px;">UNBOUND · 404</div>
+      </div>
+      <div style="position:absolute; left:50%; bottom:-8px; transform:translateX(-50%) rotate(1.2deg); background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:4px 12px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:var(--ink-3); white-space:nowrap; box-shadow:0 1px 2px rgba(27,42,46,.08); animation:fl-in .4s ease-out .95s both;">HTTP 404 · 页面未找到</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px; animation:fl-rise .55s ease-out .45s both;">
+      <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" href="{{ homeHref }}" hint-size="auto,40px">返回首页</x-import>
+      <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="ghost" hint-size="auto,40px">查看今日线索</x-import>
+    </div>
+  </main>
+  <sc-if value="{{ showFooter }}" hint-placeholder-val="{{ true }}">
+    <footer style="border-top:1px solid var(--rule); padding:28px 64px; display:flex; justify-content:space-between; align-items:baseline; animation:fl-in .5s ease-out .3s both;">
+      <span style="font-family:var(--font-display); font-size:20px; color:var(--ink-2);">Flint 燧石</span>
+      <span style="font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:var(--ink-3);">每日热点 → 可行性判定 → 深度报告</span>
+    </footer>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;showNav&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;结构&quot;},
+  &quot;showFooter&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;结构&quot;},
+  &quot;homeHref&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;#&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;链接&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      showNav: this.props.showNav ?? true,
+      showFooter: this.props.showFooter ?? true,
+      homeHref: this.props.homeHref ?? "#",
+    };
+  }
+}
+</script>
+</body>
+</html>

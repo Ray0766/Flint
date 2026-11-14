@@ -1,0 +1,15 @@
+:root{
+/* 麻纸噪点：全站 ≤4%，首屏可到 8%。CSS/SVG 生成，不用位图 */
+--tex-paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); /* @kind other */
+--tex-paper-strong:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E"); /* @kind other */
+/* 网点（降级生成 = 复印件） */
+--tex-halftone:radial-gradient(rgba(139,151,153,.5) 1px,transparent 1.3px) 0 0/6px 6px; /* @kind other */
+/* 划线底纹（争议） */
+--tex-hatch:repeating-linear-gradient(45deg,transparent 0 5px,rgba(90,106,110,.14) 5px 6px); /* @kind other */
+/* 便条横线（待复核·提示级） */
+--tex-note:repeating-linear-gradient(transparent 0 21px,rgba(46,74,125,.12) 21px 22px); /* @kind other */
+/* 缝线（保护只读侧边）：用作窄条 background */
+--tex-stitch:repeating-linear-gradient(180deg,var(--moss) 0 7px,transparent 7px 14px); /* @kind other */
+/* 压印网格（空缺区标尺感之外的底） */
+--tex-press:repeating-linear-gradient(transparent 0 7px,rgba(27,42,46,.03) 7px 8px); /* @kind other */
+}

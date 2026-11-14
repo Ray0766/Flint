@@ -1,0 +1,2106 @@
+version: 0
+source: generator-ground-truth
+directive: owner 2026-07-27：金标由 fixture 生成器按构造场景直出
+window:
+  start: '2026-06-24'
+  end: '2026-07-23'
+dormant_after_days: 14
+clusters:
+- canonical: 复活测试词
+  keyword_id: kw-8362edde1701
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-07-10'
+    kind: dormant
+  - day: '2026-07-15'
+    kind: revived
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+- canonical: 热搜话题24
+  keyword_id: kw-b8e28fbe1600
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-07-11'
+    kind: dormant
+  - day: '2026-07-12'
+    kind: revived
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: delivery
+  keyword_id: kw-cefb57c743bc
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: ai 制药
+  keyword_id: kw-24893d29fbc1
+  expected:
+  - day: '2026-07-23'
+    kind: new
+- canonical: 热搜话题50
+  keyword_id: kw-48e2629d49e4
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+- canonical: on-device llm
+  keyword_id: kw-adca7a5ccf0f
+  expected:
+  - day: '2026-07-23'
+    kind: new
+- canonical: low-altitude traffic management via marl
+  keyword_id: kw-f42b8de38a15
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: long
+  keyword_id: kw-e2337bac44ee
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: drone route
+  keyword_id: kw-ea893b852ced
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题49
+  keyword_id: kw-eac1460b2a6b
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+- canonical: datacenter
+  keyword_id: kw-fb3abef2029e
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题34
+  keyword_id: kw-4dbdb5a060a3
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 电竞世界杯
+  keyword_id: kw-e2c7189618db
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题00
+  keyword_id: kw-8d2724ca7c68
+  expected:
+  - day: '2026-07-04'
+    kind: new
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+- canonical: control
+  keyword_id: kw-a43e4fdde589
+  expected:
+  - day: '2026-06-25'
+    kind: new
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题12
+  keyword_id: kw-bd888cd3758c
+  expected:
+  - day: '2026-07-08'
+    kind: new
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: synbio
+  keyword_id: kw-74109ed6e236
+  expected:
+  - day: '2026-06-26'
+    kind: new
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: airspace
+  keyword_id: kw-b9cac7ef21a9
+  expected:
+  - day: '2026-06-25'
+    kind: new
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: ai 面试官
+  keyword_id: kw-b56fa35f621b
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: cooling
+  keyword_id: kw-f2c300dfca21
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: liquid
+  keyword_id: kw-4675962d44e1
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: longstore
+  keyword_id: kw-fe727296a2db
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 开源大模型评测
+  keyword_id: kw-50e9822fbd99
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+- canonical: 热搜话题15
+  keyword_id: kw-0bbc890df07d
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-07-08'
+    kind: dormant
+  - day: '2026-07-09'
+    kind: revived
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 自动驾驶卡车
+  keyword_id: kw-8c093e9926f5
+  expected:
+  - day: '2026-06-29'
+    kind: new
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+- canonical: 热搜话题04
+  keyword_id: kw-a59026c3fa54
+  expected:
+  - day: '2026-07-06'
+    kind: new
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: interface
+  keyword_id: kw-ca3e8bf1f118
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题44
+  keyword_id: kw-14b3c492687a
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+- canonical: 热搜话题27
+  keyword_id: kw-c451dfdf9194
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-07-12'
+    kind: dormant
+  - day: '2026-07-13'
+    kind: revived
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题40
+  keyword_id: kw-cb0072662422
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题72
+  keyword_id: kw-89ef8021637a
+  expected:
+  - day: '2026-07-01'
+    kind: new
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+- canonical: storage
+  keyword_id: kw-b147eaf852d8
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: logistics
+  keyword_id: kw-905b1987bb4a
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: thermal-aware scheduling for liquid-cooled clusters
+  keyword_id: kw-6715fa3ad9aa
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题11
+  keyword_id: kw-71e2acb8fbec
+  expected:
+  - day: '2026-07-07'
+    kind: new
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: open
+  keyword_id: kw-bb697158465b
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: agent
+  keyword_id: kw-c536ce33e743
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: embodied intelligence
+  keyword_id: kw-69063dc0a125
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题39
+  keyword_id: kw-6b3955622f23
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-16'
+    kind: dormant
+  - day: '2026-07-17'
+    kind: revived
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题69
+  keyword_id: kw-c0544d0f75fa
+  expected:
+  - day: '2026-06-30'
+    kind: new
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+- canonical: runtime
+  keyword_id: kw-c2e3252b3e4b
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题73
+  keyword_id: kw-038e684be96d
+  expected:
+  - day: '2026-07-01'
+    kind: new
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+- canonical: edge
+  keyword_id: kw-36e6dcde32d9
+  expected:
+  - day: '2026-06-27'
+    kind: new
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题65
+  keyword_id: kw-a9a108e24602
+  expected:
+  - day: '2026-06-29'
+    kind: new
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+- canonical: routing
+  keyword_id: kw-50d69f4b1378
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: 热搜话题75
+  keyword_id: kw-a318aa8bc641
+  expected:
+  - day: '2026-07-02'
+    kind: new
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+- canonical: 热搜话题66
+  keyword_id: kw-27cfb52fa0ea
+  expected:
+  - day: '2026-06-29'
+    kind: new
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+- canonical: solid
+  keyword_id: kw-365ff2c5dafc
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: core
+  keyword_id: kw-cb9c9e84ba7d
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued
+- canonical: scaling laws for agentic memory systems
+  keyword_id: kw-49d2cb601500
+  expected:
+  - day: '2026-06-24'
+    kind: new
+  - day: '2026-06-25'
+    kind: continued
+  - day: '2026-06-26'
+    kind: continued
+  - day: '2026-06-27'
+    kind: continued
+  - day: '2026-06-28'
+    kind: continued
+  - day: '2026-06-29'
+    kind: continued
+  - day: '2026-06-30'
+    kind: continued
+  - day: '2026-07-01'
+    kind: continued
+  - day: '2026-07-02'
+    kind: continued
+  - day: '2026-07-03'
+    kind: continued
+  - day: '2026-07-04'
+    kind: continued
+  - day: '2026-07-05'
+    kind: continued
+  - day: '2026-07-06'
+    kind: continued
+  - day: '2026-07-07'
+    kind: continued
+  - day: '2026-07-08'
+    kind: continued
+  - day: '2026-07-09'
+    kind: continued
+  - day: '2026-07-10'
+    kind: continued
+  - day: '2026-07-11'
+    kind: continued
+  - day: '2026-07-12'
+    kind: continued
+  - day: '2026-07-13'
+    kind: continued
+  - day: '2026-07-14'
+    kind: continued
+  - day: '2026-07-15'
+    kind: continued
+  - day: '2026-07-16'
+    kind: continued
+  - day: '2026-07-17'
+    kind: continued
+  - day: '2026-07-18'
+    kind: continued
+  - day: '2026-07-19'
+    kind: continued
+  - day: '2026-07-20'
+    kind: continued
+  - day: '2026-07-21'
+    kind: continued
+  - day: '2026-07-22'
+    kind: continued
+  - day: '2026-07-23'
+    kind: continued

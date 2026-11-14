@@ -1,0 +1,6 @@
+[
+ {
+  "url": "https://api.deepseek.com/chat/completions",
+  "body_text": "{\"id\":\"1dd10b15-9962-4646-a251-8798ba1e583b\",\"object\":\"chat.completion\",\"created\":1785825533,\"model\":\"deepseek-v4-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"好\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":9,\"completion_tokens\":1,\"total_tokens\":10,\"prompt_tokens_details\":{\"cached_tokens\":0},\"prompt_cache_hit_tokens\":0,\"prompt_cache_miss_tokens\":9},\"system_fingerprint\":\"fp_a18b46594c_prod0820_fp8_kvcache_20260402\"}"
+ }
+]

@@ -1,0 +1,22 @@
+{
+ "card": "CAL-01",
+ "judge": "deepseek-chat",
+ "judged_at": "2026-08-04T10:02:11Z",
+ "kinds": {
+  "lineage": {
+   "count": 60,
+   "sampling": "按 (day, cluster_id, event_index) 排序、按 event_kind 分层各最多 30 簇、不足 60 按序补齐；每条给「本簇今天的关键词」与「前一天同簇的关键词」，判的是簇有没有漂移。前两版分别栽在「首个事件几乎全是 new」与「拿了不存在的 previous_cluster_id 字段」上——后者让 15 条 continued 全被判 wrong，那是标注器在判提示词。零随机，可复现",
+   "source": "postgres flint: lineage_audit（role=subject）× clusters"
+  },
+  "relevance": {
+   "count": 60,
+   "sampling": "两侧都取关键词词表：先取词面最近邻对（有重叠者，正例候选），再用 index+97 错位补远例。第一版拿「簇名 × 关键词」配，簇名多为中文占位而词表多为英文，60 条全判 irrelevant、零正例——已改。零随机，可复现",
+   "source": "postgres flint: clusters × evidence_cards × keywords"
+  },
+  "same_topic": {
+   "count": 60,
+   "sampling": "全词表两两算 Jaccard 词面重叠，取重叠最高的 30 对（难例：leo/leo mesh 这类）+ 零重叠的 30 对（易负例）。零随机，可复现",
+   "source": "postgres flint: keywords 全词表（193 条）两两配对"
+  }
+ }
+}

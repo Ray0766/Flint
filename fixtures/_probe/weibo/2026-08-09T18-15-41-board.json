@@ -1,0 +1,25 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "weibo",
+ "url": "https://s.weibo.com/top/summary?cate=realtimehot",
+ "requested_at_utc": "2026-08-09T18:15:41.387160+00:00",
+ "status": 200,
+ "final_url": "https://s.weibo.com/top/summary?cate=realtimehot",
+ "method": "GET",
+ "after_visitor_handshake": true,
+ "headers": {
+  "content-type": "text/html; charset=UTF-8",
+  "server": "SHANHAI-SERVER"
+ },
+ "body_head": "<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/>\n    <meta name=\"renderer\" content=\"webkit\"/>\n    <meta name=\"viewport\" content=\"initial-scale=1,minimum-scale=1\"/>\n    <title>微博搜索-热搜榜</title>\n\n    <!--智搜-->\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/aisearch/mediaModule/mediaModule.css?version=202607301108\" rel=\"stylesheet\"/>\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/aisearch/mdCard/index.css?version=202607301108\" rel=\"stylesheet\"/>\n\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/video.css?version=202607301108\" rel=\"stylesheet\"/>\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/global.css?version=202607301108\" rel=\"stylesheet\" />\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/module.css?version=202607301108\" rel=\"stylesheet\" />\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/page.css?version=202607301108\" rel=\"stylesheet\" />\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/card.css?version=202607301108\" rel=\"stylesheet\" />\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/css_v6/layer/layer_show_pic.css?version=202607301108\" rel=\"stylesheet\" />\n\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/wooui.css?version=202607301108\" rel=\"stylesheet\" />\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/vars.css\" rel=\"stylesheet\" />\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/woo_font/fonticon.css?version=202607301108\" rel=\"stylesheet\" />\n    <link href=\"//img.t.sinajs.cn/t4/appstyle/searchpc/css/new_pc/css/new.css?version=202607301108\" rel=\"stylesheet\" />\n\n    <link rel=\"stylesheet\" href=\"//js.t.sinajs.cn/t4/apps/searchpc/js/pcNew/top-nav/weibo-top-nav.css?version=202607301108\">\n    <link rel=\"stylesheet\" href=\"//js.t.sinajs.cn/t4/apps/searchpc/js/pcNew/copyright/weibo-copyright.css?version=202607301108\">\n   ",
+ "body_bytes": 105724,
+ "cookie_names": [
+  "SRF",
+  "SRT",
+  "SUB",
+  "SUBP",
+  "SVB"
+ ],
+ "left_allowed_hosts": []
+}

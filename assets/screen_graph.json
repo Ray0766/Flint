@@ -1,0 +1,503 @@
+{
+  "_note": "NAV-01 · 导航图声明。每屏写明**谁能到这一屏**（reached_by）与**从这一屏能去哪**（goes_to）。两个方向都写，是因为只写出口的话孤岛查不出来——一座孤岛的出口可以很多，而没有任何一条边指向它。",
+  "_how": "tools/check_reachability.py 从 entries 出发做图遍历。走不到的屏判红并点名，除非它在 exempt 里写明理由。同一把尺子还比对**图与代码**：图里声明的每条边都要在 web/ 的源码里找得到（href / router.push / location.href），代码里有而图里没有的边也要报——一份与代码对不上的图比没有图更坏，它会让人以为路查过了。",
+  "_never": "NEVER 把「还没接线」写进 exempt 顶掉红。exempt 是给**本来就不该从站内点到**的屏留的（演示串屏、要外部 token 的屏），不是给待办事项留的。待办就该红着——它红着才说明它在量。 另一条同样要紧：**两个方向都要写**。ENTRY-05 实测撞上——只补了 `/combo` 的 `reached_by`，尺子照样报它是孤岛，因为遍历走的是 `goes_to`。只写一边的边在图里看起来是接上了，而它一条路都走不通。",
+  "_measured": "steward 2026-08-09 实测并由 NAV-01 复核：22 屏 · 站内链接目标 5 个 · 顶栏 2 项 · 点得到 6 屏 · 走不到 16 屏。NAV-01 复核：**链接目标是 6 个不是 5 个**——工单列的 5 个全是 href，第 6 个 `/combo -> /projects/[id]/topics` 写在提交回调的 `window.location.assign()` 里（web/app/combo/page.tsx:50），只扫 href 看不见它；而它正是造出二级孤岛的那一条。其余数字复核一致：走不到的 16 屏 = 孤岛 15 + 豁免 1。 ENTRY-05（2026-08-09）复测：ENTRY-04 建了广场多选建组合、PERSIST-02 让入台那条边走得通，**六座孤岛与那条「路接上了而走不通」一并清零**。清零靠的是两张卡真的把功能做出来了，NEVER 靠往 exempt 里塞。",
+  "entries": [
+    {
+      "route": "/plaza",
+      "how": "AppShell 顶栏导航（NAV_ITEMS）",
+      "why": "主链路第一屏"
+    },
+    {
+      "route": "/favorites",
+      "how": "AppShell 顶栏导航（NAV_ITEMS）",
+      "why": "NAV-04：收藏图书馆。它建于 FAV-06，此前有出口没入口——只能手敲 URL"
+    },
+    {
+      "route": "/design",
+      "how": "AppShell 顶栏导航（NAV_ITEMS）",
+      "why": "NAV-04：AI 设计工作台（DESIGN-02）"
+    },
+    {
+      "route": "/settings/locale",
+      "how": "AppShell 顶栏导航（NAV_ITEMS）",
+      "why": "NAV-04：语言与地区（I18N-08）"
+    },
+    {
+      "route": "/account",
+      "how": "AppShell 顶栏导航（NAV_ITEMS）",
+      "why": "NAV-04：账户（UI-04）。改前顶栏那一格挂的是一句写死的「接口未提供」——WIRE-01 挂上 GET /account 之后那句话就成了假的。**入口照常给，状态归屏说**"
+    },
+    {
+      "route": "/demo",
+      "how": "AppShell 顶栏导航（NAV_ITEMS）",
+      "why": "演示串屏。它今天是唯一能看到整条链路怎么走的地方；NAV-05 把主链路走通之后就该从顶栏撤下（撤入口，屏留着）"
+    },
+    {
+      "route": "/workbench",
+      "how": "AppShell 顶栏导航（NAV_ITEMS）",
+      "why": "WB-01 / DEC-059：计划书主工作台。**新增一项**，既有六项一个不改"
+    }
+  ],
+  "exempt": [
+    {
+      "route": "/share/[token]",
+      "why": "只读外链屏。它的 token 由**站外**拿到（别人分享给你的链接），站内没有、也不该有一条指向它的边——站内能点到就说明有人把别人的 token 印在了屏上。"
+    }
+  ],
+  "screens": [
+    {
+      "route": "/account",
+      "reached_by": [
+        {
+          "from": "顶栏",
+          "how": "NAV_ITEMS",
+          "where": "web/components/shell/AppShell.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/billing",
+          "how": "「查看额度与计费」",
+          "where": "web/app/account/page.tsx"
+        }
+      ],
+      "island_since": "UI-04",
+      "goes_to_note": "NAV-04：额度与计费从账户屏进——它是账户的一部分，放进顶栏会让一个二级页面与「热点广场」平级。",
+      "note": "NAV-04 接上了顶栏入口。改前顶栏那一格挂的是一句**写死的**「接口未提供」——WIRE-01 把 GET /account 挂上之后那句话就成了假的，而顶栏没有办法知道账户屏四态里是哪一态。入口照常给，状态归屏说。"
+    },
+    {
+      "route": "/billing",
+      "reached_by": [
+        {
+          "from": "/account",
+          "how": "「查看额度与计费」",
+          "where": "web/app/account/page.tsx"
+        }
+      ],
+      "goes_to": [],
+      "island_since": "UI-05",
+      "note": "NAV-04 决定：**从账户屏进，不进顶栏**。它是账户的一部分（免费额度、已用量、计费事件都挂在这个身份上），放进顶栏会让一个二级页面与「热点广场」平级。入口放在账户屏的取数状态**外面**：账户读失败 NEVER 把账单入口一起带走——那两件事之间没有关系。"
+    },
+    {
+      "route": "/clusters/[id]",
+      "reached_by": [
+        {
+          "from": "/plaza",
+          "how": "点卡片主体（DEC-042 ①）",
+          "where": "web/app/plaza/page.tsx"
+        }
+      ],
+      "goes_to": [],
+      "note": "NAV-02 建的承载屏。AnalysisView（HOTSPOT-03 的成品）此前没有任何屏在用——建好的东西点不到，与没建长得一模一样。进入即渲染、**进入不触发**：本屏一个写请求都不发。"
+    },
+    {
+      "route": "/combo",
+      "reached_by": [
+        {
+          "from": "/plaza",
+          "how": "多选卡片之后那条「建组合」（ENTRY-04）",
+          "where": "web/app/plaza/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/projects/[id]/topics",
+          "how": "建组合后跳主题列表",
+          "where": "web/app/combo/page.tsx"
+        }
+      ],
+      "note": "ENTRY-04 之前这是一座孤岛，理由写的是「广场上没有『多选卡片建组合』这个能力——那是一个功能，不是一条链接」。**ENTRY-04 建的正是那个功能**：卡片可多选、选够之后那条组合栏带着 `?clusters=` 跳过来。所以这里不是把理由删掉了事，是那个理由**被做掉了**。"
+    },
+    {
+      "route": "/deliverables/[id]",
+      "reached_by": [
+        {
+          "from": "/gate/[id]",
+          "how": "查看交付物",
+          "where": "web/app/gate/[id]/page.tsx"
+        },
+        {
+          "from": "/deliverables/[id]/export",
+          "how": "返回报告",
+          "where": "web/app/deliverables/[id]/export/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/deliverables/[id]/export",
+          "how": "导出入口",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        },
+        {
+          "to": "/deliverables/[id]/quality",
+          "how": "「质量卡」",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        },
+        {
+          "to": "/deliverables/[id]/pack",
+          "how": "「vibe_pack」",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        },
+        {
+          "to": "/deliverables/[id]/interventions",
+          "how": "「干预记录」",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        }
+      ]
+    },
+    {
+      "route": "/deliverables/[id]/export",
+      "reached_by": [
+        {
+          "from": "/deliverables/[id]",
+          "how": "导出入口",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/deliverables/[id]",
+          "how": "返回报告",
+          "where": "web/app/deliverables/[id]/export/page.tsx"
+        }
+      ]
+    },
+    {
+      "route": "/deliverables/[id]/interventions",
+      "reached_by": [
+        {
+          "from": "/deliverables/[id]",
+          "how": "「干预记录」",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [],
+      "island_since": "CHAIN-05"
+    },
+    {
+      "route": "/deliverables/[id]/pack",
+      "reached_by": [
+        {
+          "from": "/deliverables/[id]",
+          "how": "「vibe_pack」",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [],
+      "island_since": "UI-10"
+    },
+    {
+      "route": "/deliverables/[id]/quality",
+      "reached_by": [
+        {
+          "from": "/deliverables/[id]",
+          "how": "「质量卡」",
+          "where": "web/app/deliverables/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [],
+      "island_since": "UI-09"
+    },
+    {
+      "route": "/demo",
+      "reached_by": [
+        {
+          "from": "顶栏",
+          "how": "NAV_ITEMS",
+          "where": "web/components/shell/AppShell.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/jobs/[id]",
+          "how": "提交后跳进度屏",
+          "where": "web/components/DemoFlow.tsx"
+        }
+      ]
+    },
+    {
+      "route": "/design",
+      "reached_by": [
+        {
+          "from": "顶栏",
+          "how": "NAV_ITEMS",
+          "where": "web/components/shell/AppShell.tsx"
+        }
+      ],
+      "goes_to": [],
+      "island_since": "DESIGN-02",
+      "note": "NAV-04 接上了顶栏入口。"
+    },
+    {
+      "route": "/favorites",
+      "reached_by": [
+        {
+          "from": "顶栏",
+          "how": "NAV_ITEMS",
+          "where": "web/components/shell/AppShell.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/plaza",
+          "how": "空态里那条「去广场看看」",
+          "where": "web/components/favorites-library/FavoritesLibrary.tsx"
+        }
+      ],
+      "island_since": "FAV-06",
+      "note": "NAV-04 接上了顶栏入口。**它此前有出口却没有入口**——只写出口的图查不出这一座，那正是两个方向都要写的理由。"
+    },
+    {
+      "route": "/gate/[id]",
+      "reached_by": [
+        {
+          "from": "/plaza",
+          "how": "「查看判定」入口",
+          "where": "web/app/plaza/page.tsx"
+        },
+        {
+          "from": "/jobs/[id]",
+          "how": "跑完了才给的「查看 Gate① 判定」",
+          "where": "web/app/jobs/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/deliverables/[id]",
+          "how": "查看交付物",
+          "where": "web/app/gate/[id]/page.tsx"
+        }
+      ]
+    },
+    {
+      "route": "/jobs/[id]",
+      "reached_by": [
+        {
+          "from": "/demo",
+          "how": "提交后跳进度屏",
+          "where": "web/components/DemoFlow.tsx"
+        },
+        {
+          "from": "/projects/[id]/analysis",
+          "how": "发起分析后跳进度屏",
+          "where": "web/app/projects/[id]/analysis/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/gate/[id]",
+          "how": "跑完了才给的「查看 Gate① 判定」",
+          "where": "web/app/jobs/[id]/page.tsx",
+          "when": "status === \"done\" 时才出现。作业还在跑时点过去，判定屏会如实说「未判定」——那句话没错，可它读起来像「这次没判出结果」，而真相是「还没跑到」。"
+        }
+      ]
+    },
+    {
+      "route": "/plaza",
+      "reached_by": [
+        {
+          "from": "顶栏",
+          "how": "NAV_ITEMS",
+          "where": "web/components/shell/AppShell.tsx"
+        },
+        {
+          "from": "/favorites",
+          "how": "空态里那条「去广场看看」",
+          "where": "web/components/favorites-library/FavoritesLibrary.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/gate/[id]",
+          "how": "「查看判定」入口",
+          "where": "web/app/plaza/page.tsx",
+          "when": "URL 带 ?verdictJob= 时才可点（DEC-012：cluster→判定没有持久化真相）"
+        },
+        {
+          "to": "/clusters/[id]",
+          "how": "点卡片主体（DEC-042 ①：卡面是导航，三个按钮是动作）",
+          "where": "web/app/plaza/page.tsx"
+        },
+        {
+          "to": "/workbenches/[id]",
+          "how": "「入台」按钮成功之后（DEC-042 ②）",
+          "where": "web/components/plaza/PlazaCards.tsx",
+          "when": "入台成功回 graph_id 之后（PERSIST-02 建了 workbenches / graph_nodes / graph_edges 三张表与 GET /workbenches/{id}，这条边从此走得通；改前端点回框架 404，入台永远拿不到 ok）"
+        },
+        {
+          "to": "/combo",
+          "how": "多选卡片之后那条组合栏（ENTRY-04），带 `?clusters=` 过去",
+          "where": "web/app/plaza/page.tsx",
+          "when": "选中两张或以上卡片时才出现——一张卡片没有「组合」可言"
+        }
+      ]
+    },
+    {
+      "route": "/projects/[id]",
+      "reached_by": [
+        {
+          "from": "/projects/[id]/topics",
+          "how": "「项目总览」",
+          "where": "web/app/projects/[id]/topics/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/projects/[id]/topics",
+          "how": "「主题列表」",
+          "where": "web/app/projects/[id]/page.tsx"
+        },
+        {
+          "to": "/projects/[id]/analysis",
+          "how": "「发起分析」",
+          "where": "web/app/projects/[id]/page.tsx"
+        },
+        {
+          "to": "/projects/[id]/proposal",
+          "how": "「计划书受众」",
+          "where": "web/app/projects/[id]/page.tsx"
+        }
+      ],
+      "note": "改前是孤岛，理由是「这一族没有活的入口」。入口在 `/projects/[id]/topics` 那一侧，而那条链的头 `/combo` 此前没人指向它——**头一通，整条链跟着通**。本屏自己一行都没改：孤岛从来不是它的病。"
+    },
+    {
+      "route": "/projects/[id]/analysis",
+      "reached_by": [
+        {
+          "from": "/projects/[id]/topics",
+          "how": "「发起分析」",
+          "where": "web/app/projects/[id]/topics/page.tsx"
+        },
+        {
+          "from": "/projects/[id]",
+          "how": "「发起分析」",
+          "where": "web/app/projects/[id]/page.tsx"
+        },
+        {
+          "from": "/topics/[id]",
+          "how": "「用这条主题发起分析」",
+          "where": "web/app/topics/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/jobs/[id]",
+          "how": "发起分析后跳进度屏",
+          "where": "web/app/projects/[id]/analysis/page.tsx"
+        }
+      ],
+      "note": "改前是孤岛，理由是「这一族没有活的入口」。入口在 `/projects/[id] 与 /topics/[id]` 那一侧，而那条链的头 `/combo` 此前没人指向它——**头一通，整条链跟着通**。本屏自己一行都没改：孤岛从来不是它的病。"
+    },
+    {
+      "route": "/projects/[id]/proposal",
+      "reached_by": [
+        {
+          "from": "/projects/[id]",
+          "how": "「计划书受众」",
+          "where": "web/app/projects/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [],
+      "note": "改前是孤岛，理由是「这一族没有活的入口」。入口在 `/projects/[id]` 那一侧，而那条链的头 `/combo` 此前没人指向它——**头一通，整条链跟着通**。本屏自己一行都没改：孤岛从来不是它的病。"
+    },
+    {
+      "route": "/projects/[id]/topics",
+      "reached_by": [
+        {
+          "from": "/combo",
+          "how": "建组合后跳主题列表",
+          "where": "web/app/combo/page.tsx"
+        },
+        {
+          "from": "/projects/[id]",
+          "how": "「主题列表」",
+          "where": "web/app/projects/[id]/page.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/topics/[id]",
+          "how": "每条主题的「查看这条主题」（带 ?project=）",
+          "where": "web/components/views/TopicListView.tsx"
+        },
+        {
+          "to": "/projects/[id]",
+          "how": "「项目总览」",
+          "where": "web/app/projects/[id]/topics/page.tsx"
+        },
+        {
+          "to": "/projects/[id]/analysis",
+          "how": "「发起分析」",
+          "where": "web/app/projects/[id]/topics/page.tsx"
+        }
+      ],
+      "note": "改前是孤岛，理由是「这一族没有活的入口」。入口在 `/combo 与 /projects/[id]` 那一侧，而那条链的头 `/combo` 此前没人指向它——**头一通，整条链跟着通**。本屏自己一行都没改：孤岛从来不是它的病。"
+    },
+    {
+      "route": "/settings/locale",
+      "reached_by": [
+        {
+          "from": "顶栏",
+          "how": "NAV_ITEMS",
+          "where": "web/components/shell/AppShell.tsx"
+        }
+      ],
+      "goes_to": [],
+      "island_since": "I18N-08",
+      "note": "NAV-04 接上了顶栏入口。"
+    },
+    {
+      "route": "/share/[token]",
+      "reached_by": [],
+      "goes_to": [],
+      "island_since": "UI-06",
+      "wanted_from": "站外链接（见 exempt）"
+    },
+    {
+      "route": "/topics/[id]",
+      "reached_by": [
+        {
+          "from": "/projects/[id]/topics",
+          "how": "每条主题的「查看这条主题」（带 ?project=）",
+          "where": "web/components/views/TopicListView.tsx"
+        }
+      ],
+      "goes_to": [
+        {
+          "to": "/projects/[id]/analysis",
+          "how": "「用这条主题发起分析」",
+          "where": "web/app/topics/[id]/page.tsx",
+          "when": "URL 带 ?project= 时才可点。主题详情自己不知道属于哪个项目——Topic 里没有 project_id，所以由调用方带过来（DEC-012 同形态）。没带时屏上如实说，NEVER 拿 topic_id 拼一个项目去试：猜错会把分析发起到别人的项目上，而那要花钱。"
+        }
+      ],
+      "note": "改前是孤岛，理由是「这一族没有活的入口」。入口在 `/projects/[id]/topics` 那一侧，而那条链的头 `/combo` 此前没人指向它——**头一通，整条链跟着通**。本屏自己一行都没改：孤岛从来不是它的病。"
+    },
+    {
+      "route": "/workbench",
+      "reached_by": [
+        {
+          "from": "顶栏",
+          "how": "NAV_ITEMS",
+          "where": "web/components/shell/AppShell.tsx"
+        }
+      ],
+      "goes_to": [],
+      "note": "WB-01 / DEC-059：计划书主工作台。新增一屏，`/design` 原样留着。"
+    },
+    {
+      "route": "/workbenches/[id]",
+      "reached_by": [
+        {
+          "from": "/plaza",
+          "how": "「入台」按钮成功之后（DEC-042 ②）",
+          "where": "web/components/plaza/PlazaCards.tsx"
+        }
+      ],
+      "goes_to": [],
+      "note": "NAV-03 接上了这条边，PERSIST-02 让它**真的走得通**：三张表建齐、`POST /workbenches` 落库、`GET /workbenches/{id}` 新建，这一屏因此从「写死 graph = null」换成真去取那张图。前端 NEVER 自己拼一个 graph_id 跳过去——那会让用户落进一个不存在的图谱。"
+    }
+  ],
+  "_island_reason": "每一座孤岛 MUST 带 `island_reason` + `island_sheet`：理由写清缺的是什么，单据在 docs/blocked/ 下开着。**NEVER 用理由把红顶掉**——尺子照样报它们，写理由只是让「没人管」与「有主，等一件具体的东西」分得开。"
+}

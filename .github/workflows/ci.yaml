@@ -1,0 +1,60 @@
+# CI 流水线（M1-007，技术方案 E9）：四阶段串行 lint → typecheck → unit → compose-smoke。
+# S2-7：测试阶段零外部网络调用——一切外部 HTTP 走 fixtures/ 录制回放（M1-008 机制）；
+# 依赖安装一律走 requirements.lock 锁版。评测与 7 天演练归定时任务，不阻塞合并（E9）。
+
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.lock
+      - run: ruff check .
+
+  typecheck:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.lock
+      - run: mypy --strict flint
+
+  unit:
+    needs: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.lock
+      - run: pytest -q -m "not compose"
+
+  compose-smoke:
+    needs: unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.lock
+      - run: docker compose up -d --wait postgres redis
+      # 测试库 flint_test：建库 + 迁移 + 大类种子。
+      # compose 的 initdb 只在数据卷首次创建时执行，本地既有 pgdata 卷不会触发，
+      # 故建库统一走运行时脚本（先查 pg_database 再 CREATE——PG 没有 IF NOT EXISTS）。
+      - run: python scripts/provision_test_db.py
+      - run: pytest -q -m compose
+      - run: docker compose down -v
+        if: always()

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/typography.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/texture.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/base.css">
+<link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/styles.css">
+<script src="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/_ds_bundle.js"></script>
+<style>
+html, body { margin: 0; padding: 0; background: var(--paper); }
+::selection { background: var(--sulfur-soft); color: var(--ink); }
+a { color: var(--indigo); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--sulfur); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+@keyframes flint-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+</helmet>
+<main style="position: relative; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: var(--font-body); color: var(--text-body); background: var(--paper); background-image: var(--tex-paper-strong);">
+  <div style="width: 100%; max-width: 1120px; box-sizing: border-box; padding: 0 32px; display: flex; flex-direction: column; flex: 1;">
+    <section data-screen-label="首屏" style="flex: 1; min-height: 72vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 24px; padding: 120px 0 64px 0; animation: flint-rise 0.9s ease-out both;">
+      <sc-if value="{{ showSticker }}" hint-placeholder-val="{{ true }}">
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" tone="indigo" hint-size="auto,26px">FLINT · DAILY</x-import>
+      </sc-if>
+      <h1 style="margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 96px; line-height: 1.15; color: var(--ink); text-wrap: balance;">把热点敲出<span style="box-shadow: inset 0 -0.28em 0 var(--sulfur-soft);">火花</span></h1>
+      <p style="margin: 0; font-size: var(--fs-16); line-height: 1.8; color: var(--ink-2); max-width: 34em;">Flint 把每日热点线索沉淀成可行性判定与深度报告。判定基于已证事实；推测明确标注，不提供溯源。</p>
+      <div style="display: flex; align-items: center; gap: 16px; margin-top: 8px;">
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="primary" hint-size="auto,44px">开始使用</x-import>
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="ghost" hint-size="auto,44px">查看示例报告</x-import>
+      </div>
+    </section>
+    <footer data-screen-label="页脚" style="width: 100%; box-sizing: border-box; background: var(--surface); background-image: var(--tex-paper); border: 1px solid var(--rule); border-radius: 8px; padding: 48px; margin: 96px 0 64px 0; animation: flint-rise 0.9s ease-out 0.2s both;">
+      <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 48px; margin-bottom: 40px;">
+        <div style="grid-column: span 5; display: flex; flex-direction: column; gap: 16px;">
+          <span style="font-family: var(--font-display); font-size: var(--fs-25); line-height: 1.2; color: var(--ink);">Flint 燧石</span>
+          <p style="margin: 0; font-size: var(--fs-14); line-height: 1.8; color: var(--ink-2); max-width: 24em;">每日热点线索，沉淀成可行性判定与深度报告。数据区安静、对齐、等宽；温度在四周，准确在中间。</p>
+        </div>
+        <div style="grid-column: span 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+          <div>
+            <h3 style="margin: 0 0 16px 0; font-family: var(--font-mono); font-size: var(--fs-12); text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3); font-weight: 400;">探索 · DISCOVER</h3>
+            <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: var(--fs-13);">
+              <li><a href="#">每日线索</a></li>
+              <li><a href="#">深度报告</a></li>
+              <li><a href="#">可行性判定</a></li>
+              <li><a href="#">资料库</a></li>
+              <li><a href="#">路线图</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 16px 0; font-family: var(--font-mono); font-size: var(--fs-12); text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3); font-weight: 400;">关于 · MISSION</h3>
+            <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: var(--fs-13);">
+              <li><a href="#">Flint 的由来</a></li>
+              <li><a href="#">团队</a></li>
+              <li><a href="#">新闻</a></li>
+              <li><a href="#">加入我们</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 16px 0; font-family: var(--font-mono); font-size: var(--fs-12); text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3); font-weight: 400;">支持 · SUPPORT</h3>
+            <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: var(--fs-13);">
+              <li><a href="#">联系我们</a></li>
+              <li><a href="#">隐私政策</a></li>
+              <li><a href="#">用户协议</a></li>
+              <li><a href="#">问题反馈</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top: 24px; border-top: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+        <p style="margin: 0; font-family: var(--font-mono); font-size: var(--fs-12); letter-spacing: 0.04em; color: var(--ink-3); font-variant-numeric: tabular-nums;">© 2026 FLINT 燧石</p>
+        <div style="display: flex; align-items: center; gap: 20px; font-family: var(--font-mono); font-size: var(--fs-12); letter-spacing: 0.04em;">
+          <span style="color: var(--ink-3); text-transform: uppercase;">FOLLOW</span>
+          <a href="#">RSS</a>
+          <a href="#">微博</a>
+          <a href="#">知乎</a>
+          <a href="#">GITHUB</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showSticker&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;首屏&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return { showSticker: this.props.showSticker ?? true };
+  }
+}
+</script>
+</body>
+</html>

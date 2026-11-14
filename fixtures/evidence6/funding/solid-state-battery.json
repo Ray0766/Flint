@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.funding.example/orgs?q=solid+state+battery",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"organizations\": [{\"name\": \"Solid State Battery Labs 0\", \"last_round\": \"Seed\", \"raised_usd\": 5000000, \"url\": \"https://funding.example/solid-state-battery/0\"}, {\"name\": \"Solid State Battery Labs 1\", \"last_round\": \"Series B\", \"raised_usd\": 10000000, \"url\": \"https://funding.example/solid-state-battery/1\"}, {\"name\": \"Solid State Battery Labs 2\", \"last_round\": \"Seed\", \"raised_usd\": 15000000, \"url\": \"https://funding.example/solid-state-battery/2\"}]}"
+ }
+]

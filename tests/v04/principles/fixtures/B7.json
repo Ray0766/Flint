@@ -1,0 +1,10 @@
+{
+ "principle": "B7",
+ "title": "name_native 唯一权威",
+ "source": "docs/PRINCIPLES-v04.md",
+ "raw": "用 `name_display[\"en\"].text` 做 embedding；入库时对原名做全角半角归一改写。",
+ "counter_examples": [
+  "用 `name_display[\"en\"].text` 做 embedding",
+  "入库时对原名做全角半角归一改写"
+ ]
+}

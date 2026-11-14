@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.news.example/v2/everything?q=probe&pageSize=10",
+  "status_code": 503,
+  "content_type": "text/plain",
+  "body_text": "upstream unavailable"
+ }
+]

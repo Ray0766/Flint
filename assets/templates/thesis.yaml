@@ -1,0 +1,58 @@
+template_id: thesis
+locale: zh-CN
+audience: human_reader
+sections:
+- section_id: abstract
+  ratio:
+    share: 0.08
+    unit: words
+    min_words: 240
+    max_words: 720
+  check_questions:
+  - 贡献点是否可证伪？
+  charts: []
+- section_id: related_work
+  ratio:
+    share: 0.22
+    unit: words
+    min_words: 660
+    max_words: 1980
+  check_questions:
+  - 引用是否覆盖近三年？
+  charts: []
+- section_id: method
+  ratio:
+    share: 0.25
+    unit: words
+    min_words: 750
+    max_words: 2250
+  check_questions:
+  - 方法与基线差异是否明确？
+  charts: []
+- section_id: evaluation_plan
+  ratio:
+    share: 0.2
+    unit: words
+    min_words: 600
+    max_words: 1800
+  check_questions:
+  - 指标与数据集是否可获得？
+  charts: []
+- section_id: timeline
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 节点是否与学制对齐？
+  charts: []
+- section_id: resources
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 设备是否在 Profile 资产内？
+  charts: []

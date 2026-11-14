@@ -1,0 +1,15 @@
+/* Webfonts for Flint 燧石.
+
+   外部字体引用已移除（DESIGN-21 / G27：产物不向外要东西）。原先这里挂着两条
+   @import：一条 cn-fontsource 的得意黑、一条 Google Fonts 的 Inter / Noto Sans SC /
+   IBM Plex Mono。交付出去的文件带着它们，就会在**客户机器上**向第三方要东西——
+   内网打不开、离线打不开、对方能看见谁在什么时候读了这份文件；而哪天那两个 CDN
+   改版，早已交付的文件会自己变样。
+
+   现在的行为：走 tokens/typography.css 里已声明的**回落栈**
+   （Inter → Noto Sans SC → PingFang SC → system-ui），文字照常渲染，只是不是品牌字形。
+
+   要恢复品牌字形：把 woff2 二进制放进本目录，然后在下面按 @font-face 自托管声明
+   （src 用同源路径 /_ds/.../fonts/xxx.woff2）。二进制需 owner 提供——
+   本仓库 NEVER 联网下载（S2-7 / worker.md §7 事前必审）。
+   登记：docs/blocked/DESIGN-21-FONTS.md。 */

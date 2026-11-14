@@ -1,0 +1,10 @@
+{
+  "_note": "REGION-04 双区同事件样本（US 侧）。E12 目录口径 fixtures/{region}/{source_id}/{yyyy-mm-dd}.json。source_id 为占位名，K1 未决前 NEVER 写真实站点。",
+  "region": "US",
+  "source_id": "demo-wire",
+  "day": "2026-08-02",
+  "items": [
+    {"item_id": "us-1", "event_text": "Toyota solid-state battery mass production line"},
+    {"item_id": "us-2", "event_text": "Toyota announces battery factory in Kentucky"}
+  ]
+}

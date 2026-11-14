@@ -1,0 +1,67 @@
+template_id: generic
+locale: zh-CN
+audience: human_reader
+sections:
+- section_id: summary
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 结论与档位是否一句话可读？
+  charts: []
+- section_id: opportunity
+  ratio:
+    share: 0.2
+    unit: words
+    min_words: 600
+    max_words: 1800
+  check_questions:
+  - 机会陈述是否全部挂证据？
+  charts: []
+- section_id: market
+  ratio:
+    share: 0.2
+    unit: words
+    min_words: 600
+    max_words: 1800
+  check_questions:
+  - 市场数字是否全部走 Fact/PriceCell 通道？
+  charts: []
+- section_id: competition
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 竞品强度是否与 signal 对齐？
+  charts: []
+- section_id: plan
+  ratio:
+    share: 0.2
+    unit: words
+    min_words: 600
+    max_words: 1800
+  check_questions:
+  - 里程碑是否可验证？
+  charts: []
+- section_id: budget
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 预算格是否全部 PriceCell？
+  charts: []
+- section_id: risks
+  ratio:
+    share: 0.05
+    unit: words
+    min_words: 150
+    max_words: 450
+  check_questions:
+  - 风险是否含证伪面？
+  charts: []

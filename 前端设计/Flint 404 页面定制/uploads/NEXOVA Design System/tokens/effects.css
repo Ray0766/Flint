@@ -1,0 +1,10 @@
+:root{
+--nx-radius-pill:9999px;--nx-radius-panel:16px;--nx-radius-input:6px;
+--nx-glow-404:0 0 80px rgba(255,255,255,.3),0 0 160px rgba(255,255,255,.1);
+--nx-glass-inset:inset 0 1px 1px rgba(255,255,255,.1);
+--nx-blur-glass:4px;--nx-blur-panel:24px;--nx-blur-backdrop:12px;
+--nx-dur-fast:200ms;/* @kind other */
+--nx-dur-med:300ms;/* @kind other */
+--nx-dur-menu:400ms;/* @kind other */
+--nx-ease:ease-out;/* @kind other */
+}

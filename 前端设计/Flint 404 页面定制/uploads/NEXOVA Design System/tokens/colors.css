@@ -1,0 +1,15 @@
+:root{
+/* base */
+--nx-emerald-400:#34d399;--nx-cyan-500:#06b6d4;
+--nx-space-950:#02060d;--nx-space-900:#050d1a;
+--nx-white:#ffffff;
+--nx-white-80:rgba(255,255,255,.8);--nx-white-50:rgba(255,255,255,.5);--nx-white-10:rgba(255,255,255,.1);
+--nx-black-40:rgba(0,0,0,.4);
+/* semantic */
+--nx-surface-page:var(--nx-space-900);
+--nx-text-hi:var(--nx-white);
+--nx-text-body:var(--nx-white-80);
+--nx-text-dim:var(--nx-white-50);
+--nx-grad-cta:linear-gradient(to right,var(--nx-emerald-400),var(--nx-cyan-500));
+--nx-glass-bg:rgba(255,255,255,.01);
+}

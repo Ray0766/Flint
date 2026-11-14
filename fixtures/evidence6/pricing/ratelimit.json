@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://www.vendor-probe.example/pricing",
+  "status_code": 429,
+  "content_type": "text/plain",
+  "body_text": "rate limited: retry later"
+ }
+]

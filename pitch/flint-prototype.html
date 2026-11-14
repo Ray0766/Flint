@@ -1,0 +1,1354 @@
+<title>燧石 Flint · 产品原型</title>
+<style>
+:root{
+  --ground:#EEF0F2; --surface:#FFFFFF; --raised:#F7F8F9; --sunken:#E4E8EB;
+  --ink:#141C24; --ink-2:#3D4A57; --ink-3:#6B7785; --ink-4:#96A1AC;
+  --line:#D6DCE1; --line-2:#E7EBEE;
+  --accent:#1F4E8C; --accent-soft:#E6EDF6; --accent-ink:#173C6B; --on-accent:#FFFFFF;
+  --vA:#A6392F; --vB:#9E7118; --vC:#2E7D6B; --vD:#64717F;
+  --vA-bg:#F7E9E7; --vB-bg:#F7F0DF; --vC-bg:#E4F0EC; --vD-bg:#EAEDF0;
+  --s1:#3E6FB0; --s2:#C2603C; --s3:#6A5AA8; --s4:#8C7A33;
+  --ok:#2E7D6B; --warn:#9E7118; --stop:#A6392F;
+  --shadow:0 1px 2px rgba(20,28,36,.06),0 8px 24px -16px rgba(20,28,36,.28);
+  --sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono","Cascadia Mono",Consolas,"SF Mono",ui-monospace,monospace;
+  --r:3px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ground:#0E1418; --surface:#151D23; --raised:#1B242B; --sunken:#0A1013;
+    --ink:#E6EBEF; --ink-2:#B4C0CA; --ink-3:#8593A0; --ink-4:#5E6D7A;
+    --line:#293540; --line-2:#1F2A32;
+    --accent:#79A8E3; --accent-soft:#182838; --accent-ink:#A8C7EE; --on-accent:#0E1418;
+    --vA:#E08076; --vB:#D6AE5A; --vC:#63BCA5; --vD:#93A1AD;
+    --vA-bg:#2B1A18; --vB-bg:#2A2416; --vC-bg:#14261F; --vD-bg:#1B242B;
+    --s1:#7BA6DC; --s2:#DE8F6C; --s3:#9E8FD4; --s4:#C0AA5C;
+    --ok:#63BCA5; --warn:#D6AE5A; --stop:#E08076;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="light"]{
+  --ground:#EEF0F2; --surface:#FFFFFF; --raised:#F7F8F9; --sunken:#E4E8EB;
+  --ink:#141C24; --ink-2:#3D4A57; --ink-3:#6B7785; --ink-4:#96A1AC;
+  --line:#D6DCE1; --line-2:#E7EBEE;
+  --accent:#1F4E8C; --accent-soft:#E6EDF6; --accent-ink:#173C6B; --on-accent:#FFFFFF;
+  --vA:#A6392F; --vB:#9E7118; --vC:#2E7D6B; --vD:#64717F;
+  --vA-bg:#F7E9E7; --vB-bg:#F7F0DF; --vC-bg:#E4F0EC; --vD-bg:#EAEDF0;
+  --s1:#3E6FB0; --s2:#C2603C; --s3:#6A5AA8; --s4:#8C7A33;
+  --ok:#2E7D6B; --warn:#9E7118; --stop:#A6392F;
+  --shadow:0 1px 2px rgba(20,28,36,.06),0 8px 24px -16px rgba(20,28,36,.28);
+}
+:root[data-theme="dark"]{
+  --ground:#0E1418; --surface:#151D23; --raised:#1B242B; --sunken:#0A1013;
+  --ink:#E6EBEF; --ink-2:#B4C0CA; --ink-3:#8593A0; --ink-4:#5E6D7A;
+  --line:#293540; --line-2:#1F2A32;
+  --accent:#79A8E3; --accent-soft:#182838; --accent-ink:#A8C7EE;
+  --vA:#E08076; --vB:#D6AE5A; --vC:#63BCA5; --vD:#93A1AD;
+  --vA-bg:#2B1A18; --vB-bg:#2A2416; --vC-bg:#14261F; --vD-bg:#1B242B;
+  --s1:#7BA6DC; --s2:#DE8F6C; --s3:#9E8FD4; --s4:#C0AA5C;
+  --ok:#63BCA5; --warn:#D6AE5A; --stop:#E08076;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:-.015em;font-weight:700}
+p{margin:0}
+a{color:var(--accent);text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
+.rail{background:var(--surface);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;border-bottom:1px solid var(--line-2)}
+.mark{width:26px;height:26px;flex:none}
+.brand b{font-size:16px;letter-spacing:.04em}
+.brand span{font-family:var(--mono);font-size:10px;color:var(--ink-4);letter-spacing:.14em;display:block;margin-top:-2px}
+.navgrp{padding:14px 10px 2px}
+.navgrp>h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-4);
+  font-weight:500;padding:0 8px 6px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav button{display:flex;align-items:baseline;gap:8px;padding:6px 8px;border-radius:var(--r);
+  text-align:left;color:var(--ink-2);font-size:13.5px;transition:background .12s,color .12s}
+.nav button i{font-family:var(--mono);font-style:normal;font-size:10px;color:var(--ink-4);
+  min-width:22px;font-variant-numeric:tabular-nums}
+.nav button:hover{background:var(--raised);color:var(--ink)}
+.nav button[aria-current="true"]{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.nav button[aria-current="true"] i{color:var(--accent)}
+.railfoot{margin-top:auto;padding:14px 18px;border-top:1px solid var(--line-2);
+  font-family:var(--mono);font-size:10.5px;color:var(--ink-4);line-height:1.7}
+
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 86%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:14px;padding:0 26px;height:52px}
+.crumb{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em}
+.crumb b{color:var(--ink);font-weight:600}
+.topbar .sp{margin-left:auto}
+.chipbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);
+  background:var(--surface);padding:4px 10px;border-radius:var(--r);font-size:12.5px;color:var(--ink-2)}
+.chipbtn:hover{border-color:var(--ink-4)}
+.demochip{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-4);
+  border:1px dashed var(--line);padding:3px 8px;border-radius:var(--r)}
+main{padding:26px 26px 80px;max-width:1240px}
+.screen{animation:in .22s ease}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- primitives ---------- */
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--ink-4);margin-bottom:6px}
+.h1{font-size:26px;line-height:1.25}
+.h2{font-size:17px;margin-bottom:2px}
+.lede{color:var(--ink-2);max-width:70ch;margin-top:6px}
+.hdr{margin-bottom:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:16px 18px}
+.grid{display:grid;gap:14px}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sec{margin-top:26px}
+.sec>h3{font-size:13px;letter-spacing:.02em;margin-bottom:10px;color:var(--ink-2);
+  display:flex;align-items:center;gap:8px}
+.sec>h3::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.muted{color:var(--ink-3)}
+.small{font-size:12.5px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;padding:2px 7px;border-radius:2px;border:1px solid var(--line);color:var(--ink-3)}
+.tag.new{color:var(--s1);border-color:color-mix(in srgb,var(--s1) 40%,transparent);background:color-mix(in srgb,var(--s1) 8%,transparent)}
+.tag.mom{color:var(--s2);border-color:color-mix(in srgb,var(--s2) 40%,transparent);background:color-mix(in srgb,var(--s2) 8%,transparent)}
+.tag.rev{color:var(--s3);border-color:color-mix(in srgb,var(--s3) 40%,transparent);background:color-mix(in srgb,var(--s3) 8%,transparent)}
+.tag.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
+.tag.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 40%,transparent)}
+.tag.stop{color:var(--stop);border-color:color-mix(in srgb,var(--stop) 40%,transparent)}
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);
+  padding:6px 13px;border-radius:var(--r);font-size:13px;color:var(--ink);transition:.12s}
+.btn:hover{border-color:var(--ink-4);background:var(--raised)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-4);
+  font-weight:500;padding:0 10px 7px;border-bottom:1px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line-2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13px}
+.kv dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-4);padding-top:3px}
+.kv dd{margin:0}
+
+/* 出处槽 */
+.cite{font-family:var(--mono);font-size:10.5px;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);
+  background:var(--accent-soft);padding:1px 5px;border-radius:2px;vertical-align:1px;transition:.12s}
+.cite:hover{background:var(--accent);color:var(--surface)}
+.cite[aria-expanded="true"]{background:var(--accent);color:var(--surface)}
+.citebody{margin:8px 0 12px;border-left:2px solid var(--accent);background:var(--raised);
+  padding:10px 14px;font-size:12.5px;color:var(--ink-2)}
+.citebody b{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink)}
+.citebody q{display:block;margin:6px 0;color:var(--ink);border-left:2px solid var(--line);padding-left:10px}
+
+/* 判定 */
+.verdict{display:grid;grid-template-columns:120px 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.vstamp{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 10px;gap:2px}
+.vstamp b{font-family:var(--mono);font-size:52px;line-height:1;font-weight:700}
+.vstamp span{font-size:11.5px;letter-spacing:.05em}
+.vbody{padding:16px 18px;background:var(--surface)}
+.vC .vstamp{background:var(--vC-bg);color:var(--vC)}
+.vA .vstamp{background:var(--vA-bg);color:var(--vA)}
+.vB .vstamp{background:var(--vB-bg);color:var(--vB)}
+.vD .vstamp{background:var(--vD-bg);color:var(--vD)}
+.chain{display:flex;flex-direction:column;gap:1px;font-size:13px}
+.chain .step{display:grid;grid-template-columns:30px 1fr auto;gap:10px;padding:9px 12px;
+  background:var(--raised);border-left:2px solid var(--line)}
+.chain .step.hit{background:var(--vC-bg);border-left-color:var(--vC)}
+.chain .step.miss{opacity:.82}
+.chain .mk{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink-4)}
+.chain .step.hit .mk{color:var(--vC)}
+.chain .why{color:var(--ink-2);font-size:12.5px;margin-top:2px}
+.cond{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;padding:3px 0;color:var(--ink-2)}
+.cond em{font-style:normal;font-family:var(--mono);font-size:12px;flex:none;width:14px}
+.cond.y em{color:var(--ok)} .cond.n em{color:var(--stop)}
+
+/* 卡片 */
+.hcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px}
+.hcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);transition:.14s}
+.hcard:hover{border-color:var(--ink-4);transform:translateY(-1px)}
+.hcard .native{font-size:15.5px;font-weight:700;letter-spacing:-.01em}
+.hcard .trans{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px;margin-top:1px}
+.mt{font-family:var(--mono);font-size:9px;letter-spacing:.1em;border:1px solid var(--line);
+  padding:0 4px;border-radius:2px;color:var(--ink-4)}
+.srcbars{display:flex;gap:3px;align-items:flex-end;height:26px}
+.srcbars i{flex:1;border-radius:1px 1px 0 0;display:block}
+.srcleg{display:flex;gap:10px;font-family:var(--mono);font-size:9.5px;color:var(--ink-4)}
+.srcleg span{display:flex;align-items:center;gap:3px}
+.srcleg s{width:6px;height:6px;border-radius:1px;text-decoration:none}
+.heat{display:flex;align-items:baseline;gap:6px}
+.heat b{font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums;line-height:1}
+.heat span{font-size:11px;color:var(--ink-3)}
+
+/* 图谱 */
+.canvas{position:relative;height:400px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;
+  background-image:radial-gradient(var(--line-2) 1px,transparent 1px);background-size:18px 18px}
+.node{position:absolute;transform:translate(-50%,-50%);background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:7px 11px;font-size:12.5px;box-shadow:var(--shadow);cursor:grab;max-width:170px}
+.node.k-hot{border-left:3px solid var(--s2)}
+.node.k-topic{border-left:3px solid var(--accent)}
+.node.k-ev{border-left:3px solid var(--s1)}
+.node small{display:block;font-family:var(--mono);font-size:9.5px;color:var(--ink-4);letter-spacing:.06em}
+.edgelabel{position:absolute;transform:translate(-50%,-50%);background:var(--ground);
+  border:1px dashed var(--line);padding:3px 8px;font-size:11.5px;color:var(--ink-2);max-width:210px;border-radius:2px}
+
+/* 报告 */
+.doc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:30px 36px;max-width:78ch}
+.doc h2{font-size:19px;margin:26px 0 10px}
+.doc h2:first-child{margin-top:0}
+.doc p{margin:0 0 12px;line-height:1.85}
+.disclaimer{background:var(--sunken);border-left:2px solid var(--ink-4);padding:10px 14px;
+  font-size:12px;color:var(--ink-2);margin-bottom:18px}
+.blk{position:relative;padding:2px 0}
+.blk.prot{background:var(--raised);border-left:2px solid var(--ink-4);padding:10px 14px;margin:0 0 12px -16px}
+.blk.rev{background:var(--vB-bg);border-left:2px solid var(--vB);padding:10px 14px;margin:0 0 12px -16px}
+.blk.block{background:var(--vA-bg);border-left:2px solid var(--vA);padding:10px 14px;margin:0 0 12px -16px}
+.blkflag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;display:block;margin-bottom:4px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.metric{background:var(--surface);padding:12px 14px}
+.metric b{font-family:var(--mono);font-size:21px;font-variant-numeric:tabular-nums;display:block;line-height:1.2}
+.metric span{font-size:11px;color:var(--ink-3);display:block;margin-top:2px}
+.metric.bad b{color:var(--stop)} .metric.good b{color:var(--ok)} .metric.warn b{color:var(--warn)}
+.bar{height:5px;background:var(--sunken);border-radius:3px;overflow:hidden;margin-top:7px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+
+/* 任务卡 */
+.task{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:13px 15px}
+.task header{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
+.task header b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--accent)}
+.task header span{font-weight:600;font-size:14px}
+code,pre{font-family:var(--mono);font-size:11.5px}
+pre{background:var(--sunken);border:1px solid var(--line-2);border-radius:var(--r);
+  padding:10px 12px;overflow-x:auto;margin:6px 0;line-height:1.6}
+code.inl{background:var(--sunken);padding:1px 5px;border-radius:2px;font-size:11.5px}
+
+/* 步骤流 */
+.steps{display:flex;flex-direction:column;gap:1px}
+.step2{display:grid;grid-template-columns:18px 1fr auto auto;gap:12px;align-items:center;
+  padding:10px 14px;background:var(--surface);border:1px solid var(--line-2);font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--line);justify-self:center}
+.step2.done .dot{background:var(--ok)}
+.step2.run .dot{background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.45}}
+.step2 .t{font-family:var(--mono);font-size:11px;color:var(--ink-4)}
+
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.tabs button{padding:7px 13px;font-size:13px;color:var(--ink-3);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.tabs button:hover{color:var(--ink)}
+.note{border:1px dashed var(--line);border-radius:var(--r);padding:11px 14px;font-size:12.5px;color:var(--ink-2);background:var(--raised)}
+.split{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+@media(max-width:1100px){.split{grid-template-columns:1fr}}
+@media(max-width:820px){
+  .shell{grid-template-columns:1fr}
+  .rail{position:static;height:auto;flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line)}
+  .brand{border:none;flex:none} .navgrp{display:flex;align-items:center;gap:6px;padding:8px}
+  .navgrp>h4{display:none} .nav{flex-direction:row} .nav button i{display:none}
+  .railfoot{display:none} main{padding:18px 16px 60px} .verdict{grid-template-columns:1fr}
+}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 13.5 9.5 3l7 5.5L20 17l-6.5 4L5 18.5Z" stroke="var(--accent)" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M9.5 3 11 11l-4.2 3.2L13.5 21" stroke="var(--ink-4)" stroke-width="1" stroke-linejoin="round"/>
+        <circle cx="17.6" cy="6.4" r="1.5" fill="var(--s2)"/>
+      </svg>
+      <div><b>燧石 Flint</b><span>EVIDENCE FIRST</span></div>
+    </div>
+    <div id="nav"></div>
+    <div class="railfoot">原型 · 演示数据<br>2026-08-12</div>
+  </aside>
+
+  <div>
+    <div class="topbar">
+      <div class="crumb" id="crumb"></div>
+      <div class="sp"></div>
+      <span class="demochip">演示数据</span>
+      <button class="chipbtn" id="regionbtn">中国大陆</button>
+      <button class="chipbtn">中文</button>
+      <button class="chipbtn">林 · 个人版</button>
+    </div>
+    <main id="view"></main>
+  </div>
+</div>
+
+<script>
+/* ============================== 演示数据 ============================== */
+const SRC = [
+  {k:"gtrends", n:"Google 趋势", c:"var(--s1)"},
+  {k:"weibo",   n:"微博热搜",    c:"var(--s2)"},
+  {k:"ghtrend", n:"GitHub",     c:"var(--s3)"},
+  {k:"arxiv",   n:"arXiv",      c:"var(--s4)"},
+];
+
+const CLUSTERS = [
+  {id:"clu-0417", zh:"固态电池中试线", en:"Solid-state battery pilot line", heat:154, pct:98,
+   flags:["mom"], first:"2025-11-02", src:[71,154,38,26], region:"CN",
+   note:"7 日归一化涨幅 +34，四源三源同向"},
+  {id:"clu-0231", zh:"具身智能操作策略", en:"Embodied manipulation policy", heat:141, pct:96,
+   flags:["mom","new"], first:"2026-07-31", src:[52,88,141,96], region:"CN"},
+  {id:"clu-0102", zh:"钙钛矿叠层量产良率", en:"Perovskite tandem yield", heat:118, pct:91,
+   flags:["rev"], first:"2024-03-18", src:[63,118,22,47], region:"CN",
+   note:"沉寂 96 天后回热"},
+  {id:"clu-0388", zh:"长上下文检索增强", en:"Long-context RAG", heat:109, pct:88,
+   flags:[], first:"2025-02-11", src:[44,31,109,102], region:"CN"},
+  {id:"clu-0455", zh:"稀土永磁替代材料", en:"Rare-earth-free magnets", heat:96, pct:84,
+   flags:["new"], first:"2026-08-05", src:[96,74,11,38], region:"CN"},
+  {id:"clu-0290", zh:"口服 GLP-1 小分子", en:"Oral small-molecule GLP-1", heat:88, pct:81,
+   flags:["mom"], first:"2025-06-20", src:[88,66,9,54], region:"CN"},
+  {id:"clu-0511", zh:"AI 编程代理评测", en:"Coding-agent benchmarks", heat:77, pct:75,
+   flags:[], first:"2025-09-14", src:[38,24,77,71], region:"HK"},
+  {id:"clu-0146", zh:"高温超导带材", en:"HTS tape", heat:64, pct:69,
+   flags:["rev"], first:"2023-12-01", src:[64,29,18,52], region:"CN"},
+  {id:"clu-0602", zh:"脑机接口临床试验", en:"BCI clinical trials", heat:58, pct:64,
+   flags:[], first:"2025-04-08", src:[58,41,7,44], region:"HK"},
+];
+
+const REGIONS = [["CN","中国大陆"],["HK","香港"],["US","美国"],["SG","新加坡"],["JP","日本"],
+  ["KR","韩国"],["GB","英国"],["AU","澳大利亚"],["IT","意大利"],["FR","法国"]];
+
+const CURVE = {
+  gtrends:[22,25,31,29,34,41,38,45,52,49,58,63,61,70,71],
+  weibo:[8,12,10,18,26,44,39,58,77,92,88,110,132,148,154],
+  ghtrend:[14,15,17,16,19,21,20,24,27,26,30,33,32,36,38],
+  arxiv:[4,5,5,7,6,9,11,10,13,15,14,18,21,24,26],
+};
+
+const CITES = {
+  "fact-mkt-01":{t:"中国汽车动力电池产业创新联盟 · 2026 年 6 月装机量月报",
+    q:"2026 年 1—6 月，半固态电池装机量 3.14 GWh，同比增长 214%，占三元装机 2.7%。",
+    u:"battery-cic.org.cn/monthly/2026-06", d:"2026-07-11", s:"强 · 82", a:"公开"},
+  "fact-mkt-02":{t:"J. Power Sources · Pilot-line defect statistics of sulfide SSB electrodes",
+    q:"In the surveyed three pilot lines, 61% of rejected cells traced back to cathode-layer thickness deviation beyond ±3 μm.",
+    u:"doi.org/10.1016/j.jpowsour.2026.234117", d:"2026-05-03", s:"强 · 76", a:"公开"},
+  "fact-cmp-01":{t:"Hitachi High-Tech · 电极检测系统产品页",
+    q:"面向锂电极的在线光学检测，最小可检缺陷 5 μm，节拍 60 m/min。定价：contact us。",
+    u:"hitachi-hightech.com/cn/products/eb-insp", d:"2026-08-01", s:"中 · 58", a:"公开"},
+  "fact-cmp-02":{t:"36 氪 · 精测电子完成 C 轮 4.2 亿元融资",
+    q:"本轮资金主要用于固态电池检测线的产能扩张，客户覆盖头部电池厂三家。",
+    u:"36kr.com/p/3187442", d:"2026-04-22", s:"中 · 61", a:"公开"},
+  "fact-tech-01":{t:"arXiv:2607.11284 · Few-shot defect detection under extreme class imbalance",
+    q:"With 43 labelled defect samples, the proposed method reaches 0.91 AP50 on the pilot-line dataset.",
+    u:"arxiv.org/abs/2607.11284", d:"2026-07-19", s:"强 · 79", a:"公开"},
+  "fact-user-01":{t:"用户提供 · 某中试线 2026 Q2 质检工时台账",
+    q:"人工目检环节单班 6.5 小时，占质检总工时 71%；漏检返工率 4.3%。",
+    u:"（用户上传材料 · 第 2 页）", d:"2026-06-30", s:"一手 · 84", a:"私有"},
+  "price-labor-07":{t:"单价库 · 机器视觉工程师 · 人月",
+    q:"¥ 38,000 – 52,000 / 人月（华东，2026 年）。来源：拉勾 2026 中国 AI 人才薪酬报告 p.44。",
+    u:"pricebook · entry price-labor-07", d:"2026-03-01", s:"单价库", a:"公开"},
+  "profile-team":{t:"个人档案 · 团队 · 3 人",
+    q:"林（负责人，机器视觉，可投入 0.6 FTE）· 赵（嵌入式，0.4 FTE）· 待招（数据标注，0 FTE）。",
+    u:"profile · team[]", d:"2026-08-01", s:"档案", a:"仅所有者"},
+};
+
+const COMPETITORS = [
+  {n:"Hitachi High-Tech 电极检测",u:"hitachi-hightech.com",str:"strong",
+   sig:["funded_or_scaled","same_target_user","active_last_12m"],price:"待确认 · 置信 0.31"},
+  {n:"精测电子 · 固态检测线",u:"jingce.com.cn",str:"strong",
+   sig:["funded_or_scaled","mature_pricing","same_target_user","active_last_12m"],price:"¥ 180 万起 · 置信 0.74"},
+  {n:"Isra Vision 通用表检",u:"isravision.com",str:"moderate",
+   sig:["mature_pricing","active_last_12m"],price:"€ 240k · 置信 0.66"},
+  {n:"某高校孵化项目（未公开）",u:"—",str:"unknown",sig:[],price:"无数据"},
+];
+
+const TOPICS = [
+  {id:"top-01",one:"面向固态电池中试线的极片缺陷在线检测，用 43 张缺陷样本冷启动",
+   u:"中试线质检主管",f:"产线旁部署的软硬一体检测工位",v:"C",
+   why:{c:"极片厚度偏差是当前中试线报废的首要成因，而小样本缺陷检测在 2026 年 7 月刚出现可用方法",
+        ev:[["中试线报废归因统计发表","2026-05-03","fact-mkt-02"],["小样本检测方法达 0.91 AP50","2026-07-19","fact-tech-01"]]},
+   comp:2,strength:"strong×2",window:"2026-07",med:76},
+  {id:"top-02",one:"固态电解质配方的高通量筛选平台，替代实验室手工试错",
+   u:"材料实验室 PI",f:"云端计算 + 试剂盒订阅",v:"B",
+   why:{c:"三家上市公司在 18 个月内发布同类平台",ev:[["精测 C 轮融资投向检测线","2026-04-22","fact-cmp-02"]]},
+   comp:5,strength:"strong×3",window:"2026-04",med:64},
+  {id:"top-03",one:"用大模型直接预测固态界面阻抗，跳过第一性原理计算",
+   u:"电池仿真工程师",f:"API 服务",v:"A",
+   why:{c:"推测：大模型可拟合界面物理",ev:[]},spec:true,
+   comp:1,strength:"—",window:"2026-02",med:41},
+  {id:"top-04",one:"中试线数据合规中台，把产线数据脱敏后供给上游材料商",
+   u:"电池厂 IT 负责人",f:"私有化部署中台",v:"D",
+   why:{c:"数据要素政策 2026 年落地，但产线侧案例检索不到",ev:[["—","2026-01-15","fact-mkt-01"]]},
+   comp:0,strength:"unknown×2",window:"2026-01",med:38},
+  {id:"top-05",one:"面向中小电池厂的检测工位租赁，按检测片数计费",
+   u:"二线电池厂厂长",f:"设备租赁 + 按量计费",v:"C",
+   why:{c:"中小厂买不起 180 万的整线，而按量计费在光伏检测已被验证",ev:[["精测定价 180 万起","2026-04-22","fact-cmp-02"]]},
+   comp:2,strength:"moderate×1",window:"2026-04",med:58},
+];
+
+const VERDICT_LABEL = {A:"明显不可行",B:"红海",C:"有机会",D:"信息不足"};
+
+const JOBSTEPS = [
+  ["接收与鉴权","done","0.4s","¥0.00"],
+  ["查询构造 · 术语标准化 + 扩展 6 条","done","3.1s","¥0.02"],
+  ["证据检索 · 六源并发 · 去重后 84 条","done","22.7s","¥0.31"],
+  ["证伪检索 · refute 模板 4 条","done","11.2s","¥0.14"],
+  ["相关率判定 · 0.71 ≥ θ 0.60","done","4.8s","¥0.06"],
+  ["竞品扫描 · 4 家 · 强度判定","done","18.3s","¥0.22"],
+  ["第一段对齐校验 · 关键证据 6/8 条","run","—","¥0.09"],
+  ["判定引擎 · 规则表 A>B>C>D","wait","—","—"],
+  ["生成分析产物 + 质量卡","wait","—","—"],
+];
+
+const VP_TASKS = [
+  {id:"M1-014",t:"簇血缘日更算法",c:2,ver:"pytest -q tests/m1/test_M1-014.py",
+   acc:["一旧对多新判分裂并写 parent_cluster_ids","多旧对一新判合并且旧簇 status=merged","连续 14 天无新成员转 dormant，永不物理删除"],
+   ctx:["技术方案-v1.1.md#E4","contracts/models.py#Cluster"],gate:true},
+  {id:"M1-015",t:"热度归一化与信号角标",c:1,ver:"pytest -q tests/m1/test_M1-015.py",
+   acc:["每源每日同时落 raw_value 与源内 90 天分位","novelty/momentum/revival 三字段互不覆盖"],
+   ctx:["产品描述文档-v0.2.md#3.3"],gate:false},
+  {id:"M1-016",t:"arXiv 日增筛选闸门",c:1,ver:"pytest -q tests/m1/test_M1-016.py",
+   acc:["分类白名单外一律不进广场","三项择一命中才入选，落选仅入原始层"],
+   ctx:["产品描述文档-v0.2.md#3.4"],gate:false},
+];
+
+/* ============================== 工具 ============================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const FLAG = {new:["新","new"],mom:["升温","mom"],rev:["回热","rev"]};
+
+function cite(id, label){
+  return `<button class="cite" data-cite="${id}" aria-expanded="false">${label||id}</button>`;
+}
+function srcbars(v){
+  const m = Math.max(...v,1);
+  return `<div class="srcbars">${v.map((x,i)=>
+    `<i style="height:${Math.max(8,x/m*100)}%;background:${SRC[i].c}"></i>`).join("")}</div>`;
+}
+function legend(){
+  return `<div class="srcleg">${SRC.map(s=>`<span><s style="background:${s.c}"></s>${s.n}</span>`).join("")}</div>`;
+}
+function area(series, w=560, h=150){
+  const keys = Object.keys(series);
+  const all = keys.flatMap(k=>series[k]); const max = Math.max(...all)*1.1;
+  const n = series[keys[0]].length;
+  const X = i => 34 + i*(w-46)/(n-1);
+  const Y = v => h-22 - v/max*(h-40);
+  let g = "";
+  for(let i=0;i<=4;i++){ const y = h-22 - i*(h-40)/4;
+    g += `<line x1="34" x2="${w-12}" y1="${y}" y2="${y}" stroke="var(--line-2)" stroke-width="1"/>
+          <text x="26" y="${y+3}" text-anchor="end" font-size="8.5" fill="var(--ink-4)"
+          font-family="var(--mono)">${Math.round(max*i/4)}</text>`; }
+  keys.forEach((k,ki)=>{
+    const c = SRC.find(s=>s.k===k).c; const d = series[k];
+    const line = d.map((v,i)=>`${i?"L":"M"}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(" ");
+    g += `<path d="${line} L${X(n-1)},${h-22} L${X(0)},${h-22}Z" fill="${c}" opacity=".07"/>
+          <path d="${line}" fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"/>
+          <circle cx="${X(n-1)}" cy="${Y(d[n-1])}" r="2.8" fill="${c}"/>`;
+  });
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" role="img"
+    aria-label="四源 15 日归一化曲线">${g}
+    <text x="34" y="${h-6}" font-size="8.5" fill="var(--ink-4)" font-family="var(--mono)">07-29</text>
+    <text x="${w-12}" y="${h-6}" text-anchor="end" font-size="8.5" fill="var(--ink-4)" font-family="var(--mono)">08-12</text>
+  </svg>`;
+}
+function hcard(c, opts={}){
+  return `<article class="hcard">
+    <div>
+      <div class="between"><div class="native">${c.zh}</div>
+        <button class="chipbtn" style="padding:2px 7px;font-size:11px">${opts.fav?"已收藏":"收藏"}</button></div>
+      <div class="trans">${c.en}<span class="mt">机翻</span></div>
+    </div>
+    <div class="heat"><b>${c.heat}</b><span>综合热度 · 派生</span>
+      <span class="num" style="margin-left:auto;color:var(--ink-3)">P${c.pct}</span></div>
+    ${srcbars(c.src)}${legend()}
+    <div class="row" style="gap:5px">
+      ${c.flags.map(f=>`<span class="tag ${FLAG[f][1]}">${FLAG[f][0]}</span>`).join("")}
+      <span class="tag">首见 ${c.first}</span>
+    </div>
+    ${c.note?`<p class="small muted">${c.note}</p>`:""}
+    <div class="row" style="gap:6px;margin-top:auto">
+      <button class="btn small" data-go="evidence">证据卡</button>
+      <button class="btn small" data-go="graph">加入工作台</button>
+    </div>
+  </article>`;
+}
+function condRow(ok, txt){ return `<div class="cond ${ok?"y":"n"}"><em>${ok?"✓":"✗"}</em><span>${txt}</span></div>`; }
+
+/* ============================== 屏 ============================== */
+const S = {};
+
+S.plaza = {g:"发现",n:"热点广场",render:()=>`
+  <div class="hdr"><div class="eyebrow">每日 06:00 全量更新 · 四源</div>
+    <h1 class="h1">2026 年 08 月 12 日 · 中国大陆</h1>
+    <p class="lede">四个源的分数本来就不可比——趋势是 0~100 相对值、微博是排名、GitHub 是 star 日增、arXiv 是论文计数。
+    所以每一行同时给原始值和本源 90 天分位，「综合热度」明确标着派生。</p></div>
+
+  <div class="row" style="gap:6px;margin-bottom:14px" id="regiontabs">
+    ${REGIONS.map((r,i)=>`<button class="chipbtn" data-region="${r[0]}"
+      ${i===0?'style="border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)"':""}>${r[1]}</button>`).join("")}
+  </div>
+
+  <div class="card scroll"><table>
+    <thead><tr><th>簇</th><th>综合热度</th><th style="width:150px">四源分列</th>
+      <th>分位</th><th>信号</th><th>首见</th><th>簇 ID</th></tr></thead>
+    <tbody>${CLUSTERS.map(c=>`<tr>
+      <td><b>${c.zh}</b><div class="small muted">${c.en} <span class="mt">机翻</span></div></td>
+      <td class="num" style="font-size:15px">${c.heat}</td>
+      <td>${srcbars(c.src)}</td>
+      <td class="num">P${c.pct}</td>
+      <td>${c.flags.map(f=>`<span class="tag ${FLAG[f][1]}">${FLAG[f][0]}</span>`).join("")||'<span class="muted small">—</span>'}</td>
+      <td class="num small">${c.first}</td>
+      <td class="num small muted">${c.id}</td></tr>`).join("")}
+    </tbody></table></div>
+
+  <div class="sec"><h3>今日源状态</h3>
+  <div class="metrics">
+    ${SRC.map((s,i)=>`<div class="metric"><b style="color:${s.c}">${[418,60,127,2211][i]}</b>
+      <span>${s.n} · ${["关键词","热搜条目","仓库","论文（筛后 74）"][i]}</span></div>`).join("")}
+    <div class="metric good"><b>7</b><span>连续零人工干预天数</span></div>
+  </div></div>`};
+
+S.cards = {g:"发现",n:"热点卡片",render:()=>`
+  <div class="hdr"><div class="eyebrow">卡片视图</div><h1 class="h1">今天有什么在动</h1>
+  <p class="lede">卡面主行是原文名，次要行是机翻译名并标着「机翻」。译名拿不到时只显示原文——绝不用原文冒充译文。</p></div>
+  <div class="hcards">${CLUSTERS.map(c=>hcard(c)).join("")}</div>`};
+
+S.evidence = {g:"发现",n:"证据卡",render:()=>`
+  <div class="hdr"><div class="eyebrow">clu-0417 · 证据卡面板</div>
+    <h1 class="h1">固态电池中试线</h1>
+    <div class="row" style="margin-top:8px"><span class="tag mom">升温 · 7 日 Δ 归一 +34</span>
+      <span class="tag">首见 2025-11-02</span><span class="tag">活跃 285 天</span></div></div>
+
+  <div class="split">
+    <div>
+      <div class="card pad"><div class="between" style="margin-bottom:10px">
+        <h3 class="h2">分源归一化曲线 · 近 15 日</h3>
+        <div class="row" style="gap:4px"><button class="btn small" style="border-color:var(--accent)">归一化</button>
+          <button class="btn small">原始值</button></div></div>
+        ${area(CURVE)}${legend()}</div>
+
+      <div class="sec"><h3>簇血缘</h3><div class="card pad">
+        <div class="steps">
+          <div class="step2"><span class="dot" style="background:var(--s3)"></span>
+            <span><b>分裂</b> 自 clu-0201「动力电池新体系」</span><span class="t">2025-11-02</span><span class="t">首见</span></div>
+          <div class="step2"><span class="dot" style="background:var(--s1)"></span>
+            <span><b>合并</b> clu-0333「硫化物电解质」并入</span><span class="t">2026-02-14</span><span class="t">别名 +3</span></div>
+          <div class="step2"><span class="dot" style="background:var(--s2)"></span>
+            <span><b>升温</b> 7 日归一化涨幅超阈</span><span class="t">2026-08-06</span><span class="t">角标</span></div>
+        </div>
+        <p class="small muted" style="margin-top:10px">簇 ID 跨日稳定，休眠簇永不物理删除——所以两年前的曲线今天还能归因到同一个 ID 上。</p>
+      </div></div>
+
+      <div class="sec"><h3>来源链接 · 按强度排序</h3><div class="card">
+        <table><thead><tr><th>来源</th><th>类型</th><th>日期</th><th>强度</th><th>可核验</th></tr></thead><tbody>
+        ${["fact-mkt-01","fact-mkt-02","fact-tech-01","fact-user-01"].map(k=>{const c=CITES[k];
+          return `<tr><td><b>${c.t}</b><div class="small muted num">${c.u}</div></td>
+          <td class="small">${k.includes("tech")?"论文":k.includes("user")?"用户提供":"行业数据"}</td>
+          <td class="num small">${c.d}</td><td class="num small">${c.s}</td>
+          <td><span class="tag ${c.a==="私有"?"warn":"ok"}">${c.a}</span></td></tr>`}).join("")}
+        </tbody></table></div>
+        <p class="note" style="margin-top:10px">检索来的证据与用户提供的证据<b>各打各的分、分区排序</b>。
+        一手行业信息按学术公式（引用数、场所等级、同行评审）算下来每一维都近 0 分，会被打成「弱」——那是尺子错了，不是证据弱。</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="card pad"><h3 class="h2" style="margin-bottom:10px">关键词构成</h3>
+        <div class="row" style="gap:5px">${["固态电池","中试线","硫化物电解质","极片","干法电极","sulfide SSB","pilot line","cathode coating"]
+          .map(k=>`<span class="tag">${k}</span>`).join("")}</div>
+        <p class="small muted" style="margin-top:10px">跨源去重后 8 个关键词。中英术语走映射表而非直译。</p></div>
+      <div class="card pad" style="margin-top:14px"><h3 class="h2" style="margin-bottom:8px">这条能干什么</h3>
+        <div class="row" style="gap:6px">
+          <button class="btn pri small" data-go="graph">拖进工作台</button>
+          <button class="btn small">收藏</button><button class="btn small">设复核提醒</button></div></div>
+    </div>
+  </div>`};
+
+S.categories = {g:"发现",n:"大类目录",render:()=>{
+  const cats=[["能源与储能",42,["固态电池中试线","钙钛矿叠层量产良率","高温超导带材"]],
+    ["智能体与机器人",38,["具身智能操作策略","AI 编程代理评测"]],
+    ["生命科学",31,["口服 GLP-1 小分子","脑机接口临床试验"]],
+    ["材料与制造",27,["稀土永磁替代材料"]],
+    ["基础模型与检索",24,["长上下文检索增强"]],
+    ["空间与感知",16,[]]];
+  return `<div class="hdr"><div class="eyebrow">人工固定目录</div><h1 class="h1">大类</h1>
+    <p class="lede">簇归到人工维护的固定大类下——目录是固定的，簇是流动的。从大类进来也能直接建项，不必先看热点。</p></div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
+  ${cats.map(c=>`<div class="card pad"><div class="between"><h3 class="h2">${c[0]}</h3>
+    <span class="num" style="font-size:19px">${c[1]}</span></div>
+    <p class="small muted" style="margin:2px 0 10px">活跃簇</p>
+    <div class="grid" style="gap:5px">${c[2].map(x=>`<div class="small">· ${x}</div>`).join("")||'<div class="small muted">本大类今日无进入广场的簇</div>'}</div>
+    <button class="btn small" style="margin-top:12px" data-go="combo">从本大类建项</button></div>`).join("")}
+  </div>`}};
+
+S.library = {g:"发现",n:"收藏图书馆",render:()=>`
+  <div class="hdr"><div class="eyebrow">12 条收藏</div><h1 class="h1">图书馆</h1>
+  <p class="lede">收藏的那一刻连卡面带证据一起存快照。所以就算那个热点后来被清理，你的收藏也不会变成一个空壳。</p></div>
+  <div class="tabs"><button aria-selected="true">全部 12</button><button>热点 6</button>
+    <button>主题 3</button><button>交付物 3</button><button>有更新 2</button></div>
+  <div class="hcards">${CLUSTERS.slice(0,3).map(c=>hcard(c,{fav:true})).join("")}</div>
+  <div class="sec"><h3>主题与交付物</h3>
+  <div class="card"><table><thead><tr><th>标题</th><th>类型</th><th>收藏于</th><th>状态</th><th></th></tr></thead><tbody>
+    <tr><td><b>面向固态电池中试线的极片缺陷在线检测</b></td><td class="small">主题</td>
+      <td class="num small">2026-08-09</td><td><span class="tag warn">内容已更新</span></td>
+      <td class="small"><a href="#">看变化</a></td></tr>
+    <tr><td><b>固态电池检测 · 深度报告 v3</b></td><td class="small">交付物</td>
+      <td class="num small">2026-08-10</td><td><span class="tag ok">最新</span></td>
+      <td class="small"><a href="#">打开</a></td></tr>
+    <tr><td><b>钙钛矿叠层 · 可行性分析</b></td><td class="small">交付物</td>
+      <td class="num small">2026-07-28</td><td><span class="tag warn">判定档位可能已变</span></td>
+      <td class="small"><a href="#">复核</a></td></tr>
+  </tbody></table></div>
+  <p class="note" style="margin-top:10px">「有更新」这件事由后端统一判定——前端<b>不自己按时间戳猜</b>，
+  否则同一份东西在列表页说旧了、在详情页说没旧。</p></div>`};
+
+S.graph = {g:"构思",n:"图谱工作台",render:()=>`
+  <div class="hdr"><div class="eyebrow">工作台 · wb-0031</div><h1 class="h1">把三个热点连起来</h1>
+  <p class="lede">连线时必须写一句「你认为它们为什么相关」。这句话空着不让建边——它是全系统唯一由人贡献的判断，
+  既进主题生成的输入，也是最难被复制的那份数据。</p></div>
+  <div class="canvas" id="canvas">
+    <svg style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
+      <line x1="21%" y1="30%" x2="50%" y2="55%" stroke="var(--ink-4)" stroke-width="1.4"/>
+      <line x1="76%" y1="26%" x2="50%" y2="55%" stroke="var(--ink-4)" stroke-width="1.4"/>
+      <line x1="50%" y1="55%" x2="50%" y2="84%" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <line x1="28%" y1="72%" x2="50%" y2="55%" stroke="var(--line)" stroke-width="1.2"/>
+    </svg>
+    <div class="node k-hot" style="left:21%;top:30%"><small>热点 clu-0417</small>固态电池中试线</div>
+    <div class="node k-hot" style="left:76%;top:26%"><small>热点 clu-0388</small>长上下文检索增强</div>
+    <div class="node k-ev" style="left:28%;top:72%"><small>证据 fact-user-01</small>中试线质检工时台账</div>
+    <div class="edgelabel" style="left:50%;top:55%">中试线的瓶颈是<b>人工目检</b>，
+      而小样本视觉方法今年刚够用——两边在 2026 年中间碰头</div>
+    <div class="node k-topic" style="left:50%;top:84%"><small>主题 top-01</small>极片缺陷在线检测</div>
+  </div>
+  <div class="row" style="margin-top:14px">
+    <button class="btn pri" data-go="topics">生成候选主题</button>
+    <button class="btn">加入热点</button><button class="btn">撤销</button>
+    <span class="tag" style="margin-left:auto">移动端只读</span></div>
+  <div class="sec"><h3>本工作台的三个入口</h3>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">
+    ${[["热点组合","从广场拖入 2~5 张卡，写一句关联假设"],
+       ["一句话想法","直接写你想做什么，系统反向抽关键词"],
+       ["指定竞品","给一个竞品网址，从它的对手盘倒推方向"],
+       ["上传文档","上传一份材料，从中抽取种子与自带证据"]]
+      .map(x=>`<div class="card pad"><h3 class="h2">${x[0]}</h3><p class="small muted" style="margin-top:4px">${x[1]}</p></div>`).join("")}
+  </div>
+  <p class="note" style="margin-top:12px">四个入口下游<b>只认同一个种子对象</b>，主题生成、判定、文书都不关心你从哪儿进来的。
+  关联假设只在「热点组合」这条路上强制，其余入口的人类判断由入口本身承载。</p></div>`};
+
+S.combo = {g:"构思",n:"组合建项",render:()=>`
+  <div class="hdr"><div class="eyebrow">新建项目</div><h1 class="h1">你认为它们为什么相关</h1></div>
+  <div class="split"><div>
+    <div class="card pad"><h3 class="h2" style="margin-bottom:10px">已选证据卡 · 2 / 5</h3>
+      <div class="grid" style="grid-template-columns:1fr 1fr">${CLUSTERS.slice(0,2).map(c=>`
+        <div class="card pad" style="box-shadow:none"><b>${c.zh}</b>
+          <div class="small muted">${c.en}</div>${srcbars(c.src)}</div>`).join("")}</div>
+      <h3 class="h2" style="margin:18px 0 6px">关联假设 <span class="tag stop">必填</span></h3>
+      <textarea style="width:100%;min-height:88px;background:var(--raised);border:1px solid var(--line);
+        border-radius:var(--r);padding:11px 13px;font:inherit;color:inherit;resize:vertical"
+        >中试线的瓶颈是人工目检（占质检工时 71%），而小样本缺陷检测方法今年刚跨过可用线——两条曲线在 2026 年中碰头。</textarea>
+      <div class="row" style="margin-top:12px;align-items:center">
+        <button class="btn pri" data-go="topics">生成 5~8 个候选主题</button>
+        <span class="small muted">预计 40 秒 · 预估 ¥0.6</span></div>
+    </div>
+    <p class="note" style="margin-top:12px">空着提交会被服务端判 <code class="inl">EMPTY_HYPOTHESIS</code>，
+    前端本地预检说的是同一句话——两处话术不一致的话，用户会以为是网络问题。</p>
+  </div>
+  <div class="card pad"><h3 class="h2">为什么强制这一句</h3>
+    <p class="small muted" style="margin-top:6px">通用助手能替你检索，替不了你判断「这两件事为什么会撞在一起」。
+    这句话进主题生成的提示词，也进你自己的复盘——三个月后你想知道当初为什么开这个项目，答案在这里。</p></div>
+  </div>`};
+
+S.topics = {g:"构思",n:"主题列表",render:()=>`
+  <div class="hdr"><div class="eyebrow">5 个候选 · 由 combo-0031 生成</div><h1 class="h1">候选主题</h1>
+  <p class="lede">任意两个主题的目标用户与产品形态至少一维不同，且语义距离足够远——否则定点重生成，
+  防止给你五个换皮的同一个主题。</p></div>
+  <div class="grid">${TOPICS.map(t=>`
+    <article class="card pad">
+      <div class="between" style="align-items:flex-start">
+        <div style="flex:1">
+          <div class="row" style="gap:6px;margin-bottom:6px">
+            <span class="tag num">${t.id}</span>
+            <span class="tag">${t.u}</span><span class="tag">${t.f}</span></div>
+          <h3 style="font-size:16px;line-height:1.5">${t.one}</h3>
+        </div>
+        <div style="text-align:center;padding:0 6px">
+          <div class="num" style="font-size:30px;font-weight:700;color:var(--v${t.v});line-height:1">${t.v}</div>
+          <div class="small" style="color:var(--v${t.v})">${VERDICT_LABEL[t.v]}</div></div>
+      </div>
+      <div style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line-2)">
+        <div class="eyebrow" style="margin-bottom:4px">为什么是现在</div>
+        <p class="small">${t.why.c}
+          ${t.spec?'<span class="tag warn" style="margin-left:6px">推测 · 无事件证据</span>':""}</p>
+        ${t.why.ev.length&&!t.spec?`<div class="row" style="gap:6px;margin-top:7px">${t.why.ev.map(e=>
+          `<span class="tag">${e[1]} · ${e[0]}</span>${cite(e[2])}`).join("")}</div>`:""}
+      </div>
+      <div class="row" style="margin-top:12px;gap:8px">
+        <button class="btn ${t.id==="top-01"?"pri":""}" data-go="gate">${t.id==="top-01"?"看判定详情":"选这个"}</button>
+        <span class="small muted" style="margin-left:auto">竞品 ${t.comp} · 强度 ${t.strength} ·
+          最近证据 ${t.window} · 强度中位 ${t.med}</span></div>
+    </article>`).join("")}</div>
+
+  <div class="sec"><h3>横向对比</h3><div class="card scroll"><table>
+    <thead><tr><th>主题</th><th>判定</th><th>竞争强度</th><th>资源档</th><th>时间窗</th><th>证据强度中位</th></tr></thead>
+    <tbody>${TOPICS.map(t=>`<tr><td>${t.one.slice(0,22)}…</td>
+      <td><span class="num" style="color:var(--v${t.v});font-weight:700">${t.v}</span>
+        <span class="small" style="color:var(--v${t.v})">${VERDICT_LABEL[t.v]}</span></td>
+      <td class="small">${t.comp} 家 · ${t.strength}</td>
+      <td class="small">${["中","高","低","中","中"][TOPICS.indexOf(t)]}</td>
+      <td class="num small">${t.window}</td><td class="num">${t.med}</td></tr>`).join("")}</tbody></table></div>
+    <p class="note" style="margin-top:10px">选定时可以写一句「为何选此弃彼」。这句话和你每一次编辑动作一起沉淀——
+    它们是通用助手拿不到的东西。</p></div>`};
+
+S.gate = {g:"判定",n:"Gate① 判定",render:()=>`
+  <div class="hdr"><div class="eyebrow">top-01 · 分析 ana-0187 · 2026-08-12 09:41</div>
+    <h1 class="h1">面向固态电池中试线的极片缺陷在线检测</h1>
+    <p class="lede">这是唯一一道强制关卡：不过这一关，不给你往下写报告。</p></div>
+
+  <div class="verdict vC">
+    <div class="vstamp"><b>C</b><span>有机会</span></div>
+    <div class="vbody">
+      <div class="between" style="margin-bottom:10px">
+        <div><b style="font-size:14px">四项必要条件全部满足</b>
+          <div class="small muted">同时满足的档位：仅 C · 判定顺序 A &gt; B &gt; C &gt; D</div></div>
+        <div class="row" style="gap:6px"><span class="tag ok">第一段对齐 6/6</span>
+          <span class="tag">耗时 61.3s</span><span class="tag num">¥0.84</span></div>
+      </div>
+      ${condRow(true,`证伪检索已执行，相关率 <b class="num">0.71</b> ≥ θ 0.60（4 条 refute query，返回 23 篇，人判样本 8 篇）`)}
+      ${condRow(true,`竞品扫描覆盖达标——计划 6 条 query 全部执行，新增 query 边际新竞品 <b class="num">0</b>`)}
+      ${condRow(true,`≥1 条通过第一段对齐的支持证据 ${cite("fact-tech-01")} ${cite("fact-mkt-02")}`)}
+      ${condRow(true,`无 strength ∈ {strong, unknown} 的<b>同目标用户</b>竞品——两家 strong 竞品面向整线厂商，不覆盖中试线`)}
+    </div>
+  </div>
+
+  <div class="sec"><h3>判定链 · 为什么不是 A / B / D</h3>
+  <div class="chain">
+    <div class="step step2x miss"><span class="mk">A</span>
+      <div><b>明显不可行 · 未命中</b>
+        <div class="why">必要条件是「≥1 条通过第一段对齐的证伪证据」。refute 检索跑了 4 条 query、覆盖 limitations / failed replication /
+        撤稿记录 / 停更项目，<b>一条都没找到</b>。找不到证伪证据就不能判 A——这一条是硬规则，不允许模型推测。</div></div>
+      <span class="tag">0 条证伪</span></div>
+    <div class="step miss"><span class="mk">B</span>
+      <div><b>红海 · 未命中</b>
+        <div class="why">两条触发路径都不成立：竞品记录 <b class="num">4</b> 家但同目标用户的只有 <b class="num">2</b> 家（&lt;3）；
+        两家 strong 竞品的目标用户是整线厂商，与本主题的中试线主管不同层。</div></div>
+      <span class="tag">2 / 3</span></div>
+    <div class="step hit"><span class="mk">C</span>
+      <div><b>有机会 · 命中，四项全部满足</b>
+        <div class="why">这是展示给你的结论。展开上方四项可以逐条看到每一项的依据与原文。</div></div>
+      <span class="tag ok">采用</span></div>
+    <div class="step miss"><span class="mk">D</span>
+      <div><b>信息不足 · 兜底未启用</b>
+        <div class="why">C 已成立，不落兜底。若第 4 项里出现任何一个强度判不出来的同类竞品，本判定会<b>立刻退回 D</b>并列出缺口。</div></div>
+      <span class="tag">—</span></div>
+  </div></div>
+
+  <div class="sec"><h3>竞品扫描 · 4 家</h3><div class="card scroll"><table>
+    <thead><tr><th>竞品</th><th>强度</th><th>命中信号</th><th>定价</th><th>同目标用户</th><th>出处</th></tr></thead>
+    <tbody>${COMPETITORS.map((c,i)=>`<tr>
+      <td><b>${c.n}</b><div class="small muted num">${c.u}</div></td>
+      <td><span class="tag ${c.str==="strong"?"stop":c.str==="unknown"?"warn":""}">${
+        {strong:"强",moderate:"中",weak:"弱",unknown:"未知"}[c.str]}</span></td>
+      <td class="small">${c.sig.map(s=>`<span class="tag" style="margin:1px">${
+        {funded_or_scaled:"已融资/成规模",mature_pricing:"成熟定价",same_target_user:"同目标用户",active_last_12m:"近 12 月活跃"}[s]}</span>`).join("")||'<span class="muted">信号不足</span>'}</td>
+      <td class="small num">${c.price}</td>
+      <td class="small">${["否 · 整线","否 · 整线","否 · 通用","无数据"][i]}</td>
+      <td>${i<2?cite("fact-cmp-0"+(i+1)):'<span class="small muted">—</span>'}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="note" style="margin-top:10px"><b>强 = 四个信号里占任意两个。</b>信号不足就判「未知」，不判「弱」。
+    抓不到定价只是丢一个信号；<b>强度判定不接受「待确认」</b>。
+    而未知的同类竞品会直接阻断 C——判错「有机会」让你投入几个月，判错「不可行」只是少做一个项目，
+    代价不对称的时候规则向保守一侧倒。</p></div>
+
+  <div class="sec"><h3>其余四个主题的判定</h3>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">
+  ${TOPICS.slice(1).map(t=>`<div class="card pad" style="border-left:3px solid var(--v${t.v})">
+    <div class="row" style="align-items:baseline;gap:8px">
+      <span class="num" style="font-size:24px;font-weight:700;color:var(--v${t.v})">${t.v}</span>
+      <b style="font-size:13px;color:var(--v${t.v})">${VERDICT_LABEL[t.v]}</b></div>
+    <p class="small" style="margin-top:6px">${t.one}</p>
+    <p class="small muted" style="margin-top:7px">${
+      t.v==="B"?"1 家 strong 竞品即触发红海——两家寡头盘踞比五家小玩家难打得多，所以 B 的门槛是强度不是数量。":
+      t.v==="A"?"证伪证据：三篇论文报告界面阻抗在同类拟合下误差 >40%，且原项目已 archived。敢判不可行，是因为手里有那三篇。":
+      "两个竞品强度判不出来 → 阻断 C → 落 D。缺口清单已给出：需人工确认这 2 家的规模与定价。"}</p>
+    ${t.v==="A"?`<div class="row" style="gap:5px;margin-top:8px">${cite("fact-tech-01","refute-01")}${cite("fact-mkt-02","refute-02")}</div>`:""}
+  </div>`).join("")}</div></div>`};
+
+S.job = {g:"判定",n:"作业进度",render:()=>`
+  <div class="hdr"><div class="eyebrow">job-4471 · 分析 · 发起人 林</div><h1 class="h1">正在判定</h1>
+  <p class="lede">进度实时推送，断线重连从断点补发，网络受限时自动回退轮询。单一真相是作业本身，推送只是传输。</p></div>
+  <div class="split"><div>
+    <div class="steps" id="steps">${JOBSTEPS.map(s=>`
+      <div class="step2 ${s[1]}"><span class="dot"></span><span>${s[0]}</span>
+        <span class="t">${s[2]}</span><span class="t">${s[3]}</span></div>`).join("")}</div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="playjob">重播这段进度</button>
+      <button class="btn">取消作业</button>
+      <span class="small muted" style="margin-left:auto">取消在步骤边界生效，已花费按实计</span></div>
+  </div>
+  <div>
+    <div class="card pad"><h3 class="h2">成本与封顶</h3>
+      <div class="heat" style="margin-top:8px"><b>¥0.84</b><span>/ 上限 ¥3.00</span></div>
+      <div class="bar"><i style="width:28%"></i></div>
+      <p class="small muted" style="margin-top:10px">超过上限不是直接失败，而是按固定顺序降级：
+      取回篇数减半 → 扩展 query 减半 → 非核心章节降模型档 → 附录截断。<b>每一级都会写进质量卡</b>。</p></div>
+    <div class="card pad" style="margin-top:14px"><h3 class="h2">断点</h3>
+      <dl class="kv" style="margin-top:8px">
+        <dt>已执行 QUERY</dt><dd class="num">6 / 6</dd>
+        <dt>已完成 SECTION</dt><dd class="num">0 / 4</dd>
+        <dt>事件序号</dt><dd class="num">seq 41</dd>
+        <dt>重连</dt><dd class="small">带 Last-Event-ID 补发</dd></dl></div>
+  </div></div>`};
+
+S.report = {g:"成文",n:"深度报告",render:()=>`
+  <div class="hdr"><div class="eyebrow">deliv-0912 · 报告 v3 · 钉住事实清单 v7</div>
+    <h1 class="h1">固态电池中试线极片缺陷在线检测 · 深度报告</h1></div>
+  <div class="split"><div>
+  <article class="doc">
+    <div class="disclaimer">本报告基于截至 2026-08-12 的公开信息自动生成，供研究参考；
+      不构成科研立项、投资、法律或其他专业决策建议。结论可信度与盲区见质量卡。</div>
+
+    <h2>1 · 机会判断</h2>
+    <p>中试线阶段的极片缺陷检测存在一个被两家整线设备商跳过的窄口：他们的产品面向量产线，
+      节拍与价格都按整线设计${cite("fact-cmp-01")}，而中试线的批量小、缺陷样本少、预算区间低一个数量级${cite("fact-user-01")}。</p>
+    <p>2026 年上半年，半固态电池装机 3.14 GWh、同比增长 214%${cite("fact-mkt-01")}，
+      中试线数量随之扩张；同时小样本缺陷检测方法在 43 张标注样本下达到 0.91 AP50${cite("fact-tech-01")}——
+      需求侧与技术侧在同一年碰头，这是「为什么是现在」的全部依据。</p>
+
+    <h2>2 · 问题规模</h2>
+    <p>在被调查的三条中试线上，61% 的报废电芯可追溯到极片厚度偏差超过 ±3 μm${cite("fact-mkt-02")}。
+      人工目检环节单班 6.5 小时、占质检总工时 71%，漏检返工率 4.3%${cite("fact-user-01")}。</p>
+
+    <div class="blk rev"><span class="blkflag" style="color:var(--vB)">依据有变 · 提示级 · fact-mkt-01 数值更新</span>
+      <p style="margin:0">按 2026 年上半年装机量推算，国内在运行的固态/半固态中试线约 40~60 条${cite("fact-mkt-01")}。</p>
+      <div class="row small" style="margin-top:8px;gap:8px"><a href="#">看变化</a><a href="#">按新数值重写本段</a>
+        <span class="muted">结论可能仍成立，不阻断导出</span></div></div>
+
+    <div class="blk block"><span class="blkflag" style="color:var(--vA)">依据已移除 · 阻断级 · 导出前必须处理</span>
+      <p style="margin:0">单条中试线的年检测成本约 ¥ 96 万。</p>
+      <div class="row small" style="margin-top:8px;gap:8px"><a href="#">重写本段</a><a href="#">删除</a>
+        <a href="#">确认保留并标为推测</a>
+        <span class="muted">这一段此刻含无依据结论</span></div></div>
+
+    <div class="blk prot"><span class="blkflag muted">你写的 · 系统永不覆盖</span>
+      <p style="margin:0">补充：我们在 6 月和两家中试线聊过，他们更在意「误报导致停线」而不是漏检率本身。</p></div>
+
+    <h2>3 · 盲区</h2>
+    <p>本报告未能回答：① 二线电池厂的实际付费意愿区间——检索不到公开成交价；
+      ② 海外中试线是否有同类空白——本版仅覆盖中国大陆与香港两区的信息源。</p>
+  </article></div>
+
+  <div><div class="card pad"><h3 class="h2">这份报告的引用</h3>
+    <dl class="kv" style="margin-top:10px">
+      <dt>结论数</dt><dd class="num">31</dd>
+      <dt>带引用</dt><dd class="num">31 · 100%</dd>
+      <dt>事实清单</dt><dd class="num">v7 · 24 条</dd>
+      <dt>私有证据</dt><dd class="num">4 / 24 · 16.7%</dd>
+      <dt>待处理</dt><dd><span class="tag stop">阻断 1</span> <span class="tag warn">提示 1</span></dd></dl>
+    <button class="btn" style="margin-top:12px;width:100%" data-go="quality">打开质量卡</button></div>
+    <div class="card pad" style="margin-top:14px"><h3 class="h2">长文为什么不自相矛盾</h3>
+      <p class="small muted" style="margin-top:6px">先出大纲 → 从判定结果抽出<b>事实清单并冻结</b> →
+      每一段只准按 fact_id 引用清单里的事实 → 终稿逐条对账。段落之间不会各说各的数字，因为它们引的是同一张表。</p></div>
+  </div></div>`};
+
+S.quality = {g:"成文",n:"质量卡",render:()=>`
+  <div class="hdr"><div class="eyebrow">deliv-0912 · 报告 v3</div><h1 class="h1">质量卡</h1>
+  <p class="lede">让你知道什么时候不该信这份报告，反而是换取信任的方式。</p></div>
+  <div class="metrics">
+    <div class="metric"><b>24</b><span>证据条数</span></div>
+    <div class="metric"><b>47 天</b><span>证据时效中位数</span></div>
+    <div class="metric good"><b>100%</b><span>引用覆盖率</span></div>
+    <div class="metric good"><b>97.3%</b><span>引用对齐通过率 · 红线 95%</span></div>
+    <div class="metric warn"><b>16.7%</b><span>私有证据占比</span></div>
+    <div class="metric bad"><b>1</b><span>阻断级待处理</span></div>
+    <div class="metric warn"><b>1</b><span>争议中的依据</span></div>
+    <div class="metric"><b>2026</b><span>单价数据年份</span></div>
+  </div>
+  <div class="sec"><h3>盲区声明</h3><div class="card pad">
+    <div class="cond n"><em>✗</em><span><b>二线电池厂的付费意愿区间</b>——检索不到公开成交价，6 条 query 相关率 0.22 未达线。
+      补充方式：上传一份询价记录，或指名两家可联系的厂商。</span></div>
+    <div class="cond n"><em>✗</em><span><b>海外中试线是否存在同类空白</b>——本版信息源覆盖中国大陆与香港。</span></div>
+    <div class="cond n"><em>✗</em><span><b>误报率对停线成本的影响</b>——你在 6 月的访谈提到这是客户首要关切，但没有可引用的量化材料。</span></div>
+  </div></div>
+  <div class="sec"><h3>降级记录</h3><div class="card">
+    <table><thead><tr><th>级别</th><th>动作</th><th>触发</th><th>影响</th></tr></thead><tbody>
+      <tr><td><span class="tag">L1</span></td><td>每 query 取回篇数 −50%</td>
+        <td class="small num">成本达 ¥2.40 / 上限 ¥3.00</td><td class="small">证据池 84 → 51 条</td></tr>
+    </tbody></table></div>
+    <p class="note" style="margin-top:10px">系统为了不超预算做了哪些让步，逐级写在这里。
+    你看到的证据数比满配少，原因在这一行，不在别处。</p></div>
+  <div class="sec"><h3>指标口径</h3><div class="card pad">
+    <p class="small muted">引用覆盖率与对齐率<b>只统计系统写的、且你没改过的段落</b>。
+    把你手写的段落算进分母，指标会失真——那不是系统的引用行为。</p></div></div>`};
+
+S.intervene = {g:"成文",n:"干预层",render:()=>`
+  <div class="hdr"><div class="eyebrow">deliv-0912 · 第 2 节</div><h1 class="h1">四个动作</h1>
+  <p class="lede">生成不是终点。锁定、重写、注入你自己的证据、对某条依据打问号——四个动作都在原文上就地进行。</p></div>
+  <div class="split"><div>
+    <div class="card pad">
+      <p style="margin:0 0 4px">在被调查的三条中试线上，61% 的报废电芯可追溯到极片厚度偏差超过 ±3 μm${cite("fact-mkt-02")}。</p>
+      <div class="row" style="gap:6px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line-2)">
+        <button class="btn small">锁定本段</button>
+        <button class="btn small" data-go="instruct">指令改写</button>
+        <button class="btn small">注入证据</button>
+        <button class="btn small">质疑这条依据</button></div>
+    </div>
+
+    <div class="card pad" style="margin-top:14px;background:var(--raised)">
+      <span class="blkflag muted">你写的段落 · 保护中</span>
+      <p style="margin:4px 0 0">补充：我们在 6 月和两家中试线聊过，他们更在意「误报导致停线」而不是漏检率本身。</p>
+      <p class="small muted" style="margin-top:10px">这一段<b>一个按钮都不显示</b>。
+      锁定的、你写的、你改过的——三类段落任何重生成都绕开。系统覆盖用户手写内容是不可逆的信任损失。</p>
+    </div>
+
+    <div class="sec"><h3>质疑处理中 · dispute-0044</h3><div class="card pad">
+      <dl class="kv"><dt>目标</dt><dd>${cite("fact-cmp-01")} Hitachi 最小可检缺陷 5 μm</dd>
+        <dt>你的理由</dt><dd>产品页写的是实验室条件，产线节拍下达不到</dd>
+        <dt>状态</dt><dd><span class="tag warn">双向重检中 · 找支持也找反驳</span></dd></dl>
+      <div class="note" style="margin-top:12px">这条依据现在<b>不能被任何新生成的段落引用</b>，
+      已经引用它的段落挂了争议标记。重检结果回来后由你决定保留还是替换。</div>
+    </div></div>
+  </div>
+  <div>
+    <div class="card pad"><h3 class="h2">注入你自己的证据</h3>
+      <p class="small muted" style="margin-top:6px">你提供的资料走<b>和系统检索完全相同的管道</b>：
+      解析 → 强度评分 → 引用对齐校验 → 进事实清单派生新版本。</p>
+      <div class="note" style="margin-top:12px"><b>用户证据不豁免任何一道校验。</b>
+      唯一的差别是：私有来源在产品内点击能跳到你上传材料的对应段落，
+      但导出和分享时会强制标注「引自用户提供材料，外部不可核验」，链接不外链。</div>
+      <p class="small muted" style="margin-top:10px">导师点开引用发现是死链，信任是一次性崩塌的。</p></div>
+    <div class="card pad" style="margin-top:14px"><h3 class="h2">依据变了之后</h3>
+      <p class="small muted" style="margin-top:6px">事实清单派生新版本 → 算出变更的 fact →
+      <b>只有引用了它的段落</b>被标记。不会让你整篇重来。</p></div>
+  </div></div>`};
+
+S.instruct = {g:"成文",n:"指令改写",render:()=>`
+  <div class="hdr"><div class="eyebrow">块级 · blk-0912-2-04</div><h1 class="h1">用一句话指挥它改</h1></div>
+  <div class="card pad" style="max-width:78ch">
+    <div class="eyebrow">你的指令</div>
+    <div style="background:var(--raised);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;margin:6px 0 16px">
+      这段太虚，把成本拆到人月和设备两项，并给出单价来源。</div>
+    <div class="eyebrow">改写前</div>
+    <p class="small" style="background:var(--sunken);padding:10px 12px;border-radius:var(--r);margin:6px 0 14px;color:var(--ink-3)">
+      开发这套检测工位需要一定的人力与设备投入，成本可控。</p>
+    <div class="eyebrow">改写后</div>
+    <div style="border-left:2px solid var(--ok);padding:10px 14px;background:var(--vC-bg);border-radius:0 var(--r) var(--r) 0">
+      <p style="margin:0">首年投入由两项构成：机器视觉工程师 1.0 人月 × 12
+      <span class="cite" style="cursor:default">price-labor-07</span>
+      ${cite("price-labor-07","¥38k–52k/人月")}，
+      与工业相机及光源一套
+      <span class="cite" style="cursor:default">price-cam-03</span>。
+      团队现有 0.6 FTE 视觉工程师${cite("profile-team")}，缺口 0.4 FTE。</p></div>
+  </div>
+
+  <div class="sec"><h3>它想编也编不出来</h3><div class="card pad">
+    <div class="eyebrow">同一个块 · 另一条指令</div>
+    <div style="background:var(--raised);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;margin:6px 0 12px">
+      写上「这套方案能把漏检率从 4.3% 降到 0.5%」。</div>
+    <div style="border-left:2px solid var(--stop);padding:12px 14px;background:var(--vA-bg);border-radius:0 var(--r) var(--r) 0">
+      <div class="row" style="gap:8px;align-items:center;margin-bottom:6px">
+        <span class="tag stop">生成被拒</span><code class="inl">DraftViolation</code></div>
+      <p class="small" style="margin:0">「0.5%」在事实清单里没有对应条目。指令可以指方向，
+      <b>不能变成事实</b>——门禁在写入前拦下，不是事后检查。</p>
+      <p class="small muted" style="margin:8px 0 0">要让它成立：注入一条支持这个数字的证据，
+      走完强度评分与对齐校验进入清单，这一句自然就能写了。</p></div>
+  </div></div>
+
+  <div class="sec"><h3>只改目标块</h3><div class="card pad">
+    <div class="steps">
+      <div class="step2 done"><span class="dot"></span><span>blk-…-03 上一段</span><span class="t">未改</span><span class="t">字节一致</span></div>
+      <div class="step2 run"><span class="dot"></span><span>blk-…-04 目标块</span><span class="t">已改</span><span class="t">版本 2</span></div>
+      <div class="step2 done"><span class="dot"></span><span>blk-…-05 下一段（未锁定）</span><span class="t">未改</span><span class="t">字节一致</span></div>
+      <div class="step2 done"><span class="dot"></span><span>blk-…-06 你写的段落</span><span class="t">未改</span><span class="t">保护中</span></div>
+    </div>
+    <p class="small muted" style="margin-top:10px">未锁定的邻居也<b>字节不变</b>——「只改这一块」如果顺手动了别处，那句承诺就不成立。</p>
+  </div></div>`};
+
+S.audience = {g:"成文",n:"受众选择",render:()=>`
+  <div class="hdr"><div class="eyebrow">报告 → 计划书 · 必选一次</div><h1 class="h1">这份计划书是给谁看的</h1>
+  <p class="lede">给人看的和给 AI 执行的，是两份明显不同的文档。不是同一份换个格式。</p></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="card pad" style="border-color:var(--accent);border-width:1.5px">
+      <div class="eyebrow" style="color:var(--accent)">HUMAN_READER</div>
+      <h3 style="font-size:19px">给人看 · 五套模板</h3>
+      <p class="small muted" style="margin-top:6px">通用 / 毕业设计 / 创业 BP / 工程交付 / 科研基金。
+      读者是需要被说服的怀疑者，文档要防「不信」。</p>
+      <div class="grid" style="gap:5px;margin-top:12px">
+        ${[["关键信息重复三次","摘要 / 正文 / 结论，冗余是体贴"],
+           ["字数配比","按章占比与上下限"],
+           ["容忍模糊","人会脑补"],
+           ["人来验收","评审会、导师意见"]].map(x=>
+          `<div class="small"><b>${x[0]}</b> <span class="muted">· ${x[1]}</span></div>`).join("")}</div>
+      <button class="btn pri" style="margin-top:14px;width:100%" data-go="proposal">选这个</button>
+    </div>
+    <div class="card pad">
+      <div class="eyebrow">AI_EXECUTOR</div>
+      <h3 style="font-size:19px">给 AI 执行 · vibe_pack</h3>
+      <p class="small muted" style="margin-top:6px">计划书与任务规格<b>合并成一个交付物</b>。
+      读者是需要被约束的过度服从者，文档要防「乱信」。</p>
+      <div class="grid" style="gap:5px;margin-top:12px">
+        ${[["同一信息只出现一次","重复即漂移面"],
+           ["token 预算","超预算是设计错误"],
+           ["零歧义","版本号锁死，模糊词进禁用词表"],
+           ["机器验收","每任务一条命令，exit 0 才算完成"]].map(x=>
+          `<div class="small"><b>${x[0]}</b> <span class="muted">· ${x[1]}</span></div>`).join("")}</div>
+      <button class="btn" style="margin-top:14px;width:100%" data-go="vibepack">选这个</button>
+    </div>
+  </div>
+  <p class="note" style="margin-top:14px">两个版本可以都生成，钉同一个事实清单版本、互相链接。
+  为什么 AI 那条路要合并——AI 不需要先被说服再拿任务，两段式对它只是多一次转换、多一个漂移面：
+  计划书说 X、规格说 X′，执行器随机信一个。</p>`};
+
+S.proposal = {g:"成文",n:"计划书 · 五模板",render:()=>`
+  <div class="hdr"><div class="eyebrow">deliv-0931 · 工程交付模板 · 8 节</div>
+    <h1 class="h1">极片缺陷在线检测 · 项目计划书</h1></div>
+  <div class="split"><div>
+    <div class="card"><table><thead><tr><th>章节</th><th>配比</th><th>实测</th><th>必答题</th><th>图表</th></tr></thead><tbody>
+      ${[["1 项目背景与机会","12%","11.4%","3/3",""],
+         ["2 现状与问题规模","15%","16.2%","4/4","问题归因饼图"],
+         ["3 技术路线","20%","19.1%","5/5","技术架构图"],
+         ["4 竞品与差异化","12%","12.8%","4/4","竞品矩阵"],
+         ["5 前期基础与团队","10%","6.3%","2/4","—"],
+         ["6 里程碑与工作分解","13%","13.5%","3/3","甘特图 · WBS 树"],
+         ["7 资源与预算","10%","10.2%","3/3","预算表"],
+         ["8 风险评估","8%","8.1%","3/3","风险矩阵"]].map(r=>`<tr>
+        <td><b>${r[0]}</b></td><td class="num small">${r[1]}</td>
+        <td class="num small" ${r[0].startsWith("5")?'style="color:var(--warn)"':""}>${r[2]}</td>
+        <td class="small">${r[3]==="2/4"?'<span class="tag warn">2/4</span>':`<span class="tag ok">${r[3]}</span>`}</td>
+        <td class="small muted">${r[4]}</td></tr>`).join("")}
+    </tbody></table></div>
+
+    <div class="sec"><h3>第 5 节 · 缺口提示</h3>
+      <div class="card pad" style="border-left:3px solid var(--vB)">
+        <div class="eyebrow" style="color:var(--vB)">本章两道必答题没答上</div>
+        <div class="cond n" style="margin-top:6px"><em>✗</em><span>团队是否具备产线部署经验？
+          <b>档案里没有这一项</b>——不编，留白。</span></div>
+        <div class="cond n"><em>✗</em><span>过往交付中是否有同类甲方？档案的交付记录为空。</span></div>
+        <div class="row" style="margin-top:10px;gap:8px"><button class="btn small">补充到我的档案</button>
+          <button class="btn small">按现有内容重写本章</button></div>
+        <p class="small muted" style="margin-top:10px">「前期研究基础」「团队与分工」「资源与预算」这些涉我章节
+        <b>只允许引用你的档案</b>。缺了就显式留白，绝不编造一段光鲜的团队介绍——那是评审一眼看穿的地方。</p>
+      </div>
+      <div class="note" style="margin-top:12px">另一种留白长得不一样：如果是<b>你无权访问</b>预算字段，
+      提示会写「本章需要预算区间数据，你当前无权访问，请联系所有者」——
+      而不是「请补充资料」，让你白跑一趟去找根本不缺的东西。</div>
+    </div>
+
+    <div class="sec"><h3>第 7 节 · 预算表</h3><div class="card scroll"><table>
+      <thead><tr><th>项</th><th>单价</th><th>数量</th><th>小计</th><th>单价出处</th></tr></thead><tbody>
+        <tr><td>机器视觉工程师</td><td class="num">¥45,000 / 人月</td><td class="num">12</td>
+          <td class="num">¥540,000</td><td>${cite("price-labor-07")}</td></tr>
+        <tr><td>工业相机 + 光源</td><td class="num">¥86,000 / 套</td><td class="num">2</td>
+          <td class="num">¥172,000</td><td><span class="cite" style="cursor:default">price-cam-03</span></td></tr>
+        <tr><td>标注外包</td><td class="num">¥3.2 / 张</td><td class="num">6,000</td>
+          <td class="num">¥19,200</td><td><span class="cite" style="cursor:default">price-anno-11</span>
+          <span class="tag warn" style="margin-left:4px">2024 年数据</span></td></tr>
+      </tbody></table></div>
+      <p class="note" style="margin-top:10px">每一格都引用单价库条目，可审计。
+      <b>没有来源的条目不能被预算表引用</b>；过期条目仍可用，但单元格黄标、质量卡注明年份。
+      预算数字是评审一眼看穿的地方——无出处的数字一律不出。</p></div>
+  </div>
+  <div>
+    <div class="card pad"><h3 class="h2">图表铁律</h3>
+      <p class="small muted" style="margin-top:6px">每张图的数据来源必填：甘特图来自里程碑、
+      预算表来自单价库×工作量、风险矩阵来自风险清单。</p>
+      <div class="note" style="margin-top:10px"><b>数据不够就不画这张图</b>，并在原地标出缺口。
+      图表数据不允许新编。</div></div>
+    <div class="card pad" style="margin-top:14px"><h3 class="h2">字数不够时</h3>
+      <p class="small muted" style="margin-top:6px">扩写会<b>先去补检索或反问你</b>，拿到新证据才扩。
+      拿不到就直说：「本章受证据量限制（现有 3 条证据）」。</p>
+      <p class="small muted" style="margin-top:8px">不给你灌水。</p></div>
+  </div></div>`};
+
+S.vibepack = {g:"成文",n:"vibe_pack",render:()=>`
+  <div class="hdr"><div class="eyebrow">deliv-0932 · audience = ai_executor · 章节族 S1~S9</div>
+    <h1 class="h1">AI 执行包</h1>
+    <p class="lede">不是第六套模板，是另一个物种。计划书与任务规格合并成一个交付物，单位从字数换成 token。</p></div>
+  <div class="split"><div>
+    <div class="card"><table><thead><tr><th>章</th><th>内容</th><th>TOKEN</th><th>占比</th></tr></thead><tbody>
+      ${[["S1","Charter · 目标 / 非目标 / 边界",1180,"3.4%"],
+         ["S2","Invariants · MUST/NEVER + 禁用词表",2240,"6.5%"],
+         ["S3","Contracts · 数据模型与接口签名（字面给出）",6810,"19.7%"],
+         ["S4","Decision Log + Open Questions",1960,"5.7%"],
+         ["S5","Task DAG · 41 张任务卡",14320,"41.5%"],
+         ["S6","Context Manifest · 每任务装载清单",2880,"8.3%"],
+         ["S7","Verification Harness · 命令与断言",2410,"7.0%"],
+         ["S8","Progress Ledger · 进度回写格式",1520,"4.4%"],
+         ["S9","Escalation Rules · 什么时候必须停下问人",1200,"3.5%"]].map(r=>`<tr>
+        <td class="num" style="color:var(--accent);font-weight:600">${r[0]}</td><td>${r[1]}</td>
+        <td class="num">${r[2].toLocaleString()}</td><td class="num small">${r[3]}</td></tr>`).join("")}
+      <tr><td></td><td><b>合计</b> <span class="muted small">· 预算 40,000</span></td>
+        <td class="num"><b>34,520</b></td><td class="num small">86.3%</td></tr>
+    </tbody></table></div>
+    <div class="bar" style="margin-top:10px"><i style="width:86.3%"></i></div>
+    <p class="small muted" style="margin-top:6px">装载集超预算 = 设计错误，不是小事。超了就收窄装载清单或拆任务。</p>
+
+    <div class="sec"><h3>S5 · 任务卡（3 / 41）</h3>
+      <div class="grid">${VP_TASKS.map(t=>`<div class="task">
+        <header><b>${t.id}</b><span>${t.t}</span>
+          <span class="tag" style="margin-left:auto">${t.c} cycle</span>
+          ${t.gate?'<span class="tag warn">须过审核</span>':""}</header>
+        <div class="eyebrow" style="margin:8px 0 2px">ACCEPTANCE</div>
+        ${t.acc.map(a=>`<div class="cond y"><em>✓</em><span>${a}</span></div>`).join("")}
+        <div class="eyebrow" style="margin:10px 0 2px">VERIFY_CMD · EXIT 0 = 完成</div>
+        <pre>${t.ver}</pre>
+        <div class="eyebrow" style="margin:8px 0 2px">CONTEXT_REFS · 只装这些</div>
+        <div class="row" style="gap:5px">${t.ctx.map(c=>`<span class="tag">${c}</span>`).join("")}</div>
+      </div>`).join("")}</div>
+      <p class="note" style="margin-top:12px"><b>没有机器验收的任务不允许存在</b>——
+      否则 AI 会自己宣称完成。这是「可转成测试断言」升级成「必须已经转好」。</p>
+    </div>
+
+    <div class="sec"><h3>依赖校验 · 实调注册表</h3><div class="card">
+      <table><thead><tr><th>依赖</th><th>校验</th><th>锁定版本</th><th>结果</th></tr></thead><tbody>
+        <tr><td class="num">fastapi</td><td class="small">PyPI 实调</td><td class="num">0.140.0</td>
+          <td><span class="tag ok">存在 · 最新稳定</span></td></tr>
+        <tr><td class="num">pgvector</td><td class="small">PyPI 实调</td><td class="num">0.4.1</td>
+          <td><span class="tag ok">存在 · 最新稳定</span></td></tr>
+        <tr><td class="num">fast-cluster-hnsw</td><td class="small">PyPI 实调</td><td class="muted">—</td>
+          <td><span class="tag stop">不存在 · 已替换为 hnswlib 0.8.0 [replaced: 包名不存在]</span></td></tr>
+      </tbody></table></div>
+      <p class="note" style="margin-top:10px">编造包名与版本号是这类产物的头号失效点。
+      任一依赖校验不通过，<b>整包禁止导出</b>——不是给个警告让你自己看着办。</p></div>
+  </div>
+  <div>
+    <div class="card pad"><h3 class="h2">质量卡（AI 版）</h3>
+      <p class="small muted" style="margin-top:4px">这份产物没有叙事结论，所以不适用引用覆盖率。换一套口径：</p>
+      <dl class="kv" style="margin-top:10px">
+        <dt>VERIFY 覆盖</dt><dd class="num" style="color:var(--ok)">100%</dd>
+        <dt>DAG</dt><dd class="num" style="color:var(--ok)">无环 · 孤儿 0</dd>
+        <dt>注册表通过</dt><dd class="num" style="color:var(--ok)">100%</dd>
+        <dt>ONESHOT 率</dt><dd class="num">73%</dd>
+        <dt>超预算任务</dt><dd class="num" style="color:var(--ok)">0</dd>
+        <dt>关键路径</dt><dd class="num">18 cycles</dd></dl></div>
+    <div class="card pad" style="margin-top:14px"><h3 class="h2">S9 · 什么时候必须停</h3>
+      <div class="grid small" style="gap:4px;margin-top:6px">
+        <div>· 冻结的类型或签名不够用</div><div>· 撞上未决问题且绕不开</div>
+        <div>· 新依赖校验失败或只有付费方案</div><div>· 装载预算拆不下来</div>
+        <div>· 同一原因连续两次验收失败</div><div>· 任何不可逆操作</div></div>
+      <p class="small muted" style="margin-top:10px">AI 的失败模式是幻觉、漂移、上下文溢出——靠护栏，不靠沟通。</p></div>
+    <div class="card pad" style="margin-top:14px"><h3 class="h2">附 · 监工视图</h3>
+      <p class="small muted" style="margin-top:4px">一页人类看的进度页，<b>不进 AI 上下文、不计入 token 预算</b>。</p></div>
+  </div></div>`};
+
+S.export = {g:"交付",n:"导出",render:()=>`
+  <div class="hdr"><div class="eyebrow">deliv-0912 · 报告 v3</div><h1 class="h1">导出</h1></div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+    ${[["docx","带批注与目录","可导出"],["pdf","打印版式","可导出"],
+       ["html","单文件自包含","可导出"],["markdown","纯文本","可导出"],
+       ["vibe_pack.zip","含契约副本与任务清单","被拦"]].map(x=>`
+      <div class="card pad"><div class="num" style="font-size:13px;color:var(--accent)">${x[0]}</div>
+        <p class="small muted" style="margin:4px 0 10px">${x[1]}</p>
+        ${x[2]==="被拦"?'<button class="btn small" disabled>导出被拦</button>':'<button class="btn small">导出</button>'}</div>`).join("")}
+  </div>
+  <div class="sec"><h3>导出门禁 · 3 项检查</h3><div class="card pad">
+    <div class="cond n"><em>✗</em><span><b>阻断级待处理 1 项</b>——第 2 节有一段的依据已被移除，此刻含无依据结论。
+      处理方式：重写 / 删除 / 确认保留并标为推测。<a href="#" style="margin-left:6px">去处理</a></span></div>
+    <div class="cond y"><em>✓</em><span>译文引文的出处槽全部可展开到原文（12 / 12）</span></div>
+    <div class="cond y"><em>✓</em><span>规格包依赖注册表校验 100% 通过</span></div>
+    <p class="small muted" style="margin-top:12px">拦下来的时候会告诉你拦在哪一条、怎么解。
+    不是弹一个「导出失败」让你猜。</p>
+  </div></div>
+  <div class="sec"><h3>导出时会发生的两处改写</h3><div class="card pad">
+    <div class="grid small" style="gap:8px">
+      <div>· 私有证据的引用<b>强制标注</b>「引自用户提供材料，外部不可核验」，链接不外链。</div>
+      <div>· 质量卡随文导出，包含盲区声明与降级记录——不是产品内才看得到的东西。</div>
+    </div></div></div>`};
+
+S.share = {g:"交付",n:"外链只读",render:()=>`
+  <div class="hdr"><div class="eyebrow">/share/8f2c…a41 · 匿名访问</div><h1 class="h1">只读分享</h1></div>
+  <div class="split"><div>
+    <div class="card pad" style="max-width:70ch">
+      <div class="disclaimer">本报告基于截至 2026-08-12 的公开信息自动生成，供研究参考。</div>
+      <h3 style="font-size:17px;margin-bottom:8px">1 · 机会判断</h3>
+      <p class="small">中试线阶段的极片缺陷检测存在一个被两家整线设备商跳过的窄口${cite("fact-cmp-01")}……</p>
+      <p class="small" style="margin-top:10px">人工目检环节单班 6.5 小时、占质检总工时 71%
+        <span class="tag warn" style="margin-left:4px">引自用户提供材料 · 外部不可核验</span></p>
+      <div class="note" style="margin-top:14px">只读视图<b>不显示任何干预控件</b>——
+      看的人不会误以为自己能改，也不会误触。</div>
+    </div>
+  </div>
+  <div><div class="card pad"><h3 class="h2">链接管理</h3>
+    <dl class="kv" style="margin-top:10px"><dt>创建于</dt><dd class="num">2026-08-11</dd>
+      <dt>有效期</dt><dd class="num">30 天</dd><dt>访问</dt><dd class="num">7 次 · 3 人</dd>
+      <dt>权限</dt><dd class="small">只读 · 不可导出</dd></dl>
+    <button class="btn small" style="margin-top:12px">撤销此链接</button></div>
+  <div class="card pad" style="margin-top:14px"><h3 class="h2">失效时说清楚</h3>
+    <p class="small muted" style="margin-top:6px">「链接已过期」和「无此链接」是两句话，
+    不一律报 404 含糊过去——前者你该去要一个新链接，后者你手里的地址是错的。</p></div>
+  </div></div>`};
+
+S.design = {g:"交付",n:"AI 设计工作台",render:()=>`
+  <div class="hdr"><div class="eyebrow">design-0077 · 流式生成</div><h1 class="h1">说一句，生成一屏</h1></div>
+  <div class="split"><div>
+    <div class="card pad">
+      <div style="background:var(--raised);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px">
+        做一个检测工位的现场看板：左边实时缺陷计数，右边最近 10 张缺陷图，顶部是本班良率。深色，车间大屏用。</div>
+      <div class="row" style="gap:8px;margin-top:10px"><button class="btn pri small">生成</button>
+        <button class="btn small">继续上一次</button><span class="small muted">流式逐块出现，中断可续</span></div>
+    </div>
+    <div class="card" style="margin-top:14px;overflow:hidden">
+      <div style="background:#0B0F12;padding:18px;color:#DDE4EA;font-family:var(--mono)">
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #223;padding-bottom:10px">
+          <span style="font-size:11px;letter-spacing:.2em;color:#6B7785">B 班 · 极片检测工位 03</span>
+          <span style="font-size:11px;color:#63BCA5">良率 97.4%</span></div>
+        <div style="display:grid;grid-template-columns:150px 1fr;gap:16px;margin-top:14px">
+          <div><div style="font-size:38px;line-height:1;color:#E08076">142</div>
+            <div style="font-size:10px;color:#6B7785;margin-top:4px">本班缺陷计数</div>
+            <div style="font-size:38px;line-height:1;margin-top:14px">5,412</div>
+            <div style="font-size:10px;color:#6B7785;margin-top:4px">已检片数</div></div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px">
+            ${Array.from({length:10},(_,i)=>`<div style="aspect-ratio:1;background:#161E25;border:1px solid #223;
+              display:flex;align-items:center;justify-content:center;font-size:9px;color:#5E6D7A">#${8231+i}</div>`).join("")}</div>
+        </div>
+      </div>
+      <div class="pad between" style="border-top:1px solid var(--line)">
+        <span class="small muted">零构建预览 · 直接渲染</span>
+        <div class="row" style="gap:6px"><button class="btn small">再来一版</button>
+          <button class="btn small">固化为模板</button></div></div>
+    </div>
+  </div>
+  <div><div class="card pad"><h3 class="h2">固化为模板</h3>
+    <p class="small muted" style="margin-top:6px">满意的设计存进模板注册表，下次直接复用。</p>
+    <div class="note" style="margin-top:10px">模板注册表不可用时，<b>固化按钮置灰并说明原因</b>，
+    探索照常不阻断——探索期本来就不需要注册表。</div></div>
+  </div></div>`};
+
+S.locale = {g:"设置",n:"语言与地区",render:()=>`
+  <div class="hdr"><div class="eyebrow">个人偏好</div><h1 class="h1">语言与地区</h1>
+  <p class="lede">两个独立的维度。切地区不会改界面语言，切语言不会改你看到的热点集合。</p></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;max-width:760px">
+    <div class="card pad"><div class="eyebrow">系统语言</div>
+      <div class="grid" style="gap:6px;margin-top:8px">
+        <button class="btn" style="justify-content:space-between;border-color:var(--accent)">中文 <span class="tag ok">当前</span></button>
+        <button class="btn" style="justify-content:space-between">English</button></div>
+      <p class="small muted" style="margin-top:10px">只改界面文案。热点集合不重新拉取——这条正交性在屏上看得见。</p></div>
+    <div class="card pad"><div class="eyebrow">地区</div>
+      <div class="grid" style="gap:5px;margin-top:8px;max-height:210px;overflow-y:auto">
+        ${REGIONS.map((r,i)=>`<button class="btn" style="justify-content:space-between${i===0?";border-color:var(--accent)":""}">
+          ${r[1]} ${i===0?'<span class="tag ok">当前</span>':`<span class="small muted num">${r[0]}</span>`}</button>`).join("")}</div>
+      <p class="small muted" style="margin-top:10px">切换后热点集合重新拉取，界面语言不动。</p></div>
+  </div>
+  <div class="sec"><h3>屏上那一片空白是哪一种</h3><div class="card scroll"><table>
+    <thead><tr><th>屏上写什么</th><th>真相</th><th>你该做什么</th></tr></thead><tbody>
+      <tr><td>该区当日无数据</td><td class="small">查过了，今天确实没有</td><td class="small">换一天 / 换一个区</td></tr>
+      <tr><td>该区源不可用</td><td class="small">源挂了，其余区照常</td><td class="small">稍后再看</td></tr>
+      <tr><td>读取失败</td><td class="small">没查成</td><td class="small">重试</td></tr>
+    </tbody></table></div>
+    <p class="note" style="margin-top:10px">三种合成一句之后，该等的人会一直刷新，该换一天的人以为功能坏了。
+    <b>所以它们从不合并。</b></p></div>`};
+
+S.billing = {g:"设置",n:"账户与计费",render:()=>`
+  <div class="hdr"><div class="eyebrow">林 · 个人版</div><h1 class="h1">账户与用量</h1></div>
+  <div class="metrics" style="margin-bottom:20px">
+    <div class="metric"><b>3 / 5</b><span>本月免费额度已用</span></div>
+    <div class="metric"><b>¥ 12.40</b><span>本月按次消费</span></div>
+    <div class="metric"><b>¥ 0.84</b><span>单次分析均价</span></div>
+    <div class="metric"><b>免费档</b><span>当前模型档位</span></div>
+  </div>
+  <div class="split"><div>
+    <div class="card"><table><thead><tr><th>时间</th><th>作业</th><th>档位</th><th>用量</th><th>金额</th></tr></thead><tbody>
+      ${[["2026-08-12 09:41","分析 · Gate①","免费档","61.3s · 84 条证据","¥0.00 · 计免费额度"],
+         ["2026-08-11 22:07","报告组稿","付费档","4m 12s · 31 段","¥6.80"],
+         ["2026-08-11 15:33","计划书 · 工程交付","付费档","6m 02s · 8 节","¥5.60"],
+         ["2026-08-10 11:20","分析 · Gate①","免费档","58.1s","¥0.00 · 计免费额度"]].map(r=>`<tr>
+        <td class="num small">${r[0]}</td><td>${r[1]}</td>
+        <td><span class="tag ${r[2]==="付费档"?"":"ok"}">${r[2]}</span></td>
+        <td class="small num">${r[3]}</td><td class="num">${r[4]}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="note" style="margin-top:12px">额度余量与是否超额<b>都由后端算</b>，横幅说的和提交时拦的是同一个判定——
+    不会出现「横幅说还有额度、点下去被拒」。</p>
+  </div>
+  <div><div class="card pad"><h3 class="h2">模型档位</h3>
+    <div class="grid" style="gap:8px;margin-top:8px">
+      <div class="card pad" style="box-shadow:none;border-color:var(--accent)">
+        <div class="between"><b>免费档</b><span class="tag ok">当前</span></div>
+        <p class="small muted" style="margin-top:4px">本地模型 · 每月 5 次分析</p></div>
+      <div class="card pad" style="box-shadow:none">
+        <div class="between"><b>付费档 · 按次</b><span class="num small">¥5–8 / 份</span></div>
+        <p class="small muted" style="margin-top:4px">云端强模型 · 报告与计划书更厚</p></div>
+    </div>
+    <p class="small muted" style="margin-top:12px">报告的厚度取决于证据管线捞到多少<b>有据事实</b>。
+    事实少的时候报告会薄——那是正确的接地行为。</p></div>
+  <div class="card pad" style="margin-top:14px"><h3 class="h2">你的数据</h3>
+    <div class="grid small" style="gap:5px;margin-top:6px">
+      <div>· 预算区间与可投入时间默认<b>仅你可见</b>，可逐字段放宽给团队</div>
+      <div>· 可随时导出完整档案 JSON</div>
+      <div>· 删除档案时相关快照一并删除，那份产物从此不可完整复现——
+        但「发生过一次删除」这件事永久可查</div></div></div>
+  </div></div>`};
+
+/* ============================== 路由 ============================== */
+const ORDER = ["plaza","cards","evidence","categories","library","graph","combo","topics",
+  "gate","job","report","quality","intervene","instruct","audience","proposal","vibepack",
+  "export","share","design","locale","billing"];
+
+function buildNav(){
+  const groups = {};
+  ORDER.forEach((k,i)=>{ (groups[S[k].g] ||= []).push([k,i+1]); });
+  $("#nav").innerHTML = Object.entries(groups).map(([g,items])=>`
+    <div class="navgrp"><h4>${g}</h4><div class="nav">
+      ${items.map(([k,i])=>`<button data-nav="${k}"><i>${String(i).padStart(2,"0")}</i>${S[k].n}</button>`).join("")}
+    </div></div>`).join("");
+}
+function go(k){
+  if(!S[k]) return;
+  location.hash = k;
+  $("#view").innerHTML = `<div class="screen">${S[k].render()}</div>`;
+  $("#crumb").innerHTML = `${S[k].g} <b>${S[k].n}</b> <span style="color:var(--ink-4)">· ${
+    String(ORDER.indexOf(k)+1).padStart(2,"0")} / ${ORDER.length}</span>`;
+  document.querySelectorAll("[data-nav]").forEach(b=>
+    b.setAttribute("aria-current", b.dataset.nav===k ? "true" : "false"));
+  window.scrollTo({top:0,behavior:"instant"});
+}
+document.addEventListener("click", e=>{
+  const nav = e.target.closest("[data-nav]"); if(nav) return go(nav.dataset.nav);
+  const jump = e.target.closest("[data-go]"); if(jump) return go(jump.dataset.go);
+
+  const c = e.target.closest("[data-cite]");
+  if(c){
+    const open = c.getAttribute("aria-expanded")==="true";
+    document.querySelectorAll(".citebody").forEach(n=>n.remove());
+    document.querySelectorAll("[data-cite]").forEach(n=>n.setAttribute("aria-expanded","false"));
+    if(open) return;
+    c.setAttribute("aria-expanded","true");
+    const d = CITES[c.dataset.cite]; if(!d) return;
+    const box = document.createElement("div");
+    box.className = "citebody";
+    box.innerHTML = `<b>${c.dataset.cite}</b> · ${esc(d.t)}
+      <q>${esc(d.q)}</q>
+      <div class="row small" style="gap:12px;color:var(--ink-3)">
+        <span class="num">${esc(d.u)}</span><span class="num">${d.d}</span>
+        <span>强度 ${d.s}</span><span>${d.a}</span></div>`;
+    (c.closest("p,td,div,span")||c).after(box);
+    box.scrollIntoView({block:"nearest",behavior:"smooth"});
+    return;
+  }
+  const region = e.target.closest("[data-region]");
+  if(region){
+    document.querySelectorAll("[data-region]").forEach(b=>b.removeAttribute("style"));
+    region.style.cssText="border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)";
+    $("#regionbtn").textContent = region.textContent;
+    return;
+  }
+  if(e.target.id==="playjob") playJob();
+});
+function playJob(){
+  const rows = [...document.querySelectorAll("#steps .step2")];
+  rows.forEach(r=>{ r.className="step2"; r.children[2].textContent="—"; r.children[3].textContent="—"; });
+  let i = 0;
+  const tick = ()=>{
+    if(i>0) { rows[i-1].className="step2 done";
+      rows[i-1].children[2].textContent = JOBSTEPS[i-1][2];
+      rows[i-1].children[3].textContent = JOBSTEPS[i-1][3]; }
+    if(i>=JOBSTEPS.length) return;
+    rows[i].className="step2 run"; i++;
+    setTimeout(tick, 520);
+  };
+  tick();
+}
+buildNav();
+go(location.hash.slice(1) || "plaza");
+window.addEventListener("hashchange", ()=>go(location.hash.slice(1)));
+</script>

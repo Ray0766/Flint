@@ -1,0 +1,158 @@
+{
+ "model": "qwen3.6:35b-a3b",
+ "card_ids": [
+  "card-20260629-c-20260629-000",
+  "card-20260629-c-20260629-001"
+ ],
+ "hypothesis": "把两个不同热点的方法迁移到同一落地场景，做一个可复用工作台",
+ "delta": 0.8466039379146281,
+ "degraded": true,
+ "dropped_conflicts": [
+  [
+   "topic-caliber-1",
+   "topic-caliber-2"
+  ]
+ ],
+ "regen_rounds": 3,
+ "generations": 5,
+ "topics": [
+  {
+   "topic_id": "topic-caliber-1",
+   "one_liner": "面向高校招生办与新能源基建项目组的跨域决策辅助工作台，集成录取数据洞察与组件技术评估模块",
+   "target_user_tag": "B端机构运营者（教育/能源行业）",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "2026年6月29日，高考录取结果公布与钙钛矿组件技术进展同时成为热点，为跨行业数据聚合工具提供了现成的内容入口与时机窗口。",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "志愿填报辅助",
+     "高校分数线分析",
+     "录取概率预测",
+     "考生数据看板"
+    ],
+    "钙钛矿组件": [
+     "光伏技术迭代",
+     "组件效率评估",
+     "新能源基建选型",
+     "钙钛矿产业化进度"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-3",
+   "one_liner": "面向新高考选科与新能源产业交叉领域的决策辅助工作台，整合录取数据洞察与钙钛矿技术趋势分析",
+   "target_user_tag": "高敏信息差群体（新高考考生/家长及新能源行业从业者）",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "2026年6月29日，高考录取结果公布与钙钛矿组件技术进展同时成为公众关注焦点，为跨领域信息整合提供了天然的时间窗口。",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "志愿填报策略",
+     "位次换算",
+     "专业前景分析",
+     "平行志愿规则"
+    ],
+    "钙钛矿组件": [
+     "光伏技术迭代",
+     "转换效率突破",
+     "产业化进程",
+     "下一代电池技术"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-4",
+   "one_liner": "面向高校招生办与新能源基建企业的多源异构数据自动化比对与可视化工作台",
+   "target_user_tag": "B端机构运营人员（非技术背景）",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "2026年6月29日，高考录取结果公布与钙钛矿组件产业动态同时进入高关注度窗口，机构急需跨领域数据整合工具以应对突发信息流。",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "志愿填报辅助",
+     "分数线查询",
+     "录取概率分析",
+     "高校招生数据"
+    ],
+    "钙钛矿组件": [
+     "光伏效率监测",
+     "新能源基建进度",
+     "组件产能数据",
+     "绿色能源投资指标"
+    ]
+   }
+  },
+  {
+   "topic_id": "topic-caliber-5",
+   "one_liner": "面向高校招生办与新能源基建企业的多模态数据清洗与结构化工作台",
+   "target_user_tag": "B2B 机构端（非个人消费者）",
+   "form_factor_tag": "本地 Agent",
+   "why_now_claim": "2026年6月29日，高考录取结果公布与钙钛矿组件产业动态同时进入高关注窗口，机构对异构数据的实时处理需求激增。",
+   "why_now_evidences": [
+    {
+     "event": "高考录取结果相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-000"
+    },
+    {
+     "event": "钙钛矿组件相关话题热度上升",
+     "event_date": "2026-06-29",
+     "citation_id": "card-20260629-c-20260629-001"
+    }
+   ],
+   "speculative": false,
+   "keyword_mapping": {
+    "高考录取结果": [
+     "志愿填报数据清洗",
+     "高校招生统计",
+     "录取名单结构化"
+    ],
+    "钙钛矿组件": [
+     "光伏组件参数提取",
+     "新能源基建数据录入",
+     "技术规格书解析"
+    ]
+   }
+  }
+ ],
+ "cost_usd": 0.0,
+ "schema_misses": 0,
+ "pipeline": "batch",
+ "prompt_name": "topic_gen@2"
+}

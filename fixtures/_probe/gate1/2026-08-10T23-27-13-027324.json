@@ -1,0 +1,19 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-057",
+ "source": "arxiv",
+ "url": "https://export.arxiv.org/api/query?search_query=all:biomedical+engineering&max_results=3",
+ "method": "GET",
+ "requested_at_utc": "2026-08-10T23:27:13.027324+00:00",
+ "status": 200,
+ "headers": {
+  "content-length": "8496",
+  "server": "Google Frontend",
+  "content-type": "application/atom+xml; charset=utf-8",
+  "date": "Mon, 10 Aug 2026 23:27:14 GMT"
+ },
+ "body_head": "<?xml version='1.0' encoding='UTF-8'?>\n<feed xmlns:opensearch=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:arxiv=\"http://arxiv.org/schemas/atom\" xmlns=\"http://www.w3.org/2005/Atom\">\n  <id>https://arxiv.org/api/X0BTMj2/NnX/i2El+sL7LtoDf4k</id>\n  <title>arXiv Query: search_query=all:biomedical OR all:engineering&amp;id_list=&amp;start=0&amp;max_results=3</title>\n  <updated>2026-08-10T23:27:14Z</updated>\n  <link href=\"https://arxiv.org/api/query?search_query=all:biomedical+OR+all:engineering&amp;start=0&amp;max_results=3&amp;id_list=\" type=\"application/atom+xml\"/>\n  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>\n  <opensearch:totalResults>248567</opensearch:totalResults>\n  <opensearch:startIndex>0</opensearch:startIndex>\n  <entry>\n    <id>http://arxiv.org/abs/2510.05433v1</id>\n    <title>Physics-Informed Machine Learning in Biomedical Science and Engineering</title>\n    <updated>2025-10-06T22:52:39Z</updated>\n    <link href=\"https://arxiv.org/abs/2510.05433v1\" rel=\"alternate\" type=\"text/html\"/>\n    <link href=\"https://arxiv.org/pdf/2510.05433v1\" rel=\"related\" type=\"application/pdf\" title=\"pdf\"/>\n    <summary>Physics-informed machine learning (PIML) is emerging as a potentially transformative paradigm for modeling complex biomedical systems by integrating parameterized physical laws with data-driven methods. Here, we review three main classes of PIML frameworks: physics-informed neural networks (PINNs), neural ordinary differential equations (NODEs), and neural operators (NOs), highlighting their growing role in biomedical science and engineering. We begin with PINNs, which embed governing equations into deep learning models and have been successfully applied to biosolid and biofluid mechanics, mechanobiology, and medical imaging among other areas. We then review NODEs, which offer continuous-time modeling, especially suited to dynamic physiological systems, pharmacokinetics, and cell signaling. Finally, we discuss deep NOs as powerful tools for learning mappings between function spaces, enabling efficient simu",
+ "body_bytes": 8496,
+ "spent_before_this": 4,
+ "budget": 40
+}

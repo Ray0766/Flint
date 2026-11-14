@@ -1,0 +1,18 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "gtrends",
+ "url": "https://trends.google.com/trends/trendingsearches/daily/rss?geo=CN",
+ "requested_at_utc": "2026-08-09T15:25:11.866060+00:00",
+ "status": 404,
+ "final_url": "https://trends.google.com/trends/trendingsearches/daily/rss?geo=CN",
+ "redirects": [],
+ "headers": {
+  "content-length": "134",
+  "content-type": "text/html; charset=UTF-8"
+ },
+ "body_head": "<!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>404</title>404 Not Found",
+ "body_bytes": 134,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": []
+}

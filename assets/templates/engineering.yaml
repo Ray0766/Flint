@@ -1,0 +1,58 @@
+template_id: engineering
+locale: zh-CN
+audience: human_reader
+sections:
+- section_id: goal
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 目标是否可验收？
+  charts: []
+- section_id: architecture
+  ratio:
+    share: 0.25
+    unit: words
+    min_words: 750
+    max_words: 2250
+  check_questions:
+  - 选型是否过 registry 校验？
+  charts: []
+- section_id: milestones
+  ratio:
+    share: 0.25
+    unit: words
+    min_words: 750
+    max_words: 2250
+  check_questions:
+  - 里程碑是否有 verify 手段？
+  charts: []
+- section_id: resources
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 算力估算是否引 PriceBook？
+  charts: []
+- section_id: risks
+  ratio:
+    share: 0.15
+    unit: words
+    min_words: 450
+    max_words: 1350
+  check_questions:
+  - 技术风险是否含证伪证据？
+  charts: []
+- section_id: budget
+  ratio:
+    share: 0.1
+    unit: words
+    min_words: 300
+    max_words: 900
+  check_questions:
+  - 预算格是否全部 PriceCell？
+  charts: []

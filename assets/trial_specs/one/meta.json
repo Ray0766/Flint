@@ -1,0 +1,16 @@
+{
+ "name": "one",
+ "case_id": "gold-C-01",
+ "tier": "C_opportunity",
+ "category": "cat-ai",
+ "goal": "方言语音标注平台：面向语音模型训练方的方言语料标注与质检服务",
+ "task_count": 6,
+ "competition_task_ids": [
+  "T-04"
+ ],
+ "gates": {
+  "dag_errors": 0,
+  "registry_violations": 0,
+  "export_allowed": true
+ }
+}

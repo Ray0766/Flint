@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;height:100%}
+body{--bg:#f2ede4;--panel:#faf7f1;--panel2:#ece5d7;--ink:#26221c;--sub:#867b67;--line:#ded4c2;--accent:#d1531f;--accent-soft:#f6ded0;--ok:#4f7d43;--ok-soft:rgba(90,140,75,.14);--bad:#b03a2e;--bad-soft:rgba(176,58,46,.12);--warn:#a3701c;--warn-soft:rgba(180,130,40,.14);--unk:#8f8574;--unk-soft:rgba(140,130,110,.15);--shadow:0 1px 2px rgba(60,45,25,.06),0 10px 28px rgba(60,45,25,.09)}
+body[data-theme="dark"]{--bg:#191612;--panel:#211d17;--panel2:#2c261d;--ink:#ede5d7;--sub:#9a8e7d;--line:#393226;--accent:#e8763a;--accent-soft:#43301f;--ok:#7fae72;--ok-soft:rgba(127,174,114,.16);--bad:#d4695e;--bad-soft:rgba(212,105,94,.16);--warn:#c99a4a;--warn-soft:rgba(200,155,75,.16);--unk:#93887a;--unk-soft:rgba(147,136,122,.16);--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.4)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+button,select,input{font-family:inherit}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes flintpulse{0%,100%{opacity:1}50%{opacity:.35}}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}::-webkit-scrollbar-track{background:transparent}
+</style>
+</helmet>
+<div style="height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans','PingFang SC','Microsoft YaHei',sans-serif; overflow: hidden;">
+  <div style="display: flex; align-items: center; gap: 14px; height: 56px; padding: 0 18px; background: var(--panel); border-bottom: 1px solid var(--line); flex-shrink: 0;">
+    <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+      <div style="width: 20px; height: 20px; background: var(--accent); clip-path: polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%);"></div>
+      <div style="font-family: 'Smiley Sans','得意黑','IBM Plex Sans',sans-serif; font-size: 19px; font-weight: 700; letter-spacing: 0.5px;">燧石 <span style="color: var(--accent);">Flint</span></div>
+    </div>
+    <div style="width: 1px; height: 18px; background: var(--line);"></div>
+    <div style="display: flex; gap: 4px;">
+      <sc-for list="{{ navBtns }}" as="nb" hint-placeholder-count="3">
+        <button onClick="{{ nb.onClick }}" style="{{ nb.style }}">{{ nb.label }}</button>
+      </sc-for>
+    </div>
+    <div style="flex: 1;"></div>
+    <div style="font-size: 11.5px; color: var(--sub); white-space: nowrap;">2026-08-12 · run #214 · 零干预 37d</div>
+    <select value="{{ region }}" onChange="{{ onRegion }}" style="padding: 6px 8px; font-size: 12px; border: 1px solid var(--line); background: var(--panel2); color: var(--ink); border-radius: 8px; cursor: pointer;">
+      <option value="CN">CN 中国</option><option value="US">US 美国</option><option value="JP">JP 日本</option><option value="GB">GB 英国</option>
+    </select>
+    <button onClick="{{ toggleTheme }}" style="padding: 7px 13px; font-size: 12.5px; border: 1px solid var(--line); background: var(--panel2); color: var(--ink); border-radius: 8px; cursor: pointer; white-space: nowrap; flex-shrink: 0;">{{ themeBtnLabel }}</button>
+  </div>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 22px 40px;">
+    <sc-if value="{{ isHot }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="热点广场" style="display: flex; flex-direction: column; gap: 14px; max-width: 1240px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <sc-for list="{{ hotTabs }}" as="ht" hint-placeholder-count="2">
+            <button onClick="{{ ht.onClick }}" style="{{ ht.style }}">{{ ht.label }}</button>
+          </sc-for>
+          <div style="flex: 1;"></div>
+          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            <div style="font-size: 10.5px; font-weight: 700; color: #3f7286; background: rgba(63,114,134,.14); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">gtrends 214</div>
+            <div style="font-size: 10.5px; font-weight: 700; color: #b34f2c; background: rgba(179,79,44,.14); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">weibo 50</div>
+            <div style="font-size: 10.5px; font-weight: 700; color: #5a5f6e; background: rgba(90,95,110,.14); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">ghtrend 96</div>
+            <sc-if value="{{ arxivDown }}" hint-placeholder-val="{{ true }}"><div title="单源不可用时该格明示，不用别的源顶替" style="font-size: 10.5px; font-weight: 700; color: var(--bad); background: var(--bad-soft); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">今日缺 arxiv 数据 · 09:00 重试</div></sc-if>
+            <sc-if value="{{ arxivUp }}" hint-placeholder-val="{{ false }}"><div style="font-size: 10.5px; font-weight: 700; color: #75823f; background: rgba(117,130,63,.16); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">arxiv 143</div></sc-if>
+          </div>
+          <div style="display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;">
+            <sc-for list="{{ normBtns }}" as="nm" hint-placeholder-count="2"><button onClick="{{ nm.onClick }}" style="{{ nm.style }}">{{ nm.label }}</button></sc-for>
+          </div>
+        </div>
+        <sc-if value="{{ hotList }}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+            <sc-for list="{{ clusters }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.open }}" style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 15px; display: flex; flex-direction: column; gap: 10px; cursor: pointer;" style-hover="border-color: var(--accent);">
+                <div style="display: flex; align-items: center; gap: 7px; min-width: 0;">
+                  <div style="font-size: 13.5px; font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ c.name }}</div>
+                  <div style="{{ c.vStyle }}">{{ c.vLabel }}</div>
+                </div>
+                <div style="display: flex; align-items: flex-end; gap: 3px; height: 32px;">
+                  <sc-for list="{{ c.bars }}" as="b" hint-placeholder-count="9"><div style="{{ b.style }}"></div></sc-for>
+                </div>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                  <sc-for list="{{ c.srcs }}" as="s" hint-placeholder-count="4"><div style="{{ s.style }}">{{ s.txt }}</div></sc-for>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--sub); border-top: 1px solid var(--line); padding-top: 9px;">
+                  <span style="{{ c.sigStyle }}">{{ c.sigLabel }}</span>
+                  <span>{{ c.id }} · {{ c.cat }}</span>
+                  <div style="flex: 1;"></div>
+                  <span title="综合热度为派生值">综合 <b style="color: var(--ink);">{{ c.score }}</b> ◇</span>
+                  <button onClick="{{ c.addCombo }}" title="组合 = 2~5 张证据卡 + 关联假设" style="border: 1px dashed var(--accent); background: transparent; color: var(--accent); font-size: 10.5px; font-weight: 600; padding: 2px 9px; border-radius: 10px; cursor: pointer; white-space: nowrap;" style-hover="background: var(--accent-soft);">+ 组合</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; gap: 20px; font-size: 11px; color: var(--sub); align-items: center; flex-wrap: wrap;">
+            <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 16px; height: 5px; border-radius: 3px; background-image: repeating-linear-gradient(45deg, var(--line) 0 3px, transparent 3px 6px);"></span>本版无该区内容 / 当日无数据 / 读取失败 三态分别标注</span>
+            <span>◇ 综合热度为派生值 · 双口径同记原始值与源内 90 天分位</span>
+            <span>点卡片看证据 · 「+ 组合」凑 2~5 张生成主题</span>
+          </div>
+          <div style="position: sticky; bottom: 0; background: var(--panel); border: 1.5px dashed {{ comboBorder }}; border-radius: 12px; box-shadow: var(--shadow); padding: 10px 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: 1px; white-space: nowrap;">组合 COMBO</span>
+            <sc-if value="{{ comboEmpty }}" hint-placeholder-val="{{ true }}"><span style="font-size: 11.5px; color: var(--sub);">从上方卡片「+ 组合」加入 2~5 张证据卡</span></sc-if>
+            <sc-for list="{{ comboView }}" as="cb" hint-placeholder-count="0">
+              <span style="display: flex; align-items: center; gap: 4px; background: var(--accent-soft); color: var(--accent); font-size: 11.5px; font-weight: 600; padding: 3px 5px 3px 10px; border-radius: 12px; white-space: nowrap;">{{ cb.label }}<button onClick="{{ cb.onRemove }}" style="border: none; background: none; color: var(--accent); cursor: pointer; font-size: 13px; padding: 0 3px; line-height: 1;">×</button></span>
+            </sc-for>
+            <input value="{{ hyp }}" onChange="{{ onHyp }}" placeholder="关联假设（必填）：一句话人类判断，如「事件驱动的采购窗口存在」" style="flex: 1; min-width: 220px; padding: 7px 10px; font-size: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel2); color: var(--ink); outline: none;">
+            <span style="font-size: 11px; color: var(--sub); white-space: nowrap;">{{ comboMsg }}</span>
+            <button onClick="{{ comboGo }}" style="{{ comboBtnStyle }}">生成主题 ×5~8 →</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hotFav }}" hint-placeholder-val="{{ false }}">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+            <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="font-size: 10.5px; font-weight: 700; color: var(--sub); border: 1px solid var(--line); padding: 2px 8px; border-radius: 9px;">热点快照</div>
+                <div style="flex: 1;"></div>
+                <div style="font-size: 10.5px; font-weight: 700; color: var(--warn); background: var(--warn-soft); padding: 2px 8px; border-radius: 9px;">有更新</div>
+              </div>
+              <div style="font-size: 13.5px; font-weight: 600;">方言语音标注平台</div>
+              <div style="font-size: 11px; color: var(--sub); line-height: 1.6;">快照 2026-08-02 · 含证据 4 条 · 判定口径来自后端<br>更新：综合 66 → 78 · 新增证据 1 条</div>
+              <div style="display: flex; gap: 10px; font-size: 12px; border-top: 1px solid var(--line); padding-top: 8px;"><a onClick="{{ openEvidence }}" style="cursor: pointer;">查看快照</a><a href="#">刷新到最新</a></div>
+            </div>
+            <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="font-size: 10.5px; font-weight: 700; color: var(--sub); border: 1px solid var(--line); padding: 2px 8px; border-radius: 9px;">主题快照</div>
+                <div style="flex: 1;"></div>
+                <div style="font-size: 10.5px; color: var(--sub);">无更新</div>
+              </div>
+              <div style="font-size: 13.5px; font-weight: 600;">低资源方言数据集众包 + 质检</div>
+              <div style="font-size: 11px; color: var(--sub); line-height: 1.6;">快照 2026-08-10 · 判定 C 机会 · refute 0.72<br>标签：数据团队 · 数据服务</div>
+              <div style="display: flex; gap: 10px; font-size: 12px; border-top: 1px solid var(--line); padding-top: 8px;"><a onClick="{{ goGate }}" style="cursor: pointer;">进入判定台</a></div>
+            </div>
+            <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="font-size: 10.5px; font-weight: 700; color: var(--sub); border: 1px solid var(--line); padding: 2px 8px; border-radius: 9px;">交付物</div>
+                <div style="flex: 1;"></div>
+                <div style="font-size: 10.5px; color: var(--sub);">facts v3</div>
+              </div>
+              <div style="font-size: 13.5px; font-weight: 600;">计划书 · 方言语音标注平台</div>
+              <div style="font-size: 11px; color: var(--sub); line-height: 1.6;">快照 2026-08-12 · 模板 generic · 7 章<br>1 块复审阻断导出（在设计台处理）</div>
+              <div style="display: flex; gap: 10px; font-size: 12px; border-top: 1px solid var(--line); padding-top: 8px;"><a onClick="{{ goStudio }}" style="cursor: pointer;">在设计台打开</a></div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isJudge }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="判定台" style="display: flex; flex-direction: column; gap: 14px; max-width: 1240px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <sc-for list="{{ judgeTabs }}" as="jt" hint-placeholder-count="3">
+            <button onClick="{{ jt.onClick }}" style="{{ jt.style }}">{{ jt.label }}</button>
+          </sc-for>
+          <div style="flex: 1;"></div>
+          <div style="font-size: 11.5px; color: var(--sub); max-width: 340px; text-align: right;">种子：热点 c1 · 下游只认统一种子对象</div>
+        </div>
+        <sc-if value="{{ jTopics }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size: 11.5px; color: var(--sub);">本轮生成 5 个候选（标签至少一维不同且语义距离达标）· 主题以一句话为标识 · why now 强制挂事件 + 日期 + 引用</div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <sc-for list="{{ topics }}" as="t" hint-placeholder-count="5">
+              <div style="{{ t.cardStyle }}">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                  <div style="font-size: 14px; font-weight: 600; line-height: 1.5; flex: 1;">{{ t.s }}</div>
+                  <div style="{{ t.vStyle }}">{{ t.gate }}</div>
+                </div>
+                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                  <span style="font-size: 10.5px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 10px; color: var(--sub); white-space: nowrap;">{{ t.user }}</span>
+                  <span style="font-size: 10.5px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 10px; color: var(--sub); white-space: nowrap;">{{ t.form }}</span>
+                  <span style="font-size: 11px; color: var(--sub);">竞争 {{ t.compete }} · {{ t.resource }} · 窗口 {{ t.window }} · 证据中位 {{ t.ev }}</span>
+                  <sc-if value="{{ t.picked }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 10px; white-space: nowrap;">已选定 · 填了「为何选此弃彼」</span></sc-if>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: baseline;">
+                  <span style="font-size: 10.5px; color: var(--sub); flex-shrink: 0; white-space: nowrap;">why now</span>
+                  <span style="{{ t.whyStyle }}">{{ t.why }} <a href="#">{{ t.ref }}</a></span>
+                  <sc-if value="{{ t.spec }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10px; font-weight: 700; padding: 1px 7px; background: var(--warn-soft); color: var(--warn); border-radius: 9px;">推测 · 降权</span></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ jGate }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 14px; background: var(--ok-soft); border: 1px solid var(--ok); border-radius: 12px; padding: 14px 20px;">
+            <span style="font-size: 26px; font-weight: 700; color: var(--ok);">C</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 700;">机会 · 低资源方言数据集众包 + 质检</div>
+              <div style="font-size: 11.5px; color: var(--sub); margin-top: 2px;">顺序判定 A &gt; B &gt; C &gt; D · 全部满足档位：仅 C · 耗时 4m12s · 成本 ¥0.86 · 结构化重试0</div>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 1.5fr); gap: 12px; align-items: start;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <sc-for list="{{ gates }}" as="g" hint-placeholder-count="4">
+                <div style="{{ g.rowStyle }}">
+                  <div style="display: flex; align-items: center; gap: 9px;">
+                    <span style="{{ g.kStyle }}">{{ g.k }}</span>
+                    <span style="font-weight: 600; font-size: 13px;">{{ g.name }}</span>
+                    <div style="flex: 1;"></div>
+                    <span style="font-size: 11.5px; color: var(--sub);">{{ g.hit }}</span>
+                  </div>
+                  <div style="font-size: 11.5px; color: var(--sub); line-height: 1.65; margin-top: 5px;">{{ g.reason }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 13px 15px; display: grid; grid-template-columns: 1.2fr 62px 1.3fr 1.1fr 0.9fr 62px; gap: 7px 10px; font-size: 12px;">
+                <span style="font-size: 10.5px; color: var(--sub);">竞品</span><span style="font-size: 10.5px; color: var(--sub);">强度</span><span style="font-size: 10.5px; color: var(--sub);">信号（四占二为强）</span><span style="font-size: 10.5px; color: var(--sub);">定价 · 置信</span><span style="font-size: 10.5px; color: var(--sub);">同目标用户</span><span style="font-size: 10.5px; color: var(--sub);">出处</span>
+                <sc-for list="{{ comps }}" as="cp" hint-placeholder-count="3">
+                  <span style="border-top: 1px solid var(--line); padding-top: 7px; font-weight: 600;">{{ cp.name }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 7px;">{{ cp.strength }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 7px; color: var(--sub);">{{ cp.signals }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 7px;">{{ cp.price }} <span style="color: var(--sub); font-size: 10.5px;">{{ cp.conf }}</span></span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 7px;">{{ cp.sameUser }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 7px;"><a href="#">{{ cp.src }}</a></span>
+                </sc-for>
+              </div>
+              <div style="font-size: 11px; color: var(--sub); line-height: 1.7;">覆盖达标：计划 query 12/12 执行 · 边际新竞品 0.4 &lt; 1 · unknown 强度竞品会阻断 C（本次无）· 低置信定价显示「定价待确认」+ 原文链接 · 检索快照全量留存可回放</div>
+              <button onClick="{{ goJobs }}" style="align-self: flex-start; padding: 8px 18px; font-size: 12.5px; border: none; background: var(--accent); color: #fff; font-weight: 600; border-radius: 9px; cursor: pointer;">确认 Gate① · 生成深度报告 →</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ jJobs }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size: 11.5px; color: var(--sub);">作业 #J-2418 · proposal（audience=ai_executor）· SSE 实时推送 · 断线 Last-Event-ID 续传 · 受限网络回退轮询</div>
+          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
+            <sc-for list="{{ steps }}" as="sp" hint-placeholder-count="6">
+              <div style="{{ sp.rowStyle }}">
+                <span style="{{ sp.dotStyle }}"></span>
+                <div style="font-size: 12.5px; font-weight: 600; margin-top: 7px;">{{ sp.name }}</div>
+                <div style="font-size: 10.5px; color: var(--sub); margin-top: 2px;">{{ sp.meta }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 13px 15px;">
+            <div style="font-size: 10.5px; font-weight: 700; color: var(--sub); letter-spacing: 1px; margin-bottom: 8px;">步骤日志</div>
+            <div style="display: flex; flex-direction: column; gap: 5px; font-size: 12px; line-height: 1.6; color: var(--ink);">
+              <sc-for list="{{ logs }}" as="lg" hint-placeholder-count="6"><div>{{ lg.t }}</div></sc-for>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px 16px; flex-wrap: wrap;">
+            <div style="flex: 1; max-width: 420px; min-width: 240px;">
+              <div style="display: flex; justify-content: space-between; gap: 10px; font-size: 11.5px; margin-bottom: 4px;"><span style="color: var(--sub); white-space: nowrap;">成本累计（封顶自动降级）</span><span style="white-space: nowrap;">¥1.24 / ¥5.00</span></div>
+              <div style="height: 6px; background: var(--panel2); border-radius: 3px;"><div style="width: 25%; height: 6px; background: var(--accent); border-radius: 3px;"></div></div>
+            </div>
+            <button style="padding: 7px 15px; font-size: 12px; border: 1px solid var(--bad); background: transparent; color: var(--bad); border-radius: 8px; cursor: pointer; white-space: nowrap;">取消作业（步骤边界生效）</button>
+          </div>
+          <div style="font-size: 11px; color: var(--sub);">已执行 query 与已完成章节保留 · JobStep checkpoint 断点续跑 · 单源失败不阻断 → 终态 done-with-degradation</div>
+        </sc-if>
+        <sc-if value="{{ jAud }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="受众选择" style="display: flex; flex-direction: column; gap: 14px; max-width: 860px; margin: 12px auto 0; width: 100%;">
+            <div style="text-align: center;">
+              <div style="font-size: 18px; font-weight: 700;">这份计划书给谁？</div>
+              <div style="font-size: 11.5px; color: var(--sub); margin-top: 6px;">深度报告 R-107 已完成 · facts ledger v3 已冻结 · 报告 → 计划书须强制单选受众（无默认项，不选不能提交）</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div onClick="{{ pickHuman }}" style="{{ audHumanStyle }}">
+                <div style="display: flex; align-items: center; gap: 8px;"><span style="{{ audHumanDot }}"></span><span style="font-size: 15px; font-weight: 700;">给人看</span><span style="font-size: 10px; color: var(--sub); background: var(--panel2); padding: 2px 8px; border-radius: 9px;">human_reader</span></div>
+                <div style="font-size: 12px; color: var(--sub); line-height: 1.8;">五套模板（通用 / 毕设 / 创业 BP / 工程交付 / 科研基金）· 字数配比（words）· 说服怀疑者：关键信息重复三次 · 评审会 / 导师验收</div>
+              </div>
+              <div onClick="{{ pickAi }}" style="{{ audAiStyle }}">
+                <div style="display: flex; align-items: center; gap: 8px;"><span style="{{ audAiDot }}"></span><span style="font-size: 15px; font-weight: 700;">给 AI 执行</span><span style="font-size: 10px; color: var(--sub); background: var(--panel2); padding: 2px 8px; border-radius: 9px;">ai_executor</span></div>
+                <div style="font-size: 12px; color: var(--sub); line-height: 1.8;">vibe_pack 单一执行包（计划书 + spec 合并）· token 预算 · MUST / SHOULD / NEVER 规范力 · verify_cmd 机器验收 · cycle 计时</div>
+              </div>
+            </div>
+            <sc-if value="{{ audAiPicked }}" hint-placeholder-val="{{ false }}">
+              <div style="background: var(--warn-soft); border: 1px solid var(--warn); border-radius: 10px; padding: 10px 14px; font-size: 12px; color: var(--warn); line-height: 1.7;">给 AI 的文档防「乱信」不防「不信」：同一信息只出现一次并被引用；无机器验收的任务不允许存在；时间单位是 cycle 不是人日。</div>
+            </sc-if>
+            <div style="display: flex; align-items: center; gap: 12px; justify-content: center; flex-wrap: wrap;">
+              <button onClick="{{ audSubmit }}" style="{{ audBtnStyle }}">{{ audBtnLabel }}</button>
+              <span style="font-size: 11px; color: var(--sub);">任一受众生成后可再生成另一版本 · 钉同一 ledger 版本 · 两版互链（sibling_deliverable_id）</span>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ jVibe }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="vibe_pack 查看器" style="display: flex; flex-direction: column; gap: 12px; font-family: ui-monospace, Menlo, Consolas, monospace;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 14px; font-weight: 700; font-family: 'IBM Plex Sans','PingFang SC',sans-serif;">vibe_pack · 方言语音标注平台</span>
+              <span style="font-size: 10px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 9px; white-space: nowrap;">audience=ai_executor</span>
+              <span style="font-size: 10.5px; color: var(--sub); white-space: nowrap;">2.0-vibe · 41 任务 · Σ47 cycles · 关键路径 18 · review_gate ×10 · 钉 ledger v3</span>
+              <div style="flex: 1;"></div>
+              <a onClick="{{ goStudio }}" style="font-size: 11.5px; cursor: pointer; font-family: 'IBM Plex Sans',sans-serif;">↔ 人类版（设计台）</a>
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; font-family: 'IBM Plex Sans','PingFang SC',sans-serif;">
+              <sc-for list="{{ vpTabs }}" as="vt" hint-placeholder-count="3"><button onClick="{{ vt.onClick }}" style="{{ vt.style }}">{{ vt.label }}</button></sc-for>
+            </div>
+            <sc-if value="{{ vpSpec }}" hint-placeholder-val="{{ false }}">
+              <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px; font-size: 12px; line-height: 2;">
+                <div style="color: var(--sub);">## S1 Charter（≤1 屏）</div>
+                <div>目标：低资源方言数据集众包 + 质检的最小可售闭环。非目标：自建 ASR 模型、通用标注平台。</div>
+                <div style="color: var(--sub); margin-top: 8px;">## S2 Invariants + 禁用词表</div>
+                <div><span style="font-size: 10px; font-weight: 700; padding: 1px 7px; background: var(--bad-soft); color: var(--bad); border-radius: 3px;">MUST</span> 每条入库语料带 speaker 授权记录（fact F-201 挂载）</div>
+                <div><span style="font-size: 10px; font-weight: 700; padding: 1px 7px; background: var(--bad-soft); color: var(--bad); border-radius: 3px;">NEVER</span> 质检抽样率 &lt; 5% 时发布数据包</div>
+                <div><span style="font-size: 10px; font-weight: 700; padding: 1px 7px; background: var(--warn-soft); color: var(--warn); border-radius: 3px;">SHOULD</span> 双盲抽检分歧率进周报</div>
+                <div style="color: var(--sub);">禁用词表：「适当 / 合理 / 等等 / 大概」出现即不通过；示例区显式标注 non-normative。</div>
+                <div style="color: var(--sub); margin-top: 8px;">## S3 Contracts · ## S4 Decision Log</div>
+                <div>models.py / protocols.py 逐字节副本入包（contracts/）；已决不重开，执行中遇 Open Question → 必须停（S9 escalation）。</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ vpTasks }}" hint-placeholder-val="{{ false }}">
+              <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 13px 15px; display: grid; grid-template-columns: 64px minmax(0, 1.6fr) 52px 58px minmax(0, 2fr) 62px; gap: 7px 10px; font-size: 11.5px;">
+                <span style="font-size: 10px; color: var(--sub);">task_id</span><span style="font-size: 10px; color: var(--sub);">title</span><span style="font-size: 10px; color: var(--sub);">cycles</span><span style="font-size: 10px; color: var(--sub);">oneshot</span><span style="font-size: 10px; color: var(--sub);">verify_cmd</span><span style="font-size: 10px; color: var(--sub);">review</span>
+                <sc-for list="{{ vpTaskRows }}" as="tk" hint-placeholder-count="5">
+                  <span style="border-top: 1px solid var(--line); padding-top: 6px; color: var(--accent);">{{ tk.id }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 6px; font-family: 'IBM Plex Sans','PingFang SC',sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ tk.title }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 6px;">{{ tk.cycles }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 6px;">{{ tk.oneshot }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 6px; color: var(--sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ tk.verify }}</span>
+                  <span style="border-top: 1px solid var(--line); padding-top: 6px;">{{ tk.review }}</span>
+                </sc-for>
+              </div>
+              <div style="font-size: 11px; color: var(--sub); font-family: 'IBM Plex Sans','PingFang SC',sans-serif;">tasks.json 表格化只读渲染 · 共 41 任务（示例前 5）· 不进编辑器——干预路径 = dispute / 章级 regenerate（逐字改 AI 文档 = 制造漂移）· estimate_cycles ≤ 2 超则拆</div>
+            </sc-if>
+            <sc-if value="{{ vpDigest }}" hint-placeholder-val="{{ false }}">
+              <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px; font-size: 12.5px; line-height: 2; font-family: 'IBM Plex Sans','PingFang SC',sans-serif;">
+                <div style="font-weight: 700; margin-bottom: 4px;">Human Digest · 监工视图（1 页 · 不进 AI 上下文、不计预算）</div>
+                <div>本周期：M1-001 ~ M1-005（脚手架 → compose → 迁移 ×2 → 配置）· oneshot 5/5 · 关键路径上 0 阻塞</div>
+                <div>需人工确认节点：里程碑出口 · 不可逆操作（部署 / 删数据 / 付费接口）</div>
+                <div>双 agent 流水线：执行 agent → verify_cmd 机器审 → review_gate 任务过审核 agent 才解锁下游</div>
+              </div>
+            </sc-if>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-family: 'IBM Plex Sans','PingFang SC',sans-serif;">
+              <span style="font-size: 10.5px; font-weight: 700; color: var(--ok); background: var(--ok-soft); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">verify 覆盖率 100%</span>
+              <span style="font-size: 10.5px; font-weight: 700; color: var(--ok); background: var(--ok-soft); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">DAG 无环 ✓</span>
+              <span style="font-size: 10.5px; font-weight: 700; color: var(--ok); background: var(--ok-soft); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">registry 通过率 100%</span>
+              <span style="font-size: 10.5px; font-weight: 700; color: var(--unk); background: var(--unk-soft); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">oneshot 率 待实测</span>
+              <span style="font-size: 10.5px; font-weight: 700; color: var(--ok); background: var(--ok-soft); padding: 3px 9px; border-radius: 10px; white-space: nowrap;">context 超预算 0</span>
+              <div style="flex: 1;"></div>
+              <button style="padding: 8px 18px; font-size: 12.5px; border: none; background: var(--accent); color: #fff; font-weight: 600; border-radius: 9px; cursor: pointer; white-space: nowrap;">下载执行包（?fmt=pack）</button>
+            </div>
+            <div style="font-size: 11px; color: var(--sub); font-family: 'IBM Plex Sans','PingFang SC',sans-serif;">zip = CLAUDE.md 形态渲染 + tasks.json + contracts/ 副本 · 门禁：blocking review 清零 + DagValidator 通过 + verify 覆盖率 100% · RegistryValidator 不可用 → 「依赖校验暂不可用，执行包暂缓导出」</div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ isStudio }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; top: 56px; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--bg);">
+      <dc-import name="设计台" hint-size="100%,100%" style="width: 100%; height: 100%;"></dc-import>
+    </div>
+    <button onClick="{{ goHot }}" style="position: fixed; right: 14px; bottom: 14px; z-index: 60; padding: 8px 16px; font-size: 12.5px; font-weight: 600; border: 1px solid var(--line); background: var(--ink); color: var(--bg); border-radius: 20px; cursor: pointer; box-shadow: var(--shadow); white-space: nowrap;">← 返回 Flint</button>
+  </sc-if>
+  <sc-if value="{{ drawerOn }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; background: rgba(25,20,14,0.32); backdrop-filter: blur(2px); z-index: 40;" onClick="{{ closeDrawer }}"></div>
+    <div data-screen-label="证据卡面板" style="position: fixed; top: 0; right: 0; width: 450px; height: 100vh; background: var(--panel); border-left: 1px solid var(--line); box-shadow: var(--shadow); padding: 20px 22px 36px; overflow-y: auto; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; z-index: 50;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+        <div>
+          <div style="font-size: 17px; font-weight: 700; line-height: 1.4;">{{ sel.name }}</div>
+          <div style="font-size: 11.5px; color: var(--sub); margin-top: 4px;">{{ sel.id }} · {{ sel.cat }} · 稳定 {{ sel.days }} 天 · <span style="{{ sel.sigInline }}">{{ sel.sigLabel }}</span></div>
+        </div>
+        <button onClick="{{ closeDrawer }}" style="border: none; background: none; color: var(--sub); font-size: 17px; cursor: pointer; line-height: 1; padding: 2px;">✕</button>
+      </div>
+      <div style="background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; font-size: 11.5px; color: var(--sub); line-height: 1.65;">簇血缘：{{ sel.lineage }} · 继承/分裂/合并/休眠/回热 永不物理删除 · <a href="#">血缘图 →</a></div>
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 12.5px; font-weight: 700;">分源热度</div>
+          <div style="display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;">
+            <sc-for list="{{ normBtns }}" as="nb2" hint-placeholder-count="2"><button onClick="{{ nb2.onClick }}" style="{{ nb2.style }}">{{ nb2.label }}</button></sc-for>
+          </div>
+        </div>
+        <sc-for list="{{ sel.srcRows }}" as="r" hint-placeholder-count="4">
+          <div style="display: grid; grid-template-columns: 60px 1fr 58px; gap: 10px; align-items: center; font-size: 11.5px;">
+            <span style="color: var(--sub);">{{ r.n }}</span>
+            <div style="{{ r.trackStyle }}"><div style="{{ r.barStyle }}"></div></div>
+            <span style="text-align: right;">{{ r.v }}</span>
+          </div>
+        </sc-for>
+        <div style="font-size: 10.5px; color: var(--sub);">双口径：每源每日同记原始值与源内 90 天分位 · 曲线可叠加</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="font-size: 12.5px; font-weight: 700;">证据 · 检索类</div>
+        <div style="border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: var(--panel);">
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="font-size: 12.5px; font-weight: 500; line-height: 1.5; flex: 1;">#方言保护# 话题阅读 1.2 亿次</span>
+            <span style="font-size: 10.5px; font-weight: 700; padding: 2px 8px; background: var(--ok-soft); color: var(--ok); border-radius: 9px; white-space: nowrap;">强度 B+</span>
+          </div>
+          <div style="font-size: 10.5px; color: var(--sub); margin-top: 5px;"><span style="color: #b34f2c;">weibo</span> · 2026-08-10 · 时效 2 天 · <a href="#">原文 ↗</a> · <a href="#">检索快照</a></div>
+        </div>
+        <div style="border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: var(--panel);">
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="font-size: 12.5px; font-weight: 500; line-height: 1.5; flex: 1;">arXiv 低资源语音标注综述（引用分位 P88 · 带代码）</span>
+            <span style="font-size: 10.5px; font-weight: 700; padding: 2px 8px; background: var(--ok-soft); color: var(--ok); border-radius: 9px; white-space: nowrap;">强度 A-</span>
+          </div>
+          <div style="font-size: 10.5px; color: var(--sub); margin-top: 5px;"><span style="color: #75823f;">arxiv</span> · 2026-07 · 白名单分类命中 · <a href="#">原文 ↗</a> · <a href="#">检索快照</a></div>
+        </div>
+        <div style="font-size: 12.5px; font-weight: 700; margin-top: 4px;">证据 · 用户提供类</div>
+        <div style="border: 1px dashed var(--line); border-radius: 10px; padding: 11px 13px;">
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="font-size: 12.5px; font-weight: 500; line-height: 1.5; flex: 1;">车载语音客户询价记录 · 2 家</span>
+            <span style="font-size: 10.5px; font-weight: 700; padding: 2px 8px; background: var(--warn-soft); color: var(--warn); border-radius: 9px; white-space: nowrap;">可核验 中 · 私有</span>
+          </div>
+          <div style="font-size: 10.5px; color: var(--sub); margin-top: 5px;">上传 2026-07-30 · 一手性 高 · 导出时强制标注不可核验</div>
+        </div>
+        <div style="font-size: 10.5px; color: var(--sub);">两类证据分区展示、各打各的徽标，跨类不比分。</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 2px;">
+        <button style="flex: 1; padding: 9px 0; background: var(--accent); color: #fff; border: none; border-radius: 9px; font-size: 12.5px; font-weight: 600; cursor: pointer;">收藏（存快照）</button>
+        <button onClick="{{ goStudio }}" style="flex: 1; padding: 9px 0; border: 1px solid var(--line); background: var(--panel2); color: var(--ink); border-radius: 9px; font-size: 12.5px; cursor: pointer;" style-hover="border-color: var(--accent); color: var(--accent);">发往设计台素材 →</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;system&quot;,&quot;options&quot;:[&quot;system&quot;,&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;偏好&quot;},&quot;arxivDown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;演示状态&quot;}}">
+const V = {
+  A: ['A 不可行', 'var(--bad)', 'var(--bad-soft)'],
+  B: ['B 红海', 'var(--warn)', 'var(--warn-soft)'],
+  C: ['C 机会', 'var(--ok)', 'var(--ok-soft)'],
+  D: ['D 证据不足', 'var(--unk)', 'var(--unk-soft)'],
+};
+const SIG = {
+  up: ['↗ 升温', 'var(--warn)', 'var(--warn-soft)'],
+  re: ['↻ 回热', 'var(--accent)', 'var(--accent-soft)'],
+  nw: ['✦ 新出现', 'var(--ok)', 'var(--ok-soft)'],
+};
+const SRC = {
+  gtrends: ['#3f7286', 'rgba(63,114,134,.14)'], weibo: ['#b34f2c', 'rgba(179,79,44,.14)'],
+  ghtrend: ['#5a5f6e', 'rgba(90,95,110,.14)'], arxiv: ['#75823f', 'rgba(117,130,63,.16)'],
+};
+const CLUSTERS = [
+  { id: 'c1', name: '方言语音标注平台', cat: '语音数据', v: 'C', sig: 'up', days: 42, lineage: '继承自「低资源语音」', score: 78, spark: [28,32,38,42,50,58,66,78,92], src: [['weibo',71,'1.2亿'],['gtrends',58,'21.4k'],['arxiv',63,'37 篇'],['ghtrend',44,'310★']] },
+  { id: 'c2', name: '会议纪要摘要工具', cat: '办公 AI', v: 'B', sig: 'up', days: 121, lineage: '合并自 2 簇', score: 84, spark: [40,44,50,56,60,66,72,80,90], src: [['gtrends',84,'48.2k'],['ghtrend',77,'1.4k★'],['weibo',31,'9.5万'],['arxiv',26,'6 篇']] },
+  { id: 'c3', name: '脑机接口写作助手', cat: '人机接口', v: 'A', sig: 'nw', days: 3, lineage: '今日入场 · 白名单 + 带代码', score: 69, spark: [4,4,4,4,6,10,24,52,88], src: [['weibo',80,'86万'],['arxiv',63,'12 篇'],['gtrends',37,'8.8k'],['ghtrend',null,'—']] },
+  { id: 'c4', name: '社区虚拟电厂聚合', cat: '能源', v: 'D', sig: 're', days: 210, lineage: '休眠 74 天后回热', score: 41, spark: [55,38,22,12,8,10,18,30,42], src: [['gtrends',41,'6.1k'],['arxiv',22,'3 篇'],['weibo',null,'—'],['ghtrend',null,'—']] },
+  { id: 'c5', name: '粤语 ASR 预标注工具链', cat: '语音数据', v: 'C', sig: 'nw', days: 1, lineage: '今日新建 · 近邻去重合并 2 候选', score: 52, spark: [4,4,4,4,4,4,8,28,64], src: [['ghtrend',66,'520★'],['arxiv',48,'9 篇'],['gtrends',15,'2.3k'],['weibo',null,'—']] },
+  { id: 'c6', name: '众包数据质检平台', cat: '数据服务', v: 'B', sig: 're', days: 88, lineage: '分裂自「数据标注工具」', score: 61, spark: [46,36,26,18,16,22,34,48,60], src: [['gtrends',52,'11.7k'],['ghtrend',61,'760★'],['weibo',18,'2.1万'],['arxiv',29,'5 篇']] },
+];
+const TOPICS = [
+  { s: '低资源方言数据集众包 + 质检', user: '数据团队', form: '数据服务', why: '#方言保护# 阅读 1.2 亿（2026-08-10）', ref: '[E-01]', spec: false, gate: 'C', compete: '中', resource: '2 人 · 3 个月', window: '6-12 月', ev: 'B+', picked: true },
+  { s: '车载语音方言包订阅服务', user: '车企语音团队', form: '数据订阅', why: '某车企发布方言语音助手（2026-08-05）', ref: '[E-05]', spec: false, gate: 'C', compete: '中', resource: '3 人 · 4 个月', window: '6 月', ev: 'B', picked: false },
+  { s: '客服录音方言质检插件', user: '客服 SaaS', form: '中间件', why: '无事件证据', ref: '', spec: true, gate: 'C', compete: '低', resource: '1 人 · 2 个月', window: '不明', ev: 'C+', picked: false },
+  { s: '方言语料合规审计服务', user: '法务团队', form: '咨询 + 工具', why: '数据合规判例公开（2026-07-22）', ref: '[E-09]', spec: false, gate: 'D', compete: '未知', resource: '2 人 · 3 个月', window: '12 月+', ev: 'B-', picked: false },
+  { s: '方言 TTS 声库交易市场', user: '内容平台', form: '交易市场', why: '配音版权争议事件（2026-08-01）', ref: '[E-11]', spec: false, gate: 'B', compete: '高', resource: '4 人 · 6 个月', window: '3-6 月', ev: 'B', picked: false },
+];
+const GATES = [
+  { k: 'A', name: '明显不可行', hit: '未命中', hl: false, reason: 'refute 检索 4 组执行（limitations / failed replication / 撤稿 / 关停），无一条通过第一段引用对齐。' },
+  { k: 'B', name: '红海', hit: '未命中', hl: false, reason: '可达来源竞品 2 家（阈值 ≥3），均 moderate（四信号各命中 1），无 strong 竞品。' },
+  { k: 'C', name: '有机会', hit: '命中★', hl: true, reason: 'refute 已执行且 hit_rate 0.72 达标；覆盖达标（query 12/12 · 边际新竞品 0.4 < 1）；支持证据 [E-02] 对齐通过；无 strong / unknown 竞品阻断。' },
+  { k: 'D', name: '信息不足', hit: '未评估', hl: false, reason: '兜底档。C 已命中不触发，缺口清单为空。' },
+];
+const COMPS = [
+  { name: '声联数据', strength: '中', signals: 'active_last_12m（1/4）', price: '定价待确认', conf: '置信低 · 原文 ↗', sameUser: '部分重叠', src: '产品页' },
+  { name: '采语科技', strength: '中', signals: 'active_last_12m（1/4）', price: '¥0.9/条 起', conf: '置信高', sameUser: '是', src: '产品页' },
+  { name: 'label-studio', strength: '弱', signals: '0/4 · 开源工具非服务', price: '—', conf: '', sameUser: '工具重叠', src: '代码库' },
+];
+const VP_TASKS = [
+  { id: 'M1-001', title: '仓库脚手架与工具链（冻结件入 flint/domain）', cycles: 1, oneshot: 'true', verify: 'mypy --strict flint/domain && ruff check . && pytest tests/m1/test_m1_001.py -q', review: 'false' },
+  { id: 'M1-002', title: 'Docker Compose 开发环境（pg16+pgvector / redis7）', cycles: 1, oneshot: 'true', verify: 'pytest tests/m1/test_m1_002.py -q', review: 'false' },
+  { id: 'M1-003', title: 'Alembic 基线迁移：索引层五表 + 向量索引', cycles: 1, oneshot: 'true', verify: 'alembic upgrade head && … && pytest tests/m1/test_m1_003.py -q', review: 'false' },
+  { id: 'M1-004', title: 'Job 三表迁移（jobs/job_steps/job_events）', cycles: 1, oneshot: 'true', verify: 'pytest tests/m1/test_m1_004.py -q', review: 'false' },
+  { id: 'M1-005', title: '配置加载与 feature flag 骨架（E8）', cycles: 1, oneshot: 'true', verify: 'pytest tests/m1/test_m1_005.py -q', review: 'true' },
+];
+const STEPS = [
+  { name: '排队', meta: '0:04', st: 'done' },
+  { name: '检索', meta: '1:48 · ¥0.31', st: 'done' },
+  { name: '判定', meta: '0:52 · ¥0.22', st: 'done' },
+  { name: '起草', meta: '章节 3/7 · ¥0.71', st: 'run' },
+  { name: '校验', meta: '待执行', st: 'wait' },
+  { name: '完成', meta: '—', st: 'wait' },
+];
+const LOGS = [
+  '10:42:07 检索 · query 9/12「dialect speech annotation crowdsourcing」命中 14 → 去重后 6',
+  '10:43:11 检索 · 边际新竞品 0.4 < 1，覆盖判定达标',
+  '10:43:40 判定 · 声联数据定价低置信 → 标记「待确认」',
+  '10:44:03 起草 · 大纲已冻结（facts v3 · 41 条）',
+  '10:45:19 起草 · §竞品 完成，引用对齐 12/12',
+  '10:46:02 起草 · §机会 引用 [E-01] 事件 2026-08-10 ✓',
+];
+class Component extends DCLogic {
+  state = { screen: 'hot', hotTab: 'list', judgeTab: 'topics', drawerOn: false, selId: 'c1', norm: true, theme: 'light', region: 'CN', combo: [], hyp: '', audience: null, vpTab: 'tasks' };
+  componentDidMount() {
+    let saved = null;
+    try { saved = localStorage.getItem('flint4-theme'); } catch (e) {}
+    const pref = this.props.defaultTheme ?? 'system';
+    const dark = saved ? saved === 'dark' : (pref === 'dark' || (pref === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches));
+    this.setState({ theme: dark ? 'dark' : 'light' });
+    document.body.dataset.theme = dark ? 'dark' : '';
+  }
+  renderVals() {
+    const s = this.state;
+    const pill = (fg, bg) => ({ fontSize: '10px', fontWeight: 700, color: fg, background: bg, padding: '2px 8px', borderRadius: '9px', whiteSpace: 'nowrap' });
+    const bigTab = (on) => ({ padding: '8px 20px', fontSize: '14px', fontWeight: on ? 700 : 500, border: 'none', borderRadius: '9px', cursor: 'pointer', whiteSpace: 'nowrap', background: on ? 'var(--accent-soft)' : 'transparent', color: on ? 'var(--accent)' : 'var(--sub)' });
+    const subTab = (on) => ({ padding: '7px 15px', fontSize: '12.5px', fontWeight: on ? 600 : 500, border: '1px solid ' + (on ? 'var(--accent)' : 'var(--line)'), borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap', background: on ? 'var(--accent-soft)' : 'var(--panel)', color: on ? 'var(--accent)' : 'var(--sub)' });
+    const seg = (on) => ({ padding: '5px 12px', fontSize: '11.5px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', background: on ? 'var(--ink)' : 'var(--panel)', color: on ? 'var(--bg)' : 'var(--sub)' });
+    const navBtns = [['hot', '热点广场'], ['judge', '判定台'], ['studio', '设计台']].map(([k, label]) => ({
+      label, style: bigTab(s.screen === k), onClick: () => this.setState({ screen: k, drawerOn: false }),
+    }));
+    const hotTabs = [['list', '今日榜单'], ['fav', '收藏图书馆']].map(([k, label]) => ({
+      label, style: subTab(s.hotTab === k), onClick: () => this.setState({ hotTab: k }),
+    }));
+    const judgeTabs = [['topics', '主题列表'], ['gate', 'Gate① 判定'], ['jobs', '作业进度'], ['aud', '受众选择'], ['vibe', 'vibe_pack']].map(([k, label]) => ({
+      label, style: subTab(s.judgeTab === k), onClick: () => this.setState({ judgeTab: k }),
+    }));
+    const normBtns = [['90 天分位', true], ['原始值', false]].map(([label, v]) => ({
+      label, style: seg(s.norm === v), onClick: () => this.setState({ norm: v }),
+    }));
+    const mapCluster = (c) => ({
+      ...c,
+      vLabel: V[c.v][0], vStyle: pill(V[c.v][1], V[c.v][2]),
+      sigLabel: SIG[c.sig][0], sigStyle: { fontSize: '10px', fontWeight: 700, color: SIG[c.sig][1], background: SIG[c.sig][2], padding: '2px 7px', borderRadius: '9px', whiteSpace: 'nowrap' },
+      sigInline: { color: SIG[c.sig][1], fontWeight: 600, whiteSpace: 'nowrap' },
+      bars: c.spark.map((h, i) => ({ style: { flex: 1, height: h + '%', borderRadius: '2px', background: i >= 7 ? 'var(--accent)' : i >= 5 ? 'var(--accent-soft)' : 'var(--panel2)', border: i >= 5 ? 'none' : '1px solid var(--line)', boxSizing: 'border-box' } })),
+      srcs: c.src.map(([n, p, raw]) => ({
+        txt: n + ' ' + (p == null ? '—' : (s.norm ? 'P' + p : raw)),
+        style: { fontSize: '10px', fontWeight: 600, color: p == null ? 'var(--unk)' : SRC[n][0], background: p == null ? 'var(--unk-soft)' : SRC[n][1], padding: '2px 7px', borderRadius: '9px', whiteSpace: 'nowrap', opacity: p == null ? 0.7 : 1 },
+      })),
+      srcRows: c.src.map(([n, p, raw]) => ({
+        n, v: p == null ? '—' : (s.norm ? 'P' + p : raw),
+        trackStyle: { height: '6px', borderRadius: '3px', background: 'var(--panel2)', backgroundImage: p == null ? 'repeating-linear-gradient(45deg, var(--line) 0 3px, transparent 3px 6px)' : 'none' },
+        barStyle: { width: (p || 0) + '%', height: '6px', borderRadius: '3px', background: SRC[n][0] },
+      })),
+      open: () => this.setState({ drawerOn: true, selId: c.id }),
+      addCombo: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState((st) => (st.combo.includes(c.id) || st.combo.length >= 5) ? null : { combo: [...st.combo, c.id] }); },
+    });
+    const clusters = CLUSTERS.map(mapCluster);
+    const sel = mapCluster(CLUSTERS.find((c) => c.id === s.selId) || CLUSTERS[0]);
+    const topics = TOPICS.map((t) => ({
+      ...t,
+      gate: V[t.gate][0], vStyle: pill(V[t.gate][1], V[t.gate][2]),
+      cardStyle: { background: 'var(--panel)', border: '1px solid ' + (t.picked ? 'var(--accent)' : 'var(--line)'), borderRadius: '12px', boxShadow: 'var(--shadow)', padding: '13px 16px', display: 'flex', flexDirection: 'column', gap: '8px' },
+      whyStyle: t.spec ? { fontSize: '11.5px', color: 'var(--sub)', fontStyle: 'italic' } : { fontSize: '11.5px' },
+    }));
+    const gates = GATES.map((g) => ({
+      ...g,
+      rowStyle: { background: 'var(--panel)', border: '1px solid ' + (g.hl ? 'var(--ok)' : 'var(--line)'), borderRadius: '12px', boxShadow: 'var(--shadow)', padding: '11px 14px' },
+      kStyle: { fontWeight: 700, fontSize: '12.5px', width: '23px', height: '23px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: g.hl ? 'var(--ok)' : 'var(--panel2)', color: g.hl ? '#fff' : 'var(--sub)', flexShrink: 0 },
+    }));
+    const steps = STEPS.map((sp) => ({
+      ...sp,
+      rowStyle: { background: 'var(--panel)', border: '1px solid ' + (sp.st === 'run' ? 'var(--accent)' : 'var(--line)'), borderRadius: '12px', boxShadow: 'var(--shadow)', padding: '11px 13px', opacity: sp.st === 'wait' ? 0.6 : 1 },
+      dotStyle: { display: 'inline-block', width: '9px', height: '9px', borderRadius: '50%', background: sp.st === 'done' ? 'var(--ok)' : sp.st === 'run' ? 'var(--accent)' : 'transparent', border: sp.st === 'wait' ? '2px solid var(--line)' : 'none', animation: sp.st === 'run' ? 'flintpulse 1.6s infinite' : 'none' },
+    }));
+    const comboOk = s.combo.length >= 2 && s.combo.length <= 5 && s.hyp.trim().length > 0;
+    const comboView = s.combo.map((id) => {
+      const c = CLUSTERS.find((x) => x.id === id);
+      return { label: c ? c.name : id, onRemove: () => this.setState((st) => ({ combo: st.combo.filter((x) => x !== id) })) };
+    });
+    const comboMsg = s.combo.length === 0 ? '' : s.combo.length < 2 ? '还需 ' + (2 - s.combo.length) + ' 张卡' : !s.hyp.trim() ? '关联假设必填' : '就绪 · 生成 5~8 个候选主题';
+    const audCard = (on) => ({ background: 'var(--panel)', border: '2px solid ' + (on ? 'var(--accent)' : 'var(--line)'), borderRadius: '12px', boxShadow: 'var(--shadow)', padding: '18px 20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '8px' });
+    const audDot = (on) => ({ width: '13px', height: '13px', borderRadius: '50%', border: '2px solid ' + (on ? 'var(--accent)' : 'var(--line)'), background: on ? 'var(--accent)' : 'transparent', boxSizing: 'border-box', flexShrink: 0 });
+    const vpTabs = [['spec', 'S1~S4 规范'], ['tasks', 'S5 任务 DAG'], ['digest', 'Human Digest']].map(([k, label]) => ({
+      label, style: subTab(s.vpTab === k), onClick: () => this.setState({ vpTab: k }),
+    }));
+    return {
+      navBtns, hotTabs, judgeTabs, normBtns, clusters, sel, topics, gates, steps,
+      comboView, comboEmpty: s.combo.length === 0, comboMsg,
+      comboBorder: comboOk ? 'var(--accent)' : 'var(--line)',
+      comboBtnStyle: { padding: '8px 16px', fontSize: '12.5px', fontWeight: 600, border: 'none', borderRadius: '9px', whiteSpace: 'nowrap', cursor: comboOk ? 'pointer' : 'not-allowed', background: comboOk ? 'var(--accent)' : 'var(--panel2)', color: comboOk ? '#fff' : 'var(--sub)' },
+      hyp: s.hyp, onHyp: (e) => this.setState({ hyp: e.target.value }),
+      comboGo: () => { if (comboOk) this.setState({ screen: 'judge', judgeTab: 'topics' }); },
+      jAud: s.judgeTab === 'aud', jVibe: s.judgeTab === 'vibe',
+      audHumanStyle: audCard(s.audience === 'human'), audAiStyle: audCard(s.audience === 'ai'),
+      audHumanDot: audDot(s.audience === 'human'), audAiDot: audDot(s.audience === 'ai'),
+      audAiPicked: s.audience === 'ai',
+      pickHuman: () => this.setState({ audience: 'human' }), pickAi: () => this.setState({ audience: 'ai' }),
+      audBtnLabel: !s.audience ? '选择受众后才能提交' : s.audience === 'human' ? '生成计划书（五模板）→ 设计台' : '生成 vibe_pack 执行包 →',
+      audBtnStyle: { padding: '9px 22px', fontSize: '13px', fontWeight: 600, border: 'none', borderRadius: '9px', whiteSpace: 'nowrap', cursor: s.audience ? 'pointer' : 'not-allowed', background: s.audience ? 'var(--accent)' : 'var(--panel2)', color: s.audience ? '#fff' : 'var(--sub)' },
+      audSubmit: () => { if (s.audience === 'human') this.setState({ screen: 'studio' }); else if (s.audience === 'ai') this.setState({ judgeTab: 'vibe' }); },
+      vpTabs, vpSpec: s.vpTab === 'spec', vpTasks: s.vpTab === 'tasks', vpDigest: s.vpTab === 'digest',
+      vpTaskRows: VP_TASKS,
+      goJobs: () => this.setState({ screen: 'judge', judgeTab: 'jobs' }),
+      comps: COMPS, logs: LOGS.map((t) => ({ t })),
+      arxivDown: this.props.arxivDown ?? true, arxivUp: !(this.props.arxivDown ?? true),
+      isHot: s.screen === 'hot', isJudge: s.screen === 'judge', isStudio: s.screen === 'studio',
+      hotList: s.hotTab === 'list', hotFav: s.hotTab === 'fav',
+      jTopics: s.judgeTab === 'topics', jGate: s.judgeTab === 'gate', jJobs: s.judgeTab === 'jobs',
+      drawerOn: s.drawerOn,
+      closeDrawer: () => this.setState({ drawerOn: false }),
+      openEvidence: () => this.setState({ drawerOn: true, selId: 'c1' }),
+      goStudio: () => this.setState({ screen: 'studio', drawerOn: false }),
+      goHot: () => this.setState({ screen: 'hot' }),
+      goGate: () => this.setState({ screen: 'judge', judgeTab: 'gate' }),
+      region: s.region, onRegion: (e) => this.setState({ region: e.target.value }),
+      themeBtnLabel: s.theme === 'dark' ? '白天' : '夜间',
+      toggleTheme: () => {
+        const th = s.theme === 'dark' ? 'light' : 'dark';
+        this.setState({ theme: th });
+        document.body.dataset.theme = th === 'dark' ? 'dark' : '';
+        try { localStorage.setItem('flint4-theme', th); } catch (e) {}
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

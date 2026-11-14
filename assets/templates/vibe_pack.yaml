@@ -1,0 +1,88 @@
+template_id: vibe_pack
+locale: zh-CN
+audience: ai_executor
+sections:
+- section_id: S1_charter
+  ratio:
+    share: 0.06
+    unit: tokens
+    min_words: 1200
+    max_words: 3600
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S2_invariants
+  ratio:
+    share: 0.1
+    unit: tokens
+    min_words: 2000
+    max_words: 6000
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S3_contracts
+  ratio:
+    share: 0.16
+    unit: tokens
+    min_words: 3200
+    max_words: 9600
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S4_decision_log
+  ratio:
+    share: 0.1
+    unit: tokens
+    min_words: 2000
+    max_words: 6000
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S5_task_dag
+  ratio:
+    share: 0.28
+    unit: tokens
+    min_words: 5600
+    max_words: 16800
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S6_context_manifest
+  ratio:
+    share: 0.06
+    unit: tokens
+    min_words: 1200
+    max_words: 3600
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S7_verification
+  ratio:
+    share: 0.1
+    unit: tokens
+    min_words: 2000
+    max_words: 6000
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S8_progress_ledger
+  ratio:
+    share: 0.06
+    unit: tokens
+    min_words: 1200
+    max_words: 3600
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+- section_id: S9_escalation
+  ratio:
+    share: 0.08
+    unit: tokens
+    min_words: 1600
+    max_words: 4800
+  check_questions:
+  - 本章 MUST/NEVER 是否可判定？
+  charts: []
+attachments:
+- attachment_id: human_digest
+  in_ai_context: false

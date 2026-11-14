@@ -1,0 +1,633 @@
+{
+  "spec_version": "v0.4.1-batch5",
+  "frozen_against": "contracts/ @2026-07-30",
+  "audience": "ai_executor",
+  "generated_by": "steward @2026-08-07",
+  "note": "第5批 = 表现层。owner 2026-08-07 指出三件：热点广场没用卡片（内容要求写在 docs/前端功能说明-v2.md#2.14 与 HOTSPOT-01/02/07）· AI 设计工作台是空壳（规格 #2.17）· 素材没用上（风格照 前端设计/Flint 热点线索卡堆叠，已 Flint 化零依赖）。另补主链路缺的六屏与两把「必须做到」的尺子。NEVER 新增依赖。",
+  "rules": {
+    "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+    "done_marker": "docs/FLINT-V041-B5-DONE",
+    "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+    "network": "NEVER 真实网络 / 真实 API key / 付费调用。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+    "new_dependency": "NEVER 新增依赖。素材的 .dc.html 版本已 Flint 化（零 framer-motion / 零 lucide-react / 零 Tailwind，全用 _ds token）——照它做即可。playwright 恒在项目外 C:\\pwenv。"
+  },
+  "isolation": {
+    "droppable": []
+  },
+  "tasks": [
+    {
+      "id": "DS-01",
+      "title": "设计系统①：_ds_bundle.js 从未被加载——StickerTag 与 StatusMark 一直在盘上没人用",
+      "milestone": "W5",
+      "inputs": [
+        "web/app/layout.tsx",
+        "web/public/_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/_ds_bundle.js"
+      ],
+      "outputs": [
+        "web/app/layout.tsx",
+        "web/components/shell/",
+        "tests/v041/test_ds_bundle_wired.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_ds_bundle_wired.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "layout.tsx 当前只 link 了 styles.css。bundle 里的 StickerTag 与 StatusMark 全仓零引用——FB-01 接的是 CSS 那一半，JS 这一半从没接过",
+        "两个组件在 React 侧可用：给出 Flint 自己的封装（属性名与 _ds 逐字对齐），NEVER 另写一份视觉近似的替身",
+        "判据是运行时取值，NEVER 只断言 script 标签在：真渲染一次 StatusMark，取其计算样式并断言与 _ds token 一致",
+        "路径里的哈希段随导出包变，判据 MUST 断言该路径解析得到真文件——写错的路径静默 404，页面照样渲染只是没有组件（F-09 的形状）",
+        "StatusMark 落地后，把 tools/check_design_constraints.mjs 的 A4 规则从 noSubject 名单移出：名单少一条即红，那正是提醒",
+        "NEVER 新增依赖：bundle 是 _ds 导出包的一部分，走 public/ 按 URL 取，NEVER 搬进构建面"
+      ],
+      "context_refs": [
+        "web/app/layout.tsx",
+        "docs/blocked/S1-COMMON-STATES-MISSING.md"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "DS-02",
+      "title": "设计系统②：热点卡片按素材格式落成——owner 指定风格照「Flint 热点线索卡堆叠」",
+      "milestone": "W5",
+      "inputs": [
+        "前端设计/Flint 热点线索卡堆叠/CardStack.dc.html",
+        "web/components/hotspot-card/HotspotCard.tsx",
+        "docs/前端功能说明-v2.md#2.14"
+      ],
+      "outputs": [
+        "web/components/hotspot-card/",
+        "web/app/globals.css",
+        "tests/v041/test_hotspot_card_format.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_hotspot_card_format.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "卡面逐槽照素材：纸纹底（--surface + --tex-paper）· 1px --rule 边框 · --r-card 圆角 · --shadow-sticker · 24px 内边距；顶行 StickerTag 与 StatusMark 左右分列；标题 --fs-20/600/--ink；次要行 --fs-14/两行截断/--ink-2；1px --rule 分隔线；脚注 --font-mono 等宽数字",
+        "内容槽照 HOTSPOT-01 六槽 + 规格 #2.14：主行恒 name_native，机翻译名为次要行；首见日期 · 地区 · 陈旧标记 · Gate 判定各占一槽",
+        "字段缺失逐槽隐藏，NEVER 用「—」「暂无」「N/A」占位——占位符会让「这个热点没有判定」和「判定还没跑」看起来一模一样",
+        "译名缺失时只显示 name_native 单行（规格 #2.14 第四条），NEVER 用原文冒充译文",
+        "样式与结构成对交付：.hotspot-card 当前在 _ds 与 globals.css 里零样式，本卡补齐；判据取运行时计算值，NEVER 只断言类名在",
+        "NEVER 引入 framer-motion / lucide-react / Tailwind：素材的 .dc.html 版本已 Flint 化，零外部依赖、全用 _ds token"
+      ],
+      "context_refs": [
+        "前端设计/Flint 热点线索卡堆叠/CardStack.dc.html",
+        "docs/前端功能说明-v2.md",
+        "docs/trace/HOTSPOT-01.md"
+      ],
+      "depends_on": [
+        "DS-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "DS-03",
+      "title": "设计系统③：枚举值直接上屏——D_insufficient 是数据库的值，不是给人看的话",
+      "milestone": "W5",
+      "inputs": [
+        "web/lib/i18n/",
+        "web/components/"
+      ],
+      "outputs": [
+        "web/lib/i18n/",
+        "tests/v041/test_enum_labels.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_enum_labels.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "全仓扫出上屏的枚举原值并逐个给人类标签：Gate 四分类（A/B/C/D_insufficient）· 覆盖状态（not_saturated）· 权威度（unknown）· 作业状态 · 合规状态",
+        "标签走既有 i18n 通道，中英各一份；NEVER 在组件里写死中文",
+        "机器守着不漂移：判据断言「屏上不出现下划线小写的枚举原值」，新增枚举没给标签则判红",
+        "unknown 这一类 MUST 保留可分辨性：「未知」与「没查过」NEVER 用同一个词——本批一路在守的同一条纪律"
+      ],
+      "context_refs": [
+        "docs/PRINCIPLES-v04.md"
+      ],
+      "depends_on": [
+        "DS-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "PLAZA-01",
+      "title": "广场①：换成热点卡片——列表版 PlazaView 退役",
+      "milestone": "W5",
+      "inputs": [
+        "web/app/plaza/page.tsx",
+        "web/components/views/PlazaView.tsx",
+        "前端设计/Flint 热点线索卡堆叠/CardStack.dc.html"
+      ],
+      "outputs": [
+        "web/app/plaza/",
+        "web/components/",
+        "tests/v041/test_plaza_cards.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_plaza_cards.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "steward 假设（owner 可划掉）：首屏堆叠今日精选（照素材的扇形堆叠：420px 高 · perspective 1100 · 扇形 48° · 重叠 0.48 · 圆点导航 · 「N/M · 点击侧卡或拖拽当前卡切换」），其下接卡片网格放全量",
+        "卡面本体只写一次（DS-02 的 HotspotCard），堆叠与网格都只负责排布——两份卡面会各自漂移，而它们渲染的是同一份数据",
+        "PlazaView 那个 ul/li 版本退役：全仓零引用后删除，NEVER 留着两个广场",
+        "零计算不倒：后端已按 total_heat 排好，本屏不排序、不筛选、不合成任何数值",
+        "堆叠的键盘可达：方向键切换、焦点可见，NEVER 只能拖拽"
+      ],
+      "context_refs": [
+        "前端设计/Flint 热点线索卡堆叠/CardStack.dc.html",
+        "web/app/plaza/page.tsx"
+      ],
+      "depends_on": [
+        "DS-02"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "PLAZA-02",
+      "title": "广场②：地区与源筛选上屏——RegionSwitch 与 SourceColumns 建好了没人用",
+      "milestone": "W5",
+      "inputs": [
+        "web/components/region-switch/RegionSwitch.tsx",
+        "web/components/source-columns/SourceColumns.tsx",
+        "flint/api/views.py"
+      ],
+      "outputs": [
+        "web/app/plaza/",
+        "tests/v041/test_plaza_filters.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_plaza_filters.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "两个组件接上广场屏：grep 全仓当前只有它们自己的文件在引用，没有任何页面用",
+        "地区筛选打 GET /plaza/hot?region=（规格 #2.14 端点行）；不传 region 时行为与今天逐字相同",
+        "九区清单从 GET /settings/locale 的 options 取（LOC-01 已把副本退役），NEVER 在广场再抄一份",
+        "by_source 分列 ≥2 列且无合成句（HOTSPOT-07 既有判据），合成句黑名单零命中",
+        "切地区 NEVER 改语言，切语言 NEVER 改热点集合（PRINCIPLES#A3 两条轴）"
+      ],
+      "context_refs": [
+        "docs/前端功能说明-v2.md#2.14",
+        "docs/blocked/LOCALE-SEAM-RULER-MISSES-REGION-CODES.md"
+      ],
+      "depends_on": [
+        "PLAZA-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "PLAZA-03",
+      "title": "广场③：四条状态规则——owner 在规格 #2.14 里逐条写过",
+      "milestone": "W5",
+      "inputs": [
+        "docs/前端功能说明-v2.md#2.14",
+        "web/components/shell/"
+      ],
+      "outputs": [
+        "web/app/plaza/",
+        "web/components/",
+        "tests/v041/test_plaza_states.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_plaza_states.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "加载中 → 骨架卡（不是一行「加载中」文字，是卡片形状的骨架，因为卡片布局要占位）",
+        "空结果 → 「该区当日无数据」并给出可切换的区，**NEVER 回落到别的区假装有数据**",
+        "单区源全灭 → 该区卡片区显示缺数据角标（E6 降级行），其余区照常渲染",
+        "译名缺失 → 只显示 name_native 单行（A7），NEVER 用原文冒充译文",
+        "四种状态各有各的 data-*-state，阴性对照逐条构造：四种情况分别渲染，断言互不串台"
+      ],
+      "context_refs": [
+        "docs/前端功能说明-v2.md#2.14"
+      ],
+      "depends_on": [
+        "PLAZA-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "PLAZA-04",
+      "title": "广场④：卡片三独立动作——收藏 / 入台 / 分享 + 点击排除区",
+      "milestone": "W5",
+      "inputs": [
+        "web/components/hotspot-card-actions/HotspotCardActions.tsx",
+        "flint/api/favorites.py",
+        "flint/api/share.py"
+      ],
+      "outputs": [
+        "web/components/",
+        "tests/v041/test_plaza_card_actions.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_plaza_card_actions.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "三个动作各自独立触发（HOTSPOT-02 既有判据），接装配后的真端点：收藏 → /favorites，分享 → /shares，入台 → 图谱工作台",
+        "动作区点击 NEVER 冒泡到卡片跳转：双断言（点动作不跳转 · 点卡面跳转）",
+        "HotspotCardActions 组件已在盘上，本卡只接线与补端点调用，NEVER 另写一份"
+      ],
+      "context_refs": [
+        "docs/trace/HOTSPOT-01.md"
+      ],
+      "depends_on": [
+        "PLAZA-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "DESIGN-01",
+      "title": "工作台①：design_generate 没有消费者——「说一句话出一个设计」那一步空着",
+      "milestone": "W5",
+      "inputs": [
+        "flint/jobs/dispatch.py",
+        "flint/design/session.py",
+        "flint/jobs/worker_main.py"
+      ],
+      "outputs": [
+        "flint/jobs/",
+        "tests/v041/test_design_generate_job.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_design_generate_job.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "dispatch.py 现写着「flint/design/session.py 的 delta_events / replay_window 是同步纯函数，仓里还没有 design_generate 作业的消费者」——本卡把消费者接上并从 UnwiredKindReason 移进 WIREABLE_KINDS",
+        "自然语言 → 设计产物：走既有 LLMProvider 适配器，运行时用本机免费档模型，测试恒 fixture 回放，respx 护栏断言零真实出网",
+        "流式：复用既有 SSE 事件流（规格 #2.6 三种新 JobKind 复用同一通道），逐块出现",
+        "中断可续：复用 session.py 的 delta_events / replay_window，断线后 GET /design/sessions/{job_id}/replay 取回已产出的块，NEVER 从头重跑",
+        "移出 UnwiredKindReason 后分派表仍覆盖判别联合全部成员（IncompleteDispatchTable 判据不倒）"
+      ],
+      "context_refs": [
+        "flint/jobs/dispatch.py",
+        "docs/前端功能说明-v2.md#2.17"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "DESIGN-02",
+      "title": "工作台②：那一屏现在是空壳——没有输入框、没有预览区、没有生成流",
+      "milestone": "W5",
+      "inputs": [
+        "web/app/design/page.tsx",
+        "web/components/design-workbench/DesignWorkbench.tsx",
+        "docs/前端功能说明-v2.md#2.17"
+      ],
+      "outputs": [
+        "web/app/design/",
+        "web/components/design-workbench/",
+        "tests/v041/test_design_workbench_ui.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_design_workbench_ui.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "屏上补齐三件：自然语言输入区 · 生成中的流式区（逐块出现）· iframe.srcdoc 零构建预览区。当前 DesignWorkbench.tsx 只有 108 行，三件一件都没有",
+        "预览恒 iframe.srcdoc（规格 #2.17），NEVER 把生成产物注进主文档——那等于让模型产物拿到本站权限",
+        "预览失败 → 显示原始产物与错误，**NEVER 用上一次成功的预览顶替**（规格 #2.17 第三条）",
+        "生成中断 → 可续；续跑走 DESIGN-01 的 replay 通道，NEVER 从头重跑",
+        "风格照 _ds：用 DS-01 接上的 StickerTag/StatusMark 与 _ds token，NEVER 另起一套视觉"
+      ],
+      "context_refs": [
+        "docs/前端功能说明-v2.md#2.17",
+        "前端设计/Flint 热点线索卡堆叠/CardStack.dc.html"
+      ],
+      "depends_on": [
+        "DS-01",
+        "DESIGN-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "DESIGN-03",
+      "title": "工作台③：固化为模板 + 那个缺的第四态",
+      "milestone": "W5",
+      "inputs": [
+        "docs/blocked/UI-DESIGN-SCREEN-NEEDS-A-FOURTH-STATE.md",
+        "flint/api/design.py",
+        "web/components/design-workbench/DesignWorkbench.tsx"
+      ],
+      "outputs": [
+        "web/components/design-workbench/",
+        "tests/v041/test_design_solidify.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_design_solidify.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "registryAvailable 从 boolean | null 扩成四态：not_checked（还没查）· not_provided（这套部署没有 templates 表）· down（查过了，坏了）· ok（可用）。三态版把第四种塞进任一已有值都是谎——问题单已逐条列明为什么",
+        "固化走 POST /design/templates（已装配）；模板注册表不可用时**固化与生产渲染阻断、探索期不阻断**（规格 #2.17 第二条），按钮置灰并说明原因",
+        "阴性对照四条：四种状态分别构造，断言屏上四种话互不相同",
+        "关闭 docs/blocked/UI-DESIGN-SCREEN-NEEDS-A-FOURTH-STATE.md"
+      ],
+      "context_refs": [
+        "docs/blocked/UI-DESIGN-SCREEN-NEEDS-A-FOURTH-STATE.md",
+        "docs/前端功能说明-v2.md#2.17"
+      ],
+      "depends_on": [
+        "DESIGN-02"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "CHAIN-03",
+      "title": "主链路①：主题列表与主题详情两屏——蓝本 P4/P5，实仓没有",
+      "milestone": "W5",
+      "inputs": [
+        "flint/api/views.py",
+        "web/app/",
+        "前端设计/Flint 热点线索卡堆叠/CardStack.dc.html"
+      ],
+      "outputs": [
+        "web/app/",
+        "tests/v041/test_topic_screens.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_topic_screens.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "建两屏：主题列表（GET /projects/{id}/topics）· 主题详情（GET /topics/{id}）。两条端点均已装配且已建类型（TYPE-02）",
+        "【DEC-036 订正 · owner 2026-08-08】主题没有名称字段：主行 one_liner，次要行 target_user_tag + form_factor_tag——它们不是译文，NEVER 带机翻标记。本条原先要求主题屏上原文名 + 机翻译名两行，那是从热点簇抄来的；冻结件 Topic 从来没有那两个字段，故作废。改规格不动冻结件，落地见 SPEC-01 与规格 #2.4",
+        "选主题动作落到 chosen_topic_id，NEVER 前端自行记一份",
+        "风格照 DS-02 的卡片体系，与广场同源，NEVER 另起一套"
+      ],
+      "context_refs": [
+        "Claude design Flint 前端设计/Flint 应用 · 20 屏/design_handoff_flint_web/README.md",
+        "docs/前端功能说明-v2.md#2.4"
+      ],
+      "depends_on": [
+        "DS-02"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "CHAIN-04",
+      "title": "主链路②：发起分析与 combo 入口两屏——蓝本 P6/P3，实仓没有",
+      "milestone": "W5",
+      "inputs": [
+        "flint/api/analysis.py",
+        "flint/api/combo.py",
+        "web/app/"
+      ],
+      "outputs": [
+        "web/app/",
+        "tests/v041/test_analysis_entry_screens.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_analysis_entry_screens.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "建两屏：发起分析（POST /projects/{id}/analysis）· combo 入口（POST /projects/combo）。两条端点第 4 批已装配",
+        "空假设由服务端判 EMPTY_HYPOTHESIS（规格 #2.3），前端本地预检话术与之逐字一致，NEVER 各写一句",
+        "提交后进 Job 进度屏（/jobs/[id]）并接 SSE，NEVER 在本屏轮询",
+        "无权用户 403 的呈现与「资源不存在」404 分开（AUTH-03 口径）"
+      ],
+      "context_refs": [
+        "docs/前端功能说明-v2.md#2.3",
+        "docs/blocked/WIRE-01-FOUR-FAMILIES-NEED-AUTH-AND-PROVIDER.md"
+      ],
+      "depends_on": [
+        "CHAIN-03"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "CHAIN-05",
+      "title": "主链路③：受众分叉与干预页两屏——蓝本 P11/P10，实仓没有",
+      "milestone": "W5",
+      "inputs": [
+        "flint/api/compose.py",
+        "flint/api/interventions.py",
+        "web/app/"
+      ],
+      "outputs": [
+        "web/app/",
+        "tests/v041/test_audience_and_intervention_screens.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_audience_and_intervention_screens.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "建两屏：受众分叉（POST /projects/{id}/proposal，五套人类模板 vs vibe_pack）· 干预页（lock / regenerate / disputes / evidence 四动作）",
+        "受保护 block NEVER 被 regenerate 改写：locked 或 author 为 user 或 user_modified 三者任一即拒（S2-5），屏上明说拒绝原因",
+        "干预动作全部走已装配的 interventions 族端点，NEVER 前端自行改 block 树",
+        "四个动作各自的成功与失败态分开呈现，NEVER 合并成一句「操作完成」"
+      ],
+      "context_refs": [
+        "CLAUDE.md#S2",
+        "docs/前端功能说明-v2.md#2.8"
+      ],
+      "depends_on": [
+        "CHAIN-04"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "GAUGE-12",
+      "title": "尺子⑥：逐屏组件对照——这批缺的正是一把「必须做到」的尺子",
+      "milestone": "W5",
+      "inputs": [
+        "web/app/",
+        "web/components/",
+        "tools/"
+      ],
+      "outputs": [
+        "tools/check_screen_composition.mjs",
+        "assets/screen_composition.json",
+        "tests/v041/test_screen_composition.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_screen_composition.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "建一把正向尺子：每屏声明 MUST 用到的组件与 MUST 有样式的类名，缺一项判红。此前全仓判据都是禁止性的（NEVER 空转 / NEVER 空态冒充），挡得住做错、挡不住没做——广场屏四条 EYE-03 判据全绿而它是个 ul/li，就是这么过去的",
+        "断言「组件被真渲染」而不是「文件存在」：取渲染后的 DOM 与计算样式，零 className 的组件判红",
+        "阴性对照：把任一屏的卡片换回无样式列表，尺子 MUST 报红并指出缺哪个组件",
+        "接进全局门（F-11 的教训：不在门里的尺子等于没有）"
+      ],
+      "context_refs": [
+        "docs/steward/交接-STEWARD-HANDOFF.md",
+        "docs/review/终检-v04.md#F-11"
+      ],
+      "depends_on": [
+        "PLAZA-01"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "GAUGE-13",
+      "title": "尺子⑦：蓝本 P 编号 ↔ 实仓路由 双向对账，缺屏判红",
+      "milestone": "W5",
+      "inputs": [
+        "Claude design Flint 前端设计/Flint 应用 · 20 屏/design_handoff_flint_web/README.md",
+        "web/app/",
+        "docs/前端功能说明-v2.md"
+      ],
+      "outputs": [
+        "tools/check_screen_coverage.py",
+        "docs/屏对照表-v041.md",
+        "tests/v041/test_screen_coverage.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_screen_coverage.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "蓝本 README 的 P1~P14 路由表与 docs/前端功能说明-v2.md 的 18 条逐条对到 web/app/**/page.tsx，报三类：蓝本有而实仓没有 · 实仓有而蓝本没有 · 两边都有但端点对不上",
+        "已知缺口逐条列名（P3 combo 入口 · P4 主题列表 · P5 主题详情 · P6 发起分析 · P10 干预页 · P11 受众分叉），CHAIN-03~05 做掉后名单清空",
+        "机器守着不漂移：新增蓝本条目而没有屏则判红，NEVER 靠人记",
+        "接进全局门"
+      ],
+      "context_refs": [
+        "Claude design Flint 前端设计/Flint 应用 · 20 屏/design_handoff_flint_web/README.md",
+        "docs/前端功能说明-v2.md"
+      ],
+      "depends_on": [
+        "CHAIN-05"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "FIX-07",
+      "title": "缺陷⑦：一键启动脚本的 Docker 路径写死，本机走不通",
+      "milestone": "W5",
+      "inputs": [
+        "start-demo.ps1"
+      ],
+      "outputs": [
+        "start-demo.ps1",
+        "tests/v041/test_start_demo_paths.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_start_demo_paths.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "start-demo.ps1 把 Docker Desktop 写死成 C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe，而本机是用户级安装（%LOCALAPPDATA%\\Programs\\DockerDesktop\\）——脚本会掉进 Read-Host 分支等人敲回车，无人值守时就是挂住",
+        "改成按候选路径逐个探测 + 从 docker CLI 的实际位置反推；全都找不到时明说找不到并给出手动步骤，NEVER 用 Read-Host 卡住",
+        "判据是静态检查：脚本里不含写死的绝对安装路径，且候选清单至少覆盖 Program Files 与 LOCALAPPDATA 两处"
+      ],
+      "context_refs": [
+        "start-demo.ps1"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "FIX-08",
+      "title": "缺陷⑧：那次没抓到名字的前端红",
+      "milestone": "W5",
+      "inputs": [
+        "docs/blocked/ONE-UNNAMED-FRONTEND-RED-NOT-CAPTURED.md",
+        "web/"
+      ],
+      "outputs": [
+        "web/",
+        "tests/v041/test_frontend_red_capture.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_frontend_red_capture.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "按问题单给的办法连跑 30 次并**把失败用例名留下来**（上次只 grep 了汇总行，把用例名过滤掉了）",
+        "抓到就修并给出根因；30 次全绿则在问题单里写明「30 次未复现」并保留单据开着，NEVER 关单——连跑 6 次全绿不能证明它不存在，FIX-04 那处是 40 次里第 29 次才复现的",
+        "把「连跑保留用例名」固化成脚本，NEVER 让下一个人再丢一次现场"
+      ],
+      "context_refs": [
+        "docs/blocked/ONE-UNNAMED-FRONTEND-RED-NOT-CAPTURED.md",
+        "docs/trace/FIX-04.md"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "SHIP-05",
+      "title": "收尾：第 5 批完成态报告 + 出口全局门",
+      "milestone": "W5",
+      "inputs": [
+        "docs/progress-v041.jsonl",
+        "docs/steward/tasks-v041-b5.json"
+      ],
+      "outputs": [
+        "docs/V041-BATCH5-COMPLETION.md"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041 -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "全局门五条全绿并把输出逐字贴进报告：ruff check . --no-cache · mypy --strict flint · pytest -q · cd web && npm test -- --run · npx tsc --noEmit",
+        "出口判据三个：check_screen_composition 零违规 · check_screen_coverage 缺屏为 0 · 广场屏与设计工作台各跑一次真栈取证并把截图名列进报告",
+        "达不到就记 blocked 并逐条说明卡在谁那里——把出口判据的一半写成达标是最坏的写法（第 3 批的原话，本批继承）",
+        "未解决的逐条列名，NEVER 用一句「其余无异常」收口"
+      ],
+      "context_refs": [
+        "docs/V041-BATCH4-COMPLETION.md"
+      ],
+      "depends_on": [
+        "DS-03",
+        "PLAZA-02",
+        "PLAZA-03",
+        "PLAZA-04",
+        "DESIGN-03",
+        "GAUGE-12",
+        "GAUGE-13",
+        "FIX-07",
+        "FIX-08"
+      ],
+      "blocked_by": null
+    }
+  ]
+}

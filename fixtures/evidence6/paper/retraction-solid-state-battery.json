@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.retractions.example/search?q=solid+state+battery",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"retractions\": [{\"title\": \"RETRACTED: solid state battery breakthrough claims\", \"original_doi\": \"10.5555/solid-state-battery.retracted.1\", \"url\": \"https://retractions.example/solid-state-battery/1\", \"date\": \"2026-05-20\", \"reason\": \"data fabrication\"}]}"
+ }
+]

@@ -1,0 +1,21 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "ghtrend",
+ "url": "https://api.github.com/search/repositories?q=created:>2026-08-09&sort=stars&order=desc&per_page=15",
+ "requested_at_utc": "2026-08-10T03:08:15.508942+00:00",
+ "status": 200,
+ "final_url": "https://api.github.com/search/repositories?q=created:%3E2026-08-09&sort=stars&order=desc&per_page=15",
+ "redirects": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "server": "github.com",
+  "x-ratelimit-remaining": "9"
+ },
+ "body_head": "{\n  \"total_count\": 26138,\n  \"incomplete_results\": false,\n  \"items\": [\n    {\n      \"id\": 1329283683,\n      \"node_id\": \"R_kgDOTztCYw\",\n      \"name\": \"Adopt-Me-Script-2026---Auto-Farm---Pets---Free-Roblox--GUI\",\n      \"full_name\": \"johnclark-lab2093p9/Adopt-Me-Script-2026---Auto-Farm---Pets---Free-Roblox--GUI\",\n      \"private\": false,\n      \"owner\": {\n        \"login\": \"johnclark-lab2093p9\",\n        \"id\": 279061114,\n        \"node_id\": \"U_kgDOEKIieg\",\n        \"avatar_url\": \"https://avatars.githubusercontent.com/u/279061114?v=4\",\n        \"gravatar_id\": \"\",\n        \"url\": \"https://api.github.com/users/johnclark-lab2093p9\",\n        \"html_url\": \"https://github.com/johnclark-lab2093p9\",\n        \"followers_url\": \"https://api.github.com/users/johnclark-lab2093p9/followers\",\n        \"following_url\": \"https://api.github.com/users/johnclark-lab2093p9/following{/other_user}\",\n        \"gists_url\": \"https://api.github.com/users/johnclark-lab2093p9/gists{/gist_id}\",\n        \"starred_url\": \"https://api.github.com/users/johnclark-lab2093p9/starred{/owner}{/repo}\",\n        \"subscriptions_url\": \"https://api.github.com/users/johnclark-lab2093p9/subscriptions\",\n        \"organizations_url\": \"https://api.github.com/users/johnclark-lab2093p9/orgs\",\n        \"repos_url\": \"https://api.github.com/users/johnclark-lab2093p9/repos\",\n        \"events_url\": \"https://api.github.com/users/johnclark-lab2093p9/events{/privacy}\",\n        \"received_events_url\": \"https://api.github.com/users/johnclark-lab2093p9/received_events\",\n        \"type\": \"User\",\n        \"user_view_type\": \"public\",\n        \"site_admin\": false\n      },\n      \"html_url\": \"https://github.com/johnclark-lab2093p9/Adopt-Me-Script-2026---Auto-Farm---Pets---Free-Roblox--GUI\",\n      \"description\": null,\n      \"fork\": false,\n      \"url\": \"https://api.github.com/repos/johnclark-lab2093p9/Adopt-Me-Script-2026---Auto-Farm---Pets---Free-Roblox--GUI\",\n      \"forks_url\": \"https://api.github.com/repos/johnclark-lab2093p9/Adopt-Me-Script-2026---Auto-Farm---Pets---Free-Roblox--GUI/forks\",\n      \"keys_ur",
+ "body_bytes": 109728,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": [],
+ "method": "GET",
+ "cookie_names": []
+}

@@ -1,0 +1,37 @@
+[
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-557\",\"object\":\"chat.completion\",\"created\":1785492859,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"synonyms\\\": [\\n    \\\"RAG\\\",\\n    \\\"retrieval-augmented generation\\\"\\n  ],\\n  \\\"broader\\\": [\\n    \\\"large language models\\\",\\n    \\\"generative AI\\\"\\n  ],\\n  \\\"narrower\\\": [\\n    \\\"context window optimization\\\",\\n    \\\"hybrid search RAG\\\"\\n  ]\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":209,\"completion_tokens\":82,\"total_tokens\":291}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-889\",\"object\":\"chat.completion\",\"created\":1785492860,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"relevant\\\": false}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":147,\"completion_tokens\":6,\"total_tokens\":153}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-11\",\"object\":\"chat.completion\",\"created\":1785492861,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"relevant\\\": false}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":147,\"completion_tokens\":6,\"total_tokens\":153}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-994\",\"object\":\"chat.completion\",\"created\":1785492862,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"competitors\\\": [\\n    {\\n      \\\"name\\\": \\\"LightRAG\\\",\\n      \\\"url\\\": \\\"https://github.com/HKUDS/LightRAG\\\",\\n      \\\"source_doc_ids\\\": [\\n        \\\"doc-134916e26204\\\"\\n      ]\\n    },\\n    {\\n      \\\"name\\\": \\\"graphrag\\\",\\n      \\\"url\\\": \\\"https://github.com/microsoft/graphrag\\\",\\n      \\\"source_doc_ids\\\": [\\n        \\\"doc-118480639e4f\\\"\\n      ]\\n    }\\n  ]\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":377,\"completion_tokens\":137,\"total_tokens\":514}}\n"
+ },
+ {
+  "method": "POST",
+  "url": "http://localhost:11434/v1/chat/completions",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"id\":\"chatcmpl-720\",\"object\":\"chat.completion\",\"created\":1785492862,\"model\":\"qwen3.6:35b-a3b\",\"system_fingerprint\":\"fp_ollama\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"alignment\\\": \\\"unsupported\\\"\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":187,\"completion_tokens\":12,\"total_tokens\":199}}\n"
+ }
+]

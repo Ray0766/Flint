@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.products.example/search?q=agent+memory&limit=10",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"results\": [{\"name\": \"Agent Memory Vendor 0\", \"url\": \"https://vendor0-agent-memory.example\", \"description\": \"Commercial platform for agent memory\", \"last_activity\": \"2026-01-01\"}, {\"name\": \"Agent Memory Vendor 1\", \"url\": \"https://vendor1-agent-memory.example\", \"description\": \"Commercial platform for agent memory\", \"last_activity\": \"2026-02-01\"}, {\"name\": \"Agent Memory Vendor 2\", \"url\": \"https://vendor2-agent-memory.example\", \"description\": \"Commercial platform for agent memory\", \"last_activity\": \"2026-03-01\"}, {\"name\": \"Agent Memory Vendor 3\", \"url\": \"https://vendor3-agent-memory.example\", \"description\": \"Commercial platform for agent memory\", \"last_activity\": \"2026-04-01\"}], \"total\": 4}"
+ }
+]

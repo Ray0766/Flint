@@ -1,0 +1,25 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-052",
+ "source": "weibo",
+ "url": "https://passport.weibo.com/visitor/visitor?a=incarnate&t=01AfYolks72BTVu_l9De2hX0o11YGKRG0tMfTbhu4Ytocs&w=2&c=095&gc=&cb=cross_domain&from=weibo&_rand=1786299319.692380",
+ "requested_at_utc": "2026-08-09T18:15:19.890433+00:00",
+ "status": 200,
+ "final_url": "https://passport.weibo.com/visitor/visitor?a=incarnate&t=01AfYolks72BTVu_l9De2hX0o11YGKRG0tMfTbhu4Ytocs&w=2&c=095&gc=&cb=cross_domain&from=weibo&_rand=1786299319.692380",
+ "method": "GET",
+ "headers": {
+  "content-type": "text/javascript; charset=utf-8",
+  "server": "APISIX/3.14.1"
+ },
+ "body_head": "window.cross_domain && cross_domain({\"retcode\":20000000,\"msg\":\"succ\",\"data\":{\"sub\":\"_2AkMdJEyPf8NxqwJRmvwUymzmb4l3yQ7EieKreL1UJRMxHRl-yT9yqksDtRB6NqRiYDFBfI1XL1fCkP1ZGDjp_vh0_f07\",\"subp\":\"0033WrSXqPxfM72-Ws9jqgMF55529P9D9W5ZufZBkqwW5QLcb2l_ZdYB\"}});",
+ "body_bytes": 249,
+ "sent_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+ "left_allowed_hosts": [],
+ "cookie_names": [
+  "SRF",
+  "SRT",
+  "SUB",
+  "SUBP",
+  "SVB"
+ ]
+}

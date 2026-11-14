@@ -1,0 +1,4703 @@
+{
+  "generated_from": "tasks-v04.json",
+  "gate_commands": [
+    "ruff check . --no-cache",
+    "mypy --strict flint",
+    "pytest -q"
+  ],
+  "cards": 104,
+  "acceptance_total": 169,
+  "counts": {
+    "in_gate": 112,
+    "gauged_outside_gate": 57,
+    "no_gauge": 0
+  },
+  "weak_link_total": 3,
+  "entries": [
+    {
+      "task_id": "PRIN-01",
+      "acceptance_index": 1,
+      "acceptance": "七条各含 规则/反例/校验点/违反时 四段，校验器逐条断言四段齐全",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_principles_doc.py docs/PRINCIPLES-v04.md",
+          "files": [
+            "tools/check_principles_doc.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v04/principles/fixtures/__init__.py、tests/v04/principles/test_fixtures_load.py、tests/v041/test_doc_gates.py、tests/v041/test_gauge_map.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "PRIN-01",
+      "acceptance_index": 2,
+      "acceptance": "与工单 §3 正文逐字一致（哈希比对）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_principles_doc.py docs/PRINCIPLES-v04.md",
+          "files": [
+            "tools/check_principles_doc.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v04/principles/fixtures/__init__.py、tests/v04/principles/test_fixtures_load.py、tests/v041/test_doc_gates.py、tests/v041/test_gauge_map.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "PRIN-02",
+      "acceptance_index": 1,
+      "acceptance": "每条原则对应 1 个反例 fixture 且可被后续校验测试 import",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/principles/test_fixtures_load.py -q",
+          "files": [
+            "tests/v04/principles/test_fixtures_load.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture",
+        "import"
+      ],
+      "identifier_hits": [
+        "fixture",
+        "import"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "PRIN-02",
+      "acceptance_index": 2,
+      "acceptance": "fixture 内容与原则反例段一一对应",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/principles/test_fixtures_load.py -q",
+          "files": [
+            "tests/v04/principles/test_fixtures_load.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-01",
+      "acceptance_index": 1,
+      "acceptance": "规格含三条 v04 增补：校验输入=原文字段、译文禁入比对、译文引用可展开原文",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_grounding_spec.py docs/grounding_spec_v04.md",
+          "files": [
+            "tools/check_grounding_spec.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "v04"
+      ],
+      "identifier_hits": [
+        "v04"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-01",
+      "acceptance_index": 2,
+      "acceptance": "含 event 文本/日期一致性判据的伪码与错误类型 GroundingOnTranslationError",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_grounding_spec.py docs/grounding_spec_v04.md",
+          "files": [
+            "tools/check_grounding_spec.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "event",
+        "GroundingOnTranslationError"
+      ],
+      "identifier_hits": [
+        "event",
+        "GroundingOnTranslationError"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-02",
+      "acceptance_index": 1,
+      "acceptance": "八节各有增量条目；E2 七新表、E6 三新降级行逐条在列",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_techplan_delta.py docs/技术方案-v1.2-delta.md",
+          "files": [
+            "tools/check_techplan_delta.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-02",
+      "acceptance_index": 2,
+      "acceptance": "校验器断言八节标题齐全且引用 §4 类型名",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_techplan_delta.py docs/技术方案-v1.2-delta.md",
+          "files": [
+            "tools/check_techplan_delta.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-03",
+      "acceptance_index": 1,
+      "acceptance": "新增六类屏（设置/卡片广场/图书馆/图谱/设计台/外链查看）逐屏含状态呈现规则",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_fe_doc.py docs/前端功能说明-v2.md --min-screens 16",
+          "files": [
+            "tools/check_fe_doc.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-03",
+      "acceptance_index": 2,
+      "acceptance": "2.2 与 F 组定名方案成文并标 owner_review",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_fe_doc.py docs/前端功能说明-v2.md --min-screens 16",
+          "files": [
+            "tools/check_fe_doc.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "owner_review"
+      ],
+      "identifier_hits": [
+        "owner_review"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-04",
+      "acceptance_index": 1,
+      "acceptance": "77 张 review_gate 卡转 self_review 语义注记（原字段保留 deprecated）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/validate_dag_v04.py --base tasks.json --patch tasks-m1m4-v04-patch.json --merged",
+          "files": [
+            "tools/validate_dag_v04.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "review_gate",
+        "self_review",
+        "deprecated"
+      ],
+      "identifier_hits": [
+        "self_review"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-04",
+      "acceptance_index": 2,
+      "acceptance": "FE/FE-CORE/FV 15 卡逐张 impacted_by_v04 标记；合并 DAG acyclic 且 verify 覆盖率 1.0",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/validate_dag_v04.py --base tasks.json --patch tasks-m1m4-v04-patch.json --merged",
+          "files": [
+            "tools/validate_dag_v04.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_doc_gates.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "FE/FE-CORE/FV",
+        "FE-CORE",
+        "impacted_by_v04",
+        "DAG",
+        "acyclic",
+        "verify"
+      ],
+      "identifier_hits": [
+        "acyclic",
+        "verify"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-05",
+      "acceptance_index": 1,
+      "acceptance": "缺 4 类新屏逐一登记；tabular-nums 与 ⚠ 两问题登记并指向 DESIGN-05",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_impact_doc.py docs/handoff_gap_v04.md --require-sections screens,i18n-hardcode,known-issues",
+          "files": [
+            "tools/check_impact_doc.py"
+          ],
+          "in_gate": false,
+          "gate_evidence": "tests/ 下没有任何文件起它，pytest -q 碰不到"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "tabular-nums",
+        "DESIGN-05"
+      ],
+      "identifier_hits": [],
+      "weak_link": true
+    },
+    {
+      "task_id": "MIGRATE-05",
+      "acceptance_index": 2,
+      "acceptance": "包不在仓库时按 [待核实] 登记清单数字，NEVER 编造实测值",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_impact_doc.py docs/handoff_gap_v04.md --require-sections screens,i18n-hardcode,known-issues",
+          "files": [
+            "tools/check_impact_doc.py"
+          ],
+          "in_gate": false,
+          "gate_evidence": "tests/ 下没有任何文件起它，pytest -q 碰不到"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-06",
+      "acceptance_index": 1,
+      "acceptance": "逐场景 id 引用并声明断言不变",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_impact_doc.py docs/prod_caliber_impact_v04.md --require-refs 12",
+          "files": [
+            "tools/check_impact_doc.py"
+          ],
+          "in_gate": false,
+          "gate_evidence": "tests/ 下没有任何文件起它，pytest -q 碰不到"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-06",
+      "acceptance_index": 2,
+      "acceptance": "免费档路线数据依赖指向 K7",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_impact_doc.py docs/prod_caliber_impact_v04.md --require-refs 12",
+          "files": [
+            "tools/check_impact_doc.py"
+          ],
+          "in_gate": false,
+          "gate_evidence": "tests/ 下没有任何文件起它，pytest -q 碰不到"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-07",
+      "acceptance_index": 1,
+      "acceptance": "登记 PricingRecord 已含 currency/region 并核对 price_entries 表列与 E2 对齐",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_impact_doc.py docs/pricebook_currency_v04.md --require-sections currency,defer",
+          "files": [
+            "tools/check_impact_doc.py"
+          ],
+          "in_gate": false,
+          "gate_evidence": "tests/ 下没有任何文件起它，pytest -q 碰不到"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "PricingRecord",
+        "currency/region",
+        "currency",
+        "region",
+        "price_entries"
+      ],
+      "identifier_hits": [
+        "currency"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "MIGRATE-07",
+      "acceptance_index": 2,
+      "acceptance": "汇率/分档明确 NEVER 本轮并指向 K8",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_impact_doc.py docs/pricebook_currency_v04.md --require-sections currency,defer",
+          "files": [
+            "tools/check_impact_doc.py"
+          ],
+          "in_gate": false,
+          "gate_evidence": "tests/ 下没有任何文件起它，pytest -q 碰不到"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-00",
+      "acceptance_index": 1,
+      "acceptance": "v0.3.3 全部符号与字段在 v04 副本原样存在（AST 级比对，只加不删）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_frozen_additive.py contracts/models.py contracts_v04/models_v04.py",
+          "files": [
+            "tools/check_frozen_additive.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_delta_ephemeral.py、tests/v041/test_doc_content_contract.py、tests/v041/test_doc_gates.py、tests/v041/test_region_cn_hk.py 起起来"
+        },
+        {
+          "kind": "tool",
+          "command": "python tools/check_frozen_additive.py contracts/protocols.py contracts_v04/protocols_v04.py",
+          "files": [
+            "tools/check_frozen_additive.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_delta_ephemeral.py、tests/v041/test_doc_content_contract.py、tests/v041/test_doc_gates.py、tests/v041/test_region_cn_hk.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "v0.3.3",
+        "v04",
+        "AST"
+      ],
+      "identifier_hits": [
+        "v0.3.3",
+        "v04",
+        "AST"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-00",
+      "acceptance_index": 2,
+      "acceptance": "工单 §4 落点类名逐一对账；不符 → CONFLICTS-v04.md 映射表，NEVER 静默改名",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_frozen_additive.py contracts/models.py contracts_v04/models_v04.py",
+          "files": [
+            "tools/check_frozen_additive.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_delta_ephemeral.py、tests/v041/test_doc_content_contract.py、tests/v041/test_doc_gates.py、tests/v041/test_region_cn_hk.py 起起来"
+        },
+        {
+          "kind": "tool",
+          "command": "python tools/check_frozen_additive.py contracts/protocols.py contracts_v04/protocols_v04.py",
+          "files": [
+            "tools/check_frozen_additive.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_delta_ephemeral.py、tests/v041/test_doc_content_contract.py、tests/v041/test_doc_gates.py、tests/v041/test_region_cn_hk.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "CONFLICTS-v04.md"
+      ],
+      "identifier_hits": [],
+      "weak_link": true
+    },
+    {
+      "task_id": "SCHEMA-00",
+      "acceptance_index": 3,
+      "acceptance": "原 contracts/ 零改动（git diff 为空断言）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/check_frozen_additive.py contracts/models.py contracts_v04/models_v04.py",
+          "files": [
+            "tools/check_frozen_additive.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_delta_ephemeral.py、tests/v041/test_doc_content_contract.py、tests/v041/test_doc_gates.py、tests/v041/test_region_cn_hk.py 起起来"
+        },
+        {
+          "kind": "tool",
+          "command": "python tools/check_frozen_additive.py contracts/protocols.py contracts_v04/protocols_v04.py",
+          "files": [
+            "tools/check_frozen_additive.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_delta_ephemeral.py、tests/v041/test_doc_content_contract.py、tests/v041/test_doc_gates.py、tests/v041/test_region_cn_hk.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "contracts/",
+        "contracts",
+        "git",
+        "diff"
+      ],
+      "identifier_hits": [
+        "contracts/",
+        "contracts",
+        "diff"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-01",
+      "acceptance_index": 1,
+      "acceptance": "九区无 EU；语言仅 zh/en；权威度五值含 unknown；枚举外值构造被拒",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i1_enums.py -q",
+          "files": [
+            "tests/v04/schema/test_i1_enums.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "zh/en",
+        "unknown"
+      ],
+      "identifier_hits": [
+        "zh/en",
+        "unknown"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-02",
+      "acceptance_index": 1,
+      "acceptance": "region/source_country/authority_tier/fetch_legal_status 四字段落 Doc（schema_reconcile_prefill 预填）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i2_origin_fields.py -q",
+          "files": [
+            "tests/v04/schema/test_i2_origin_fields.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "region/source_country/authority_tier/fetch_legal_status",
+        "region",
+        "source_country",
+        "authority_tier",
+        "fetch_legal_status",
+        "Doc",
+        "schema_reconcile_prefill"
+      ],
+      "identifier_hits": [
+        "region/source_country/authority_tier/fetch_legal_status",
+        "region",
+        "source_country",
+        "authority_tier",
+        "fetch_legal_status",
+        "Doc",
+        "schema_reconcile_prefill"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-02",
+      "acceptance_index": 2,
+      "acceptance": "缺省值 unknown 生效；既有字段零改动（additive 校验穿透）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i2_origin_fields.py -q",
+          "files": [
+            "tests/v04/schema/test_i2_origin_fields.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "unknown",
+        "additive"
+      ],
+      "identifier_hits": [
+        "unknown",
+        "additive"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-03",
+      "acceptance_index": 1,
+      "acceptance": "select(region) 空表返回空集不抛错（K1 留空绕行）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i3_registry.py -q",
+          "files": [
+            "tests/v04/schema/test_i3_registry.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "select",
+        "region"
+      ],
+      "identifier_hits": [
+        "select",
+        "region"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-03",
+      "acceptance_index": 2,
+      "acceptance": "NEVER 内置任何真实站点清单（种子文件为空表断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i3_registry.py -q",
+          "files": [
+            "tests/v04/schema/test_i3_registry.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-04",
+      "acceptance_index": 1,
+      "acceptance": "translated 恒 True；translator 非空；source_field 指向原文字段名",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i5_translated_text.py -q",
+          "files": [
+            "tests/v04/schema/test_i5_translated_text.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "translated",
+        "translator",
+        "source_field"
+      ],
+      "identifier_hits": [
+        "translated",
+        "translator",
+        "source_field"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-05",
+      "acceptance_index": 1,
+      "acceptance": "name_native 写后读回字节等同（写路径拒二次赋值）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i4_names.py -q",
+          "files": [
+            "tests/v04/schema/test_i4_names.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "name_native"
+      ],
+      "identifier_hits": [
+        "name_native"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-05",
+      "acceptance_index": 2,
+      "acceptance": "name_display 槽为 TranslatedText 判别",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i4_names.py -q",
+          "files": [
+            "tests/v04/schema/test_i4_names.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "name_display",
+        "TranslatedText"
+      ],
+      "identifier_hits": [
+        "name_display",
+        "TranslatedText"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-06",
+      "acceptance_index": 1,
+      "acceptance": "日文 fixture 入库后原文字段字节等同",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i6_original_display.py -q",
+          "files": [
+            "tests/v04/schema/test_i6_original_display.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-06",
+      "acceptance_index": 2,
+      "acceptance": "派生槽独立可空；原文槽 NEVER 被翻译写入",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i6_original_display.py -q",
+          "files": [
+            "tests/v04/schema/test_i6_original_display.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-07",
+      "acceptance_index": 1,
+      "acceptance": "Block.lang 与所属 Deliverable.lang 不一致时构造/落库被拒",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i7_lang.py -q",
+          "files": [
+            "tests/v04/schema/test_i7_lang.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "Block.lang",
+        "Deliverable.lang"
+      ],
+      "identifier_hits": [
+        "Block.lang",
+        "Deliverable.lang"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-08",
+      "acceptance_index": 1,
+      "acceptance": "有向图字段齐全；source_kind 三值判别；archived 默认 False",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i8_graph.py -q",
+          "files": [
+            "tests/v04/schema/test_i8_graph.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "source_kind",
+        "archived"
+      ],
+      "identifier_hits": [
+        "source_kind",
+        "archived"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-09",
+      "acceptance_index": 1,
+      "acceptance": "evidence_snapshot 内嵌 JSON；snapshot_stale 默认 False",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i9_favorite.py -q",
+          "files": [
+            "tests/v04/schema/test_i9_favorite.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "evidence_snapshot",
+        "JSON",
+        "snapshot_stale"
+      ],
+      "identifier_hits": [
+        "evidence_snapshot",
+        "JSON",
+        "snapshot_stale"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-09",
+      "acceptance_index": 2,
+      "acceptance": "P1 采纳时的 snapshot_id 替换位以注释标记，不实现",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i9_favorite.py -q",
+          "files": [
+            "tests/v04/schema/test_i9_favorite.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "snapshot_id"
+      ],
+      "identifier_hits": [
+        "snapshot_id"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-10",
+      "acceptance_index": 1,
+      "acceptance": "slots 元组非空校验；checksum 与内容绑定",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i10_template.py -q",
+          "files": [
+            "tests/v04/schema/test_i10_template.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "slots",
+        "checksum"
+      ],
+      "identifier_hits": [
+        "slots",
+        "checksum"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-11",
+      "acceptance_index": 1,
+      "acceptance": "password 明文字段不存在（仅 hash）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i11_share.py -q",
+          "files": [
+            "tests/v04/schema/test_i11_share.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "password",
+        "hash"
+      ],
+      "identifier_hits": [
+        "password",
+        "hash"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-11",
+      "acceptance_index": 2,
+      "acceptance": "friend 通道调用抛 NotImplementedError('friends: post-v1') 断言",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i11_share.py -q",
+          "files": [
+            "tests/v04/schema/test_i11_share.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "friend",
+        "NotImplementedError",
+        "friends",
+        "post-v1"
+      ],
+      "identifier_hits": [
+        "friend",
+        "NotImplementedError",
+        "friends",
+        "post-v1"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-12",
+      "acceptance_index": 1,
+      "acceptance": "三个规定名测试函数存在且过；第二 primary 自动降级路径覆盖",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i12_invariants.py -q",
+          "files": [
+            "tests/v04/schema/test_i12_invariants.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "primary"
+      ],
+      "identifier_hits": [
+        "primary"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-12",
+      "acceptance_index": 2,
+      "acceptance": "stale 派生为纯函数层验证，运行时接线留 DESIGN-25",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i12_invariants.py -q",
+          "files": [
+            "tests/v04/schema/test_i12_invariants.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "stale",
+        "DESIGN-25"
+      ],
+      "identifier_hits": [
+        "stale",
+        "DESIGN-25"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-13",
+      "acceptance_index": 1,
+      "acceptance": "事件名全集唯一且 payload 判别可解析；design_check 三态含 unreported",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i13_events.py -q",
+          "files": [
+            "tests/v04/schema/test_i13_events.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "payload",
+        "design_check",
+        "unreported"
+      ],
+      "identifier_hits": [
+        "payload",
+        "design_check",
+        "unreported"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-13",
+      "acceptance_index": 2,
+      "acceptance": "P3 基线：delta 入 replay；ephemeral 位以注释标记采纳位",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i13_events.py -q",
+          "files": [
+            "tests/v04/schema/test_i13_events.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "delta",
+        "replay",
+        "ephemeral"
+      ],
+      "identifier_hits": [
+        "delta",
+        "replay",
+        "ephemeral"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-14",
+      "acceptance_index": 1,
+      "acceptance": "lang/region 两字段新增；locale 兼容注记入 v04 docstring",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i14_ctx_currency.py -q",
+          "files": [
+            "tests/v04/schema/test_i14_ctx_currency.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "lang/region",
+        "lang",
+        "region",
+        "locale",
+        "v04",
+        "docstring"
+      ],
+      "identifier_hits": [
+        "lang/region",
+        "lang",
+        "region",
+        "locale",
+        "v04",
+        "docstring"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-14",
+      "acceptance_index": 2,
+      "acceptance": "PricingRecord.currency/region 存在性断言 + price_entries 表列核对",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i14_ctx_currency.py -q",
+          "files": [
+            "tests/v04/schema/test_i14_ctx_currency.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "PricingRecord.currency/region",
+        "PricingRecord.currency",
+        "region",
+        "price_entries"
+      ],
+      "identifier_hits": [
+        "PricingRecord.currency/region",
+        "PricingRecord.currency",
+        "region",
+        "price_entries"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "SCHEMA-14",
+      "acceptance_index": 3,
+      "acceptance": "核实新增项 owner_review 标记在卡与文档双处",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/schema/test_i14_ctx_currency.py -q",
+          "files": [
+            "tests/v04/schema/test_i14_ctx_currency.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "owner_review"
+      ],
+      "identifier_hits": [
+        "owner_review"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-01",
+      "acceptance_index": 1,
+      "acceptance": "空表 select 走 E6 缺数据行（DegradationNote 落盘）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_registry.py -q",
+          "files": [
+            "tests/v04/region/test_registry.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "select",
+        "DegradationNote"
+      ],
+      "identifier_hits": [
+        "select",
+        "DegradationNote"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-01",
+      "acceptance_index": 2,
+      "acceptance": "他国强证据保留在选集（不隔离断言）；真实源清单 NEVER 内置（K1）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_registry.py -q",
+          "files": [
+            "tests/v04/region/test_registry.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-02",
+      "acceptance_index": 1,
+      "acceptance": "四溯源字段缺省注入；对派生槽调用接地 → GroundingOnTranslationError",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_ingest_fields.py tests/v04/region/test_grounding_original_only.py -q",
+          "files": [
+            "tests/v04/region/test_ingest_fields.py",
+            "tests/v04/region/test_grounding_original_only.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "GroundingOnTranslationError"
+      ],
+      "identifier_hits": [
+        "GroundingOnTranslationError"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-02",
+      "acceptance_index": 2,
+      "acceptance": "event 文本/日期一致性校验按 MIGRATE-01 规格实现并过反例 fixture",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_ingest_fields.py tests/v04/region/test_grounding_original_only.py -q",
+          "files": [
+            "tests/v04/region/test_ingest_fields.py",
+            "tests/v04/region/test_grounding_original_only.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "event",
+        "MIGRATE-01",
+        "fixture"
+      ],
+      "identifier_hits": [
+        "event",
+        "MIGRATE-01",
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-03",
+      "acceptance_index": 1,
+      "acceptance": "仅 unknown 证据支撑时判 A/B 被门拒（独立于评分公式）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_unknown_tier_gate.py -q",
+          "files": [
+            "tests/v04/region/test_unknown_tier_gate.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "unknown",
+        "A/B"
+      ],
+      "identifier_hits": [
+        "unknown",
+        "A/B"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-03",
+      "acceptance_index": 2,
+      "acceptance": "门为 verdict 前置检查，评分权重不动（K3）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_unknown_tier_gate.py -q",
+          "files": [
+            "tests/v04/region/test_unknown_tier_gate.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "verdict"
+      ],
+      "identifier_hits": [
+        "verdict"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-04",
+      "acceptance_index": 1,
+      "acceptance": "双区同事件 fixture → 2 簇 0 合并",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_cluster_bucketing.py -q",
+          "files": [
+            "tests/v04/region/test_cluster_bucketing.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-04",
+      "acceptance_index": 2,
+      "acceptance": "簇成员 region 单一性断言 all(len({m.region})==1)",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_cluster_bucketing.py -q",
+          "files": [
+            "tests/v04/region/test_cluster_bucketing.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "region",
+        "len",
+        "m.region"
+      ],
+      "identifier_hits": [
+        "region",
+        "len",
+        "m.region"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-05",
+      "acceptance_index": 1,
+      "acceptance": "建组/解组端点幂等；embedding 相似度路径不存在（模块导出面断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_same_event_group.py -q",
+          "files": [
+            "tests/v04/region/test_same_event_group.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "embedding"
+      ],
+      "identifier_hits": [
+        "embedding"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-06",
+      "acceptance_index": 1,
+      "acceptance": "axis 体系接入 authority 轴（记于 EvidenceScore.components）且权重 1.0 带 revisit(K3) 标记",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_scorer_axis.py -q",
+          "files": [
+            "tests/v04/region/test_scorer_axis.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "axis",
+        "authority",
+        "EvidenceScore.components",
+        "revisit"
+      ],
+      "identifier_hits": [
+        "axis",
+        "authority"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-06",
+      "acceptance_index": 2,
+      "acceptance": "金标回归子集 fixture 分数不漂移（守护断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_scorer_axis.py -q",
+          "files": [
+            "tests/v04/region/test_scorer_axis.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-07",
+      "acceptance_index": 1,
+      "acceptance": "restricted 源抓取任务被拒并落 DegradationNote",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_fetch_legal_gate.py -q",
+          "files": [
+            "tests/v04/region/test_fetch_legal_gate.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "restricted",
+        "DegradationNote"
+      ],
+      "identifier_hits": [
+        "restricted",
+        "DegradationNote"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-07",
+      "acceptance_index": 2,
+      "acceptance": "测试层网络护栏：真实 http 调用被拦截（respx 全域断言，S2-7）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_fetch_legal_gate.py -q",
+          "files": [
+            "tests/v04/region/test_fetch_legal_gate.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "http",
+        "respx",
+        "S2-7"
+      ],
+      "identifier_hits": [
+        "http",
+        "respx",
+        "S2-7"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-08",
+      "acceptance_index": 1,
+      "acceptance": "分歧 fixture 输出 ≥2 列；合成结论句黑名单零命中",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_by_source_regions.py -q",
+          "files": [
+            "tests/v04/region/test_by_source_regions.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "REGION-08",
+      "acceptance_index": 2,
+      "acceptance": "复用既有分列机制（import 来源断言，H6）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/region/test_by_source_regions.py -q",
+          "files": [
+            "tests/v04/region/test_by_source_regions.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "import"
+      ],
+      "identifier_hits": [
+        "import"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-01",
+      "acceptance_index": 1,
+      "acceptance": "依赖过 RegistryValidator 并锁版记录在案",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run lib/i18n",
+          "files": [
+            "web/lib/i18n/config.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "RegistryValidator"
+      ],
+      "identifier_hits": [],
+      "weak_link": true
+    },
+    {
+      "task_id": "I18N-01",
+      "acceptance_index": 2,
+      "acceptance": "zh 默认、en 可切；未登录回落 zh",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run lib/i18n",
+          "files": [
+            "web/lib/i18n/config.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-02",
+      "acceptance_index": 1,
+      "acceptance": "components 目录 CJK 字面量=0（白名单推进制，白名单须为空收尾）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/i18n_scan.mjs web/components --fail-on-cjk",
+          "files": [
+            "tools/i18n_scan.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_i18n_keys_defined.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "components",
+        "CJK"
+      ],
+      "identifier_hits": [
+        "components",
+        "CJK"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-02",
+      "acceptance_index": 2,
+      "acceptance": "扫描器兼具 B7 静态规则：embedding/检索调用点仅引 native 字段",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/i18n_scan.mjs web/components --fail-on-cjk",
+          "files": [
+            "tools/i18n_scan.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_i18n_keys_defined.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "embedding/",
+        "embedding",
+        "native"
+      ],
+      "identifier_hits": [
+        "embedding",
+        "native"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-03",
+      "acceptance_index": 1,
+      "acceptance": "接口单点、fixture/identity 实现（K4 选型位）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/i18n/test_translator.py -q",
+          "files": [
+            "tests/v04/i18n/test_translator.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture/identity",
+        "fixture",
+        "identity"
+      ],
+      "identifier_hits": [
+        "fixture/identity",
+        "fixture",
+        "identity"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-03",
+      "acceptance_index": 2,
+      "acceptance": "缓存键=原文字节+目标语+版本；服务不可用 → 降级信号（A7）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/i18n/test_translator.py -q",
+          "files": [
+            "tests/v04/i18n/test_translator.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-04",
+      "acceptance_index": 1,
+      "acceptance": "主行==native 字节等同；次要行带机翻标记",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/i18n/test_name_display.py -q",
+          "files": [
+            "tests/v04/i18n/test_name_display.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        },
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/native-name",
+          "files": [
+            "web/components/native-name/NativeName.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "native"
+      ],
+      "identifier_hits": [
+        "native"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-04",
+      "acceptance_index": 2,
+      "acceptance": "translate 作业注册进既有 JobRunner（H7 断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/i18n/test_name_display.py -q",
+          "files": [
+            "tests/v04/i18n/test_name_display.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        },
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/native-name",
+          "files": [
+            "web/components/native-name/NativeName.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "translate",
+        "JobRunner"
+      ],
+      "identifier_hits": [
+        "translate",
+        "JobRunner"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-05",
+      "acceptance_index": 1,
+      "acceptance": "译文引用必带原文展开交互；无原文数据时只显原文槽",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/quote-slot",
+          "files": [
+            "web/components/quote-slot/QuoteSlot.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-05",
+      "acceptance_index": 2,
+      "acceptance": "展开态渲染 source_field 指向的原文字节",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/quote-slot",
+          "files": [
+            "web/components/quote-slot/QuoteSlot.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "source_field"
+      ],
+      "identifier_hits": [
+        "source_field"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-06",
+      "acceptance_index": 1,
+      "acceptance": "服务端为真相；前端 store 无 localStorage 读写（源码断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/i18n/test_profile_prefs.py -q",
+          "files": [
+            "tests/v04/i18n/test_profile_prefs.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        },
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run stores/prefs",
+          "files": [
+            "web/stores/prefs.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "store",
+        "localStorage"
+      ],
+      "identifier_hits": [
+        "store",
+        "localStorage"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-06",
+      "acceptance_index": 2,
+      "acceptance": "跨设备一致：二端模拟读到同值",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/i18n/test_profile_prefs.py -q",
+          "files": [
+            "tests/v04/i18n/test_profile_prefs.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        },
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run stores/prefs",
+          "files": [
+            "web/stores/prefs.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-07",
+      "acceptance_index": 1,
+      "acceptance": "9×2 组合逐组过四断言（locale/源集/热点 hash/Deliverable.lang）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/orthogonality_check.py --combos all",
+          "files": [
+            "tools/orthogonality_check.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_locale_seam_regions.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "locale/",
+        "locale",
+        "hash/Deliverable.lang",
+        "hash",
+        "Deliverable.lang"
+      ],
+      "identifier_hits": [
+        "locale",
+        "hash",
+        "Deliverable.lang"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-07",
+      "acceptance_index": 2,
+      "acceptance": "任一断言破 → 非零退出并列出组合与断言号",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "python tools/orthogonality_check.py --combos all",
+          "files": [
+            "tools/orthogonality_check.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_locale_seam_regions.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-08",
+      "acceptance_index": 1,
+      "acceptance": "切 region 触发热点集合刷新且 locale 不变（双断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/region-switch",
+          "files": [
+            "web/components/region-switch/RegionSwitch.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "region",
+        "locale"
+      ],
+      "identifier_hits": [
+        "region",
+        "locale"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-08",
+      "acceptance_index": 2,
+      "acceptance": "九区枚举渲染完整、无 EU 项",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/region-switch",
+          "files": [
+            "web/components/region-switch/RegionSwitch.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-01",
+      "acceptance_index": 1,
+      "acceptance": "六信息槽齐全；字段缺失逐槽隐藏 NEVER 假数据占位",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/hotspot-card",
+          "files": [
+            "web/components/hotspot-card/HotspotCard.test.tsx",
+            "web/components/hotspot-card-actions/HotspotCardActions.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-01",
+      "acceptance_index": 2,
+      "acceptance": "主行恒 name_native（组件树断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/hotspot-card",
+          "files": [
+            "web/components/hotspot-card/HotspotCard.test.tsx",
+            "web/components/hotspot-card-actions/HotspotCardActions.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "name_native"
+      ],
+      "identifier_hits": [
+        "name_native"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-02",
+      "acceptance_index": 1,
+      "acceptance": "三 handler 独立触发；动作区点击不冒泡到卡片跳转（双断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/hotspot-card-actions",
+          "files": [
+            "web/components/hotspot-card-actions/HotspotCardActions.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "handler"
+      ],
+      "identifier_hits": [
+        "handler"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-03",
+      "acceptance_index": 1,
+      "acceptance": "进入即渲染既有判定与证据概览；无任何新分析调用（网络层 spy）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/analysis",
+          "files": [
+            "web/views/analysis/AnalysisView.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/hotspot/test_analysis_view_api.py -q",
+          "files": [
+            "tests/v04/hotspot/test_analysis_view_api.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "spy"
+      ],
+      "identifier_hits": [
+        "spy"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-03",
+      "acceptance_index": 2,
+      "acceptance": "界面语言=系统语言（C11）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/analysis",
+          "files": [
+            "web/views/analysis/AnalysisView.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/hotspot/test_analysis_view_api.py -q",
+          "files": [
+            "tests/v04/hotspot/test_analysis_view_api.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "C11"
+      ],
+      "identifier_hits": [
+        "C11"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-04",
+      "acceptance_index": 1,
+      "acceptance": "job 提交走既有 runner（H7）；LLM 恒 mock 注入 NEVER 真实调用",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/hotspot/test_deep_job.py -q",
+          "files": [
+            "tests/v04/hotspot/test_deep_job.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "job",
+        "runner",
+        "LLM",
+        "mock"
+      ],
+      "identifier_hits": [
+        "job",
+        "runner",
+        "LLM",
+        "mock"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-04",
+      "acceptance_index": 2,
+      "acceptance": "计费落点为配置开关（K7 两态皆可运行）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/hotspot/test_deep_job.py -q",
+          "files": [
+            "tests/v04/hotspot/test_deep_job.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-05",
+      "acceptance_index": 1,
+      "acceptance": "缓存键=cluster+lang+档位+账本版本；二次请求 0 新 job 断言",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/hotspot/test_analysis_cache.py -q",
+          "files": [
+            "tests/v04/hotspot/test_analysis_cache.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "cluster",
+        "lang",
+        "job"
+      ],
+      "identifier_hits": [
+        "cluster",
+        "lang",
+        "job"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-06",
+      "acceptance_index": 1,
+      "acceptance": "适配器 import 自 contracts 通道（H1 断言）；无新比对实现",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/hotspot/test_analysis_stale_adapter.py -q",
+          "files": [
+            "tests/v04/hotspot/test_analysis_stale_adapter.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "import",
+        "contracts"
+      ],
+      "identifier_hits": [
+        "import",
+        "contracts"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-07",
+      "acceptance_index": 1,
+      "acceptance": "分歧 fixture 渲染 ≥2 列；合成句黑名单零命中（前端复检）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/source-columns",
+          "files": [
+            "web/components/source-columns/attribution.test.tsx",
+            "web/components/source-columns/SourceColumns.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-08",
+      "acceptance_index": 1,
+      "acceptance": "匿名 viewer 走同一 auth dependency（H2 路由表断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/share/test_link.py -q",
+          "files": [
+            "tests/v04/share/test_link.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "viewer",
+        "auth",
+        "dependency"
+      ],
+      "identifier_hits": [
+        "viewer",
+        "auth",
+        "dependency"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-08",
+      "acceptance_index": 2,
+      "acceptance": "过期 410 / 密码错 401 / 改写请求 403；明文密码不落库",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/share/test_link.py -q",
+          "files": [
+            "tests/v04/share/test_link.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-09",
+      "acceptance_index": 1,
+      "acceptance": "入台项调 GRAPH-02 端点（E1 零新链路）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/share-menu",
+          "files": [
+            "web/components/share-menu/ShareMenu.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/share/test_friend_stub.py -q",
+          "files": [
+            "tests/v04/share/test_friend_stub.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "GRAPH-02"
+      ],
+      "identifier_hits": [
+        "GRAPH-02"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "HOTSPOT-09",
+      "acceptance_index": 2,
+      "acceptance": "friend 项渲染「即将上线」且后端抛 NotImplementedError 断言",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/share-menu",
+          "files": [
+            "web/components/share-menu/ShareMenu.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/share/test_friend_stub.py -q",
+          "files": [
+            "tests/v04/share/test_friend_stub.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "friend",
+        "NotImplementedError"
+      ],
+      "identifier_hits": [
+        "friend",
+        "NotImplementedError"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-01",
+      "acceptance_index": 1,
+      "acceptance": "收藏后改源 fixture → 快照字节不变",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/fav/test_snapshot_freeze.py -q",
+          "files": [
+            "tests/v04/fav/test_snapshot_freeze.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-01",
+      "acceptance_index": 2,
+      "acceptance": "P1 采纳位以注释标记（pin 路径），基线不实现",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/fav/test_snapshot_freeze.py -q",
+          "files": [
+            "tests/v04/fav/test_snapshot_freeze.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "pin"
+      ],
+      "identifier_hits": [
+        "pin"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-02",
+      "acceptance_index": 1,
+      "acceptance": "stale 判定复用 H1 适配器（import 断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/fav/test_snapshot_stale.py -q",
+          "files": [
+            "tests/v04/fav/test_snapshot_stale.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "stale",
+        "import"
+      ],
+      "identifier_hits": [
+        "stale",
+        "import"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-02",
+      "acceptance_index": 2,
+      "acceptance": "refresh 生成新快照且旧值保留历史",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/fav/test_snapshot_stale.py -q",
+          "files": [
+            "tests/v04/fav/test_snapshot_stale.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "refresh"
+      ],
+      "identifier_hits": [
+        "refresh"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-03",
+      "acceptance_index": 1,
+      "acceptance": "created_at/region/verdict_at_save/in_workbench 四排序生效",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/library",
+          "files": [
+            "web/views/library/Library.test.tsx",
+            "web/views/library-batch/LibraryBatch.test.tsx",
+            "web/views/library-empty/LibraryEmpty.test.tsx",
+            "web/views/library-filters/LibraryFilters.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "created_at/region/verdict_at_save/in_workbench",
+        "created_at",
+        "region",
+        "verdict_at_save",
+        "in_workbench"
+      ],
+      "identifier_hits": [
+        "created_at",
+        "region",
+        "verdict_at_save",
+        "in_workbench"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-03",
+      "acceptance_index": 2,
+      "acceptance": "卡片复用 HOTSPOT-01 组件（不复制）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/library",
+          "files": [
+            "web/views/library/Library.test.tsx",
+            "web/views/library-batch/LibraryBatch.test.tsx",
+            "web/views/library-empty/LibraryEmpty.test.tsx",
+            "web/views/library-filters/LibraryFilters.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "HOTSPOT-01"
+      ],
+      "identifier_hits": [
+        "HOTSPOT-01"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-04",
+      "acceptance_index": 1,
+      "acceptance": "三过滤器可组合；空结果态有引导文案（key 化）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/library-filters",
+          "files": [
+            "web/views/library-filters/LibraryFilters.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "key"
+      ],
+      "identifier_hits": [
+        "key"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-05",
+      "acceptance_index": 1,
+      "acceptance": "部分失败整体回滚 + 报错清单（事务断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/library-batch",
+          "files": [
+            "web/views/library-batch/LibraryBatch.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/fav/test_batch_ops.py -q",
+          "files": [
+            "tests/v04/fav/test_batch_ops.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "FAV-06",
+      "acceptance_index": 1,
+      "acceptance": "空态文案全 key 化；引导跳转指向广场路由",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/library-empty",
+          "files": [
+            "web/views/library-empty/LibraryEmpty.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "key"
+      ],
+      "identifier_hits": [
+        "key"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-01",
+      "acceptance_index": 1,
+      "acceptance": "/workbench 路由归 F 组（J4 定名）；容器不含 mode 概念",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/workbench-shell",
+          "files": [
+            "web/views/workbench-shell/WorkbenchShell.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "workbench",
+        "mode"
+      ],
+      "identifier_hits": [
+        "workbench",
+        "mode"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-02",
+      "acceptance_index": 1,
+      "acceptance": "同 source 二次入台幂等返回既有节点",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/graph/test_store.py -q",
+          "files": [
+            "tests/v04/graph/test_store.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "source"
+      ],
+      "identifier_hits": [
+        "source"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-02",
+      "acceptance_index": 2,
+      "acceptance": "hypothesis 校验函数 import 自 combo 通道模块（H8 断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/graph/test_store.py -q",
+          "files": [
+            "tests/v04/graph/test_store.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "hypothesis",
+        "import",
+        "combo"
+      ],
+      "identifier_hits": [
+        "hypothesis",
+        "import",
+        "combo"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-03",
+      "acceptance_index": 1,
+      "acceptance": "region/日期/stale/判定辅助槽齐全；子组件复用不复制",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-node",
+          "files": [
+            "web/components/graph-node/GraphNode.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "region/",
+        "region",
+        "stale/",
+        "stale"
+      ],
+      "identifier_hits": [
+        "region/",
+        "region",
+        "stale/",
+        "stale"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-04",
+      "acceptance_index": 1,
+      "acceptance": "拖动期零写请求；松手 1 次 PATCH；失败回弹原位",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-drag",
+          "files": [
+            "web/components/graph-drag/GraphDrag.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "PATCH"
+      ],
+      "identifier_hits": [
+        "PATCH"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-05",
+      "acceptance_index": 1,
+      "acceptance": "抽屉复用分析视图组件；路由不跳转断言",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-open-analysis",
+          "files": [
+            "web/components/graph-open-analysis/GraphOpenAnalysis.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-06",
+      "acceptance_index": 1,
+      "acceptance": "设第二主 → 旧主自动降 secondary + toast（NEVER 确认对话框）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-roles",
+          "files": [
+            "web/components/graph-roles/GraphRoles.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/graph/test_primary_unique_runtime.py -q",
+          "files": [
+            "tests/v04/graph/test_primary_unique_runtime.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "secondary",
+        "toast"
+      ],
+      "identifier_hits": [
+        "secondary",
+        "toast"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-06",
+      "acceptance_index": 2,
+      "acceptance": "服务端并发双写下 primary ≤1 仍成立",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-roles",
+          "files": [
+            "web/components/graph-roles/GraphRoles.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/graph/test_primary_unique_runtime.py -q",
+          "files": [
+            "tests/v04/graph/test_primary_unique_runtime.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "primary"
+      ],
+      "identifier_hits": [
+        "primary"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-07",
+      "acceptance_index": 1,
+      "acceptance": "松手弹假设框；空值前端不发请求；绕过前端直发 → 422 EMPTY_HYPOTHESIS",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-edge",
+          "files": [
+            "web/components/graph-edge/GraphEdge.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/graph/test_edge_hypothesis.py -q",
+          "files": [
+            "tests/v04/graph/test_edge_hypothesis.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "EMPTY_HYPOTHESIS"
+      ],
+      "identifier_hits": [
+        "EMPTY_HYPOTHESIS"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-07",
+      "acceptance_index": 2,
+      "acceptance": "校验复用 H8 函数（import 断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-edge",
+          "files": [
+            "web/components/graph-edge/GraphEdge.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/graph/test_edge_hypothesis.py -q",
+          "files": [
+            "tests/v04/graph/test_edge_hypothesis.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "import"
+      ],
+      "identifier_hits": [
+        "import"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-08",
+      "acceptance_index": 1,
+      "acceptance": "存在空假设边 → 按钮置灰+计数徽章+点击高亮定位",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-generate-gate",
+          "files": [
+            "web/components/graph-generate-gate/GenerateGate.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-08",
+      "acceptance_index": 2,
+      "acceptance": "摘要条列 primary/边数/假设完整度三项",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-generate-gate",
+          "files": [
+            "web/components/graph-generate-gate/GenerateGate.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "primary/",
+        "primary"
+      ],
+      "identifier_hits": [
+        "primary"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-09",
+      "acceptance_index": 1,
+      "acceptance": "批量设 primary 时仍只留最后一个为主（约束穿透断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run components/graph-multiselect",
+          "files": [
+            "web/components/graph-multiselect/GraphMultiSelect.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "primary"
+      ],
+      "identifier_hits": [
+        "primary"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-10",
+      "acceptance_index": 1,
+      "acceptance": "图谱操作与既有视图共用一条链（全局栈实例唯一断言，H5）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run lib/undo",
+          "files": [
+            "web/lib/undo/undoStack.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-10",
+      "acceptance_index": 2,
+      "acceptance": "跨视图交替操作后连续 undo 顺序正确",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run lib/undo",
+          "files": [
+            "web/lib/undo/undoStack.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "undo"
+      ],
+      "identifier_hits": [
+        "undo"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-11",
+      "acceptance_index": 1,
+      "acceptance": "迭代收敛后停止（无持续 rAF 断言）；50 节点内布局完成",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run lib/graph-layout",
+          "files": [
+            "web/lib/graph-layout/forceLayout.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "rAF"
+      ],
+      "identifier_hits": [
+        "rAF"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-11",
+      "acceptance_index": 2,
+      "acceptance": "package.json 无新增布局依赖",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run lib/graph-layout",
+          "files": [
+            "web/lib/graph-layout/forceLayout.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "package.json"
+      ],
+      "identifier_hits": [
+        "package.json"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-12",
+      "acceptance_index": 1,
+      "acceptance": "同一存储双投影一致（图↔树切换零丢节点）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/graph-tree",
+          "files": [
+            "web/views/graph-tree/GraphTree.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-12",
+      "acceptance_index": 2,
+      "acceptance": "未连接节点入独立区",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/graph-tree",
+          "files": [
+            "web/views/graph-tree/GraphTree.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-13",
+      "acceptance_index": 1,
+      "acceptance": "触摸端拖/连 handler 不挂载；双击开分析仍可用",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/graph-mobile",
+          "files": [
+            "web/views/graph-mobile/GraphMobile.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "handler"
+      ],
+      "identifier_hits": [
+        "handler"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-14",
+      "acceptance_index": 1,
+      "acceptance": "多台 CRUD 与 archived 生效；多台 UI 入口 flag off 断言",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/graph/test_multi_workbench_store.py -q",
+          "files": [
+            "tests/v04/graph/test_multi_workbench_store.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "CRUD",
+        "archived",
+        "flag",
+        "off"
+      ],
+      "identifier_hits": [
+        "CRUD",
+        "archived",
+        "flag",
+        "off"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-15",
+      "acceptance_index": 1,
+      "acceptance": "空态文案 key 化；引导指向广场",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/workbench-empty",
+          "files": [
+            "web/views/workbench-empty/WorkbenchEmpty.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "key"
+      ],
+      "identifier_hits": [
+        "key"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-16",
+      "acceptance_index": 1,
+      "acceptance": "store 键集无 mode（断言）；「默认/AI」仅存在于预设文案层",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/workbench-tabs",
+          "files": [
+            "web/views/workbench-tabs/WorkbenchTabs.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "store",
+        "mode"
+      ],
+      "identifier_hits": [
+        "store",
+        "mode"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "GRAPH-16",
+      "acceptance_index": 2,
+      "acceptance": "被划掉时仅移除本卡，零下游",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run views/workbench-tabs",
+          "files": [
+            "web/views/workbench-tabs/WorkbenchTabs.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-01",
+      "acceptance_index": 1,
+      "acceptance": "delta 边到边渲染 NEVER 等整回合（流式断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/chat-panel",
+          "files": [
+            "web/design/chat-panel/ChatPanel.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_stream_events.py -q",
+          "files": [
+            "tests/v04/design/test_stream_events.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "delta"
+      ],
+      "identifier_hits": [
+        "delta"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-01",
+      "acceptance_index": 2,
+      "acceptance": "replay 截断参数生效并在 trace 登记 P3 风险",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/chat-panel",
+          "files": [
+            "web/design/chat-panel/ChatPanel.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_stream_events.py -q",
+          "files": [
+            "tests/v04/design/test_stream_events.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "replay",
+        "trace"
+      ],
+      "identifier_hits": [
+        "replay",
+        "trace"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-02",
+      "acceptance_index": 1,
+      "acceptance": "srcdoc 直挂；Babel/构建器 import 黑名单零命中",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/renderer",
+          "files": [
+            "web/design/renderer/SrcdocRenderer.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "srcdoc",
+        "Babel/",
+        "Babel",
+        "import"
+      ],
+      "identifier_hits": [
+        "srcdoc",
+        "Babel/",
+        "Babel",
+        "import"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-03",
+      "acceptance_index": 1,
+      "acceptance": "HtmlRenderer/HtmlPatcher/HtmlExporter 可用；Jsx 三接口存在且抛 NotImplementedError",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/interfaces",
+          "files": [
+            "web/design/interfaces/designInterfaces.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "HtmlRenderer/HtmlPatcher/HtmlExporter",
+        "HtmlRenderer",
+        "HtmlPatcher",
+        "HtmlExporter",
+        "Jsx",
+        "NotImplementedError"
+      ],
+      "identifier_hits": [
+        "HtmlRenderer/HtmlPatcher/HtmlExporter",
+        "HtmlRenderer",
+        "HtmlPatcher",
+        "HtmlExporter",
+        "Jsx",
+        "NotImplementedError"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-04",
+      "acceptance_index": 1,
+      "acceptance": "样板引用 _ds 变量；新建 token 扫描零命中",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/ds-mount",
+          "files": [
+            "web/design/ds-mount/dsMount.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "_ds",
+        "token"
+      ],
+      "identifier_hits": [
+        "_ds",
+        "token"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-05",
+      "acceptance_index": 1,
+      "acceptance": "数字容器 .num/tabular-nums 覆盖；⚠ 字符零残留（lucide 替换）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/scan_ds_assets.mjs web/public/_ds --tabular-nums --no-warn-emoji",
+          "files": [
+            "tools/scan_ds_assets.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_scan_ds_skip.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "num/tabular-nums",
+        "num",
+        "tabular-nums",
+        "lucide"
+      ],
+      "identifier_hits": [
+        "num",
+        "tabular-nums"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-06",
+      "acceptance_index": 1,
+      "acceptance": "30+ 调用折叠态高度 ≤40px（样式断言）；展开可回看全量",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/tool-timeline",
+          "files": [
+            "web/design/tool-timeline/ToolTimeline.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-07",
+      "acceptance_index": 1,
+      "acceptance": "每题带「由你决定」；全局「全部由你决定」一键；未答复输入框禁用",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/clarify-cards",
+          "files": [
+            "web/design/clarify-cards/ClarifyCards.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-08",
+      "acceptance_index": 1,
+      "acceptance": "拖动只 patch CSS 变量（srcdoc 重建 spy=0）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/tweaks",
+          "files": [
+            "web/design/tweaks/tweaks.test.ts",
+            "web/design/tweaks-denylist/denylist.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "patch",
+        "CSS",
+        "srcdoc",
+        "spy"
+      ],
+      "identifier_hits": [
+        "patch",
+        "CSS",
+        "srcdoc",
+        "spy"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-08",
+      "acceptance_index": 2,
+      "acceptance": "回写按字节区间、缩进保持（diff 最小断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/tweaks",
+          "files": [
+            "web/design/tweaks/tweaks.test.ts",
+            "web/design/tweaks-denylist/denylist.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "diff"
+      ],
+      "identifier_hits": [
+        "diff"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-09",
+      "acceptance_index": 1,
+      "acceptance": "evidence/confidence/threshold/filter/hide/count 参数名提取报错且不入面板",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/tweaks-denylist",
+          "files": [
+            "web/design/tweaks-denylist/denylist.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "evidence/confidence/threshold/filter/hide/count",
+        "evidence",
+        "confidence",
+        "threshold",
+        "filter",
+        "hide",
+        "count"
+      ],
+      "identifier_hits": [
+        "evidence/confidence/threshold/filter/hide/count",
+        "evidence",
+        "confidence",
+        "threshold",
+        "filter",
+        "hide",
+        "count"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-10",
+      "acceptance_index": 1,
+      "acceptance": "落点顺序 工具类→style，全局 CSS 写入路径不存在",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/direct-edit",
+          "files": [
+            "web/design/direct-edit/directEdit.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "style",
+        "CSS"
+      ],
+      "identifier_hits": [
+        "style",
+        "CSS"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-10",
+      "acceptance_index": 2,
+      "acceptance": "导出产物零 data-loc 属性",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/direct-edit",
+          "files": [
+            "web/design/direct-edit/directEdit.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "data-loc"
+      ],
+      "identifier_hits": [
+        "data-loc"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-11",
+      "acceptance_index": 1,
+      "acceptance": "检查点含 VFS+图谱状态双份；恢复产生新检查点且历史不可变",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_checkpoints.py -q",
+          "files": [
+            "tests/v04/design/test_checkpoints.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "VFS"
+      ],
+      "identifier_hits": [
+        "VFS"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-12",
+      "acceptance_index": 1,
+      "acceptance": "元素消失 → 坐标锚降级仍可见",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/comments",
+          "files": [
+            "web/design/comments/CommentLayer.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_comment_job.py -q",
+          "files": [
+            "tests/v04/design/test_comment_job.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-12",
+      "acceptance_index": 2,
+      "acceptance": "「让 AI 处理」把评论注入下一 job 上下文（断言）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/comments",
+          "files": [
+            "web/design/comments/CommentLayer.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_comment_job.py -q",
+          "files": [
+            "tests/v04/design/test_comment_job.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "job"
+      ],
+      "identifier_hits": [
+        "job"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-13",
+      "acceptance_index": 1,
+      "acceptance": "三态视觉可区分（aria+class）；unreported 渲染 NEVER 等同 passed",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/check-tristate",
+          "files": [
+            "web/design/check-tristate/CheckStatus.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "aria",
+        "class",
+        "unreported",
+        "passed"
+      ],
+      "identifier_hits": [
+        "aria",
+        "class",
+        "unreported",
+        "passed"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-14",
+      "acceptance_index": 1,
+      "acceptance": "三行为齐全；退出恢复原态",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/present-mode",
+          "files": [
+            "web/design/present-mode/PresentMode.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-15",
+      "acceptance_index": 1,
+      "acceptance": "三种导出调用栈 import 自既有管线（H3 断言）；零新导出器",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_export_reuse.py -q",
+          "files": [
+            "tests/v04/design/test_export_reuse.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "import"
+      ],
+      "identifier_hits": [
+        "import"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-16",
+      "acceptance_index": 1,
+      "acceptance": "两判据命中 → 拒绝并列阻塞项清单",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_export_gate_base.py -q",
+          "files": [
+            "tests/v04/design/test_export_gate_base.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-16",
+      "acceptance_index": 2,
+      "acceptance": "沿审11 blocking 语义（P2 基线：判据在调用点）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_export_gate_base.py -q",
+          "files": [
+            "tests/v04/design/test_export_gate_base.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "blocking"
+      ],
+      "identifier_hits": [
+        "blocking"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-17",
+      "acceptance_index": 1,
+      "acceptance": "列表读环境配置；扫描器零命中硬编码模型名",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/model-picker",
+          "files": [
+            "web/design/model-picker/ModelPicker.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        },
+        {
+          "kind": "tool",
+          "command": "node tools/no_hardcoded_models.mjs web",
+          "files": [
+            "tools/no_hardcoded_models.mjs"
+          ],
+          "in_gate": false,
+          "gate_evidence": "tests/ 下没有任何文件起它，pytest -q 碰不到"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-18",
+      "acceptance_index": 1,
+      "acceptance": "用量与耗时随 job 落库并可查询",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_usage_metrics.py -q",
+          "files": [
+            "tests/v04/design/test_usage_metrics.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "job"
+      ],
+      "identifier_hits": [
+        "job"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-19",
+      "acceptance_index": 1,
+      "acceptance": "L0 概览+章节结构；375px 容器无横向滚动断言",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/multipage",
+          "files": [
+            "web/design/multipage/MultiPageDoc.test.tsx"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-20",
+      "acceptance_index": 1,
+      "acceptance": "白名单外 script/link 剥除并报错列出",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/dep-whitelist",
+          "files": [
+            "web/design/dep-whitelist/depWhitelist.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "script/link",
+        "script",
+        "link"
+      ],
+      "identifier_hits": [
+        "script/link",
+        "script",
+        "link"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-21",
+      "acceptance_index": 1,
+      "acceptance": "web 全目录外部字体 URL 扫描零命中",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/no_external_fonts.mjs web",
+          "files": [
+            "tools/no_external_fonts.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_dark_palette.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "URL"
+      ],
+      "identifier_hits": [
+        "URL"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-22",
+      "acceptance_index": 1,
+      "acceptance": "⌘⏎/⌘Z/⌘\\/⌘1/⌘2/⌘K 六绑定生效且可在设置查看",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/shortcuts",
+          "files": [
+            "web/design/shortcuts/shortcuts.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-23",
+      "acceptance_index": 1,
+      "acceptance": "进度条绑定仅 JobView.progress/骨架屏；emoji 图标零命中，lucide 线性统一",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/lint_no_confidence_viz.mjs web",
+          "files": [
+            "tools/lint_no_confidence_viz.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_disputed_mark_visible.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "JobView.progress/",
+        "JobView.progress",
+        "emoji",
+        "lucide"
+      ],
+      "identifier_hits": [
+        "JobView.progress",
+        "emoji"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-24",
+      "acceptance_index": 1,
+      "acceptance": "Tab 可达全交互点；reduced-motion 下动效时长为 0",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/a11y",
+          "files": [
+            "web/design/a11y/a11y.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "Tab",
+        "reduced-motion"
+      ],
+      "identifier_hits": [
+        "Tab",
+        "reduced-motion"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-25",
+      "acceptance_index": 1,
+      "acceptance": "graph_stale_notice 触发标黄；自动重跑路径不存在（断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_graph_stale_link.py -q",
+          "files": [
+            "tests/v04/design/test_graph_stale_link.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "graph_stale_notice"
+      ],
+      "identifier_hits": [
+        "graph_stale_notice"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-25",
+      "acceptance_index": 2,
+      "acceptance": "「查看差异/重新生成」两动作可用",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_graph_stale_link.py -q",
+          "files": [
+            "tests/v04/design/test_graph_stale_link.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-26",
+      "acceptance_index": 1,
+      "acceptance": "点节点滚动到首引用 Block；点 Block 高亮来源节点",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/cross-highlight",
+          "files": [
+            "web/design/cross-highlight/crossHighlight.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "Block"
+      ],
+      "identifier_hits": [
+        "Block"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-27",
+      "acceptance_index": 1,
+      "acceptance": "数字 XX.X% 与 [来源待补]/SRC-XXXX 语法强制；文件名 -mock 后缀",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/mock-identity",
+          "files": [
+            "web/design/mock-identity/mockIdentity.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [
+        "XX.X",
+        "SRC-XXXX",
+        "mock"
+      ],
+      "identifier_hits": [
+        "XX.X",
+        "SRC-XXXX",
+        "mock"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-27",
+      "acceptance_index": 2,
+      "acceptance": "水印节点缺失 → 渲染与导出拒绝（不可移除的可执行化）",
+      "gauges": [
+        {
+          "kind": "vitest",
+          "command": "npm test -- --run design/mock-identity",
+          "files": [
+            "web/design/mock-identity/mockIdentity.test.ts"
+          ],
+          "in_gate": false,
+          "gate_evidence": "前端套件不在 ruff·mypy·pytest 三条命令里，须单独跑"
+        }
+      ],
+      "class": "gauged_outside_gate",
+      "in_gate": false,
+      "reason": "尺子解析得到，但不在 ruff·mypy·pytest 里",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-28",
+      "acceptance_index": 1,
+      "acceptance": "固化产物注册进 G5 且插槽清单与内容一致",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_solidify_pipeline.py -q",
+          "files": [
+            "tests/v04/design/test_solidify_pipeline.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-28",
+      "acceptance_index": 2,
+      "acceptance": "solidify_result 事件带 violations 空集",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_solidify_pipeline.py -q",
+          "files": [
+            "tests/v04/design/test_solidify_pipeline.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "solidify_result",
+        "violations"
+      ],
+      "identifier_hits": [
+        "solidify_result",
+        "violations"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-29",
+      "acceptance_index": 1,
+      "acceptance": "插槽完整/无占位残留/无水印残留/Block 类型对齐 四判据",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_solidify_validator.py -q",
+          "files": [
+            "tests/v04/design/test_solidify_validator.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "Block"
+      ],
+      "identifier_hits": [
+        "Block"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-29",
+      "acceptance_index": 2,
+      "acceptance": "违规拒绝并输出行号；反例 fixture 断言实际输出文本",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_solidify_validator.py -q",
+          "files": [
+            "tests/v04/design/test_solidify_validator.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "fixture"
+      ],
+      "identifier_hits": [
+        "fixture"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-30",
+      "acceptance_index": 1,
+      "acceptance": "注册/版本递增/按 checksum 去重；注册表不可用 → 阻断固化不阻断探索（E6 行）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_template_registry.py -q",
+          "files": [
+            "tests/v04/design/test_template_registry.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "checksum"
+      ],
+      "identifier_hits": [
+        "checksum"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-31",
+      "acceptance_index": 1,
+      "acceptance": "任意 HTML 进生产路径 → 拒绝；已注册模板放行",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_prod_render_gate.py -q",
+          "files": [
+            "tests/v04/design/test_prod_render_gate.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "HTML"
+      ],
+      "identifier_hits": [
+        "HTML"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-31",
+      "acceptance_index": 2,
+      "acceptance": "两路径共用 Renderer 接口不同实现（断言）",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_prod_render_gate.py -q",
+          "files": [
+            "tests/v04/design/test_prod_render_gate.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "Renderer"
+      ],
+      "identifier_hits": [
+        "Renderer"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-32",
+      "acceptance_index": 1,
+      "acceptance": "未固化模板导出生产格式 → 拒绝并指认判据 id",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_export_gate_template.py -q",
+          "files": [
+            "tests/v04/design/test_export_gate_template.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "DESIGN-32",
+      "acceptance_index": 2,
+      "acceptance": "被划掉时仅移除本卡与判据注册，基线闸门不受影响",
+      "gauges": [
+        {
+          "kind": "pytest",
+          "command": "pytest tests/v04/design/test_export_gate_template.py -q",
+          "files": [
+            "tests/v04/design/test_export_gate_template.py"
+          ],
+          "in_gate": true,
+          "gate_evidence": "pytest -q（testpaths=[\"tests\"]）"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [],
+      "identifier_hits": [],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-09",
+      "acceptance_index": 1,
+      "acceptance": "整棵 web/ 树扫描 exit 0：CJK 字面量 0 个文件、白名单 0 项、B7 违规 0",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/i18n_scan.mjs web --fail-on-cjk",
+          "files": [
+            "tools/i18n_scan.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_i18n_keys_defined.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "web/",
+        "exit",
+        "CJK"
+      ],
+      "identifier_hits": [
+        "web/",
+        "exit",
+        "CJK"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-09",
+      "acceptance_index": 2,
+      "acceptance": "块注释里的中文不再被判为界面文案；同一把尺子对真实未 key 化文案仍报红（反例断言）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/i18n_scan.mjs web --fail-on-cjk",
+          "files": [
+            "tools/i18n_scan.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_i18n_keys_defined.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "key"
+      ],
+      "identifier_hits": [
+        "key"
+      ],
+      "weak_link": false
+    },
+    {
+      "task_id": "I18N-09",
+      "acceptance_index": 3,
+      "acceptance": "CRLF 文件不误报：同一份内容以 CRLF 与 LF 两种换行各扫一次，结果必须相同（GRAPH-11 实测到的第二类假阳性）",
+      "gauges": [
+        {
+          "kind": "tool",
+          "command": "node tools/i18n_scan.mjs web --fail-on-cjk",
+          "files": [
+            "tools/i18n_scan.mjs"
+          ],
+          "in_gate": true,
+          "gate_evidence": "被 tests/v041/test_i18n_keys_defined.py 起起来"
+        }
+      ],
+      "class": "in_gate",
+      "in_gate": true,
+      "reason": "",
+      "identifiers": [
+        "CRLF",
+        "GRAPH-11"
+      ],
+      "identifier_hits": [
+        "CRLF",
+        "GRAPH-11"
+      ],
+      "weak_link": false
+    }
+  ]
+}

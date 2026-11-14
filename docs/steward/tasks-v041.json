@@ -1,0 +1,251 @@
+{
+  "spec_version": "v0.4.1-batch1",
+  "frozen_against": "contracts/ @2026-07-30",
+  "audience": "ai_executor",
+  "generated_by": "steward @2026-08-03",
+  "note": "第1批 = 与 v0.4 文件面零交集的装配与守门。候选③⑤⑥ 与 E1 观察项已按并行纪律押后，理由见 docs/steward/连跑工单-v041-第1批.md#2。",
+  "rules": {
+    "ledger": "docs/progress-v041.jsonl",
+    "done_marker": "docs/FLINT-V041-DONE",
+    "touch_boundary": "见工单 §3。v0.4 范围内已 verified 的实现 NEVER 改；既有文件仅允许注册点的只加不删增量。",
+    "network": "NEVER 真实网络 / 真实 API key / 付费调用。本机容器（postgres 55432 / redis）与本机模型不算外网。",
+    "new_dependency": "NEVER 新增依赖。arq 0.28.0 / redis 5.3.1 已在 requirements.lock（已实测）。"
+  },
+  "isolation": {
+    "droppable": []
+  },
+  "tasks": [
+    {
+      "id": "ASM-01",
+      "title": "组稿生成器注入——首次组稿产出真正文，不再是占位 heading",
+      "milestone": "W1",
+      "inputs": [
+        "flint/jobs/compose.py",
+        "flint/compose/llm_generator.py",
+        "flint/jobs/regenerate_job.py"
+      ],
+      "outputs": [
+        "flint/jobs/compose_deps.py",
+        "tests/v041/test_asm_01.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_asm_01.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "装配函数返回的 deps.generator_factory 绑定 flint/compose/llm_generator.py 的 llm_generator_factory；断言它 NEVER 是 flint/jobs/compose.py 里的 _default_generator",
+        "注入录制回放 provider 后草拟一节，产出 block 里含 type=='paragraph' 且 content 文本非空——占位生成器只产 heading，此断言认得出退化",
+        "未注入 provider 时显式抛错并说明缺什么，NEVER 静默回落到占位生成器（静默回落正是当前缺陷的根因）",
+        "既有 _default_generator 保留但仅供显式 offline 用途，其调用点在测试里被断言不出现在生产装配路径"
+      ],
+      "context_refs": [
+        "flint/jobs/compose.py#_default_generator",
+        "flint/compose/llm_generator.py",
+        "docs/steward/项目实况报告-2026-08-03.md#四"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "ASM-02",
+      "title": "JobKind → handler 分派表（覆盖判别联合全部成员）",
+      "milestone": "W1",
+      "inputs": [
+        "contracts/models.py#JobKind",
+        "flint/jobs/runner.py",
+        "flint/jobs/compose.py",
+        "flint/jobs/gate1.py"
+      ],
+      "outputs": [
+        "flint/jobs/dispatch.py",
+        "tests/v041/test_asm_02.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_asm_02.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "分派表覆盖冻结件 JobKind 判别联合的全部成员；覆盖面用 typing.get_args 遍历真件求出，NEVER 手抄一份清单（手抄的清单不会跟着契约变）",
+        "缺任一成员即测试红，并在报错里点名缺哪个",
+        "未知 kind → 抛错并把 job 记为 failed，NEVER 静默丢弃（静默丢弃会让用户看到作业永远排队）"
+      ],
+      "context_refs": [
+        "contracts/models.py#JobKind",
+        "flint/jobs/runner.py"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "ASM-03",
+      "title": "arq worker 进程装配——让提交的作业真的有人跑",
+      "milestone": "W1",
+      "inputs": [
+        "flint/jobs/runner.py#EnqueueHook",
+        "flint/jobs/dispatch.py",
+        "harness/demo_server.py"
+      ],
+      "outputs": [
+        "flint/jobs/worker_main.py",
+        "tests/v041/test_asm_03.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_asm_03.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "enqueue 钩子实调：submit 之后作业确实进入队列，断言基于队列真实状态而非调用计数",
+        "worker 消费一条 compose 作业并把状态机推进到 done；中途 kill 后重启能续跑（复用既有 DraftCheckpoint）",
+        "NEVER 新增依赖：arq 0.28.0 与 redis 5.3.1 已在 requirements.lock，测试里断言版本来自 lock 而非硬编码",
+        "测试 NEVER 触真实外网；本机 redis 容器可用"
+      ],
+      "context_refs": [
+        "flint/jobs/runner.py",
+        "flint/jobs/compose.py",
+        "harness/demo_server.py#_enqueue"
+      ],
+      "depends_on": [
+        "ASM-02"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "ASM-04",
+      "title": "定时批 cron 装配（×2/日：清晨全量 + 午后增量）",
+      "milestone": "W1",
+      "inputs": [
+        "flint/jobs/sched.py",
+        "flint/jobs/revalidation.py",
+        "flint/jobs/worker_main.py"
+      ],
+      "outputs": [
+        "flint/jobs/cron.py",
+        "tests/v041/test_asm_04.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_asm_04.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "两个批次的时刻取自 flint/jobs/sched.py 既有定义，NEVER 另写一份（另写一份就有两个真相，改一处另一处不跟）",
+        "幂等：同一天同一批次重复触发只跑一次，复用既有 lock:daily_ingest:{day}:{batch}",
+        "cron 注册面可在不启动真实调度的前提下被断言（注册表可取出检查）"
+      ],
+      "context_refs": [
+        "flint/jobs/sched.py",
+        "flint/jobs/revalidation.py"
+      ],
+      "depends_on": [
+        "ASM-03"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "ASM-05",
+      "title": "端到端冒烟——主链第一次真跑通（录制回放，机器可验）",
+      "milestone": "W1",
+      "inputs": [
+        "flint/api/compose.py",
+        "flint/jobs/worker_main.py",
+        "flint/jobs/compose_deps.py",
+        "flint/api/deliverables.py"
+      ],
+      "outputs": [
+        "harness/e2e_smoke.py",
+        "tests/v041/test_asm_05_e2e.py"
+      ],
+      "cycles": 2,
+      "estimate_days": 1.0,
+      "oneshot": false,
+      "verify_cmd": "pytest tests/v041/test_asm_05_e2e.py -q",
+      "self_review": true,
+      "owner_review": true,
+      "acceptance": [
+        "一条链路真跑：POST /projects/{id}/report → worker 消费 → GET /deliverables/{id}/blocks 非空且含 paragraph → GET /deliverables/{id}/render 出 markdown",
+        "冒烟数据 NEVER 来自 harness/demo_seed_report.py 的 fixture 播种：断言 deliverable_id 不带 del-demo-fixture- 前缀，且 blocks 的 author 与 revision 与本次真跑一致",
+        "沿途至少一道导出闸门被真实触发：blocking 命中时返回 409 带 blocking_block_ids、放行时出产物，两种用例都要有",
+        "全程零真实网络：respx 护栏不得绕过；LLM 走录制回放或本机模型",
+        "失败时报出断在哪一步（提交/入队/消费/组稿/渲染），NEVER 只报一句断言失败"
+      ],
+      "context_refs": [
+        "flint/api/compose.py",
+        "harness/demo_seed_report.py",
+        "docs/steward/项目实况报告-2026-08-03.md#四"
+      ],
+      "depends_on": [
+        "ASM-01",
+        "ASM-03"
+      ],
+      "blocked_by": null
+    },
+    {
+      "id": "LEDGER-01",
+      "title": "台账配对守门扩到新台账——旧守门只守 progress.jsonl",
+      "milestone": "W1",
+      "inputs": [
+        "eval/ledger_pairing.py",
+        "tests/m4/test_ledger_pairing.py",
+        "docs/progress-v04.jsonl"
+      ],
+      "outputs": [
+        "tests/v041/test_ledger_pairing_v041.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_ledger_pairing_v041.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "docs/progress-v041.jsonl 的每个 verified/blocked/review_passed/review_failed 事件必有前置 started，违反即红",
+        "docs/progress-v04.jsonl 的历史未配对事件（实测 71 个事件、涉 60 张卡）以显式白名单豁免，清单在文件里列全，NEVER 放宽规则本身",
+        "白名单不是通配：新增的未配对事件仍然红（用一条构造用例证明它认得出）",
+        "NEVER 改 tests/m4/test_ledger_pairing.py 与 eval/ledger_pairing.py 的既有语义——本卡只新增覆盖面"
+      ],
+      "context_refs": [
+        "eval/ledger_pairing.py",
+        "tests/m4/test_ledger_pairing.py"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    },
+    {
+      "id": "GOLD-01",
+      "title": "金标集采集脚手架（为 θ_rel / δ / hotness 标定备料，不含调参）",
+      "milestone": "W1",
+      "inputs": [
+        "flint/jobs/gate1.py",
+        "harness/gate1_live.py"
+      ],
+      "outputs": [
+        "harness/gold_collect.py",
+        "tests/v041/test_gold_01.py"
+      ],
+      "cycles": 1,
+      "estimate_days": 0.5,
+      "oneshot": true,
+      "verify_cmd": "pytest tests/v041/test_gold_01.py -q",
+      "self_review": true,
+      "owner_review": false,
+      "acceptance": [
+        "能把一次真跑的簇/证据/判定导出成可人工标注的金标条目，每条带来源 job_id 与真实 UTC 时间戳",
+        "NEVER 内置任何阈值判定：本卡只采集不调参（θ_rel 0.6 / δ 0.965 属 Open Question，调参是 owner 决策）",
+        "可复现：同一输入两次导出逐字节一致"
+      ],
+      "context_refs": [
+        "CLAUDE.md#S4",
+        "flint/jobs/gate1.py"
+      ],
+      "depends_on": [],
+      "blocked_by": null
+    }
+  ]
+}

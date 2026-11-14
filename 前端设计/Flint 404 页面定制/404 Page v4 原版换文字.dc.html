@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="uploads/NEXOVA Design System/styles.css">
+<script src="uploads/NEXOVA Design System/_ds_bundle.js"></script>
+<style>
+body{margin:0}
+.nx-logo-text{visibility:hidden; position:relative;}
+.nx-logo-text::after{content:"FLINT"; visibility:visible; position:absolute; left:0; top:0;}
+</style>
+</helmet>
+<div data-screen-label="404 原版换文字" class="nx-page">
+  <x-import component-from-global-scope="NEXOVADesignSystem_7abf1c.BackgroundVideo" hint-size="100%,0px"></x-import>
+  <div class="nx-content">
+    <x-import component-from-global-scope="NEXOVADesignSystem_7abf1c.NavBar" links="{{ navLinks }}" login-label="登录" hint-size="100%,72px"></x-import>
+    <x-import component-from-global-scope="NEXOVADesignSystem_7abf1c.Hero404" line1="你要找的这一页" line2="不在这本册子里 :/" cta-label="返回首页" cta-href="#" hint-size="100%,560px"></x-import>
+    <x-import component-from-global-scope="NEXOVADesignSystem_7abf1c.Footer" columns="{{ footerColumns }}" newsletter-title="订阅每日线索" send-label="订阅" placeholder="输入邮箱，接收每日线索" connect-title="关注" hint-size="100%,320px"></x-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      navLinks: ["今日线索", "可行性判定", "深度报告", "如实原则", "定价", "关于"],
+      footerColumns: [
+        { title: "产品", links: ["今日线索", "可行性判定", "深度报告", "溯源引用", "导出"] },
+        { title: "原则", links: ["如实原则", "状态标记", "资料缺口", "复核机制"] },
+        { title: "帮助", links: ["提交工单", "常见问题", "文档", "教程", "社区"] },
+        { title: "关于", links: ["我们的故事", "团队", "新闻", "加入我们", "博客"] },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

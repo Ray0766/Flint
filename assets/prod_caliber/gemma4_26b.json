@@ -1,0 +1,8 @@
+{
+ "model": "gemma4:26b",
+ "tier": "free-local",
+ "judged": false,
+ "status": "failed_generation",
+ "run_day": "2026-07-28",
+ "failure": "探针确认（owner 裁决 @2026-07-29，证据 gemma4_26b_probe_evidence.json）：该模型思考段常态约 2 万 tokens——max_tokens=16384 时 finish=length、content 空（两次全链失败根因）；30000 预算下思考 31335 字符后仅产出 223 字，无法满足分节字数靶。按「空产两试即败 + 模型交白卷是对照表合法结果」口径直接记失败行，不进全链。"
+}

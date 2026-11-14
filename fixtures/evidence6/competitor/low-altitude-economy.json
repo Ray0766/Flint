@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.products.example/search?q=low+altitude+economy&limit=10",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"results\": [{\"name\": \"Low Altitude Economy Vendor 0\", \"url\": \"https://vendor0-low-altitude-economy.example\", \"description\": \"Commercial platform for low altitude economy\", \"last_activity\": \"2026-01-01\"}, {\"name\": \"Low Altitude Economy Vendor 1\", \"url\": \"https://vendor1-low-altitude-economy.example\", \"description\": \"Commercial platform for low altitude economy\", \"last_activity\": \"2026-02-01\"}, {\"name\": \"Low Altitude Economy Vendor 2\", \"url\": \"https://vendor2-low-altitude-economy.example\", \"description\": \"Commercial platform for low altitude economy\", \"last_activity\": \"2026-03-01\"}, {\"name\": \"Low Altitude Economy Vendor 3\", \"url\": \"https://vendor3-low-altitude-economy.example\", \"description\": \"Commercial platform for low altitude economy\", \"last_activity\": \"2026-04-01\"}], \"total\": 4}"
+ }
+]

@@ -1,0 +1,432 @@
+{
+ "spec_version": "v0.4.1-batch7",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward @2026-08-08",
+ "note": "第7批 = owner 2026-08-08 三条裁决落地（陈旧槽恒不显示 / global 归未归区 / demo 种主题）+ steward 复核发现的并发缺口（projects 无版本列）+ 清 8 张问题单。积压已显著变小：13 张 open 里 5 张长期属 owner 面。NEVER 改 contracts/。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B7-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "network": "NEVER 真实网络 / 真实 API key / 付费调用。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。playwright 恒在项目外 C:\\pwenv。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "DEC-039-041-LANDING",
+   "title": "裁决落地：owner 2026-08-08 的三条逐字进 DECISIONS-v04.md",
+   "milestone": "W7",
+   "inputs": [
+    "docs/steward/连跑工单-v041-第7批.md#2",
+    "DECISIONS-v04.md"
+   ],
+   "outputs": [
+    "DECISIONS-v04.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_decisions_landed.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "三条逐字追加，编号接现有水位：DEC-039 陈旧槽恒不显示（走 SLOT-02 单的甲）· DEC-040 global 与 NULL 归入显式的「未归区」· DEC-041 demo 库种一条主题（走 DEMO-TOPIC 单的甲）",
+    "每条写明来由与影响面，NEVER 只记结论",
+    "追加式写入，NEVER 回改既有 DEC 行"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "STALE-01",
+   "title": "陈旧槽：恒不显示 + 把时间戳捷径钉死（DEC-039）",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/SLOT-02-A-CLUSTER-HAS-NOTHING-THE-REVALIDATOR-CAN-JUDGE.md",
+    "web/components/hotspot-card/",
+    "flint/analysis/stale_adapter.py"
+   ],
+   "outputs": [
+    "web/components/hotspot-card/",
+    "tools/",
+    "tests/v041/test_no_fake_staleness.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_no_fake_staleness.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 裁决 DEC-039：热点卡的陈旧槽**恒不显示**。理由是那张单查实的——热点簇不是一份分析：它不引用事实，它是事实的来源之一；Revalidator 判的是「一份分析引用过的事实变没变」，而 clusters 表没有 project_id、没有账本版本、没有引用的事实",
+    "**这条判据才是本卡的产品**：钉死时间戳捷径——全仓禁止用 last_active 或 first_seen 做算术得出「陈旧」（形如 now - last_active > N）。那是新写一套比对（SLOT-02 acceptance① 明令禁止），而且它说的是系统不知道的事",
+    "阴性对照：往任一模块插一处时间戳减法并据此置 stale，判据 MUST 报红并点名文件与行",
+    "Favorite.snapshot_stale 的既有语义一字不动：它说的是「你收藏的那份快照旧了」，NEVER 被借去说「这个热点旧了」——两句话不是一回事（DEC-038 同一形状）",
+    "卡面槽位保留但恒隐藏，注释写明恢复条件：哪天簇身上真有可判新旧的东西，改这一处即可",
+    "关闭 docs/blocked/SLOT-02-A-CLUSTER-HAS-NOTHING-THE-REVALIDATOR-CAN-JUDGE.md"
+   ],
+   "context_refs": [
+    "docs/blocked/SLOT-02-A-CLUSTER-HAS-NOTHING-THE-REVALIDATOR-CAN-JUDGE.md",
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "REGION-11",
+   "title": "地区面④：global 与 NULL 归入显式的「未归区」（DEC-040）",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/REGION-08-GLOBAL-IS-A-SOURCE-CONSTANT-NOT-A-REGION.md",
+    "flint/api/views.py",
+    "web/components/region-switch/RegionSwitch.tsx"
+   ],
+   "outputs": [
+    "flint/",
+    "web/",
+    "tests/v041/test_unassigned_region.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_unassigned_region.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 实查（省一次重查）：clusters 的 region 分布是 global=103 · CN=89 · NULL=1。global 是 ghtrend 写死的常量，不是地理事实",
+    "owner 裁决 DEC-040：**global 与 NULL 都归入一个显式的「未归区」**，NEVER 把 global 当成第九区——用户会在地理列表里选到一个不存在的地方；也 NEVER 让它们从筛选面消失——那 104 条在默认视图之外就再也看不见",
+    "筛选器上「未归区」是一个可见可选项，与九区并列但**标注它不是地理区**",
+    "阴性对照三条：选 CN 拿到 89 条 · 选未归区拿到 104 条 · 九区之和加未归区等于全量，NEVER 有簇落在任何选项之外",
+    "NULL 与 global 在库里保持可分辨（本卡只在呈现层合并），NEVER 把 NULL 回填成 global——那会抹掉「这条簇从来没归过区」这个事实",
+    "关闭 docs/blocked/REGION-08-GLOBAL-IS-A-SOURCE-CONSTANT-NOT-A-REGION.md"
+   ],
+   "context_refs": [
+    "docs/blocked/REGION-08-GLOBAL-IS-A-SOURCE-CONSTANT-NOT-A-REGION.md"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "REGION-12",
+   "title": "地区面⑤：SourceColumns 的原文词面——PLAZA-02 唯一的残留缺口",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/PLAZA-02-REGION-QUERY-AND-SOURCE-REGION-NOT-BUILT.md",
+    "web/components/source-columns/SourceColumns.tsx",
+    "flint/api/views.py"
+   ],
+   "outputs": [
+    "flint/",
+    "web/",
+    "tests/v041/test_source_columns_verbatim.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_source_columns_verbatim.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "缺口一（region query）已由 REGION-08/09/10 建成；本卡清缺口二：SourceColumns 要按源分列**原文词面**，而端点目前只回分数",
+    "分列 ≥2 列且**无合成句**（HOTSPOT-07 既有判据不倒），合成句黑名单零命中——NEVER 把两个源的说法揉成一句",
+    "词面缺失时该列如实标注缺，NEVER 用分数顶替词面",
+    "关闭 docs/blocked/PLAZA-02-REGION-QUERY-AND-SOURCE-REGION-NOT-BUILT.md（缺口一二均已清）"
+   ],
+   "context_refs": [
+    "docs/blocked/PLAZA-02-REGION-QUERY-AND-SOURCE-REGION-NOT-BUILT.md"
+   ],
+   "depends_on": [
+    "REGION-11"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SEED-01",
+   "title": "种子：demo 库种一条主题（DEC-041）",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/DEMO-TOPIC-SAMPLE-ID-IS-A-PLACEHOLDER.md",
+    "harness/demo_seed_report.py",
+    "harness/fe_smoke.py"
+   ],
+   "outputs": [
+    "harness/",
+    "tests/v041/test_demo_topic_seeded.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_demo_topic_seeded.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 裁决 DEC-041 走甲：给 demo 库种一条主题，连同 seed_id · why_now（含 speculative 与逐条证据 + citation_id）· keyword_mapping · 两维 tag",
+    "取证样例 id 改用它；harness/fe_smoke.py 的占位串退役",
+    "种子恒幂等（重复跑不产生第二条），与 demo_seed_report 的既有形态一致；前缀标记出它是夹具，NEVER 冒充模型产出",
+    "主题两屏（列表 + 详情）第一次有真数据：判据打真栈，断言两屏都不再是 404 且渲染出 why_now 的逐条证据",
+    "CONSOLE_BASELINE 里那条为 /topics/[id] 留的 404 额度撤掉——额度撤掉后判据仍绿才算数",
+    "关闭 docs/blocked/DEMO-TOPIC-SAMPLE-ID-IS-A-PLACEHOLDER.md"
+   ],
+   "context_refs": [
+    "docs/blocked/DEMO-TOPIC-SAMPLE-ID-IS-A-PLACEHOLDER.md"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "LOCK-01",
+   "title": "并发：projects 全行 upsert 没有乐观锁，change_log 会被静默覆盖",
+   "milestone": "W7",
+   "inputs": [
+    "flint/topic/store.py#PgProjectStore",
+    "migrations/versions/0021_cluster_region.py"
+   ],
+   "outputs": [
+    "migrations/versions/0022_project_version.py",
+    "flint/topic/store.py",
+    "tests/v041/test_project_optimistic_lock.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_project_optimistic_lock.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 第 6 批复核发现：ENTRY-02 把 PgProjectStore.save 从纯 INSERT 改成全行 upsert（修的是真缺陷，维持），但 projects 九列里**没有版本列**，而 change_log 在被覆盖的列里——A 读→B 读→A 写→B 写，A 那条审计条目无声消失",
+    "改前是「第二次写大声失败（500）」，改后是「并发下静默丢失」。**本卡把响亮的错找回来**：加版本列 + 条件更新（WHERE version = $n），版本不符时抛可被端点转成 409 的冲突，NEVER 静默覆盖",
+    "口径与 LedgerStore 的乐观锁同源，NEVER 另发明一套",
+    "阴性对照：模拟两个并发写，断言后写者拿到 409 且**先写者的 change_log 条目还在**——只断言抛异常不够，MUST 断言数据没丢",
+    "迁移号接 0021，NEVER 跳号；upgrade 与 downgrade 都跑通",
+    "既有单写路径行为不变：无并发时 save 照常成功"
+   ],
+   "context_refs": [
+    "flint/topic/store.py",
+    "docs/steward/巡检.jsonl"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "UIX-04",
+   "title": "作业屏：403 之后它停在加载骨架上，永远",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/JOB-SCREEN-HAS-NO-DENIED-STATE.md",
+    "web/app/jobs/[id]/page.tsx",
+    "web/lib/"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_job_denied_state.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_job_denied_state.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "jobs/[id] 当前只有四态（加载骨架 / 失败 / 空 / 就绪），useJobStream 与 jobClient 里 grep 403|denied|forbidden **零命中**——SSE 被拒后 status 恒为 null，屏上是一张永远转下去的骨架",
+    "补第五态「无权查看」：**「在连」与「不让你连」NEVER 长得一样**——前者的正确动作是继续守着，后者的正确动作是去要权限",
+    "401 与 403 分开呈现（AUTH-03 口径）：没登录与登录了但无权，两句话不同",
+    "补上第 6 批 FIX-09 因此没做成的那条 acceptance⑤：一条判据专门守「无权时屏上显示无权查看」，判据打真栈（用那条不属于探针的作业）",
+    "**NEVER 把 403 加进控制台噪声白名单**——那等于把鉴权正确工作的证据当成噪声吞掉",
+    "关闭 docs/blocked/JOB-SCREEN-HAS-NO-DENIED-STATE.md"
+   ],
+   "context_refs": [
+    "docs/blocked/JOB-SCREEN-HAS-NO-DENIED-STATE.md",
+    "docs/trace/FIX-09.md"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "UIX-05",
+   "title": "取数钩子：useScreenData 没有 refetch，写完只能整屏重读",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/SCREEN-DATA-HOOK-HAS-NO-REFETCH.md",
+    "web/lib/useScreenData.ts"
+   ],
+   "outputs": [
+    "web/lib/",
+    "web/app/",
+    "tests/v041/test_screen_data_refetch.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_screen_data_refetch.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "useScreenData(path) 只在 path 变化时重取，没有别的重取入口。第 6 批起出现「写完要重读」的屏（ENTRY-02 选主题第一个），当前走的是 window.location.reload()——能用、诚实，但整屏重来（滚动位置与屏内状态全丢）",
+    "加 refetch 句柄；ENTRY-02 与 ENTRY-01 两处改用它，reload 退役",
+    "三条错误做法逐条钉死判据：NEVER 前端记一份（刷新就没，而用户以为选过）· NEVER 拿变化的假 query 骗重取（DEC-035 判死的形状）· reload 仅在没有 refetch 时才可用",
+    "阴性对照：写入后不调 refetch，断言屏上仍是旧值——证明这条路真的在起作用",
+    "关闭 docs/blocked/SCREEN-DATA-HOOK-HAS-NO-REFETCH.md"
+   ],
+   "context_refs": [
+    "docs/blocked/SCREEN-DATA-HOOK-HAS-NO-REFETCH.md"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TYPE-05",
+   "title": "契约⑤：尺子看清之后浮出的 7 条 field_mismatch",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/PARITY-WIDER-SCAN-REVEALS-FIFTEEN-TYPE-GAPS.md",
+    "web/lib/",
+    "tools/check_fe_be_parity.py"
+   ],
+   "outputs": [
+    "web/lib/",
+    "tests/v041/test_type_gaps_mismatch.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_type_gaps_mismatch.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "七条建了类型但字段对不上：/cards/{} · /charts/{} · /facts/{} · /favorites · /hints/{} · /projects/{}/design_generate · /shares",
+    "**这七条不是新引入的**——GAUGE-14 修掉对账器盲区之前，那些调用点扫不到，其响应类型自然无从比对",
+    "字段以后端真实 payload 为准逐字对齐，NEVER 手抄字段名清单",
+    "对账器的 field_mismatch 计数归零并接成硬判据"
+   ],
+   "context_refs": [
+    "docs/blocked/PARITY-WIDER-SCAN-REVEALS-FIFTEEN-TYPE-GAPS.md"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "TYPE-06",
+   "title": "契约⑥：8 条端点前端根本没建类型",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/PARITY-WIDER-SCAN-REVEALS-FIFTEEN-TYPE-GAPS.md",
+    "web/lib/types.ts"
+   ],
+   "outputs": [
+    "web/lib/",
+    "tests/v041/test_type_gaps_untyped.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_type_gaps_untyped.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "八条 frontend_untyped_response 逐条建类型，清单以对账器实跑输出为准，NEVER 照记忆写",
+    "字段以后端真实 payload 为准逐字对齐",
+    "对账器的 frontend_untyped_response 计数归零并接成硬判据",
+    "关闭 docs/blocked/PARITY-WIDER-SCAN-REVEALS-FIFTEEN-TYPE-GAPS.md（两类均清零后）"
+   ],
+   "context_refs": [
+    "docs/blocked/PARITY-WIDER-SCAN-REVEALS-FIFTEEN-TYPE-GAPS.md"
+   ],
+   "depends_on": [
+    "TYPE-05"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-15",
+   "title": "缺陷⑮：那次没抓到名字的前端红——第三次尝试",
+   "milestone": "W7",
+   "inputs": [
+    "docs/blocked/ONE-UNNAMED-FRONTEND-RED-NOT-CAPTURED.md",
+    "web/"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_frontend_red_capture.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_frontend_red_capture.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "连跑 30 次并**把失败用例名留下来**（--reporter=verbose 逐次落日志），前两次尝试都因为只 grep 汇总行而丢了现场",
+    "抓到就修并给出根因；30 次全绿则在单里写明「30 次未复现」并**保留单据开着**，NEVER 关单——FIX-04 那处是 40 次里第 29 次才复现的",
+    "把「连跑保留用例名」固化成脚本并写进 docs，NEVER 让下一个人再丢一次现场",
+    "本卡 NEVER 以「跑不出来就是没有」收口"
+   ],
+   "context_refs": [
+    "docs/blocked/ONE-UNNAMED-FRONTEND-RED-NOT-CAPTURED.md",
+    "docs/trace/FIX-04.md"
+   ],
+   "depends_on": [
+    "DEC-039-041-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-07",
+   "title": "收尾：第 7 批完成态报告 + 出口全局门",
+   "milestone": "W7",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b7.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH7-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041 -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "全局门五条全绿并逐字贴出：ruff check . --no-cache · mypy --strict flint · pytest -q · cd web && npm test -- --run · npx tsc --noEmit",
+    "**pytest MUST 零 failed**（第 6 批已达成，本批继承）",
+    "出口判据三个：对账器 field_mismatch 与 frontend_untyped_response 均为 0 · 未归区选项上屏且九区加未归区等于全量 · 主题两屏在真栈上有真数据（不再 404）",
+    "open 单据逐条列名并说明卡在谁那里；本批预计清 8 张，剩下的 5 张全部是 owner 面，逐条点名 NEVER 混在一起说",
+    "未解决的逐条列名，NEVER 用一句「其余无异常」收口"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH6-COMPLETION.md"
+   ],
+   "depends_on": [
+    "STALE-01",
+    "REGION-12",
+    "SEED-01",
+    "LOCK-01",
+    "UIX-04",
+    "UIX-05",
+    "TYPE-06",
+    "FIX-15"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

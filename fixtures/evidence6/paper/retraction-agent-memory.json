@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.retractions.example/search?q=agent+memory",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"retractions\": [{\"title\": \"RETRACTED: agent memory breakthrough claims\", \"original_doi\": \"10.5555/agent-memory.retracted.1\", \"url\": \"https://retractions.example/agent-memory/1\", \"date\": \"2026-05-20\", \"reason\": \"data fabrication\"}]}"
+ }
+]

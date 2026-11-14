@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.news.example/v2/everything?q=solid+state+battery&pageSize=10",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"status\": \"ok\", \"articles\": [{\"title\": \"solid state battery market update 0\", \"url\": \"https://news.example/solid-state-battery/0\", \"source\": {\"name\": \"TechBlog Weekly\"}, \"media_tier\": 3, \"independent_sources\": 2, \"publishedAt\": \"2026-07-10T08:00:00Z\"}, {\"title\": \"solid state battery market update 1\", \"url\": \"https://news.example/solid-state-battery/1\", \"source\": {\"name\": \"Reuters\"}, \"media_tier\": 1, \"independent_sources\": 3, \"publishedAt\": \"2026-07-11T08:00:00Z\"}, {\"title\": \"solid state battery market update 2\", \"url\": \"https://news.example/solid-state-battery/2\", \"source\": {\"name\": \"TechBlog Weekly\"}, \"media_tier\": 3, \"independent_sources\": 4, \"publishedAt\": \"2026-07-12T08:00:00Z\"}, {\"title\": \"solid state battery market update 3\", \"url\": \"https://news.example/solid-state-battery/3\", \"source\": {\"name\": \"Reuters\"}, \"media_tier\": 1, \"independent_sources\": 1, \"publishedAt\": \"2026-07-13T08:00:00Z\"}, {\"title\": \"solid state battery market update 4\", \"url\": \"https://news.example/solid-state-battery/4\", \"source\": {\"name\": \"TechBlog Weekly\"}, \"media_tier\": 3, \"independent_sources\": 2, \"publishedAt\": \"2026-07-14T08:00:00Z\"}]}"
+ }
+]

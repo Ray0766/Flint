@@ -1,0 +1,374 @@
+{
+ "spec_version": "v0.4.1-batch9",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward 2026-08-12（第 14 批 · 按蓝本新建计划书主工作台）",
+ "note": "owner 2026-08-12 给出蓝本 `前端设计/ai工作台/Flint 设计台 v3.dc.html` 并定两条：**新增主工作台**（不替换现有 AI 设计工作台，后者改名退居次要）、**一批做完**。steward 读完蓝本的判断：它是一个**三栏计划书工作台**（左卡片 / 中对话 / 右预览 + 章节导航 + 逐章检查 + 五模板），其模板选项 generic/startup/engineering/grant/thesis 与 `assets/templates/` 里那五个 yaml **逐字对应**，block 类型与本仓 Block 判别联合基本一致，连「资料不足绝不注水、改出 gap_notice」都与铁律同构——**后端大半已有，缺的是这一屏**。**最硬的一条**：蓝本让 LLM 直接吐 HTML 再正则解析（它是个没有后端的独立 demo），**本仓 NEVER 这样做**——生成走 compose 真链产真 Block，否则 claim_ids / fact_ids / 三通道 / 提升不变量 / 渲染门禁全部绕过去。视觉与交互照蓝本，数据走真链。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B14-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "blueprint": "风格来源唯一锚点 = `前端设计/ai工作台/Flint 设计台 v3.dc.html`（owner 2026-08-12 指定）。**视觉与交互照它做**；蓝本没写而本仓需要的（减动效、双主题、中文字体）逐条在 trace 写明是补的。",
+  "never_html_regex": "**生成 MUST 走既有 compose 真链产真 Block**（`flint/jobs/compose.py` + `compose_deps.build_production_compose_deps`），**NEVER 照蓝本让 LLM 直接吐 HTML 再正则解析回来**——蓝本是个没有后端的独立 demo，而本仓的 Block 是冻结件判别联合，带 claim_ids / fact_ids / 三通道 / 提升不变量 / 渲染门禁。照蓝本那套实现会把这些全绕过去。",
+  "positive_criteria": "**判据一律正向**：每条 MUST 是「这个元素/这条链 MUST 是什么样」并带实测数值或真产物，NEVER 只写禁止性判据。由来：UI-01~11 那四条禁止性判据全绿而屏是错的。**第 13 批的补充**：正向判据要覆盖的不只是「长什么样」，还有「显示的是不是对的东西」——每个可见控件 MUST 断言「屏上显示的值 == 数据源里的值」。",
+  "real_browser": "视觉判据 MUST 打真浏览器真栈（playwright 恒在项目外 C:\\pwenv，:3000），NEVER 用组件快照冒充整屏。",
+  "llm_cost": "生成一律走**免费本地档**（LocalProvider → 本机 Ollama），NEVER 读任何 API key、NEVER 调付费接口（付费开通是 owner 人审节点 S2-10）。",
+  "network": "本批 NEVER 真实网络。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。蓝本若引外链字体，NEVER 引——CI 不联网且那是第三方请求。",
+  "stale_premise": "遇到任何写着「因为 X 所以不做」的注释，MUST 先核 X 今天还成不成立，NEVER 照着它继续不做。",
+  "encoding": "跑 pytest MUST 带 PYTHONIOENCODING=utf-8。",
+  "stale_process": "打真栈之前 MUST 先核 :3000 与 :8000 的 PID 与启动时间。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "DEC-059-LANDING",
+   "title": "裁决落地：新增计划书主工作台，AI 设计工作台改名退居次要（DEC-059）",
+   "milestone": "W14",
+   "inputs": [
+    "DECISIONS-v04.md"
+   ],
+   "outputs": [
+    "DECISIONS-v04.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_decisions_landed.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "DEC-059 原文一字不改追加进 DECISIONS-v04.md；既有字节逐字节不动，水位 058→059",
+    "判据扩：水位断言 059 · 全序无洞 · **三个关键句各断言一次**：「新增一屏而不是替换」「DESIGN-01~03 的成果一点不丢」「生成走 compose 真链，NEVER LLM 直吐 HTML」",
+    "先红后绿"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "WB-01",
+   "title": "三栏骨架：左卡片 / 中对话 / 右预览，可拖宽、可响应",
+   "milestone": "W14",
+   "inputs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "web/components/shell/AppShell.tsx",
+    "web/app/globals.css"
+   ],
+   "outputs": [
+    "web/app/workbench/",
+    "web/components/workbench/",
+    "web/app/globals.css",
+    "tests/v041/test_wb_layout.py"
+   ],
+   "cycles": 3,
+   "estimate_days": 1.5,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wb_layout.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "风格来源逐字锚定：`前端设计/ai工作台/Flint 设计台 v3.dc.html`（owner 2026-08-12 指定）。**照它做**，NEVER 自创一版",
+    "**正向判据**（playwright 真浏览器量 getBoundingClientRect / computed style）：1920 视口下三栏并排、左栏初始宽 **250px**（蓝本 `cardsW = 250`）、右栏预览初始 **860px**（蓝本 `previewWidth = '860px'`）、中栏 `flex:1` 占满剩余且 `min-width:0`",
+    "**拖宽**：拖动分隔条后左栏宽度改变且**有下限**（蓝本 `Math.min(sideW - 240, …)` 那一路的意思是中栏永远留得住）——判据拖到极限后断言中栏宽度 >0 且无横向溢出",
+    "整屏 `height:100vh` + `overflow:hidden`，三栏各自 `overflow-y:auto`（蓝本原形）——判据断言页面 body 不滚动而栏内滚动",
+    "**响应式**：390 视口下三栏 MUST 不横排（收成上下或抽屉，做法写进 trace），且无横向溢出",
+    "亮/暗两主题各一套，沿用 `DARK-02` 判据形状（两主题量到同一组颜色仍判红）",
+    "顶栏加一个入口「工作台」；**既有 6 个入口一个都不改**，`/share/[token]` 仍是唯一豁免屏，`ENTRY-05` 的可达性三个空表继续成立"
+   ],
+   "context_refs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "docs/trace/NAV-ANIME-01.md"
+   ],
+   "depends_on": [
+    "DEC-059-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WB-02",
+   "title": "左栏：热点/证据卡片选取（复用广场那张卡）",
+   "milestone": "W14",
+   "inputs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "web/components/hotspot-card/HotspotCard.tsx",
+    "flint/api/views.py"
+   ],
+   "outputs": [
+    "web/components/workbench/",
+    "tests/v041/test_wb_cards.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wb_cards.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "左栏列热点卡与证据卡，**复用广场那张 `HotspotCard`**，NEVER 另写一个卡片组件（`FAV-CARD-01` 已经走过这条路：两个卡片会各自漂移，而它们呈现的是同一种东西）",
+    "可勾选进「本次组合」；已选数量与清单在屏上看得见（蓝本左栏形状）",
+    "数据走既有端点：热点取 `GET /plaza/hot`、证据卡取既有证据端点——**NEVER 新建一份平行取数**，也 NEVER 在前端拼卡面",
+    "**正向判据**：选中两张卡之后，中栏那条「本次组合」显示的 id 与所选逐字相同；阴性对照 = 取消一张则清单同步少一条并点名是哪一条",
+    "空态照实说（今天没有卡 / 读失败 / 本版暂无该区内容 三句 NEVER 合并——`CN-02` 的既有纪律）"
+   ],
+   "context_refs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "docs/trace/FAV-CARD-01.md"
+   ],
+   "depends_on": [
+    "WB-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WB-03",
+   "title": "中栏：对话区 + 提交生成（走 compose 真链，NEVER LLM 直吐 HTML）",
+   "milestone": "W14",
+   "inputs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "flint/jobs/compose.py",
+    "flint/jobs/compose_deps.py",
+    "flint/api/compose.py"
+   ],
+   "outputs": [
+    "web/components/workbench/",
+    "flint/",
+    "tests/v041/test_wb_generate.py"
+   ],
+   "cycles": 3,
+   "estimate_days": 1.5,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wb_generate.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "中栏是对话区 + 底部输入框（蓝本形状：`flex:1` 滚动 + `flex-shrink:0` 的输入区）",
+    "**生成 MUST 走既有 compose 真链产真 Block**（`flint/jobs/compose.py` + `compose_deps.build_production_compose_deps`），**NEVER 照蓝本让 LLM 直接吐 HTML 再正则解析回来**——蓝本是个没有后端的独立 demo，而本仓的 Block 是冻结件判别联合，带 claim_ids / fact_ids / 三通道 / 提升不变量 / 渲染门禁。照蓝本那套实现会把这些全绕过去。",
+    "**这是本批最硬的一条**：蓝本脚本里那套 `<part id>` / `<block type=…>` 正则解析（`html.match(new RegExp('<part id=\"' + sid + '\">…'))`）**NEVER 移植**。判据 MUST 断言：全仓没有任何一处用正则从 LLM 输出里抠 `<block` 或 `<part`",
+    "提交走既有 `POST /projects/{id}/report`（或 proposal）→ 作业进队列 → worker 消费 → 真 Block 落库；模型一律**免费本地档**（LocalProvider → 本机 Ollama），NEVER 读任何 API key",
+    "**端到端正向判据**：选两张卡 + 输入一句话 → 提交 → 作业 done → `deliverables` 多出一条**新的**（`deliverable_id` NEVER 是 `del-demo-fixture-report`）→ 右栏预览渲染它；逐屏截图留 trace",
+    "作业失败时屏上 MUST 说清失败（`mark_failed` 那一族的病：失败不写事件、屏上一直转圈——本卡若撞上它，照实开单，NEVER 让屏上假装还在跑）",
+    "「资料不足绝不注水」照蓝本也照铁律：该出 `gap_notice` 的地方 MUST 出，判据断言 gap_notice 里写明了**缺什么**与**该找哪些来源**"
+   ],
+   "context_refs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "docs/trace/COMPOSE-01.md",
+    "contracts/models.py#Block"
+   ],
+   "depends_on": [
+    "WB-01",
+    "WB-02"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WB-04",
+   "title": "右栏：计划书实时预览（渲染真 Block，八种类型逐一）",
+   "milestone": "W14",
+   "inputs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "flint/render/",
+    "web/app/deliverables/"
+   ],
+   "outputs": [
+    "web/components/workbench/",
+    "tests/v041/test_wb_preview.py"
+   ],
+   "cycles": 3,
+   "estimate_days": 1.5,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wb_preview.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "右栏渲染当前 deliverable 的真 Block。**八种类型逐一有渲染**：heading / paragraph / table / chart / declaration / quality_card / citation_list / gap_notice（与冻结件 Block 判别联合逐字对齐，NEVER 少一种也 NEVER 自造一种）",
+    "数字与价格按三通道显示出处（蓝本 `class=\"price\"` 注明通道那一条，本仓走 Fact / PriceCell / ProfileRef）——**判据断言每个数字旁边说得出它走哪条通道**",
+    "引用可展开到原文（`PRINCIPLES#B10`：译文引用 MUST 可展开到原文）",
+    "**正向判据**：拿 `WB-03` 生成的那份真产物渲染，逐类型断言渲染出了东西；阴性对照 = 塞一种未知类型 → MUST 显式报出「未知块类型」而不是静默跳过",
+    "渐进出现：生成过程中逐块出现（既有 `PartialBlockEvent` / SSE 那一路），断线时照既有 `SSE-DISCONNECT` 纪律说清，NEVER 静默停住"
+   ],
+   "context_refs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "contracts/models.py#Block",
+    "技术方案-v1.1.md#E6"
+   ],
+   "depends_on": [
+    "WB-03"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WB-05",
+   "title": "章节导航 + 逐章检查项（五套模板的章节表照蓝本逐字落地）",
+   "milestone": "W14",
+   "inputs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "assets/templates/"
+   ],
+   "outputs": [
+    "web/components/workbench/",
+    "assets/templates/",
+    "tests/v041/test_wb_sections.py"
+   ],
+   "cycles": 3,
+   "estimate_days": 1.5,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wb_sections.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "右栏配一条 sticky 章节导航（蓝本：`position:sticky; width:138px`），点章节跳到该章",
+    "**五套模板的章节表照蓝本逐字**（每章五格：id / 中文名 / 英文名 / 权重% / 字数区间 / 检查问句）。例：`generic` = 摘要10%『结论与档位是否一句话可读？』· 机会20%『机会陈述是否全部挂证据？』· 市场20%『市场数字是否全部走 Fact/PriceCell 通道？』· 竞品15% · 计划20% · 预算10% · 风险5%",
+    "**章节表 MUST 与 `assets/templates/*.yaml` 对齐**——盘上那五个 yaml（generic / startup / engineering / grant / thesis）就是后端的模板真相。两处对不上时**停下开单**，NEVER 在前端另建一份章节清单（一处定义他处引用）",
+    "逐章检查项上屏：每章旁边显示它的检查问句与当前是否满足；**「是否满足」MUST 来自后端的质量判定，NEVER 前端自己猜**——拿不到判定时显示「还没有判定」而不是显示「通过」",
+    "**正向判据**：切到每一套模板，断言章节数与名称与蓝本表逐字相同（五套各断言一次）；阴性对照 = 改掉一章的名字 → 判据红并点名是哪一套的哪一章"
+   ],
+   "context_refs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "assets/templates/"
+   ],
+   "depends_on": [
+    "WB-04"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WB-06",
+   "title": "五模板切换 + 单块批注重写（走干预层，NEVER 另开一条生成路）",
+   "milestone": "W14",
+   "inputs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "flint/intervene/",
+    "flint/api/interventions.py"
+   ],
+   "outputs": [
+    "web/components/workbench/",
+    "tests/v041/test_wb_annotate.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_wb_annotate.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "模板切换：五套任选，切换后章节导航与预览同步换（`WB-05` 的表驱动）",
+    "单块批注：对某一个块提批注 → **只重写那一个块**（蓝本原话「只重写这个块」）",
+    "**重写 MUST 走既有干预层**（`flint/intervene/` + `POST /deliverables/{}/sections/{}/regenerate`），NEVER 另开一条生成路——两条生成路会让「这段文字是怎么来的」有两个答案",
+    "**受保护 block NEVER 被改写**（`S2-5`：locked ∨ author==user ∨ user_modified）——判据两个方向各断言一次：受保护的改不动且屏上说清为什么；未受保护的改得动且 revision +1",
+    "改写前后 MUST 留痕（改了哪一块、批注是什么、revision 从几到几）"
+   ],
+   "context_refs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html",
+    "contracts/models.py#Block"
+   ],
+   "depends_on": [
+    "WB-05"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "WB-07",
+   "title": "AI 设计工作台改名退居次要（DESIGN-01~03 的成果一点不丢）",
+   "milestone": "W14",
+   "inputs": [
+    "web/components/shell/AppShell.tsx",
+    "web/app/design/page.tsx"
+   ],
+   "outputs": [
+    "web/",
+    "tests/v041/test_wb_nav_rename.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_wb_nav_rename.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "按 DEC-059：顶栏「AI 设计工作台」改名为「模板工具」（或 owner 划定的名字），退居主工作台之后",
+    "**那一屏与它的端点、作业、固化流程一个字不改**——DESIGN-01~03 的成果一点不丢，判据断言 `/design` 那 7 条路由与提交端点仍在且仍可达",
+    "可达性三个空表继续成立；豁免名单仍只有 `/share/[token]`",
+    "**NEVER 把它从导航上摘掉**（摘掉就是把一个做好的功能变成孤岛）"
+   ],
+   "context_refs": [
+    "docs/trace/DESIGN-01.md"
+   ],
+   "depends_on": [
+    "WB-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "EYE-05",
+   "title": "看屏取证：工作台整屏逐条对着蓝本验收",
+   "milestone": "W14",
+   "inputs": [
+    "web/",
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html"
+   ],
+   "outputs": [
+    ".ui-probe/eye05/",
+    "docs/怎么测-v041.md",
+    "tests/v041/test_eye05.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_eye05.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "**本批的防空转闸**：三视口（1920 / 1440 / 390）× 两主题（亮 / 暗）共 6 张整屏截图，落 `.ui-probe/eye05/`，文件名写明视口与主题",
+    "每张 MUST 同时满足：三栏在位（390 除外）· 无横向溢出 · 零控制台报错 · 右栏渲染的是**真 Block**（不是占位文案）",
+    "另拍一组**流程图**：选卡 → 输入 → 生成中 → 出块 → 批注重写，逐步留图",
+    "截图 MUST 打真栈真浏览器（:3000），NEVER 用组件快照冒充整屏",
+    "`docs/怎么测-v041.md` 补一节「工作台」：owner 从哪进、该看到什么、看不到时是谁的问题"
+   ],
+   "context_refs": [
+    "前端设计/ai工作台/Flint 设计台 v3.dc.html"
+   ],
+   "depends_on": [
+    "WB-06",
+    "WB-07"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-14",
+   "title": "本批收尾",
+   "milestone": "W14",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b14.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH14-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_ledger_pairing_v041.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "五条全局门逐字贴出；pytest 的红逐条点名归属，NEVER 按族小结",
+    "顺序写死：先写 trace 与台账 → 再跑五条门 → 最后只改完成态报告的数字",
+    "blocked 也要有 started；每张卡的 started 与终态成对",
+    "报告首节 = **与蓝本的逐条对照**：蓝本有什么 / 做成了什么 / 哪张截图为证 / **哪几处刻意没照蓝本做以及为什么**（生成不走 HTML 正则那一条 MUST 在列）",
+    "列出 6 张整屏截图与流程图路径，owner 不用翻目录"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH13-COMPLETION.md"
+   ],
+   "depends_on": [
+    "EYE-05"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

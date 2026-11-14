@@ -1,0 +1,7 @@
+{
+  "_note": "样板占位语法（DESIGN-27 / G2）。这些是**检测模式**不是界面文案：中文要逐字保留，key 化会让它们不再匹配任何东西（与 synthesis-blacklist.json 同一条口径）。",
+  "placeholderNumber": "\\bX+(?:[.,]X+)*%?",
+  "placeholderSource": "\\[来源待补\\]|\\bSRC-X{4}\\b",
+  "concreteNumber": "\\b\\d+(?:[.,]\\d+)*\\s*%?",
+  "concreteSource": "\\bSRC-\\d{4}\\b|\\[来源[:：][^\\]]+\\]"
+}

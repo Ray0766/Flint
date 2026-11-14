@@ -1,0 +1,11 @@
+{
+ "schema": "fixture-provenance/1",
+ "authorized_by": "DEC-057",
+ "recorded_by": "fixtures/_gate1_real.py",
+ "job_id": "job-4c558f32-f8a2-4a25-9215-f76c6781ff91",
+ "topic_id": "topic-gate1real",
+ "real_requests": 28,
+ "distinct_urls": 13,
+ "receipts_dir": "fixtures/_probe/gate1/",
+ "note": "GATE1-REAL 那一跑的真响应。留痕（回执 + body）在 receipts_dir，本文件是回放夹具。"
+}

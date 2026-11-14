@@ -1,0 +1,42 @@
+{
+ "schema": "cn-01/1",
+ "day": "2026-08-10",
+ "ran_at": "2026-08-10T03:38:49.452010+00:00",
+ "authorized_by": "DEC-052",
+ "local_date": "2026-08-10",
+ "utc_date": "2026-08-10",
+ "legal_decision": {
+  "scope": "non_commercial",
+  "decided_on": "2026-08-04"
+ },
+ "results": [
+  {
+   "source": "weibo",
+   "outcome": "ok",
+   "items": 50,
+   "exchanges": 3,
+   "fixture": "fixtures\\weibo\\2026-08-10.json"
+  },
+  {
+   "source": "gtrends",
+   "outcome": "ok",
+   "items": 10,
+   "exchanges": 1,
+   "fixture": "fixtures\\gtrends\\2026-08-10.json"
+  },
+  {
+   "source": "ghtrend",
+   "outcome": "ok",
+   "items": 0,
+   "exchanges": 1,
+   "fixture": "fixtures\\ghtrend\\2026-08-10.json"
+  },
+  {
+   "source": "arxiv",
+   "outcome": "ok",
+   "items": 0,
+   "exchanges": 1,
+   "fixture": "fixtures\\arxiv\\2026-08-10.json"
+  }
+ ]
+}

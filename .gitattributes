@@ -1,0 +1,4 @@
+# Byte-exact checkout on every platform. The tree mixes CRLF and LF files, and
+# contracts/ is verified byte-for-byte against its copies, so git must never
+# convert line endings.
+* -text

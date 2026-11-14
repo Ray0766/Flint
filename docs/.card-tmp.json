@@ -1,0 +1,36 @@
+{
+  "id": "I18N-09",
+  "title": "整树 i18n 收尾（扫描器块注释假阳性 + app/ 三页 + 旧词条表清理）",
+  "milestone": "V5",
+  "inputs": [
+    "tools/i18n_scan.mjs",
+    "web/lib/i18n.ts",
+    "docs/trace/SELFCHECK-V2.md 追记",
+    "docs/trace/GRAPH-11.md（CRLF 假阳性实测）"
+  ],
+  "outputs": [
+    "tools/i18n_scan.mjs",
+    "web/app/",
+    "web/messages/zh.json",
+    "web/messages/en.json"
+  ],
+  "cycles": 1,
+  "estimate_days": 0.5,
+  "oneshot": true,
+  "verify_cmd": "node tools/i18n_scan.mjs web --fail-on-cjk",
+  "self_review": true,
+  "owner_review": false,
+  "acceptance": [
+    "整棵 web/ 树扫描 exit 0：CJK 字面量 0 个文件、白名单 0 项、B7 违规 0",
+    "块注释里的中文不再被判为界面文案；同一把尺子对真实未 key 化文案仍报红（反例断言）",
+    "CRLF 文件不误报：同一份内容以 CRLF 与 LF 两种换行各扫一次，结果必须相同（GRAPH-11 实测到的第二类假阳性）"
+  ],
+  "context_refs": [
+    "DECISIONS-v04.md#DEC-013",
+    "docs/trace/SELFCHECK-V2.md"
+  ],
+  "depends_on": [
+    "I18N-02"
+  ],
+  "blocked_by": null
+}

@@ -1,0 +1,662 @@
+version: 1
+entries:
+- entry_id: pe-compute-01
+  item: A100 80G 按小时租用
+  unit: 卡·小时
+  price_low: 6.0
+  price_high: 15.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-02
+  item: 4090 按小时租用
+  unit: 卡·小时
+  price_low: 1.5
+  price_high: 3.5
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-03
+  item: CPU 云主机 8C16G 包月
+  unit: 台·月
+  price_low: 300.0
+  price_high: 800.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-04
+  item: 对象存储
+  unit: TB·月
+  price_low: 90.0
+  price_high: 150.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-05
+  item: CDN 流量
+  unit: TB
+  price_low: 180.0
+  price_high: 260.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-06
+  item: 推理 API（7B 级）
+  unit: 百万 token
+  price_low: 3.0
+  price_high: 12.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-07
+  item: 推理 API（旗舰级）
+  unit: 百万 token
+  price_low: 60.0
+  price_high: 220.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-08
+  item: 向量数据库托管
+  unit: 百万向量·月
+  price_low: 200.0
+  price_high: 600.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-09
+  item: 日志与监控托管
+  unit: GB·月
+  price_low: 2.0
+  price_high: 8.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-compute-10
+  item: CI 构建分钟
+  unit: 千分钟
+  price_low: 40.0
+  price_high: 120.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-01
+  item: 初级算法工程师
+  unit: 人·月
+  price_low: 15000.0
+  price_high: 30000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-02
+  item: 资深算法工程师
+  unit: 人·月
+  price_low: 35000.0
+  price_high: 70000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-03
+  item: 全栈工程师
+  unit: 人·月
+  price_low: 20000.0
+  price_high: 45000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-04
+  item: 产品经理
+  unit: 人·月
+  price_low: 18000.0
+  price_high: 40000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-05
+  item: UI 设计
+  unit: 人·月
+  price_low: 15000.0
+  price_high: 30000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-06
+  item: 数据标注员
+  unit: 人·月
+  price_low: 6000.0
+  price_high: 12000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-07
+  item: 兼职标注（按件）
+  unit: 千条
+  price_low: 300.0
+  price_high: 1500.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-08
+  item: 技术顾问
+  unit: 人·日
+  price_low: 3000.0
+  price_high: 10000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-09
+  item: 专利代理服务
+  unit: 件
+  price_low: 8000.0
+  price_high: 25000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-labor-10
+  item: 法务咨询
+  unit: 小时
+  price_low: 800.0
+  price_high: 2500.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-01
+  item: 工作站（单 4090）
+  unit: 台
+  price_low: 15000.0
+  price_high: 30000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-02
+  item: 服务器（双路）
+  unit: 台
+  price_low: 40000.0
+  price_high: 120000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-03
+  item: 开发笔记本
+  unit: 台
+  price_low: 8000.0
+  price_high: 20000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-04
+  item: 显示器
+  unit: 台
+  price_low: 1500.0
+  price_high: 5000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-05
+  item: NAS 存储
+  unit: 台
+  price_low: 3000.0
+  price_high: 15000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-06
+  item: 机械臂（协作级）
+  unit: 台
+  price_low: 30000.0
+  price_high: 150000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-07
+  item: 深度相机
+  unit: 台
+  price_low: 2000.0
+  price_high: 12000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-08
+  item: 激光雷达（16 线）
+  unit: 台
+  price_low: 15000.0
+  price_high: 60000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-09
+  item: 3D 打印机（FDM）
+  unit: 台
+  price_low: 2000.0
+  price_high: 15000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-equipment-10
+  item: 示波器
+  unit: 台
+  price_low: 3000.0
+  price_high: 20000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-01
+  item: 行业研究报告单份
+  unit: 份
+  price_low: 2000.0
+  price_high: 20000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-02
+  item: 学术数据库年订阅
+  unit: 年
+  price_low: 10000.0
+  price_high: 80000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-03
+  item: 专利数据库年订阅
+  unit: 年
+  price_low: 20000.0
+  price_high: 100000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-04
+  item: 舆情数据 API
+  unit: 月
+  price_low: 3000.0
+  price_high: 20000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-05
+  item: 地图/POI API
+  unit: 百万次
+  price_low: 500.0
+  price_high: 5000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-06
+  item: 金融行情 API
+  unit: 月
+  price_low: 2000.0
+  price_high: 30000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-07
+  item: 公开数据集清洗外包
+  unit: 数据集
+  price_low: 5000.0
+  price_high: 50000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-08
+  item: 问卷调研（有效样本）
+  unit: 千份
+  price_low: 8000.0
+  price_high: 30000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-09
+  item: 用户访谈（深度）
+  unit: 人次
+  price_low: 300.0
+  price_high: 1500.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-data-10
+  item: 竞品测评采购
+  unit: 批
+  price_low: 2000.0
+  price_high: 20000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-01
+  item: 域名
+  unit: 年
+  price_low: 60.0
+  price_high: 300.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-02
+  item: SSL 证书（OV）
+  unit: 年
+  price_low: 500.0
+  price_high: 3000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-03
+  item: 邮件服务
+  unit: 千封
+  price_low: 8.0
+  price_high: 40.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-04
+  item: 短信验证码
+  unit: 千条
+  price_low: 30.0
+  price_high: 60.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-05
+  item: 支付通道费率
+  unit: 万元流水
+  price_low: 20.0
+  price_high: 60.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-06
+  item: 客服 SaaS
+  unit: 坐席·月
+  price_low: 100.0
+  price_high: 500.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-07
+  item: 协同办公 SaaS
+  unit: 人·月
+  price_low: 20.0
+  price_high: 120.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-08
+  item: 设计工具订阅
+  unit: 人·月
+  price_low: 60.0
+  price_high: 300.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-09
+  item: 代码托管私有仓
+  unit: 人·月
+  price_low: 20.0
+  price_high: 80.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-cloud_saas-10
+  item: BI 报表工具
+  unit: 人·月
+  price_low: 100.0
+  price_high: 600.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-01
+  item: 公司注册代办
+  unit: 次
+  price_low: 500.0
+  price_high: 3000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-02
+  item: 代理记账
+  unit: 月
+  price_low: 200.0
+  price_high: 800.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-03
+  item: 联合办公工位
+  unit: 位·月
+  price_low: 800.0
+  price_high: 3000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-04
+  item: 独立办公室（小型）
+  unit: 月
+  price_low: 5000.0
+  price_high: 20000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-05
+  item: 商标注册
+  unit: 类
+  price_low: 300.0
+  price_high: 1500.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-06
+  item: 软著登记
+  unit: 件
+  price_low: 300.0
+  price_high: 1200.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-07
+  item: 发票与税控
+  unit: 年
+  price_low: 500.0
+  price_high: 2000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-08
+  item: 五险一金企业成本
+  unit: 人·月
+  price_low: 1500.0
+  price_high: 5000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-09
+  item: 市场投放（信息流）
+  unit: 千次曝光
+  price_low: 20.0
+  price_high: 120.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12
+- entry_id: pe-operations-10
+  item: 展会参展（标摊）
+  unit: 次
+  price_low: 8000.0
+  price_high: 50000.0
+  currency: CNY
+  region: CN
+  year: 2026
+  source: seed:2026 调研汇编（生产逐条替换为 url/citation）
+  updated_at: '2026-07-01T00:00:00+00:00'
+  stale_after_months: 12

@@ -1,0 +1,9 @@
+{
+ "principle": "B9",
+ "title": "引文原文不翻译",
+ "source": "docs/PRINCIPLES-v04.md",
+ "raw": "ingest 时统一翻成中文写入原文字段。",
+ "counter_examples": [
+  "ingest 时统一翻成中文写入原文字段"
+ ]
+}

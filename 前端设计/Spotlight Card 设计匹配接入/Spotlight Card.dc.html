@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/texture.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/base.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/styles.css">
+  <script src="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/_ds_bundle.js"></script>
+  <style>
+    body { margin: 0; background: #EDEEE6; }
+    a { color: #E8B93C; } a:hover { color: #1B2A2E; }
+  </style>
+</helmet>
+<div data-screen-label="Spotlight Cards" style="min-height: 100vh; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 40px; font-family: 'Inter', 'Noto Sans SC', sans-serif; color: #1B2A2E;">
+  <x-import component="GlowCard" from="./spotlight-card.jsx" glow-color="{{ glowColor }}" size="{{ cardSize }}" hint-size="256px,320px">
+    <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: rgba(27,42,46,0.6);">CLUE</span>
+      <h3 style="margin: 0; font-family: 'Smiley Sans Oblique', 'Noto Sans SC', sans-serif; font-weight: 400; font-size: 31px; line-height: 1.15; color: #1B2A2E;">今日线索</h3>
+      <p style="margin: 0; font-size: 14px; line-height: 1.8; color: rgba(27,42,46,0.75); text-wrap: pretty;">每日热点抓取入册，逐条标注来源与抓取时间，不做任何补写。</p>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-variant-numeric: tabular-nums; color: rgba(27,42,46,0.6);">
+      <span>08:00 抓取</span><span>32 条</span>
+    </div>
+  </x-import>
+  <x-import component="GlowCard" from="./spotlight-card.jsx" glow-color="{{ glowColor }}" size="{{ cardSize }}" hint-size="256px,320px">
+    <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: rgba(27,42,46,0.6);">VERDICT</span>
+      <h3 style="margin: 0; font-family: 'Smiley Sans Oblique', 'Noto Sans SC', sans-serif; font-weight: 400; font-size: 31px; line-height: 1.15; color: #1B2A2E;">可行性判定</h3>
+      <p style="margin: 0; font-size: 14px; line-height: 1.8; color: rgba(27,42,46,0.75); text-wrap: pretty;">该判定基于 3 条已证事实。推测段落单独标出，不提供溯源。</p>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-variant-numeric: tabular-nums; color: rgba(27,42,46,0.6);">
+      <span>判定：可行</span><span>溯源齐备</span>
+    </div>
+  </x-import>
+  <x-import component="GlowCard" from="./spotlight-card.jsx" glow-color="{{ glowColor }}" size="{{ cardSize }}" hint-size="256px,320px">
+    <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: rgba(27,42,46,0.6);">REPORT</span>
+      <h3 style="margin: 0; font-family: 'Smiley Sans Oblique', 'Noto Sans SC', sans-serif; font-weight: 400; font-size: 31px; line-height: 1.15; color: #1B2A2E;">深度报告</h3>
+      <p style="margin: 0; font-size: 14px; line-height: 1.8; color: rgba(27,42,46,0.75); text-wrap: pretty;">报告随判定生成，含全部引用。存在待处理复核时导出被阻断。</p>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-variant-numeric: tabular-nums; color: rgba(27,42,46,0.6);">
+      <span>12 页</span><span>可导出</span>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: &quot;1100px&quot;, &quot;height&quot;: &quot;560px&quot;},
+  &quot;glowColor&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;blue&quot;, &quot;tsType&quot;: &quot;'blue'|'purple'|'green'|'red'|'orange'&quot;, &quot;options&quot;: [&quot;blue&quot;, &quot;purple&quot;, &quot;green&quot;, &quot;red&quot;, &quot;orange&quot;], &quot;section&quot;: &quot;辉光&quot;},
+  &quot;cardSize&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;md&quot;, &quot;tsType&quot;: &quot;'sm'|'md'|'lg'&quot;, &quot;options&quot;: [&quot;sm&quot;, &quot;md&quot;, &quot;lg&quot;], &quot;section&quot;: &quot;辉光&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      glowColor: this.props.glowColor ?? 'blue',
+      cardSize: this.props.cardSize ?? 'md'
+    };
+  }
+}
+</script>
+</body>
+</html>

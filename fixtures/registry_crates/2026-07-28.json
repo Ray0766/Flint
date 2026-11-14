@@ -1,0 +1,23 @@
+[
+ {
+  "method": "GET",
+  "url": "https://crates.io/api/v1/crates/serde",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"crate\": {\"name\": \"serde\", \"max_stable_version\": \"1.0.219\"}}"
+ },
+ {
+  "method": "GET",
+  "url": "https://crates.io/api/v1/crates/flint-no-such-package",
+  "status_code": 404,
+  "content_type": "application/json",
+  "body_text": "{\"errors\": [{\"detail\": \"Not Found\"}]}"
+ },
+ {
+  "method": "GET",
+  "url": "https://crates.io/api/v1/crates/flint-broken-registry",
+  "status_code": 503,
+  "content_type": "application/json",
+  "body_text": "{\"errors\": [{\"detail\": \"Service Unavailable\"}]}"
+ }
+]

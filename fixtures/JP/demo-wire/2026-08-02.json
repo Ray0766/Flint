@@ -1,0 +1,10 @@
+{
+  "_note": "REGION-04 双区同事件样本（JP 侧）。与 US 侧是**同一事件**的两国报道——B5 的反例场景：embedding 会想把它们合成一簇。原文 NEVER 翻译（B7/B9）。",
+  "region": "JP",
+  "source_id": "demo-wire",
+  "day": "2026-08-02",
+  "items": [
+    {"item_id": "jp-1", "event_text": "トヨタ、全固体電池の量産ラインを稼働"},
+    {"item_id": "jp-2", "event_text": "トヨタ固体電池工場の建設計画を発表"}
+  ]
+}

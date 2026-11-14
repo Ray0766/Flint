@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.patents.example/v1/search?q=agent+memory&rows=10",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"patents\": [{\"patent_id\": \"US11001237\", \"title\": \"agent memory apparatus 0\", \"family_size\": 6, \"legal_status\": \"pending\", \"date\": \"2026-01-15\", \"url\": \"https://patents.example/US11001237\"}, {\"patent_id\": \"US11001238\", \"title\": \"agent memory apparatus 1\", \"family_size\": 7, \"legal_status\": \"active\", \"date\": \"2026-02-15\", \"url\": \"https://patents.example/US11001238\"}, {\"patent_id\": \"US11001239\", \"title\": \"agent memory apparatus 2\", \"family_size\": 8, \"legal_status\": \"active\", \"date\": \"2026-03-15\", \"url\": \"https://patents.example/US11001239\"}, {\"patent_id\": \"US11001240\", \"title\": \"agent memory apparatus 3\", \"family_size\": 1, \"legal_status\": \"pending\", \"date\": \"2026-04-15\", \"url\": \"https://patents.example/US11001240\"}, {\"patent_id\": \"US11001241\", \"title\": \"agent memory apparatus 4\", \"family_size\": 2, \"legal_status\": \"active\", \"date\": \"2026-05-15\", \"url\": \"https://patents.example/US11001241\"}], \"count\": 5}"
+ }
+]

@@ -1,0 +1,15 @@
+# 大类目录种子（M1-022，12 类，人工固定目录——Cluster.category_id 的取值域）
+version: 0
+categories:
+  - {id: cat-ai, name: 人工智能与大模型}
+  - {id: cat-robotics, name: 机器人与自动驾驶}
+  - {id: cat-energy, name: 能源与双碳}
+  - {id: cat-semiconductor, name: 半导体与硬件}
+  - {id: cat-quantum, name: 量子科技}
+  - {id: cat-biotech, name: 生物医药与健康}
+  - {id: cat-aerospace, name: 航天与低空经济}
+  - {id: cat-computing, name: 计算与云基础设施}
+  - {id: cat-materials, name: 新材料与先进制造}
+  - {id: cat-mobility, name: 出行与消费硬件}
+  - {id: cat-fintech, name: 金融科技与企业服务}
+  - {id: cat-media, name: 内容与数字娱乐}

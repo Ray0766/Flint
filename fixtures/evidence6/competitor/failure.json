@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.products.example/search?q=probe&limit=10",
+  "status_code": 503,
+  "content_type": "text/plain",
+  "body_text": "upstream unavailable"
+ }
+]

@@ -1,0 +1,60 @@
+# 燧石 Flint 开发环境（M1-002，技术方案 E1 单机拓扑）
+# 端口用 55432/56379 避开本机常驻服务冲突；应用侧连接串见 .env.example。
+# api/worker 为骨架占位（python:3.11-slim + sleep）：应用镜像随 M1-033+/api 任务落地
+# 后替换为构建镜像；E1 第五容器 ingestd 同期补齐。
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: flint
+      POSTGRES_PASSWORD: flint
+      POSTGRES_DB: flint
+    ports:
+      - "55432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flint -d flint"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "56379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "PING"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  api:
+    image: python:3.11-slim
+    command: ["sleep", "infinity"]
+    environment:
+      FLINT_ENV: dev
+      DATABASE_URL: postgresql+asyncpg://flint:flint@postgres:5432/flint
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    image: python:3.11-slim
+    command: ["sleep", "infinity"]
+    environment:
+      FLINT_ENV: dev
+      DATABASE_URL: postgresql+asyncpg://flint:flint@postgres:5432/flint
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.news.example/v2/everything?q=low+altitude+economy+shutdown&pageSize=5",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"status\": \"ok\", \"articles\": [{\"title\": \"Low Altitude Economy startup shuts down after funding dries up\", \"url\": \"https://news.example/low-altitude-economy/shutdown\", \"source\": {\"name\": \"Reuters\"}, \"media_tier\": 1, \"independent_sources\": 3, \"publishedAt\": \"2026-06-30T08:00:00Z\"}]}"
+ }
+]

@@ -1,0 +1,33 @@
+:root{
+/* 纸与墨 */
+--paper:#EDEEE6; /* 生纸底，微带灰绿。NEVER 暖奶油 #F4F1EA 一挂 */
+--paper-2:#E3E5DA; /* 次级底、纹理区、贴纸底 */
+--surface:#F7F8F3; /* 卡面，比纸亮一档 */
+--ink:#1B2A2E; /* 墨，深青黑 */
+--ink-2:#5A6A6E; /* 次级文字 */
+--ink-3:#8B9799; /* 标签、元信息 */
+--rule:#D2D6C9; /* 细线 */
+/* 三个性格色 + 苔绿 */
+--indigo:#2E4A7D; /* 藍染。结构、链接、印记、已证态 */
+--sulfur:#E8B93C; /* 硫磺火花。重点、高亮、CTA、首屏主角 */
+--rust:#B4472C; /* 铁锈。唯一告警色，全站仅三处 */
+--moss:#6B7A5A; /* 苔绿。插画与纹理辅助 */
+/* 派生淡色（语义域可用） */
+--indigo-soft:#DDE3EE; /* 便条底、提示级复核 */
+--indigo-mist:#8FA3C4; /* 降权藍 */
+--moss-soft:#E0E4D6; /* 保护只读底 */
+--sulfur-soft:#F6E5B3; /* 高亮划线底 */
+--rust-soft:#F0DAD2; /* 阻塞级底纹 */
+/* 语义别名 */
+--bg-page:var(--paper);
+--surface-card:var(--surface);
+--text-body:var(--ink);
+--text-secondary:var(--ink-2);
+--text-meta:var(--ink-3);
+--border-rule:var(--rule);
+--accent-structure:var(--indigo);
+--accent-highlight:var(--sulfur);
+--alert-blocking:var(--rust); /* 只用于：阻塞级复核标 / 导出被阻断 409 / 服务不可用 503 */
+--link:var(--indigo);
+--focus-ring:var(--indigo);
+}

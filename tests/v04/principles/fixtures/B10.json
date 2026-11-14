@@ -1,0 +1,10 @@
+{
+ "principle": "B10",
+ "title": "接地校验只对原文",
+ "source": "docs/PRINCIPLES-v04.md",
+ "raw": "对 `event_text_display[\"en\"]` 跑一致性比对；报告引文只给译文且无原文展开。",
+ "counter_examples": [
+  "对 `event_text_display[\"en\"]` 跑一致性比对",
+  "报告引文只给译文且无原文展开"
+ ]
+}

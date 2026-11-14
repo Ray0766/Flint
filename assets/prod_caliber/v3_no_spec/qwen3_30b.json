@@ -1,0 +1,1491 @@
+{
+ "model": "qwen3:30b",
+ "tier": "free-local",
+ "judged": true,
+ "run_day": "2026-07-28",
+ "n_compositions": 12,
+ "scale_chars": 1200,
+ "usage": {
+  "calls": 301,
+  "input_tokens": 64512,
+  "output_tokens": 1430084,
+  "cost_usd": 0.0
+ },
+ "structured_output_failures": 0,
+ "answer": {
+  "questions": 86,
+  "answered": 38,
+  "rate": 0.4418604651162791,
+  "meets_line": false,
+  "records": [
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "summary",
+    "question": "结论与档位是否一句话可读？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "opportunity",
+    "question": "机会陈述是否全部挂证据？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "market",
+    "question": "市场数字是否全部走 Fact/PriceCell 通道？",
+    "answered": false,
+    "answer": "缺口：行业平均30%、30种方言、500+企业客户、15%市场占有率、30%成本降低、25%数据质量提升等数字未标注Fact/PriceCell标签"
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "competition",
+    "question": "竞品强度是否与 signal 对齐？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "plan",
+    "question": "里程碑是否可验证？",
+    "answered": true,
+    "answer": "各里程碑均包含明确量化指标（如10种方言、5000用户、10万元营收、15人团队）及具体截止日期，可通过系统数据（平台上线记录、用户注册统计、财务报表、人事档案）直接验证，符合可验证性要求。"
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "budget",
+    "question": "预算格是否全部 PriceCell？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "risks",
+    "question": "风险是否含证伪面？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "summary",
+    "question": "结论与档位是否一句话可读？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "opportunity",
+    "question": "机会陈述是否全部挂证据？",
+    "answered": false,
+    "answer": "缺口：工具准确率90%、年均节省1200美元、市场缺口30%未标注证据标记（如Fact-3/PriceCell-3）"
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "market",
+    "question": "市场数字是否全部走 Fact/PriceCell 通道？",
+    "answered": true,
+    "answer": "是，所有市场数字均标注了Fact或PriceCell来源"
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "competition",
+    "question": "竞品强度是否与 signal 对齐？",
+    "answered": true,
+    "answer": "是，竞品密集入场（如Otter融资、Fireflies增长、Zoom覆盖）与行业准确率低（65%）的信号对齐，我方85%准确率实现显著超越。"
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "plan",
+    "question": "里程碑是否可验证？",
+    "answered": true,
+    "answer": "是，所有里程碑均设定具体量化指标，如每月1000场会议处理、5000用户规模、10万元营收、20人团队规模及10年平均资历，可通过实际数据实时验证。"
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "budget",
+    "question": "预算格是否全部 PriceCell？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "risks",
+    "question": "风险是否含证伪面？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "abstract",
+    "question": "贡献点是否可证伪？",
+    "answered": false,
+    "answer": "内容中未提供可验证的基准数据、测试方法或第三方依据，仅陈述结果而无证伪路径（如对比数据、测试报告、行业标准等）"
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "related_work",
+    "question": "引用是否覆盖近三年？",
+    "answered": false,
+    "answer": "缺口：缺少2021年引用，仅覆盖2022-2023年（近三年应包含2021-2023年）"
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "method",
+    "question": "方法与基线差异是否明确？",
+    "answered": true,
+    "answer": "明确，节内容明确对比了传统方法（如数据采集效率较传统方法提升30%）和行业平均（如成本相比行业平均降低30%），并标注了具体基线参照点（Fact-2、PriceCell-1）。"
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "evaluation_plan",
+    "question": "指标与数据集是否可获得？",
+    "answered": true,
+    "answer": "是，数据来源明确提及独立第三方测试数据（Fact-2）和成本分析报告（PriceCell-2），且内容强调数据来源清晰可追溯。"
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "timeline",
+    "question": "节点是否与学制对齐？",
+    "answered": false,
+    "answer": "内容中未提及任何学制相关要素（如学年、学期、毕业时间等），无法判断节点与学制的对齐关系"
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "resources",
+    "question": "设备是否在 Profile 资产内？",
+    "answered": false,
+    "answer": "内容中未明确设备属于Profile-1资产，仅说明由该团队操作"
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "abstract",
+    "question": "贡献点是否可证伪？",
+    "answered": false,
+    "answer": "内容中仅列出数据标签（如Fact-1），未提供验证方法、测试数据来源或第三方依据，无法确认贡献点是否可证伪"
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "related_work",
+    "question": "引用是否覆盖近三年？",
+    "answered": false,
+    "answer": "内容仅引用2023年数据（如Fact-1、Fact-5、Fact-6），未覆盖2021年和2022年数据，缺少近三年完整引用"
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "method",
+    "question": "方法与基线差异是否明确？",
+    "answered": false,
+    "answer": "内容未提及任何基线方法或对比数据，仅说明自身目标准确率（95%→98%）和延迟指标，缺乏与现有方法或行业基准的明确差异描述。"
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "evaluation_plan",
+    "question": "指标与数据集是否可获得？",
+    "answered": false,
+    "answer": "节内容中数据采集计划（Fact-1）为2024年12月31日前完成，当前时间未达截止日期，数据集尚未实际获得；历史数据提及但未明确说明可获取性，存在时间与数据状态缺口。"
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "timeline",
+    "question": "节点是否与学制对齐？",
+    "answered": false,
+    "answer": "内容未提及学制相关要素"
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "resources",
+    "question": "设备是否在 Profile 资产内？",
+    "answered": false,
+    "answer": "设备在Fact-2中提及，但未说明属于Profile资产，内容未明确设备与Profile的关联"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "one_liner",
+    "question": "一句话是否含用户与形态？",
+    "answered": false,
+    "answer": "内容中未提及用户与形态"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "problem",
+    "question": "痛点是否有一手证据？",
+    "answered": false,
+    "answer": "内容中引用的Fact-1至Fact-5未说明数据来源是否为一手调研或实验，缺乏一手证据的直接证明"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "solution",
+    "question": "方案是否与竞品差异化？",
+    "answered": true,
+    "answer": "是，方案通过深度学习模型实现检测速度10秒/个（较传统方法提升300%）、准确率95%、覆盖1000+主流电池型号、年降成本200万元等核心优势，与竞品相比在效率、成本及覆盖范围上形成显著差异化。"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "market_size",
+    "question": "规模数字是否全挂出处？",
+    "answered": true,
+    "answer": "所有规模数字均标注对应Fact编号（Fact-1至Fact-8）"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "go_to_market",
+    "question": "首批用户路径是否具体？",
+    "answered": false,
+    "answer": "内容未描述首批用户获取的具体路径步骤（如展会具体对接流程、线上平台转化路径等），仅提及推广方式但缺乏执行细节"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "business_model",
+    "question": "定价是否引 PriceBook？",
+    "answered": false,
+    "answer": "内容中未提及PriceBook，仅出现PriceCell-1/PriceCell-2"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "team",
+    "question": "团队是否走 ProfileRef？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "financials",
+    "question": "预算是否全 PriceCell？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "one_liner",
+    "question": "一句话是否含用户与形态？",
+    "answered": false,
+    "answer": "缺口：未提及形态"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "problem",
+    "question": "痛点是否有一手证据？",
+    "answered": false,
+    "answer": "数据来源未说明为一手调查，属于引用的二手数据（如Fact-1/2/3及PriceCell-1未注明调研主体或原始数据来源）"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "solution",
+    "question": "方案是否与竞品差异化？",
+    "answered": true,
+    "answer": "是，通过能量密度250Wh/kg（显著优于行业标准）、循环寿命6000次（10年以上）、成本低20%、AI智能管理系统提升太阳能自给率85%及年均电费降低35%实现差异化。"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "market_size",
+    "question": "规模数字是否全挂出处？",
+    "answered": false,
+    "answer": "规模数字'降低电费20%'未标注出处（节内容中仅标注'PriceCell-1'为户均电费支出，未对应20%数据）"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "go_to_market",
+    "question": "首批用户路径是否具体？",
+    "answered": false,
+    "answer": "内容未描述首批用户获取的具体步骤、渠道执行细节或用户转化路径，仅提及目标数量（10万户）和策略类型（直销与渠道融合），缺乏可操作的路径说明。"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "business_model",
+    "question": "定价是否引 PriceBook？",
+    "answered": false,
+    "answer": "内容中仅提及产品定价为PriceCell-1，未出现PriceBook相关引用"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "team",
+    "question": "团队是否走 ProfileRef？",
+    "answered": true,
+    "answer": "yes"
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "financials",
+    "question": "预算是否全 PriceCell？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "goal",
+    "question": "目标是否可验收？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "architecture",
+    "question": "选型是否过 registry 校验？",
+    "answered": false,
+    "answer": "内容中未提及任何registry校验相关的信息，无法判断选型是否通过校验"
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "milestones",
+    "question": "里程碑是否有 verify 手段？",
+    "answered": true,
+    "answer": "是，里程碑包含明确验证手段：2024年3月31日的认证通过国际权威机构第三方测试（Fact-2），所有指标基于内部测试数据、月度进度审查及KPI动态监控机制确保可验证性。"
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "resources",
+    "question": "算力估算是否引 PriceBook？",
+    "answered": false,
+    "answer": "内容中未提及算力估算相关描述，仅出现PriceCell-1预算项（非PriceBook），缺乏PriceBook引用依据"
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "risks",
+    "question": "技术风险是否含证伪证据？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "budget",
+    "question": "预算格是否全部 PriceCell？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "goal",
+    "question": "目标是否可验收？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "architecture",
+    "question": "选型是否过 registry 校验？",
+    "answered": false,
+    "answer": "内容中未提及任何registry校验相关技术选型信息，缺乏校验依据"
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "milestones",
+    "question": "里程碑是否有 verify 手段？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "resources",
+    "question": "算力估算是否引 PriceBook？",
+    "answered": false,
+    "answer": "内容中未提及算力估算，仅出现硬件设备采购预算（PriceCell-1），无法确认是否引用PriceBook"
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "risks",
+    "question": "技术风险是否含证伪证据？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "budget",
+    "question": "预算格是否全部 PriceCell？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "significance",
+    "question": "意义陈述是否挂权威证据？",
+    "answered": true,
+    "answer": "引用IDC报告（Fact-1）和NIST标准（Fact-2）作为权威证据，符合问题要求。"
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "innovation",
+    "question": "创新点是否与文献对照？",
+    "answered": false,
+    "answer": "内容未提及与文献的对照，仅陈述自身创新点而未引用或对比现有文献"
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "approach",
+    "question": "技术路线是否含备选？",
+    "answered": false,
+    "answer": "未提及备选技术路线"
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "feasibility",
+    "question": "可行性是否引 track_record？",
+    "answered": true,
+    "answer": "是，核心团队5年量子技术开发经验（Profile-1）作为track_record支持技术可行性论证。"
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "team_resources",
+    "question": "团队与设备是否走 ProfileRef？",
+    "answered": false,
+    "answer": "内容中团队部分提及Profile-1和Profile-2，但未提及设备相关ProfileRef，缺口为设备未明确引用ProfileRef"
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "budget_justification",
+    "question": "预算依据是否全 PriceCell？",
+    "answered": true,
+    "answer": "预算依据全为PriceCell，包含PriceCell-1、PriceCell-2、PriceCell-3"
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "timeline",
+    "question": "进度是否与资助期对齐？",
+    "answered": false,
+    "answer": "缺少资助期起止时间信息"
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "significance",
+    "question": "意义陈述是否挂权威证据？",
+    "answered": false,
+    "answer": "内容中使用Fact-1、Fact-2等内部标记而非权威机构名称或具体报告来源，缺乏实际权威证据引用"
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "innovation",
+    "question": "创新点是否与文献对照？",
+    "answered": false,
+    "answer": "内容未提及任何文献引用或与现有文献的对比分析，仅陈述自身数据和市场调研结果，缺乏文献对照依据。"
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "approach",
+    "question": "技术路线是否含备选？",
+    "answered": false,
+    "answer": "内容未提及技术路线的备选方案"
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "feasibility",
+    "question": "可行性是否引 track_record？",
+    "answered": false,
+    "answer": "内容中未提及track_record"
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "team_resources",
+    "question": "团队与设备是否走 ProfileRef？",
+    "answered": false,
+    "answer": "设备部分未提及ProfileRef引用"
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "budget_justification",
+    "question": "预算依据是否全 PriceCell？",
+    "answered": true,
+    "answer": "是"
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "timeline",
+    "question": "进度是否与资助期对齐？",
+    "answered": false,
+    "answer": "内容中未提及资助期时间范围，无法判断进度是否对齐"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S1_charter",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST或NEVER相关条款"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S2_invariants",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": true,
+    "answer": "MUST"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S3_contracts",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容未提及任何MUST/NEVER相关条款，仅陈述事实性数据（如SLA保障、客户数量等），无法判定MUST/NEVER"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S4_decision_log",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST/NEVER相关声明，无法判定"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S5_task_dag",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未出现MUST/NEVER相关条款，仅描述计划细节与量化指标，无法判定"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S6_context_manifest",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": true,
+    "answer": "MUST"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S7_verification",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容未提及MUST/NEVER相关条款"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S8_progress_ledger",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST/NEVER相关规则或要求，无法判定"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S9_escalation",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": true,
+    "answer": "MUST"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S1_charter",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": true,
+    "answer": "MUST"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S2_invariants",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST或NEVER相关条件，无法判定"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S3_contracts",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST/NEVER相关判定条件，缺乏判定依据"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S4_decision_log",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容未提及任何MUST/NEVER约束条件，无法判定"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S5_task_dag",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容未提及MUST/NEVER相关条款，无法判定"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S6_context_manifest",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST或NEVER相关条款，无法判定"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S7_verification",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST/NEVER相关条款"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S8_progress_ledger",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": false,
+    "answer": "内容中未提及MUST/NEVER相关判定标准或条款，无法判断"
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S9_escalation",
+    "question": "本章 MUST/NEVER 是否可判定？",
+    "answered": true,
+    "answer": "MUST"
+   }
+  ]
+ },
+ "ratio": {
+  "worst_deviation": 0.2121212121212121,
+  "meets_line": false,
+  "records": [
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "summary",
+    "declared_share": 0.1,
+    "actual_share": 0.09364820846905537,
+    "relative_deviation": 0.06351791530944631
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "opportunity",
+    "declared_share": 0.2,
+    "actual_share": 0.18811074918566775,
+    "relative_deviation": 0.05944625407166129
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "market",
+    "declared_share": 0.2,
+    "actual_share": 0.23371335504885993,
+    "relative_deviation": 0.16856677524429958
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "competition",
+    "declared_share": 0.15,
+    "actual_share": 0.13925081433224756,
+    "relative_deviation": 0.07166123778501621
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "plan",
+    "declared_share": 0.2,
+    "actual_share": 0.1783387622149837,
+    "relative_deviation": 0.10830618892508151
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "budget",
+    "declared_share": 0.1,
+    "actual_share": 0.11482084690553745,
+    "relative_deviation": 0.1482084690553745
+   },
+   {
+    "composition_id": "golddoc-generic-plain",
+    "section_id": "risks",
+    "declared_share": 0.05,
+    "actual_share": 0.05211726384364821,
+    "relative_deviation": 0.04234527687296416
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "summary",
+    "declared_share": 0.1,
+    "actual_share": 0.10238305383936452,
+    "relative_deviation": 0.023830538393645184
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "opportunity",
+    "declared_share": 0.2,
+    "actual_share": 0.20476610767872905,
+    "relative_deviation": 0.023830538393645184
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "market",
+    "declared_share": 0.2,
+    "actual_share": 0.19858781994704325,
+    "relative_deviation": 0.007060900264783815
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "competition",
+    "declared_share": 0.15,
+    "actual_share": 0.1562224183583407,
+    "relative_deviation": 0.04148278905560465
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "plan",
+    "declared_share": 0.2,
+    "actual_share": 0.18623124448367168,
+    "relative_deviation": 0.06884377758164167
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "budget",
+    "declared_share": 0.1,
+    "actual_share": 0.10150044130626655,
+    "relative_deviation": 0.01500441306266545
+   },
+   {
+    "composition_id": "golddoc-generic-channels",
+    "section_id": "risks",
+    "declared_share": 0.05,
+    "actual_share": 0.05030891438658429,
+    "relative_deviation": 0.0061782877316857165
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "abstract",
+    "declared_share": 0.08,
+    "actual_share": 0.07295081967213114,
+    "relative_deviation": 0.08811475409836074
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "related_work",
+    "declared_share": 0.22,
+    "actual_share": 0.20573770491803278,
+    "relative_deviation": 0.06482861400894191
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "method",
+    "declared_share": 0.25,
+    "actual_share": 0.25573770491803277,
+    "relative_deviation": 0.022950819672131084
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "evaluation_plan",
+    "declared_share": 0.2,
+    "actual_share": 0.2278688524590164,
+    "relative_deviation": 0.1393442622950819
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "timeline",
+    "declared_share": 0.15,
+    "actual_share": 0.14016393442622951,
+    "relative_deviation": 0.06557377049180321
+   },
+   {
+    "composition_id": "golddoc-thesis-plain",
+    "section_id": "resources",
+    "declared_share": 0.1,
+    "actual_share": 0.09754098360655737,
+    "relative_deviation": 0.02459016393442634
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "abstract",
+    "declared_share": 0.08,
+    "actual_share": 0.08151735270379339,
+    "relative_deviation": 0.018966908797417303
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "related_work",
+    "declared_share": 0.22,
+    "actual_share": 0.22195318805488298,
+    "relative_deviation": 0.008878127522195372
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "method",
+    "declared_share": 0.25,
+    "actual_share": 0.24778046811945117,
+    "relative_deviation": 0.0088781275221953
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "evaluation_plan",
+    "declared_share": 0.2,
+    "actual_share": 0.19693301049233253,
+    "relative_deviation": 0.015334947538337418
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "timeline",
+    "declared_share": 0.15,
+    "actual_share": 0.15012106537530268,
+    "relative_deviation": 0.0008071025020178757
+   },
+   {
+    "composition_id": "golddoc-thesis-channels",
+    "section_id": "resources",
+    "declared_share": 0.1,
+    "actual_share": 0.1016949152542373,
+    "relative_deviation": 0.01694915254237289
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "one_liner",
+    "declared_share": 0.05,
+    "actual_share": 0.05086206896551724,
+    "relative_deviation": 0.017241379310344723
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "problem",
+    "declared_share": 0.15,
+    "actual_share": 0.15775862068965518,
+    "relative_deviation": 0.051724137931034586
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "solution",
+    "declared_share": 0.2,
+    "actual_share": 0.19655172413793104,
+    "relative_deviation": 0.017241379310344862
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "market_size",
+    "declared_share": 0.15,
+    "actual_share": 0.14224137931034483,
+    "relative_deviation": 0.051724137931034406
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "go_to_market",
+    "declared_share": 0.15,
+    "actual_share": 0.1396551724137931,
+    "relative_deviation": 0.06896551724137927
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "business_model",
+    "declared_share": 0.1,
+    "actual_share": 0.11724137931034483,
+    "relative_deviation": 0.1724137931034482
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "team",
+    "declared_share": 0.1,
+    "actual_share": 0.10431034482758621,
+    "relative_deviation": 0.043103448275862016
+   },
+   {
+    "composition_id": "golddoc-startup-plain",
+    "section_id": "financials",
+    "declared_share": 0.1,
+    "actual_share": 0.09137931034482759,
+    "relative_deviation": 0.08620689655172417
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "one_liner",
+    "declared_share": 0.05,
+    "actual_share": 0.04668304668304668,
+    "relative_deviation": 0.06633906633906644
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "problem",
+    "declared_share": 0.15,
+    "actual_share": 0.14987714987714987,
+    "relative_deviation": 0.0008190008190008443
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "solution",
+    "declared_share": 0.2,
+    "actual_share": 0.20638820638820637,
+    "relative_deviation": 0.03194103194103182
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "market_size",
+    "declared_share": 0.15,
+    "actual_share": 0.1375921375921376,
+    "relative_deviation": 0.08271908271908268
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "go_to_market",
+    "declared_share": 0.15,
+    "actual_share": 0.1506961506961507,
+    "relative_deviation": 0.0046410046410046615
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "business_model",
+    "declared_share": 0.1,
+    "actual_share": 0.09254709254709255,
+    "relative_deviation": 0.07452907452907456
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "team",
+    "declared_share": 0.1,
+    "actual_share": 0.095004095004095,
+    "relative_deviation": 0.04995904995905007
+   },
+   {
+    "composition_id": "golddoc-startup-channels",
+    "section_id": "financials",
+    "declared_share": 0.1,
+    "actual_share": 0.12121212121212122,
+    "relative_deviation": 0.2121212121212121
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "goal",
+    "declared_share": 0.1,
+    "actual_share": 0.09957805907172995,
+    "relative_deviation": 0.004219409282700537
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "architecture",
+    "declared_share": 0.25,
+    "actual_share": 0.26329113924050634,
+    "relative_deviation": 0.05316455696202538
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "milestones",
+    "declared_share": 0.25,
+    "actual_share": 0.24050632911392406,
+    "relative_deviation": 0.03797468354430378
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "resources",
+    "declared_share": 0.15,
+    "actual_share": 0.13924050632911392,
+    "relative_deviation": 0.07172995780590719
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "risks",
+    "declared_share": 0.15,
+    "actual_share": 0.14936708860759493,
+    "relative_deviation": 0.004219409282700445
+   },
+   {
+    "composition_id": "golddoc-engineering-plain",
+    "section_id": "budget",
+    "declared_share": 0.1,
+    "actual_share": 0.1080168776371308,
+    "relative_deviation": 0.08016877637130798
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "goal",
+    "declared_share": 0.1,
+    "actual_share": 0.09527824620573355,
+    "relative_deviation": 0.047217537942664534
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "architecture",
+    "declared_share": 0.25,
+    "actual_share": 0.2487352445193929,
+    "relative_deviation": 0.005059021922428353
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "milestones",
+    "declared_share": 0.25,
+    "actual_share": 0.2622259696458685,
+    "relative_deviation": 0.04890387858347389
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "resources",
+    "declared_share": 0.15,
+    "actual_share": 0.14249578414839797,
+    "relative_deviation": 0.0500281056773468
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "risks",
+    "declared_share": 0.15,
+    "actual_share": 0.14249578414839797,
+    "relative_deviation": 0.0500281056773468
+   },
+   {
+    "composition_id": "golddoc-engineering-channels",
+    "section_id": "budget",
+    "declared_share": 0.1,
+    "actual_share": 0.1087689713322091,
+    "relative_deviation": 0.08768971332209094
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "significance",
+    "declared_share": 0.15,
+    "actual_share": 0.15038893690579083,
+    "relative_deviation": 0.002592912705272251
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "innovation",
+    "declared_share": 0.15,
+    "actual_share": 0.1616248919619706,
+    "relative_deviation": 0.07749927974647075
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "approach",
+    "declared_share": 0.25,
+    "actual_share": 0.24027657735522903,
+    "relative_deviation": 0.03889369057908387
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "feasibility",
+    "declared_share": 0.15,
+    "actual_share": 0.15038893690579083,
+    "relative_deviation": 0.002592912705272251
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "team_resources",
+    "declared_share": 0.1,
+    "actual_share": 0.10025929127052723,
+    "relative_deviation": 0.0025929127052722045
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "budget_justification",
+    "declared_share": 0.15,
+    "actual_share": 0.14866032843560933,
+    "relative_deviation": 0.008931143762604399
+   },
+   {
+    "composition_id": "golddoc-grant-plain",
+    "section_id": "timeline",
+    "declared_share": 0.05,
+    "actual_share": 0.04840103716508211,
+    "relative_deviation": 0.03197925669835788
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "significance",
+    "declared_share": 0.15,
+    "actual_share": 0.1460101867572156,
+    "relative_deviation": 0.026598754951895898
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "innovation",
+    "declared_share": 0.15,
+    "actual_share": 0.14770797962648557,
+    "relative_deviation": 0.015280135823429464
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "approach",
+    "declared_share": 0.25,
+    "actual_share": 0.2470288624787776,
+    "relative_deviation": 0.011884550084889645
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "feasibility",
+    "declared_share": 0.15,
+    "actual_share": 0.1494057724957555,
+    "relative_deviation": 0.0039615166949632154
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "team_resources",
+    "declared_share": 0.1,
+    "actual_share": 0.1035653650254669,
+    "relative_deviation": 0.035653650254668934
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "budget_justification",
+    "declared_share": 0.15,
+    "actual_share": 0.16044142614601017,
+    "relative_deviation": 0.06960950764006787
+   },
+   {
+    "composition_id": "golddoc-grant-channels",
+    "section_id": "timeline",
+    "declared_share": 0.05,
+    "actual_share": 0.04584040747028863,
+    "relative_deviation": 0.08319185059422751
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S1_charter",
+    "declared_share": 0.06,
+    "actual_share": 0.0581787521079258,
+    "relative_deviation": 0.030354131534569957
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S2_invariants",
+    "declared_share": 0.1,
+    "actual_share": 0.112141652613828,
+    "relative_deviation": 0.12141652613827991
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S3_contracts",
+    "declared_share": 0.16,
+    "actual_share": 0.15345699831365936,
+    "relative_deviation": 0.04089376053962902
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S4_decision_log",
+    "declared_share": 0.1,
+    "actual_share": 0.081787521079258,
+    "relative_deviation": 0.18212478920742
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S5_task_dag",
+    "declared_share": 0.28,
+    "actual_share": 0.2984822934232715,
+    "relative_deviation": 0.06600819079739806
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S6_context_manifest",
+    "declared_share": 0.06,
+    "actual_share": 0.0581787521079258,
+    "relative_deviation": 0.030354131534569957
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S7_verification",
+    "declared_share": 0.1,
+    "actual_share": 0.09612141652613827,
+    "relative_deviation": 0.038785834738617325
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S8_progress_ledger",
+    "declared_share": 0.06,
+    "actual_share": 0.06492411467116357,
+    "relative_deviation": 0.08206857785272628
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-plain",
+    "section_id": "S9_escalation",
+    "declared_share": 0.08,
+    "actual_share": 0.07672849915682968,
+    "relative_deviation": 0.04089376053962902
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S1_charter",
+    "declared_share": 0.06,
+    "actual_share": 0.0632279534109817,
+    "relative_deviation": 0.05379922351636165
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S2_invariants",
+    "declared_share": 0.1,
+    "actual_share": 0.09151414309484193,
+    "relative_deviation": 0.08485856905158073
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S3_contracts",
+    "declared_share": 0.16,
+    "actual_share": 0.15973377703826955,
+    "relative_deviation": 0.001663893510815348
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S4_decision_log",
+    "declared_share": 0.1,
+    "actual_share": 0.11564059900166389,
+    "relative_deviation": 0.15640599001663882
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S5_task_dag",
+    "declared_share": 0.28,
+    "actual_share": 0.28036605657237934,
+    "relative_deviation": 0.0013073449013546931
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S6_context_manifest",
+    "declared_share": 0.06,
+    "actual_share": 0.0632279534109817,
+    "relative_deviation": 0.05379922351636165
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S7_verification",
+    "declared_share": 0.1,
+    "actual_share": 0.09816971713810316,
+    "relative_deviation": 0.01830282861896848
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S8_progress_ledger",
+    "declared_share": 0.06,
+    "actual_share": 0.0524126455906822,
+    "relative_deviation": 0.12645590682196334
+   },
+   {
+    "composition_id": "golddoc-vibe_pack-channels",
+    "section_id": "S9_escalation",
+    "declared_share": 0.08,
+    "actual_share": 0.07570715474209651,
+    "relative_deviation": 0.05366056572379367
+   }
+  ]
+ },
+ "compositions": {
+  "golddoc-generic-plain": {
+   "template_id": "generic",
+   "sections": {
+    "summary": "本项目判定为 C_opportunity 机会档。中国方言语音数据标注需求年增长20%（Fact-1），平台AI化显著提升标注效率3倍（Fact-2），有效解决人工标注成本高、效率低的痛点。团队核心成员均来自腾讯AI实验室，拥有10年经验（Profile-1）。开发成本15万元（PriceCell-1），预计首年营收30万元（PriceCell-2），市场潜力超500万元（Fact-3）。",
+    "opportunity": "当前，随着人工智能语音技术在各行业深度应用，方言识别需求呈现爆发式增长，市场潜力巨大，凸显显著机遇。中国方言使用者规模达10亿人（Fact-1），但专业标注平台供给严重不足。语音标注市场年复合增长率15%（Fact-2），预计2025年市场规模将突破50亿元（PriceCell-2），为平台发展奠定坚实基础。企业标注成本平均为50元/小时（PriceCell-1），显著推高企业开发成本。我司团队拥有5年AI标注经验（Profile-1），已服务300余家企业，可提供成本降低30%的解决方案，将标注成本降至35元/小时，效率提升40%，精准匹配企业高质量多样化需求。市场空白期仅18个月，是构建高效标注平台的黄金战略窗口。",
+    "market": "根据最新市场数据，全球语音识别市场2023年规模达100亿美元（Fact-1），市场持续扩张且需求旺盛。方言数据标注需求年增20%（Fact-2），尤其在智能语音应用爆发式增长背景下，凸显数据稀缺性与标注瓶颈。现有平台仅覆盖50%方言，服务成本高达每小时50美元（PriceCell-1），远超行业平均30%，使中小企业难以负担高质量标注服务。我团队核心成员具10年AI标注资历（Profile-1），在头部科技公司积累丰富经验，确保服务可靠性，将推出高效低价平台。目标2025年覆盖30种方言，重点服务华东、华南等方言密集区域，实现规模化运营，服务500+企业客户，市场占有率15%（方言标注细分领域）。通过AI驱动工具，结合机器学习算法优化流程，降低企业成本30%，提升数据质量25%，有效填补市场缺口，项目具备显著先发优势，有望引领行业标准发展。",
+    "competition": "方言语音标注市场中，Scale AI 2021年成功获得1.5亿美元融资（Fact-1），阿里云2022年方言服务用户数突破50万（Fact-2）。行业年复合增长率高达25%，呈现强劲增长态势（Fact-3），但大厂产品方言覆盖深度不足，尤其在非主流方言领域未能深入。我方团队深耕方言标注领域十年（Profile-1），成本较竞品低30%（PriceCell-1），通过AI技术优化显著提升标注效率，高效精准聚焦粤语、闽南语等高价值方言细分市场，差异化优势显著，市场潜力巨大且前景广阔。",
+    "plan": "本计划基于全面深入且持续的市场调研分析，科学系统地规划了四个关键量化里程碑：2023年12月31日前完成方言语音标注平台V1.0正式上线并投入运营，支持10种主流方言的标注服务（Fact-1）；2024年3月31日前实现注册用户数稳定增长至5000人，确保用户基数持续稳健扩大（Fact-2）；2024年6月30日前确保月营收突破10万元人民币，达成初步盈利目标，实现正向现金流（PriceCell-1）；2024年9月30日前将团队规模扩充至15人，有效支撑业务持续扩展需求（Profile-1）。通过系统化高效推进各里程碑节点，项目将严格确保按期交付并成功实现商业盈利目标。",
+    "budget": "预算部分规划了项目启动和运营的总成本，总计200,000元（PriceCell-1）。其中，核心软件开发投入80,000元（PriceCell-2），云服务器租赁费用30,000元/年（PriceCell-3），团队成员薪资70,000元（PriceCell-4），市场推广活动20,000元（PriceCell-5）。预算基于市场调研和成本分析，确保合理性和可行性，通过精细管理保障资金高效使用。项目团队将严格控制成本，避免浪费。通过优化流程，提升资金使用效率。",
+    "risks": "方言语音标注平台面临主要关键风险：方言数据资源稀缺，需标注大量至少10万条数据以证伪（Fact-1）；语音识别精度不足，需准确率至少达85%以上以证伪（Fact-2）"
+   },
+   "section_chars": {
+    "summary": 115,
+    "opportunity": 231,
+    "market": 287,
+    "competition": 171,
+    "plan": 219,
+    "budget": 141,
+    "risks": 64
+   }
+  },
+  "golddoc-generic-channels": {
+   "template_id": "generic",
+   "sections": {
+    "summary": "判定为C_opportunity机会档。全球会议管理工具市场2025年规模达$50亿（Fact-1），年增长15%（Fact-2）。75%的中小企业每月召开10次以上会议需摘要（Fact-3），80%用户愿支付每月$10订阅费（Fact-4）。核心团队5人，拥有Google AI背景及3项专利（Profile-1），开发成本$150,000（PriceCell-1），首年营收$500,000（PriceCell-2），提升会议效率30%（Fact-5），ROI 300%（PriceCell-3）。",
+    "opportunity": "在日益快节奏的商业环境中，企业会议效率低下问题日益凸显，导致资源浪费和沟通障碍，显著影响项目进度与决策质量。调查显示，70%员工每周花费2.5小时整理纪要，直接降低生产力（Fact-2）。全球会议软件市场2025年规模预计为120亿美元（Fact-1），但主流AI工具年费499美元（PriceCell-1）且准确率仅65%，企业因工具低效年均损失5000美元（PriceCell-2），包括重做工作与延误成本。我们团队核心成员均来自Google AI（Profile-1），凭借深厚技术积累，开发的AI摘要工具将纪要生成时间从平均45分钟压缩至5分钟，准确率提升至90%，为中小企业年均节省1200美元，市场缺口高达30%，当前机会窗口显著且紧迫。",
+    "market": "据Fact-1市场研究，全球企业会议软件市场2023年规模达50亿美元，年增长率稳定维持在15%。Fact-2表明，80%的中小企业目前亟需高效且经济的会议摘要工具，但现有解决方案价格高昂且功能相对不足。Fact-3分析，会议手动整理平均耗时2小时/会议，导致企业每年平均生产力损失高达1000万美元。主流产品如Otter.ai月费20美元（PriceCell-1），本工具定价15美元，提供约25%的成本节约（PriceCell-2）。团队核心成员拥有10年SaaS开发经验（Profile-1），已成功交付3个AI产品，具备规模化落地和扩展能力。目标市场覆盖全球500万企业，潜在年收入7.5亿美元（Fact-4），市场空白显著且需求迫切。",
+    "competition": "会议纪要摘要工具市场竞品密集，格局日益复杂。当前，Otter.ai 2023年成功融资5000万美元（Fact-1），Fireflies.ai用户规模年增长率达200%（Fact-2），Zoom AI摘要功能已覆盖全球1000万企业用户（Fact-3）。大厂加速入场整合市场，但摘要准确率行业平均仅65%（Fact-4），显著影响用户体验与粘性，导致用户流失率上升。我方团队AI模型通过深度学习优化，准确率提升至85%（Profile-1），较行业平均提升20个百分点，在核心性能指标上实现显著超越，差异化优势突出，市场竞争力强劲。",
+    "plan": "本项目计划分四个阶段稳步推进，各阶段均设定明确量化目标：2023年9月前完成核心功能开发，实现会议处理能力达每月1000场的高效处理（Fact-1）；2023年12月正式上线测试版本，用户规模突破5000人并保持稳定增长（Fact-2）；2024年3月启动商业化运营，首年营收目标设定为10万元人民币（PriceCell-1）；2024年6月团队规模扩充至20人，团队平均资历维持在10年水平（Profile-1）。所有关键里程碑均设定具体量化指标，通过数据驱动确保进度高度透明、可实时追踪与验证，有效规避项目延期风险，从而持续提升客户满意度及产品市场竞争力。",
+    "budget": "预计会议纪要摘要工具项目预算基于详细需求分析，具体涵盖软件开发、市场推广及系统运维等核心支出，总预算（PriceCell-1）150,000元，其中开发（PriceCell-2）80,000元，营销（PriceCell-3）40,000元，运维（PriceCell-4）30,000元。团队规模（Profile-5）10人，由专业人员组成，通过合理配置资源，确保项目按期高效执行并达成业务目标。",
+    "risks": "关键风险包括以下：摘要不准确（证伪：准确率≥90%（Fact-1））；用户量少（证伪：月活>500（Fact-2））；成本超支（证伪：成本≤预算（PriceCell-1））；团队经验弱（证伪：经验≥3年（Profile-1））"
+   },
+   "section_chars": {
+    "summary": 116,
+    "opportunity": 232,
+    "market": 225,
+    "competition": 177,
+    "plan": 211,
+    "budget": 115,
+    "risks": 57
+   }
+  },
+  "golddoc-thesis-plain": {
+   "template_id": "thesis",
+   "sections": {
+    "abstract": "机会档：C_opportunity 本项目采用量子传感技术，地质勘探效率提升3倍（Fact-1），勘探成本降低40%（PriceCell-1），团队10年专业经验（Profile-1），市场潜力50亿元（Fact-2），覆盖全国主要矿产资源区，石油天然气勘探3年内商业化，提升资源发现率（Fact-3）。",
+    "related_work": "量子传感地质勘探领域，QSS和IBM已确立显著市场主导地位。QSS于2023年成功完成B轮融资，募集5000万美元（Fact-1），彰显了投资者对该领域的高度信心与认可。IBM于2022年宣布投入1.2亿美元研发预算（PriceCell-1）全面进军该市场。全球量子地质勘探市场2023年规模已达12亿美元，年复合增长率高达25.3%（Fact-2, Fact-3），展现出强劲增长潜力与广阔前景，预计未来五年将保持高速增长。本项目团队核心成员均来自MIT和斯坦福大学（Profile-1），拥有5年技术积累和丰富行业经验，专注于高精度勘探技术的创新突破，实现精度提升20%、成本降低30%的显著优势，为行业树立新标杆，预计2024年正式商业化落地，较主要竞品提前1年达成盈利目标。",
+    "method": "本项目创新性地采用量子纠缠传感技术，基于量子纠缠原理有效抑制环境噪声干扰，实现地质结构亚米级高精度成像。核心方法包括：2025年Q3前完成原型机开发，地质层位分辨精度达0.1%（Fact-1），确保对薄层矿体的精准识别；2026年Q1在华北油田典型构造区开展50平方公里野外测试，覆盖复杂断层带和深部储层，数据采集效率较传统方法提升30%（Fact-2），显著缩短勘探周期；2026年Q4完成系统优化并商业化部署，成本控制在500万元内（PriceCell-1），涵盖全生命周期成本，相比行业平均成本降低30%。团队核心成员拥有10年量子传感研发资历（Profile-1），均来自中科院量子信息实验室，具备丰富工程化经验；技术已在3个实际矿区成功验证（Fact-3），覆盖金、铜、石油等多种矿产类型。所有指标均通过中国地质调查局第三方标准测试（依据GB/T 19001-2016），数据可量化、可追溯，确保里程碑可验证性。",
+    "evaluation_plan": "本评估计划系统性地设立三个关键量化里程碑：2024年第一季度完成原型测试并实现定位精度精确控制在±5米的高精度标准（Fact-1）；2024年第二季度将单位成本有效降至15万元的经济可行性水平（PriceCell-1）；2024年第三季度成功获取ISO 14001环境管理体系认证（Profile-1）。验证工作严格依据独立第三方权威测试数据（Fact-2）和详尽成本分析报告（PriceCell-2），通过团队季度评估机制确保目标达成率不低于90%（Fact-3），并实施动态预算优化策略（PriceCell-3）以将总成本严格控制在300万元以内（PriceCell-4）。所有评估指标均设定明确的时间节点，数据来源清晰可追溯，评估过程严格遵循国际行业标准，确保最终结果客观公正、透明可信且高效可验证，为项目决策提供坚实数据支持，从而保障项目整体高效推进和成果可靠。",
+    "timeline": "项目时间线规划：2024年Q1至Q2高效完成量子传感核心模块研发（Fact-1），耗时6个月，奠定坚实技术基础；2024年Q3启动实验室测试，投入500万元（PriceCell-1），验证技术可行性并优化参数；2025年Q1开展野外地质勘探验证，依托团队10年行业资历（Profile-1）确保数据精度95%以上，显著提升勘探效率；2025年Q3通过国家认证，获得市场准入；2026年Q1正式商用，首年销售目标2000万元（PriceCell-2），市场占有率5%（Fact-2），预计实现盈利；后续计划2027年拓展全球市场。",
+    "resources": "核心资源包括10台高精度量子传感设备，单台设备成本200万元（PriceCell-1），由15人专业团队（Profile-1）操作，全面覆盖地质勘探的矿产资源探测、地震活动监测、地壳结构分析等核心领域。市场调研数据表明，该技术需求年均增长率15%（Fact-1），项目总预算500万元在项目实施中确保高效精准实施与持续创新。"
+   },
+   "section_chars": {
+    "abstract": 89,
+    "related_work": 251,
+    "method": 312,
+    "evaluation_plan": 278,
+    "timeline": 171,
+    "resources": 119
+   }
+  },
+  "golddoc-thesis-channels": {
+   "template_id": "thesis",
+   "sections": {
+    "abstract": "判定为 C_opportunity 机会档。本项目开发车规芯片老化预测系统，基于大数据分析和深度学习技术，预测准确率92%（Fact-1），测试成本降低30%（PriceCell-1），团队具备5年行业经验（Profile-1），开发周期缩短20%（Fact-2），显著有效提升汽车电子系统的安全可靠性，市场应用前景广阔。",
+    "related_work": "车规芯片老化预测领域竞品分析揭示：公司A于2023年成功完成B轮融资，筹集1.2亿美元（Fact-1）；头部车企如大众已将老化预测模块集成至车规芯片系统（Fact-2）；细分市场年增长率高达30%（Fact-3），凸显市场强劲需求与增长潜力。当前竞品产品单价约5000美元/套（PriceCell-1），但预测精度仅85%（Fact-4），导致实际应用中可靠性不足，误差率偏高。2023年全球车规芯片市场规模已达500亿美元（Fact-5），老化预测子市场以40%的年增速快速扩张（Fact-6），呈现显著增长态势。现有方案普遍存在实时性弱（数据处理延迟高）、误差率高（超过15%）的问题，严重影响车辆安全性能与系统稳定性。本项目将通过创新的深度学习算法，将预测精度提升至95%以上，有效降低误差率，全面满足车规级高可靠性与安全性能需求。",
+    "method": "本项目采用深度学习方法进行车规芯片老化预测，核心流程涵盖数据驱动建模与系统集成。数据收集阶段：系统整合合作车企在-40°C至125°C温度范围内涵盖多种芯片型号和工况的芯片老化测试数据（Fact-1），累计10万条高质量样本用于训练，覆盖全生命周期测试数据。里程碑1：2024年6月30日前完成数据集构建，通过严格数据清洗、特征工程及K折交叉验证，目标预测准确率95%（Fact-2）。里程碑2：2024年9月30日前通过模型调优与集成学习方法优化，目标准确率提升至98%（Fact-3）。里程碑3：2024年12月31日前部署至车载诊断系统，实现无缝集成与低延迟响应，目标延迟<100ms（Fact-4）。团队核心成员具备5年车规芯片研发资历（Profile-1），确保模型在实际车载环境中的鲁棒性与可靠性。项目预算50万元（PriceCell-1），用于数据处理与模型开发，优化资源分配以确保高成本效益。",
+    "evaluation_plan": "评估计划设定三个核心量化里程碑：2024年12月31日前完成1000个车规芯片在典型汽车运行环境下的老化数据点采集，覆盖高温、高湿等多工况条件，确保数据采集的全面性与代表性（Fact-1）；2025年3月31日前实现模型预测准确率达到90%，基于历史老化数据和先进机器学习算法优化，提升预测精度与稳定性（Fact-2）；2025年6月30日前通过严格的汽车级环境测试，验证模型在实际应用中的准确率提升至95%，确保可靠性与适用性（Fact-3）。所有评估指标均经独立第三方实验室严格验证（Fact-4），团队拥有8年车规芯片研发深厚资历与丰富经验（Profile-1），有效保障整个评估过程的客观性、可量化性及全程可追溯性。",
+    "timeline": "项目总周期18个月（Fact-1），2024年1月启动至2025年6月结束。需求分析阶段3个月（Fact-2）完成数据需求定义，核心开发6个月（Fact-3）构建预测模型，测试验证4个月（Fact-4）执行2000小时老化测试，交付部署5个月（Fact-5）集成系统。预算总额500万元（PriceCell-1），研发成本300万元（PriceCell-2），测试费用200万元（PriceCell-3）。团队由10名工程师组成，平均资历5年（Profile-1）。关键里程碑：2024年3月完成10万条数据集构建（Fact-7），2024年9月模型精度达95%（Fact-8），2025年2月通过AEC-Q100认证（Fact-9），2025年6月正式交付。",
+    "resources": "本项目依托一支10人核心团队，由拥有10年以上车规芯片研发经验的专家组成（Profile-1），基于5000个真实车规芯片老化数据点构建模型（Fact-1），配备3台高精度加速老化测试设备进行实验验证（Fact-2），总预算500万元用于设备采购和数据处理（PriceCell-1），确保预测准确率超过95%以上，满足车规级可靠性要求，确保汽车安全。"
+   },
+   "section_chars": {
+    "abstract": 101,
+    "related_work": 275,
+    "method": 307,
+    "evaluation_plan": 244,
+    "timeline": 186,
+    "resources": 126
+   }
+  },
+  "golddoc-startup-plain": {
+   "template_id": "startup",
+   "sections": {
+    "one_liner": "年处理退役电池50万吨，确保梯次利用效率（Fact-1）；检测成本低至350元/次，显著降低运营成本（PriceCell-2）；核心团队10年行业经验，保障技术先进稳定（Profile-3）",
+    "problem": "全球每年退役动力电池量已突破50万吨（Fact-1），检测准确率目前仅维持在60%的较低水平（Fact-2），安全事故率因检测失误高达10%，导致重大事故频发（Fact-3），梯次利用率长期低于30%，远低于理想水平（Fact-4）。检测成本高达每块500元（PriceCell-1），资源浪费每年约10亿元，造成显著经济损失（Fact-5），安全风险持续上升，安全隐患日益凸显，威胁公共安全，严重制约产业规模化发展进程。亟需开发高精度、低成本、安全可靠的梯次检测技术，以全面提升电池资源循环利用效率。",
+    "solution": "针对退役电池梯次利用检测效率低、成本高的行业痛点，本项目创新性地推出高效智能梯次检测系统。该系统采用先进深度学习模型，高效地实时精准分析电池电化学特性，检测速度高达10秒/个（Fact-1），准确率稳定达95%（Fact-3），较传统方法提升300%。系统精准评估电池剩余容量，显著有效提升梯次利用回收率30%（Fact-2），年均显著降低检测成本200万元（PriceCell-1）。核心团队凭借5年电池检测丰富经验（Profile-1），高效处理1000+电池样本。系统支持1000+主流电池型号，覆盖广泛应用场景，部署成本仅50万元（PriceCell-2），年处理量达50000+组（Fact-4），显著提升退役电池梯次利用的整体效率与经济性。",
+    "market_size": "在国家政策强力驱动下，中国退役动力电池梯次利用市场年规模近年来已稳定于50亿元（Fact-1），2023年退役量突破30万吨（Fact-2）。检测服务需求持续旺盛并快速增长，市场前景广阔，预计2025年市场规模将达80亿元（Fact-3），年复合增长率预计保持25%（Fact-4）。目前全球检测市场中，中国占据约60%的份额（Fact-5），但服务渗透率仅为15%（Fact-6），显著低于发达国家30%的平均水平（Fact-7），未来三年增长空间预计显著超过百亿（Fact-8）。",
+    "go_to_market": "为解决退役电池安全梯次利用的迫切需求，我们面向电池回收企业推出专业、高效的梯次检测服务，定价500元/次（PriceCell-1）。目标2025年覆盖全国30%回收企业（Fact-2），基于行业数据统计，预计覆盖约300家核心回收企业。团队凭借10年电池检测经验（Profile-3），拥有扎实的行业实践基础。通过参加中国电池回收峰会等行业展会，并积极开发线上营销平台进行推广，预计首年签约50家客户（Fact-4），实现收入25万元（Fact-5）。",
+    "business_model": "本项目提供退役电池梯次利用的标准化高效检测服务，基于AI技术精准评估电芯健康度与安全性能。服务对象覆盖电池回收商及车企，单次检测服务定价5000元（PriceCell-1），年服务量预计5000次（Fact-2）。团队核心成员具备10年电池检测行业资历（Profile-1），单次检测成本控制在3000元（PriceCell-2），毛利率达40%（Fact-3），契合全球1000亿元市场（Fact-4），盈利模式可持续。",
+    "team": "本团队在退役电池梯次检测项目中，由5名资深专家构成，包括3名博士（Profile-1）和2名工程师（Profile-2），平均12年行业经验（Profile-3）。首席专家王芳（Profile-4）拥有20年研发资历，主导过3个国家级项目（Profile-5）。团队持有8项专利（Profile-6），项目总预算45万元（PriceCell-1），确保检测成本比行业标准低12%（Fact-1），检测精度达96%（Fact-2）。",
+    "financials": "基于最新权威市场调研报告，退役电池梯次检测行业市场容量初步估算约为10亿元（Fact-1）。项目首年计划实现收入目标约500万元（PriceCell-1），研发与运营总投入预计为200万元（PriceCell-2）。团队核心成员均具备5年专业相关行业经验（Profile-1），预计第三年净利润率可达30%（PriceCell-3）。"
+   },
+   "section_chars": {
+    "one_liner": 59,
+    "problem": 183,
+    "solution": 228,
+    "market_size": 165,
+    "go_to_market": 162,
+    "business_model": 136,
+    "team": 121,
+    "financials": 106
+   }
+  },
+  "golddoc-startup-channels": {
+   "template_id": "startup",
+   "sections": {
+    "one_liner": "户用储能电池系统采用先进锂电技术，5千瓦时容量（Fact-1），成本2000美元（PriceCell-2），10年行业资历（Profile-3），提升家庭能源自给率80%（Fact-4），高效安全可靠。",
+    "problem": "当前，户用储能电池市场面临严峻的核心问题：太阳能发电的利用率目前仅为30%（Fact-1），导致每年约150亿千瓦时的电力资源被浪费；主流产品价格高达5000元/套（PriceCell-1），远超普通家庭的经济承受能力；安全性能存在缺陷，年故障率超过5%（Fact-2）。市场渗透率仅8%（Fact-3），用户对价格高度敏感且对安全问题担忧突出。这些问题不仅造成能源浪费严重、加重家庭经济负担，还显著制约了能源转型的进程，因此亟需推出经济实惠且安全可靠的创新产品解决方案。",
+    "solution": "本项目提供户用储能电池系统，采用创新锂电技术，能量密度高达250Wh/kg（Fact-1），显著优于行业标准，延长单次使用时间至12小时以上，提升能源利用效率。循环寿命达6000次（Fact-2），确保系统在10年以上稳定运行，减少更换频率和维护成本，增强长期经济性。系统成本为$1050/套（PriceCell-1），较市场均价低20%，为家庭用户实现高性价比选择。核心团队拥有12年行业经验（Profile-1），已成功部署10000+家庭项目，具备专业实施能力与可靠保障。产品集成AI智能管理系统，实时优化充放电策略，提升太阳能自给率至85%（Fact-3），年均电费降低35%（Fact-4），有效减少能源支出，同时显著提升家庭用电可靠性与经济性，为用户提供高效、安全、可持续的储能解决方案。",
+    "market_size": "目前全球户用储能电池市场正处于高速增长期，受能源转型加速和政策支持持续推动，2023年规模达50亿美元（Fact-1），年均增长15%（Fact-2）。中国家庭用户超4.5亿（Fact-3），户均年电费支出约5000元（PriceCell-1），储能系统可有效降低电费20%，显著提升家庭经济收益并凸显其价值，从而推动市场扩张。若渗透率提升至10%，潜在市场空间达450亿元（Fact-4），市场潜力巨大。核心团队拥有10年行业经验（Profile-1），确保项目高效实施与规模化落地。",
+    "go_to_market": "针对家庭用户，我们创新采用直销与渠道分销深度融合的模式，2024年目标覆盖10万户家庭，该策略基于全球户用储能市场年增长25%的强劲趋势 (Fact-1)，受可再生能源政策推动。产品定价5000美元/套 (PriceCell-2)，比行业均价低15%，显著降低用户门槛并提升竞争力。核心团队由资深专家组成，拥有10年储能技术开发经验 (Profile-3)，已成功部署5000套系统，技术成熟可靠。预计首年销售额5000万美元，市场占有率达3%，通过精准营销实现快速市场渗透并为后续扩张奠定基础。",
+    "business_model": "本项目业务模式专注于家庭用户，通过电商平台高效销售集成储能系统。核心产品创新定价5000元/套（PriceCell-1），市场年增长率稳定15%（Fact-1）。团队拥有10年储能技术深厚资历（Profile-1），收入来源包括硬件销售60%、安装服务25%及数据增值服务15%。预计首年覆盖10万家庭用户，实现规模化发展。",
+    "team": "核心团队由15人组成，平均年龄35岁（Fact-1），CEO张明拥有15年电池行业经验（Profile-1），技术总监李华有10年储能系统研发经验（Profile-2），销售总监王芳主导8年渠道建设（Profile-3），团队协作高效且协同性强。已成功交付2000套户用储能设备（Fact-2），项目总预算500万元（PriceCell-1），确保高效落地与市场快速覆盖。",
+    "financials": "财务分析表明，户用储能电池项目首年销售规模预计为5000套（PriceCell-2），平均销售单价10000元（PriceCell-1），由此产生年收入5000万元（PriceCell-3）。生产成本控制在8000元/套（PriceCell-4），总成本4000万元（PriceCell-5），实现净利润1000万元（PriceCell-6）。初始投资总额500万元（PriceCell-7），投资回报率预计达20%（PriceCell-8）。项目团队基于多年经验，确保成本优化，实现高利润率。市场调研显示需求持续增长。市场前景广阔。首年即实现盈利。"
+   },
+   "section_chars": {
+    "one_liner": 57,
+    "problem": 183,
+    "solution": 252,
+    "market_size": 168,
+    "go_to_market": 184,
+    "business_model": 113,
+    "team": 116,
+    "financials": 148
+   }
+  },
+  "golddoc-engineering-plain": {
+   "template_id": "engineering",
+   "sections": {
+    "goal": "本项目目标为开发一款高效、智能且可靠的果园采摘执行器，以提升果园整体效率，计划于2025年底前通过创新技术实现采摘效率显著提升至30%（Fact-1），年运营成本大幅降低至20%（PriceCell-2），设备在1000亩果园成功完成部署（Fact-3），用户满意度提升至85%（Fact-4），并支持多品种水果的自动化采摘功能（Fact-5）。",
+    "architecture": "本项目架构采用三层模块化设计，感知层集成多光谱摄像头、激光雷达及深度相机等多传感器融合技术，高效实现果实成熟度的精准检测与高精度三维建模，识别准确率高达95%（Fact-1），系统响应时间稳定控制在500ms以内（Fact-2）。决策层基于先进深度学习算法动态优化采摘路径，采摘效率显著提升30%（Fact-3）。执行层采用轻量化六轴机械臂设计，末端执行器智能适配苹果、梨等常见果型，单台设备成本为20,000元（PriceCell-1）。团队核心成员均具备5年以上农业机器人开发资历（Profile-1），并持有3项相关技术专利（Profile-2）。架构支持边缘-云协同计算架构，数据处理延迟低至100ms（Fact-4），无缝兼容主流果园管理系统，部署成本较传统人工方案降低25%（Fact-5）。系统可扩展至50台设备集群部署，覆盖50亩标准果园，实现全年无间断自动化采摘，提升整体产量15%（Fact-6），平均无故障时间达5000小时（Fact-7）。",
+    "milestones": "本项目关键里程碑量化明确且可执行：2023年12月31日前完成原型设计，通过创新性优化机械臂结构与AI识别算法，实现采摘效率较传统方式提升40%（Fact-1）；2024年3月31日前通过国际权威农业技术认证机构第三方测试，成功率在多次测试中稳定达90%以上（Fact-2）；2024年6月30日前完成自动化量产线建设，单台成本精准控制在5000元人民币，较行业平均降低20%，确保高性价比（PriceCell-1）；2024年9月30日前交付首批100台设备至合作果园（Fact-3）。团队凭借5年果园自动化领域深厚资历（Profile-1），已成功主导多个规模化果园项目落地。所有指标均基于详实的内部测试数据、科学的预算规划及团队多年实战经验，通过严格的月度进度审查与KPI动态监控机制确保可验证性与进度可控，为项目高效落地提供全面保障。",
+    "resources": "本项目资源规划详述：核心团队15人（Profile-1），由资深专家组成，平均拥有10年丰富的农业自动化研发经验；设备研发与采购总预算500万元（PriceCell-1），专项用于硬件制造、软件开发及系统测试全流程；依据Fact-1中国农业部2023年权威统计数据，全国果园面积达2000万公顷，系统应用在果园场景中可显著提升采摘效率30%，有效降低人工成本25%，覆盖1600万公顷果园（Fact-2），预计2025年完成全面规模化部署并实现商业化应用。",
+    "risks": "在果园采摘执行器项目中，主要风险分为技术、成本和市场三类：技术风险方面，执行器在复杂多变的果园环境中（如多变天气和地形）采摘准确率可能不足85%（Fact-1），其证伪条件为连续5次测试准确率均不低于90%；成本风险方面，制造成本预计2000元/台但可能因材料价格波动而超支（PriceCell-1），证伪条件为实际成本控制在1800元/台以内；市场风险方面，果园主对设备接受度较低，这可能影响初期推广，证伪条件为与5家果园达成试用协议（Profile-1）。",
+    "budget": "本项目预算规划基于Fact/PriceCell/Profile数据，确保成本控制，详细规划硬件开发（PriceCell-1）元，用于高精度传感器采购与轻量化机械臂设计；软件开发（PriceCell-2）元，涵盖实时图像处理算法与直观用户界面开发；测试与优化（PriceCell-3）元，实施多场景系统测试与性能调优；总预算（PriceCell-4）元，确保果园采摘执行器研发顺利实施，实现高效自动化目标。"
+   },
+   "section_chars": {
+    "goal": 118,
+    "architecture": 312,
+    "milestones": 285,
+    "resources": 165,
+    "risks": 177,
+    "budget": 128
+   }
+  },
+  "golddoc-engineering-channels": {
+   "template_id": "engineering",
+   "sections": {
+    "goal": "本项目致力于开发基于人工智能的高效、精准的智能仓储搬运机器人，以显著提升现代化仓库作业效率30%以上（Fact-1），大幅降低人工成本25%以上（Fact-2），项目预算严格控制在500万元以内（PriceCell-1），团队凭借5年行业经验及多个成功实施案例（Profile-1）确保项目目标在12个月内顺利达成。",
+    "architecture": "本项目采用模块化分层架构设计，感知层深度融合激光雷达与深度相机技术，实现厘米级精确定位，定位误差严格控制在2厘米以内（Fact-1）；控制层依托自研先进AI算法，任务调度效率显著提升35%（Fact-2），响应时间缩短至2秒内；应用层无缝对接WMS系统，支持实时数据交互，延迟低于50毫秒。单台设备成本为14.8万元（PriceCell-1），较行业均价低18%，有效降低初期投资成本。核心团队在仓储自动化领域拥有10年深厚经验（Profile-1），已成功交付8个大型项目。系统可高效处理500+并发任务，吞吐量稳定达到2000件/小时（Fact-3），故障率稳定低于0.4%（Fact-4）。通过AI智能优化，搬运路径平均缩短22%（Fact-5），年运营成本显著节约25%（PriceCell-2）。架构支持高度弹性扩展能力，可无缝适配50万SKU管理需求（Fact-6），并规划未来升级至AIoT平台（Profile-2），确保技术持续领先优势。",
+    "milestones": "项目里程碑规划清晰，确保研发、测试、量产与销售各环节紧密衔接并高效协同。2024年第一季度完成2个原型机的开发，涵盖硬件结构优化、软件算法集成及初步功能验证，确保系统基础稳定运行并满足初步性能指标（Fact-1）。2024年第三季度实施1000次连续搬运测试，准确率稳定达到99.5%，在模拟仓库环境与实际负载条件下充分验证系统高可靠性并提升稳定性（Fact-2）。2024年第四季度启动首批100台量产，单台成本严格控制在5000美元，通过精益制造与供应链优化实现成本效益与规模化生产（PriceCell-1）。2025年第一季度正式上市销售，首年销售目标500台，精准覆盖核心仓储客户区域需求并实现市场快速渗透（Fact-3）。团队凭借10年仓储机器人研发的深厚资历（Profile-1），在技术实现、质量管控及进度管理方面提供专业保障，全面确保各阶段目标高效达成，为市场推广奠定坚实基础。",
+    "resources": "本项目资源规划聚焦团队建设、设备采购及市场分析。核心团队由15名专业工程师组成（Profile-1），平均拥有5年仓储自动化专业经验，成功实施过3个大型项目。硬件设备采购预算800万元（PriceCell-1），用于购置20台智能搬运机器人及配套激光导航系统。市场数据显示全球仓储自动化当前渗透率已达20%（Fact-1），年复合增长率15%，预计2025年市场规模将达500亿元。系统精度达99.5%（Fact-2），确保高效稳定运行，项目总资金需求1000万元。",
+    "risks": "仓储搬运机器人项目核心风险已通过实证数据充分验证：针对导航系统在动态仓库环境中的精度挑战，通过实际应用测试，准确率稳定维持在98%以上（Fact-1）；制造成本超预算20%的潜在风险（PriceCell-1）经供应链优化策略实施后，实际成本反而低于预算10%（PriceCell-2）；市场需求低于预期的担忧被5家大型仓库的采购意向书证实，意向订单覆盖年需求量的30%以上，从而市场接受度显著提升，表明项目风险已充分有效控制（Fact-2）。",
+    "budget": "预算包括研发、硬件、软件及测试四部分。总预算（PriceCell-1）万元，研发（PriceCell-2）万元用于核心算法开发与系统集成，硬件（PriceCell-3）万元覆盖传感器、电机驱动系统等关键组件，软件（PriceCell-4）万元涉及控制程序与用户界面设计，测试（PriceCell-5）万元确保系统在真实仓储环境高效稳定运行。所有预算均经成本分析与市场调研确认，保障项目实施。"
+   },
+   "section_chars": {
+    "goal": 113,
+    "architecture": 295,
+    "milestones": 311,
+    "resources": 169,
+    "risks": 169,
+    "budget": 129
+   }
+  },
+  "golddoc-grant-plain": {
+   "template_id": "grant",
+   "sections": {
+    "significance": "量子随机数云服务提供不可预测的真随机数，有效解决传统伪随机数在加密应用中的安全缺陷。据IDC报告，2023年全球网络安全支出达1500亿美元（Fact-1），其中随机数需求年增25%。本服务基于量子技术，随机性符合NIST标准（Fact-2），成本比商用方案低40%（PriceCell-1）。团队核心成员拥有量子计算领域10年经验（Profile-1），已获5项专利。市场预测2025年量子随机数需求将达20亿美元（Fact-3），本服务可显著提升金融交易、政府数据保护及云平台安全水平。",
+    "innovation": "本项目创新性地推出量子随机数云服务，核心创新点在于利用量子叠加态生成真随机数，彻底解决传统伪随机数的可预测性问题。服务性能指标：生成速率10 Gbps（Fact-1），延迟仅0.5毫秒，比行业标准快5倍。市场数据：全球量子随机数需求年增长25%（Fact-2）。成本优化：定价0.01美元/MB（PriceCell-1），较市场均价低30%。团队资历：核心成员拥有10年量子计算研发经验（Profile-1），并已主导3个国家级安全项目，确保技术领先与服务可靠性，为金融加密、游戏安全等场景提供核心支撑。",
+    "approach": "本项目采用创新的三层云架构设计，量子源层部署量子点芯片，实现高达1 Gbps的稳定随机数生成速率（Fact-1），有效支撑金融交易加密与游戏防作弊等高安全场景的实时需求；处理层通过AI算法优化随机性测试通过率至99.9%（Fact-2），确保完全符合NIST SP 800-22随机性测试标准；云服务层提供高性能RESTful API接口，支持每秒10万次高效请求（Fact-3），实现全球范围内低延迟与高并发服务体验。开发预算500万元（PriceCell-1），核心团队5人具备10年量子技术资历（Profile-1），拥有量子随机数生成核心专利技术。服务定价0.5元/百万次（PriceCell-2），目标首年服务500家金融及游戏类企业，基于每家年均使用量500万次，预计首年年收入250万元（Fact-4），显著提升数字安全基础设施的可靠性与抗攻击性，较行业基准提升30%。",
+    "feasibility": "量子随机数云服务项目技术可行性高。当前量子随机数生成器（QRNG）技术商业化率已达30%（Fact-1），技术已高度成熟，商业化进程稳步推进。全球加密市场2023年规模达500亿美元，年增长率15%（Fact-2），市场需求强劲且持续扩张，尤其在金融和网络安全领域增长显著。开发成本预估200万元（PriceCell-1），核心团队拥有5年量子技术开发经验（Profile-1），项目经济模型预测3年内可实现盈亏平衡，投资回报率显著，市场潜力巨大且前景广阔，项目经济可行。",
+    "team_resources": "核心团队由5名量子计算专家构成，含2名博士，平均10年行业经验（Profile-1）。专项预算500万人民币用于平台研发与部署（PriceCell-1）。行业报告显示，2023年全球量子随机数市场规模达10亿美元，年增长率25%（Fact-1）。已获3项核心专利（Profile-2），系统可实时处理100万次/秒请求（Fact-2），确保高安全低延迟服务。",
+    "budget_justification": "本项目预算总额1000万元（PriceCell-1），研发费用500万元（PriceCell-2）主要用于量子芯片采购及算法优化，服务器年运营成本300万元（PriceCell-3）。市场数据显示，全球量子随机数需求年均增长20%（Fact-1），2023年市场规模达5亿美元（Fact-2），且当前需求缺口高达10亿美元（Fact-3），预计未来将持续扩大。核心团队成员平均拥有10年行业经验（Profile-1），专业背景深厚，有效保障技术可行性。预算分配严格依据详细成本分析和市场数据，具有高度合理性并持续优化。",
+    "timeline": "项目计划预计2023年Q3启动（Fact-1），核心开发计划6个月（Fact-2），2023年Q4完成（Fact-3），2024年Q1安全测试（Fact-4），2024年Q2正式上线（Fact-5），预算500万元（PriceCell-1）"
+   },
+   "section_chars": {
+    "significance": 174,
+    "innovation": 187,
+    "approach": 278,
+    "feasibility": 174,
+    "team_resources": 116,
+    "budget_justification": 172,
+    "timeline": 56
+   }
+  },
+  "golddoc-grant-channels": {
+   "template_id": "grant",
+   "sections": {
+    "significance": "国产 EDA 插件市场对实现我国电子设计自动化产业技术自主具有战略意义。全球 EDA 市场规模已达 120 亿美元（Fact-1），中国国产化率不足 10%（Fact-2），每年进口依赖支出超 100 亿美元。本项目开发的插件成本较进口低 30%（PriceCell-1），可为企业年均节省研发成本 2 亿元。团队凭借十年以上 EDA 专业开发经验（Profile-1），将加速国产替代进程，提升产业链自主可控能力，保障国家集成电路产业安全，促进本土创新生态形成，支撑数字经济高质量发展。",
+    "innovation": "创新点在于创新性构建全栈国产EDA插件生态，深度集成AI驱动设计优化技术，显著提升电路效率40%（Fact-1），并有效降低开发成本35%（PriceCell-1）。团队核心成员均来自华为海思与中芯国际（Profile-1），拥有12年行业经验。市场调研数据显示，当前国产插件渗透率已达25%（Fact-2），用户数量年均增长50%（Fact-3），2023年市场规模为30亿元（Fact-4），预计2025年将突破60亿元（PriceCell-2），占据30%市场份额（Fact-5）。插件全面兼容主流EDA工具，用户满意度高达95%（Fact-6），反馈积极。",
+    "approach": "本项目采用“技术驱动、生态协同”核心策略，通过自主研发兼容主流 EDA 工具的国产插件，并同步构建活跃的开发者社区以促进生态共建与持续创新。基于 Fact-1 数据，中国 EDA 市场规模已达 150 亿元（Fact-1），年均增速保持 20%（Fact-2），我们精准聚焦于 5% 的高增长细分领域（Fact-3），即高端芯片设计工具链。开发成本严格控制在 PriceCell-1 预算的 300 万元（PriceCell-1）内，通过模块化设计显著提升代码复用率与开发效率。核心团队依托 Profile-1 的 10 年 EDA 行业深厚经验（Profile-1），已成功交付 20 个企业级项目（Profile-2），确保技术落地可靠性并显著降低项目风险。实施路径分三阶段推进：首年完成 3 个核心插件开发，覆盖 80% 的核心需求；次年拓展至 50 家企业用户，深化生态合作；第三年实现 10% 的市场占有率目标。此方法确保项目高效落地与精准响应市场动态。",
+    "feasibility": "国产EDA插件市场可行性分析表明，市场潜力巨大，尤其在国产替代加速背景下。中国EDA市场规模2023年达100亿元（Fact-1），年增长15%（Fact-2）。开发成本约50万元（PriceCell-1），显著低于行业均值。团队核心成员拥有5年EDA开发资历（Profile-1），成功交付3个企业级项目（Profile-2）。技术上，基于开源框架，开发周期缩短30%（Fact-3），开发效率提升。经济上，预计3年回本，投资回报率200%（PriceCell-2），盈利前景良好。市场接受度高，客户反馈积极，竞争格局有利，风险可控，项目实施可行。",
+    "team_resources": "国产EDA插件市场项目团队由10名经验丰富且技术精湛的资深工程师组成（Profile-1），平均拥有8年深厚丰富的行业经验（Fact-1），成功高效交付5个国产EDA插件项目并实现显著优化（Fact-2），团队资源全面涵盖全栈技术能力及200万元专项研发预算（PriceCell-1），确保产品从设计、开发到交付的全流程无缝高效推进。",
+    "budget_justification": "国产EDA插件市场2023年规模已达到10亿元（Fact-2），年增长率稳定维持在20%，呈现强劲增长态势（Fact-1），国产化率目前仅为25%（Fact-4）。本项目计划投入研发资金50万元（PriceCell-1）用于开发AI驱动的插件，并投入市场推广费用20万元（PriceCell-2），确保全面覆盖市场。团队由5人组成（Profile-1），平均拥有10年行业经验，确保技术持续领先优势，提升研发效率。预算分配科学合理，预计3年内实现盈利，投资回报率高达150%（PriceCell-3），市场占有率将提升至15%（Fact-3），有效推动国产化替代进程，加速行业升级。",
+    "timeline": "2024Q1核心开发于6月完成（Fact-1），2024Q3测试版于9月上线（Fact-2），2025Q1正式发布于12月（Fact-3），团队拥有5年行业经验（Profile-1），预算500万人民币（PriceCell-1）。"
+   },
+   "section_chars": {
+    "significance": 172,
+    "innovation": 174,
+    "approach": 291,
+    "feasibility": 176,
+    "team_resources": 122,
+    "budget_justification": 189,
+    "timeline": 54
+   }
+  },
+  "golddoc-vibe_pack-plain": {
+   "template_id": "vibe_pack",
+   "sections": {
+    "S1_charter": "本项目计划开发专业高效行业术语纠错引擎，用于提升多个行业术语的准确性与效率，覆盖50个核心关键行业（Fact-1），首年预算300万元（PriceCell-2），团队具备8年行业经验（Profile-3）。",
+    "S2_invariants": "在行业术语纠错引擎项目中，S2不变量是核心原则，包括纠错准确率不低于95%（Fact-1）、平均响应时间不超过200毫秒（Fact-2）、覆盖行业术语库100个以上（Fact-3）、开发预算控制在50万元人民币内（PriceCell-4）、核心团队规模固定为10人（Profile-5），这些指标将作为产品开发的硬性标准，确保系统在各种场景下稳定高效运行并确保用户获得最佳体验。",
+    "S3_contracts": "本项目合同采用标准SaaS服务协议，全面覆盖超过500个行业术语（Fact-1），签约客户达200家（Fact-4），年费为20万元（PriceCell-1），并提供SLA 99.9%的高可用性保障（Fact-2）。核心团队规模10人（Profile-1），平均经验8年（Profile-2），可支持超过100家企业客户（Fact-5）。合同周期为3年，首年预付50%（PriceCell-2），第二年30%（PriceCell-3），第三年20%（PriceCell-4）。保密协议确保100%客户数据安全（Fact-6），法律条款覆盖100%合规要求（Fact-7）。合同致力于提供高质量服务，客户满意度达95%（Fact-9）。同时提供7x24小时全天候技术支持（Fact-10）。",
+    "S4_decision_log": "决策日志：经市场趋势分析（Fact-1），采用深度学习模型（Fact-1），准确率高达92%（Fact-1）经多轮测试验证；开发预算45万元（PriceCell-2），包含数据清洗、标注及模型优化；核心团队5人（Profile-3），由三年以上行业经验成员组成，通过敏捷开发流程确保项目高效实施。",
+    "S5_task_dag": "本节S5_task_dag详细规划任务依赖图，基于DAG（有向无环图）模型管理15（PriceCell-1）个任务节点，确保任务间无环依赖关系，有效避免循环依赖引发的执行停滞与资源冲突。关键路径分析通过识别核心任务链并优化资源分配，将平均任务处理周期精准控制在3（PriceCell-2）个月，显著提升项目执行效率。总开发成本预算800,000（PriceCell-3）元，明细包括人力成本600,000（PriceCell-4）元（覆盖开发、测试及项目管理团队薪资）和工具采购200,000（PriceCell-5）元（用于专业纠错引擎软件及云服务基础设施）。团队规模10（PriceCell-6）人，由5名开发工程师、3名测试专家和2名项目经理构成，通过自动化调度系统实现任务智能分配与实时监控，有效提升任务处理效率20（PriceCell-7）%。预计2025（PriceCell-8）年第三季度完成交付，以契合公司年度产品发布计划与市场窗口期。该任务依赖图通过动态调整任务优先级与并行处理机制，大幅减少延迟风险，提高项目成功率至95%，确保系统准时上线交付，为行业术语纠错引擎的高效落地提供坚实保障。",
+    "S6_context_manifest": "本行业术语纠错引擎精准高效覆盖500个核心行业术语（Fact-1），错误率低且持续稳定控制在5%以下（Fact-2），项目总预算200万元人民币（PriceCell-1），团队具备10年丰富专业经验（Profile-1）。",
+    "S7_verification": "在S7_verification阶段，我们将采用10万条真实、丰富的行业语料进行全面系统化压力测试，错误率稳定在1.2%（Fact-1），验证成本优化至5万元（PriceCell-1），团队凭借5年专业经验（Profile-1）高效精准执行验证流程，保障系统在各类专业场景下的高精度和可靠性，有效满足客户期望并显著提升用户体验。",
+    "S8_progress_ledger": "在S8阶段，我们已完成核心模块开发并进行测试，进度85%（Fact-1），预算20万元（PriceCell-1），团队15名成员（Profile-1），所有交付物均符合质量标准，项目风险低且进度良好，无重大偏差，用户满意度高，持续改进。",
+    "S9_escalation": "在行业术语纠错引擎的S9升级机制中，系统自动纠正95%的高频常见错误场景（Fact-1），剩余5%的复杂错误需人工审核，审核成本为50美元/小时（PriceCell-2），团队成员平均拥有5年行业经验以确保审核质量的高准确性和可靠性（Profile-3）。"
+   },
+   "section_chars": {
+    "S1_charter": 69,
+    "S2_invariants": 133,
+    "S3_contracts": 182,
+    "S4_decision_log": 97,
+    "S5_task_dag": 354,
+    "S6_context_manifest": 69,
+    "S7_verification": 114,
+    "S8_progress_ledger": 77,
+    "S9_escalation": 91
+   }
+  },
+  "golddoc-vibe_pack-channels": {
+   "template_id": "vibe_pack",
+   "sections": {
+    "S1_charter": "方言语料授权分发项目通过安全数字平台分发，覆盖全国一百种方言（Fact-1），预计首年授权收入二百万元（PriceCell-1），项目预算五百万元（PriceCell-2），核心团队十五人（Profile-1），致力于文化保护与语言传承。",
+    "S2_invariants": "依托语料库完整性（Fact-1）作为核心基准，确保数据一致性与完整性；授权费用（PriceCell-1）维持固定标准；团队资质（Profile-1）持续稳定。分发数据保持一致，实现全面覆盖50种方言（Fact-2），授权费明确为1000元/次（PriceCell-2），团队具备10年专业经验（Profile-2）持续有效，从而有效保障项目长期稳定运行。",
+    "S3_contracts": "方言语料授权分发合同体系设计精良，采用三级授权模式：基础版覆盖8种方言（Fact-1），年授权费用15万元（PriceCell-1）；高级版覆盖15种方言（Fact-2），年费35万元（PriceCell-2）；企业定制版支持全方言库（Fact-3），费用根据企业规模协商。团队拥有7年方言语料处理专业经验（Profile-1），合同履约率高达92%（Fact-4），分发服务覆盖全国200个城市（Fact-5），覆盖广泛且服务响应迅速，确保高效、稳定、快速的分发服务并提供定制化支持，满足企业即时需求，实现无缝对接，有效支持全国业务拓展与市场竞争力提升。",
+    "S4_decision_log": "决策日志：经综合市场评估，方言用户需求年均增长率达15%，基于用户反馈及市场分析（Fact-1），项目总预算500万元，涵盖开发、推广及运维全周期成本（PriceCell-1），核心团队12人，由方言学专家、数据工程师及市场专员构成（Profile-1），分发服务覆盖10个主要方言区，包括粤语、闽南语等核心区域，实现高效覆盖（Fact-2），授权单价设定为5000元/年，经市场调研确认（PriceCell-2）。",
+    "S5_task_dag": "S5_task_dag 采用动态任务依赖图技术，通过图算法实时优化任务依赖关系，避免资源冲突与等待时间，显著提升方言语料授权分发流程的执行效率。核心任务链包含数据清洗（Fact-1）、授权协议签订（Fact-2）、分发平台开发（Fact-3）、数据验证、用户接口设计等10个关键节点，确保任务逻辑无缝衔接与高效协同。项目总预算500,000元（PriceCell-1），由15人专业团队（Profile-1）执行，团队平均行业经验5年，成员均具备方言语料处理与协议管理的深厚背景。交付周期设定为6个月（Fact-4），需处理10TB方言语料数据（Fact-5），授权费用标准为每千字100元（PriceCell-2）。团队将实施AI驱动的智能自动化调度系统，动态分配计算资源并预测任务负载，提升任务并行度，降低20%处理时间（Fact-6），从而显著缩短交付周期并增强服务竞争力。所有数字均基于历史数据与项目规划，确保预算、时间及质量目标的可行性，实现高效、低成本的授权分发服务，满足市场高需求并提升客户满意度。",
+    "S6_context_manifest": "本项目通过授权分发方言语料，覆盖全国100种方言（Fact-1），授权费用为5000元每年（PriceCell-1），团队核心成员具有5年方言数据处理专业资历（Profile-1），致力于提供高质量、合规且安全的方言语料服务。",
+    "S7_verification": "方言语料授权分发系统S7_verification环节通过严格验证确保数据准确可靠，验证覆盖1000多个方言点确保全面覆盖（Fact-1），授权成本5000元/年（PriceCell-1），团队资历5年经验丰富（Profile-1），系统响应<200ms保证高效响应（Fact-2），数据准确率99.5%高水平（Fact-3），分发效率提升20%（Fact-4），客户满意度95%（Fact-5），持续优化以提升性能。",
+    "S8_progress_ledger": "本项目截至目前，已累计授权方言语料总计10个（Fact-1），用户覆盖人数已实现20万（Fact-2），预算支出累计50万元（PriceCell-1），团队规模为15人（Profile-1），进度完成率60%（Fact-3）。",
+    "S9_escalation": "方言语料授权分发项目中，所有问题必须在24小时内升级处理以确保及时响应（Fact-1）；成本预算严格控制在50万元以内，通过优化资源分配实现（PriceCell-2）；团队具备10年方言处理经验，覆盖全国20个方言区处理超1000个样本（Profile-3）。"
+   },
+   "section_chars": {
+    "S1_charter": 76,
+    "S2_invariants": 110,
+    "S3_contracts": 192,
+    "S4_decision_log": 139,
+    "S5_task_dag": 337,
+    "S6_context_manifest": 76,
+    "S7_verification": 118,
+    "S8_progress_ledger": 63,
+    "S9_escalation": 91
+   }
+  }
+ }
+}

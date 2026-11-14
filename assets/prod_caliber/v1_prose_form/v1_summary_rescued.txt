@@ -1,0 +1,3 @@
+# v1 纯散文形态跑批汇总行（全量 trail 因归档 mv 撞名被 v3 同名文件覆盖丢失 @2026-07-29；本文件自后台任务输出抢救；v1 逐条判读样本另见会话 trace 与台账 note）
+{"model": "qwen3:30b", "answer_rate": 0.2558139534883721, "answer_meets_line": false, "ratio_worst": 0.6758457907159715, "ratio_meets_line": false, "calls": 173}
+{"model": "gemma4:31b", "answer_rate": 0.32558139534883723, "answer_meets_line": false, "ratio_worst": 0.11940298507462685, "ratio_meets_line": true, "calls": 172}

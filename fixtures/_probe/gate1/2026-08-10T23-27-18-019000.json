@@ -1,0 +1,19 @@
+{
+ "schema": "probe/1",
+ "authorized_by": "DEC-057",
+ "source": "arxiv",
+ "url": "https://export.arxiv.org/api/query?search_query=all:human-computer+interaction&max_results=3",
+ "method": "GET",
+ "requested_at_utc": "2026-08-10T23:27:18.019000+00:00",
+ "status": 200,
+ "headers": {
+  "content-length": "8409",
+  "server": "Google Frontend",
+  "content-type": "application/atom+xml; charset=utf-8",
+  "date": "Mon, 10 Aug 2026 23:27:18 GMT"
+ },
+ "body_head": "<?xml version='1.0' encoding='UTF-8'?>\n<feed xmlns:opensearch=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:arxiv=\"http://arxiv.org/schemas/atom\" xmlns=\"http://www.w3.org/2005/Atom\">\n  <id>https://arxiv.org/api/1EN9Tq428Il+1xfUvM73fBL/4B0</id>\n  <title>arXiv Query: search_query=all:human-computer OR all:interaction&amp;id_list=&amp;start=0&amp;max_results=3</title>\n  <updated>2026-08-10T23:27:13Z</updated>\n  <link href=\"https://arxiv.org/api/query?search_query=all:human-computer+OR+all:interaction&amp;start=0&amp;max_results=3&amp;id_list=\" type=\"application/atom+xml\"/>\n  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>\n  <opensearch:totalResults>375614</opensearch:totalResults>\n  <opensearch:startIndex>0</opensearch:startIndex>\n  <entry>\n    <id>http://arxiv.org/abs/2506.16345v1</id>\n    <title>Can GPT-4o Evaluate Usability Like Human Experts? A Comparative Study on Issue Identification in Heuristic Evaluation</title>\n    <updated>2025-06-19T14:22:44Z</updated>\n    <link href=\"https://arxiv.org/abs/2506.16345v1\" rel=\"alternate\" type=\"text/html\"/>\n    <link href=\"https://arxiv.org/pdf/2506.16345v1\" rel=\"related\" type=\"application/pdf\" title=\"pdf\"/>\n    <summary>Heuristic evaluation is a widely used method in Human-Computer Interaction (HCI) to inspect interfaces and identify issues based on heuristics. Recently, Large Language Models (LLMs), such as GPT-4o, have been applied in HCI to assist in persona creation, the ideation process, and the analysis of semi-structured interviews. However, considering the need to understand heuristics and the high degree of abstraction required to evaluate them, LLMs may have difficulty conducting heuristic evaluation. However, prior research has not investigated GPT-4o's performance in heuristic evaluation compared to HCI experts in web-based systems. In this context, this study aims to compare the results of a heuristic evaluation performed by GPT-4o and human experts. To this end, we selected a set of screenshots from a web system and asked GPT-4o to perform a heuristic eva",
+ "body_bytes": 8409,
+ "spent_before_this": 17,
+ "budget": 40
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/texture.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/tokens/base.css">
+  <link rel="stylesheet" href="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/styles.css">
+  <script src="_ds/flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724/_ds_bundle.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: var(--paper); }
+    a { color: var(--link); text-underline-offset: 3px; }
+    a:hover { text-decoration-color: var(--sulfur); text-decoration-thickness: 2px; }
+  </style>
+</helmet>
+<div data-screen-label="营销首屏" style="min-height: 100vh; background: var(--paper); background-image: var(--tex-paper-strong); color: var(--ink); font-family: var(--font-body); display: flex; flex-direction: column; overflow: hidden;">
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 20px 48px;">
+    <div style="font-family: var(--font-display); font-size: 25px; color: var(--ink);">Flint 燧石</div>
+    <nav style="display: flex; align-items: center; gap: 24px;">
+      <a href="#how" style="font-size: 14px;">它怎么工作</a>
+      <a href="#honest" style="font-size: 14px;">如实原则</a>
+      <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" size="sm" hint-size="auto,32px">开始使用</x-import>
+    </nav>
+  </header>
+  <section style="flex: 1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding: 32px 48px 64px; max-width: 1360px; width: 100%; margin: 0 auto; box-sizing: border-box;">
+    <div>
+      <x-import component-from-global-scope="FlintDesignSystem_8fd95b.StickerTag" tone="sulfur" rotate="{{ stickerRotate }}" hint-size="auto,24px">每日 09:00 自动装订</x-import>
+      <h1 style="font-family: var(--font-display); font-weight: 400; font-size: 88px; line-height: 1.15; margin: 20px 0 0; color: var(--ink);">每日热点，<br>敲成<span style="color: var(--indigo);">可行</span>的<span style="background: linear-gradient(transparent 62%, var(--sulfur) 62% 94%, transparent 94%);">报告</span>。</h1>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--ink-2); max-width: 30em; margin: 24px 0 0;">Flint 把热点线索沉淀成可行性判定与深度报告。知道什么就说什么，不知道就明说——每个数字都带出处，每个空缺都留着形状。</p>
+      <div style="display: flex; align-items: center; gap: 16px; margin-top: 32px;">
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" hint-size="auto,40px">开始使用</x-import>
+        <x-import component-from-global-scope="FlintDesignSystem_8fd95b.Button" variant="ghost" hint-size="auto,40px">看一份样例报告</x-import>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-3); margin-top: 48px;">REPORT · 已证事实盖印冻结，随附出处链</div>
+    </div>
+    <div style="position: relative; height: min(72vh, 680px); min-height: 420px;">
+      <x-import component="FlintCarousel" from="./FlintCarousel.jsx" speed="{{ speed }}" tilt="{{ tiltEnabled }}" hint-size="100%,100%" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></x-import>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;speed&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.2, &quot;max&quot;: 3, &quot;step&quot;: 0.1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;轮播&quot;, &quot;description&quot;: &quot;自动轮播速度倍率&quot;}, &quot;tiltEnabled&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;轮播&quot;, &quot;description&quot;: &quot;鼠标视差倾斜&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      speed: this.props.speed ?? 1,
+      tiltEnabled: this.props.tiltEnabled ?? true,
+      stickerRotate: -1.5,
+    };
+  }
+}
+</script>
+</body>
+</html>

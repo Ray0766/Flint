@@ -1,0 +1,9 @@
+[
+ {
+  "method": "GET",
+  "url": "https://api.patents.example/v1/search?q=solid+state+battery&rows=10",
+  "status_code": 200,
+  "content_type": "application/json",
+  "body_text": "{\"patents\": [{\"patent_id\": \"US11001937\", \"title\": \"solid state battery apparatus 0\", \"family_size\": 2, \"legal_status\": \"pending\", \"date\": \"2026-01-15\", \"url\": \"https://patents.example/US11001937\"}, {\"patent_id\": \"US11001938\", \"title\": \"solid state battery apparatus 1\", \"family_size\": 3, \"legal_status\": \"active\", \"date\": \"2026-02-15\", \"url\": \"https://patents.example/US11001938\"}, {\"patent_id\": \"US11001939\", \"title\": \"solid state battery apparatus 2\", \"family_size\": 4, \"legal_status\": \"active\", \"date\": \"2026-03-15\", \"url\": \"https://patents.example/US11001939\"}, {\"patent_id\": \"US11001940\", \"title\": \"solid state battery apparatus 3\", \"family_size\": 5, \"legal_status\": \"pending\", \"date\": \"2026-04-15\", \"url\": \"https://patents.example/US11001940\"}, {\"patent_id\": \"US11001941\", \"title\": \"solid state battery apparatus 4\", \"family_size\": 6, \"legal_status\": \"active\", \"date\": \"2026-05-15\", \"url\": \"https://patents.example/US11001941\"}], \"count\": 5}"
+ }
+]

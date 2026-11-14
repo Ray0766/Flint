@@ -1,0 +1,645 @@
+{
+ "spec_version": "v0.4.1-batch6",
+ "frozen_against": "contracts/ @2026-07-30",
+ "audience": "ai_executor",
+ "generated_by": "steward @2026-08-08",
+ "note": "第6批 = owner 2026-08-08 四条裁决落地 + 把广场卡填满 + 补两条缺的写入口 + 清七张问题单。地区面要迁移（clusters 表没有 region 列，steward 已实测）；首见日期零迁移（列与冻结件都已有）。NEVER 改 contracts/。",
+ "rules": {
+  "ledger": "docs/progress-v041.jsonl（续用，append-only）",
+  "done_marker": "docs/FLINT-V041-B6-DONE",
+  "touch_boundary": "允许改既有文件；每处改动 MUST 在 trace 写明「改前后各是什么、为什么非改不可」。改动面大于卡上 outputs → 停下走 docs/blocked/。",
+  "network": "NEVER 真实网络 / 真实 API key / 付费调用。本机容器、本机模型、localhost:3000 与 :8000 不算外网。",
+  "new_dependency": "NEVER 新增依赖。playwright 恒在项目外 C:\\pwenv。"
+ },
+ "isolation": {
+  "droppable": []
+ },
+ "tasks": [
+  {
+   "id": "DEC-035-038-LANDING",
+   "title": "裁决落地：owner 2026-08-08 的四条逐字进 DECISIONS-v04.md",
+   "milestone": "W6",
+   "inputs": [
+    "docs/steward/连跑工单-v041-第6批.md#2",
+    "DECISIONS-v04.md"
+   ],
+   "outputs": [
+    "DECISIONS-v04.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "python tools/check_decisions_format.py || pytest tests/v041/test_decisions_landed.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "四条逐字追加，编号接现有水位：DEC-035 地区面走迁移 · DEC-036 主题名称三元组改规格不动冻结件 · DEC-037 那条红改取证样例不改产品 · DEC-038 维持 DEC-034",
+    "每条写明来由与影响面，NEVER 只记结论",
+    "追加式写入，NEVER 回改既有 DEC 行"
+   ],
+   "context_refs": [
+    "DECISIONS-v04.md"
+   ],
+   "depends_on": [],
+   "blocked_by": null
+  },
+  {
+   "id": "REGION-08",
+   "title": "地区面①：clusters 加 region 列 + 回填 + 日更写入（迁移 0021）",
+   "milestone": "W6",
+   "inputs": [
+    "migrations/versions/0020_identity.py",
+    "flint/region/bucketing.py",
+    "migrations/versions/0004_trend_items_raw.py"
+   ],
+   "outputs": [
+    "migrations/versions/0021_cluster_region.py",
+    "flint/",
+    "tests/v041/test_cluster_region.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_cluster_region.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "steward 已核实（省一次重查）：clusters 表列为 cluster_id · canonical_name · category_id · centroid · status · first_seen · last_active · parent_cluster_ids · merged_into · aliases——**没有 region**；heat_points 也没有；region 只在 trend_items_raw 里（0004 迁移）与 flint/region/bucketing.py 的 RegionCluster 里，而后者是模块内的 dataclass，**从没落过库**",
+    "迁移 0021 给 clusters 加 region 列，接 0020，NEVER 跳号",
+    "region 随成员走、NEVER 靠簇去推断（bucketing.py 的原话）：回填取该簇成员的 region，成员跨区时判红并点名是哪个簇——B5 说先聚后拆是拆不干净的，回填时撞见跨区簇就是数据面已经破了 B5，MUST 停下上报而不是取众数",
+    "日更作业写入新簇时带上 region，NEVER 留一条只在回填时才有区的路",
+    "血缘不跨区的既有判据不倒（CrossRegionLineageError）"
+   ],
+   "context_refs": [
+    "flint/region/bucketing.py",
+    "docs/PRINCIPLES-v04.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "REGION-09",
+   "title": "地区面②：GET /plaza/hot?region= 真的筛，by_source 带地区",
+   "milestone": "W6",
+   "inputs": [
+    "flint/api/views.py",
+    "docs/blocked/PLAZA-02-REGION-QUERY-AND-SOURCE-REGION-NOT-BUILT.md"
+   ],
+   "outputs": [
+    "flint/api/views.py",
+    "tests/v041/test_plaza_region_query.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_plaza_region_query.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "flint/api/views.py:66 的签名当前只有 day。FastAPI 对未声明的 query 静默忽略——带 region=CN 照样回全量 154 条。本卡把 region 声明成真参数并真的过滤",
+    "阴性对照是这张卡的核心：断言 region=CN 与 region=US 返回的簇集合**不同**，且都是全量的真子集。NEVER 只断言参数被接受——静静地什么都不筛的筛选器比没有筛选器更坏",
+    "不传 region 时行为与今天逐字相同（规格 #2.14 的增量口径）",
+    "by_source 每个源带地区维度（HOTSPOT-07 分列 ≥2 列的既有判据不倒，合成句黑名单零命中）",
+    "无效 region 值回 400 并点名可选值，NEVER 静默回全量"
+   ],
+   "context_refs": [
+    "docs/blocked/PLAZA-02-REGION-QUERY-AND-SOURCE-REGION-NOT-BUILT.md",
+    "docs/前端功能说明-v2.md#2.14"
+   ],
+   "depends_on": [
+    "REGION-08"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "REGION-10",
+   "title": "地区面③：广场筛选器接上（第 5 批 PLAZA-02 重做）",
+   "milestone": "W6",
+   "inputs": [
+    "web/app/plaza/",
+    "web/components/region-switch/RegionSwitch.tsx",
+    "web/components/source-columns/SourceColumns.tsx"
+   ],
+   "outputs": [
+    "web/app/plaza/",
+    "tests/v041/test_plaza_filters.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_plaza_filters.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "RegionSwitch 与 SourceColumns 接上广场屏——两个组件建好至今没有任何页面在用",
+    "判据打真栈：切区后断言卡片集合真的变了，NEVER 只断言请求发出去了",
+    "九区清单从 GET /settings/locale 的 options 取，NEVER 在广场再抄一份",
+    "切地区 NEVER 改语言，切语言 NEVER 改热点集合（PRINCIPLES#A3 两条轴）",
+    "空区落到 PLAZA-03 已建的「该区当日无数据」态，NEVER 回落到别的区",
+    "关闭 docs/blocked/PLAZA-02-REGION-QUERY-AND-SOURCE-REGION-NOT-BUILT.md"
+   ],
+   "context_refs": [
+    "docs/trace/PLAZA-03.md"
+   ],
+   "depends_on": [
+    "REGION-09"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SLOT-01",
+   "title": "填卡①：首见日期——列早就在，端点没回",
+   "milestone": "W6",
+   "inputs": [
+    "flint/api/views.py",
+    "contracts/models.py#Cluster"
+   ],
+   "outputs": [
+    "flint/api/views.py",
+    "web/",
+    "tests/v041/test_plaza_first_seen.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_plaza_first_seen.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "steward 已核实：冻结件 Cluster 有 first_seen: date，clusters 表也有这一列——**零迁移，端点多回一个字段即可**",
+    "卡面首见日期槽真显示出来（DS-02 已建槽，逐槽隐藏规则不变）",
+    "NEVER 改 contracts/：本卡只让端点回一个它本来就有的字段",
+    "判据打真栈：广场卡上取到的日期与库里该簇的 first_seen 逐字相同"
+   ],
+   "context_refs": [
+    "contracts/models.py",
+    "docs/trace/DS-02.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SLOT-02",
+   "title": "填卡②：陈旧标记——接 HOTSPOT-06 的 Revalidator 适配器",
+   "milestone": "W6",
+   "inputs": [
+    "flint/revalidate/",
+    "flint/api/views.py",
+    "docs/trace/HOTSPOT-06.md"
+   ],
+   "outputs": [
+    "flint/api/views.py",
+    "web/",
+    "tests/v041/test_plaza_stale.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_plaza_stale.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "陈旧口径复用 Revalidator 统一 stale（D8 已决），NEVER 新写一套比对——HOTSPOT-06 建的适配器就是为此",
+    "三态分明：未判定过（undefined，槽隐藏）· 判过且新鲜（不挂标记）· 判过且陈旧（挂标记）。「没查过」与「查过了是陈旧的」NEVER 挤进同一个表示",
+    "阴性对照三条：三种状态分别构造，断言屏上互不相同",
+    "本卡只读不写：NEVER 在广场请求里触发一次重核"
+   ],
+   "context_refs": [
+    "docs/trace/HOTSPOT-06.md",
+    "docs/PRINCIPLES-v04.md"
+   ],
+   "depends_on": [
+    "SLOT-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SLOT-03",
+   "title": "填卡③：机翻译名——translate 作业至今没有消费者",
+   "milestone": "W6",
+   "inputs": [
+    "flint/jobs/dispatch.py",
+    "flint/i18n/name_display_job.py",
+    "web/components/native-name/NativeName.tsx"
+   ],
+   "outputs": [
+    "flint/jobs/",
+    "flint/api/",
+    "tests/v041/test_translate_job.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_translate_job.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "dispatch.py 的 UnwiredKindReason 写着「flint/i18n/name_display_job.py 只产 payload，派生函数 derive_name_display 是同步的，仓里还没有 translate 作业的消费者」——本卡接上消费者并从 UnwiredKindReason 移进 WIREABLE_KINDS",
+    "译名走既有 Translator 适配器，运行时用本机免费档，测试恒 fixture 回放，respx 护栏断言零真实出网",
+    "主次不倒：主行恒 name_native，译名为次要行且**必带机翻标记**（PRINCIPLES#B8）",
+    "译名缺失时只显单行（A7 降级），NEVER 用原文冒充译文——PLAZA-03 已建的既有判据不倒",
+    "分派表仍覆盖判别联合全部成员（IncompleteDispatchTable 判据不倒）"
+   ],
+   "context_refs": [
+    "flint/jobs/dispatch.py",
+    "docs/PRINCIPLES-v04.md"
+   ],
+   "depends_on": [
+    "SLOT-01"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "ENTRY-01",
+   "title": "入口①：design_generate 有消费者、没有提交端点",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/DESIGN-GENERATE-HAS-NO-SUBMIT-ENDPOINT.md",
+    "flint/api/",
+    "web/lib/jobClient.ts"
+   ],
+   "outputs": [
+    "flint/api/",
+    "tests/v041/test_design_submit.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_design_submit.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "第 5 批 DESIGN-01 接上了消费者，但没有任何端点能把这类作业塞进队列：openapi 的作业一族只有 /jobs/{id} · /jobs/{id}/events · /jobs/{id}/verdict",
+    "前端提交器 web/lib/jobClient.ts#submitJob 打的是 POST /projects/{id}/{kind}——本卡把 design_generate 那条建出来并装配，实测当前回的是框架那种没有 code 的 404",
+    "鉴权照 AUTH-03 口径：缺头 401 · 无角色 403 · 项目不存在 404，三种 NEVER 混成一个",
+    "提交后返回 job_id 并可经既有 SSE 通道订阅（规格 #2.17 的流式那一条）",
+    "关闭 docs/blocked/DESIGN-GENERATE-HAS-NO-SUBMIT-ENDPOINT.md"
+   ],
+   "context_refs": [
+    "docs/blocked/DESIGN-GENERATE-HAS-NO-SUBMIT-ENDPOINT.md",
+    "docs/前端功能说明-v2.md#2.17"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "ENTRY-02",
+   "title": "入口②：选主题落不到 chosen_topic_id——topic 一族三条全是 GET",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/TOPIC-CHOOSE-HAS-NO-WRITE-ENDPOINT.md",
+    "flint/api/views.py"
+   ],
+   "outputs": [
+    "flint/api/",
+    "web/app/",
+    "tests/v041/test_topic_choose.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_topic_choose.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "建写端点让选主题落到 projects.chosen_topic_id；当前 /topics/{id} · /projects/{id}/topics · /plaza/topics 三条全是 GET，写的那一半不存在",
+    "NEVER 前端自行记一份（CHAIN-03 acceptance③ 的原话）：判据断言刷新页面后选择仍在",
+    "幂等：同一主题重复选 NEVER 产生第二条变更记录；换主题写进 change_log",
+    "鉴权照 AUTH-03 口径；无权改判 403",
+    "关闭 docs/blocked/TOPIC-CHOOSE-HAS-NO-WRITE-ENDPOINT.md"
+   ],
+   "context_refs": [
+    "docs/blocked/TOPIC-CHOOSE-HAS-NO-WRITE-ENDPOINT.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SPEC-01",
+   "title": "规格订正：主题没有名称三元组（DEC-036，改规格不动冻结件）",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/TOPIC-HAS-NO-NAME-TRIPLE.md",
+    "docs/前端功能说明-v2.md",
+    "contracts/models.py#Topic"
+   ],
+   "outputs": [
+    "docs/前端功能说明-v2.md",
+    "tests/v041/test_spec_topic_naming.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_spec_topic_naming.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 裁决 DEC-036：规格 #2.4 那句「名称三元组上屏」**对主题不适用**——冻结件 Topic 只有 topic_id · seed_id · one_liner · target_user_tag · form_factor_tag · why_now · keyword_mapping · embedding，从来没有名称字段。该句大概率是从热点簇那边抄来的（簇确实有，HotspotCard 在用）",
+    "订正 docs/前端功能说明-v2.md#2.4 的那一行，并把 CHAIN-03 卡面 acceptance② 一并订正",
+    "机器守着不漂移：判据断言规格里凡提名称三元组的实体，冻结件里 MUST 真有那两个字段——下一次抄错会被拦住",
+    "NEVER 改 contracts/：本卡改的是规格文字",
+    "关闭 docs/blocked/TOPIC-HAS-NO-NAME-TRIPLE.md"
+   ],
+   "context_refs": [
+    "docs/blocked/TOPIC-HAS-NO-NAME-TRIPLE.md",
+    "contracts/models.py"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-09",
+   "title": "缺陷⑨：全局门那一条红——取证样例不属于探针那个用户（DEC-037）",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/DEMO-JOB-NOT-OWNED-BY-THE-PROBE-USER.md",
+    "harness/fe_smoke.py",
+    "harness/demo_seed_report.py"
+   ],
+   "outputs": [
+    "harness/",
+    "tests/v041/test_probe_job_owned.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_probe_job_owned.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "owner 裁决 DEC-037：**改取证样例，不改产品**。/jobs/m1004-j 回 403 是第 4 批鉴权接上之后的正确行为——那条作业的发起人不是探针用的 self，屏上正确显示无权查看",
+    "给探针种一条属于它的作业（发起人 = 探针身份），harness/fe_smoke.py 的样例 id 改指它",
+    "四条既有判据回绿：test_mobile_sweep · test_screens_live_probe · test_ui_restyle · test_sse_live",
+    "**NEVER 把 403 加进控制台噪声白名单**——那等于把鉴权正确工作的证据当成噪声吞掉",
+    "另建一条判据专门守「无权时屏上显示无权查看」，让这条正确行为从此有人量",
+    "关闭 docs/blocked/DEMO-JOB-NOT-OWNED-BY-THE-PROBE-USER.md"
+   ],
+   "context_refs": [
+    "docs/blocked/DEMO-JOB-NOT-OWNED-BY-THE-PROBE-USER.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-10",
+   "title": "缺陷⑩：「空假设」在两条端点上是两个码、两句话",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/EMPTY-HYPOTHESIS-TWO-CODES.md",
+    "flint/api/combo.py",
+    "flint/api/graph_edges.py"
+   ],
+   "outputs": [
+    "flint/api/",
+    "web/",
+    "tests/v041/test_empty_hypothesis_one_code.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_empty_hypothesis_one_code.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "同一件事（假设是空的）两条端点答复不同：POST /projects/combo 回 400 VALIDATION_FAILED「hypothesis required (non-empty str)」，graph_edges.py:71 回 422 EMPTY_HYPOTHESIS。规格 #2.3 写的是同一判据",
+    "统一成一个码一句话；前端本地预检话术与之逐字一致，NEVER 各写一句",
+    "判据断言两条端点对同一输入回同一 code，新增端点漏了则判红",
+    "关闭 docs/blocked/EMPTY-HYPOTHESIS-TWO-CODES.md"
+   ],
+   "context_refs": [
+    "docs/blocked/EMPTY-HYPOTHESIS-TWO-CODES.md",
+    "docs/前端功能说明-v2.md#2.3"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-11",
+   "title": "缺陷⑪：共用取数层没有「这一条不存在」那一态",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/FETCH-LAYER-HAS-NO-NOT-FOUND-STATE.md",
+    "web/lib/"
+   ],
+   "outputs": [
+    "web/lib/",
+    "web/components/",
+    "tests/v041/test_fetch_not_found_state.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_fetch_not_found_state.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "后端对未知主题回的形状是对的（404 + code NOT_FOUND），而屏上显示的是通用错误框「取数出错 · 后端回了一个错误状态」——「这一条不存在」被说成「系统出错了」，两者用户该做的事完全不同",
+    "取数层新增 not_found 态，接 UIX-02 已建的 NotFound404 组件",
+    "NotFound404 与「接口未提供」NEVER 用同一个表示：一个是这条资源不存在，一个是这个能力还没接",
+    "阴性对照：404 带 code · 404 不带 code · 500 三种分别构造，断言屏上三种话互不相同",
+    "关闭 docs/blocked/FETCH-LAYER-HAS-NO-NOT-FOUND-STATE.md"
+   ],
+   "context_refs": [
+    "docs/blocked/FETCH-LAYER-HAS-NO-NOT-FOUND-STATE.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-12",
+   "title": "缺陷⑫：后端散文里嵌着枚举原值——前端换不掉，也不该换",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/BACKEND-PROSE-EMBEDS-RAW-ENUM.md",
+    "flint/gate/rule_d.py"
+   ],
+   "outputs": [
+    "flint/",
+    "tests/v041/test_no_raw_enum_in_prose.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_no_raw_enum_in_prose.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "屏上可见文字里有「竞品扫描覆盖未达标（not_saturated）（search）」，拼这句话的是后端（flint/gate/rule_d.py:44 的 missing_what f-string）",
+    "后端改成回结构化字段（原因码 + 参数），由前端按 DS-03 的标签表渲染——NEVER 让后端拼给人看的句子，那样前端换不掉、两边话术也会各自漂移",
+    "判据扫后端返回的散文字段：出现下划线小写的枚举原值即判红，新增拼接会被拦住",
+    "既有 Gate 判定语义一字不动：只改呈现载体，NEVER 改判定规则",
+    "关闭 docs/blocked/BACKEND-PROSE-EMBEDS-RAW-ENUM.md"
+   ],
+   "context_refs": [
+    "docs/blocked/BACKEND-PROSE-EMBEDS-RAW-ENUM.md",
+    "docs/trace/DS-03.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-13",
+   "title": "缺陷⑬：UI-01 那把样式尺子把「后来每一段」都当成自己的",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/UI01-RULER-JUDGES-EVERY-LATER-SECTION.md",
+    "tests/v041/test_ui_restyle.py",
+    "web/app/globals.css"
+   ],
+   "outputs": [
+    "tests/v041/",
+    "tools/",
+    "tests/v041/test_css_section_scoping.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_css_section_scoping.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "_ui01_css() 取的是「起点标记 → 文件尾」，而 globals.css 是追加式的：DS-02 追加了卡面版式、PLAZA-01 追加了堆叠与网格，于是 UI-01 那三条判据把后来每一段都当成 UI-01 判",
+    "worker 已就地收敛，本卡复核并把「小节边界」固化：每段有明确的起止标记，判据只量自己那一段",
+    "阴性对照：往 UI-01 段内插一处颜色字面量必红；往后来的段插同样一处**不**触发 UI-01 那三条（它们该由自己的判据管）",
+    "三条 UI-01 判据的语义一字不动（零颜色字面量 / 零裸字号间距 / token 必须存在于 _ds）",
+    "关闭 docs/blocked/UI01-RULER-JUDGES-EVERY-LATER-SECTION.md"
+   ],
+   "context_refs": [
+    "docs/blocked/UI01-RULER-JUDGES-EVERY-LATER-SECTION.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "FIX-14",
+   "title": "缺陷⑭：卡号撞车——DESIGN-01 在 v0.4 与第 5 批各是一张不同的卡",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/CARD-ID-COLLISION-DESIGN-01.md",
+    "tools/check_outputs_declared.py"
+   ],
+   "outputs": [
+    "tools/",
+    "docs/steward/",
+    "tests/v041/test_card_id_unique.py"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041/test_card_id_unique.py -q",
+   "self_review": true,
+   "owner_review": true,
+   "acceptance": [
+    "同一个卡号 DESIGN-01 在 tasks-v04.json 与 tasks-v041-b5.json 各是一张卡，outputs 完全不同。check_outputs_declared.py 按模块 docstring 首行的卡号去查 outputs，已经据此误判过一次",
+    "建一条跨批次卡号唯一性判据：全部 tasks-*.json 的 id 并集里出现重复即判红并点名两处出处",
+    "本次撞车的处置写进 trace 与问题单：改谁的号、为什么（改新的那张更安全——旧卡已 verified，改它会让既有 trace 与台账对不上）",
+    "check_outputs_declared.py 在卡号有歧义时 MUST 报错而不是挑一张，NEVER 静默取第一个",
+    "关闭 docs/blocked/CARD-ID-COLLISION-DESIGN-01.md"
+   ],
+   "context_refs": [
+    "docs/blocked/CARD-ID-COLLISION-DESIGN-01.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "GAUGE-14",
+   "title": "尺子⑧：对账器把 12 条已接线的端点报成「前端没人用」——报的是反的",
+   "milestone": "W6",
+   "inputs": [
+    "docs/blocked/PARITY-BLIND-TO-PAGES-AND-UNLISTED-PREFIXES.md",
+    "tools/check_fe_be_parity.py"
+   ],
+   "outputs": [
+    "tools/check_fe_be_parity.py",
+    "docs/端点分诊-v041.md",
+    "tests/v041/test_parity_blind_spots.py"
+   ],
+   "cycles": 2,
+   "estimate_days": 1.0,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/v041/test_parity_blind_spots.py -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "两个盲区，机制不同：① 首段白名单写死（_ENDPOINT_LITERAL 那串正则），不在清单里的路径永远扫不到——/facts/{} · /price-entries/{} · /citations/{} · /charts/{} · /cards/{} · /hints/{} · /interventions/lock 七条全在 web/lib/ 里真被调用；② 只扫 web/lib，不扫 page 组件里的直接调用",
+    "首段白名单退役：改成按真实路由表比对，NEVER 靠人维护一串前缀",
+    "阴性对照：造一条新前缀的真调用，断言尺子认得出来；再造一条注释里的假调用，断言不误报（GAUGE-10 的剥注释不倒）",
+    "backend_unused_by_frontend 重新计数并更新 docs/端点分诊-v041.md，误报的 12 条移出",
+    "关闭 docs/blocked/PARITY-BLIND-TO-PAGES-AND-UNLISTED-PREFIXES.md"
+   ],
+   "context_refs": [
+    "docs/blocked/PARITY-BLIND-TO-PAGES-AND-UNLISTED-PREFIXES.md"
+   ],
+   "depends_on": [
+    "DEC-035-038-LANDING"
+   ],
+   "blocked_by": null
+  },
+  {
+   "id": "SHIP-06",
+   "title": "收尾：第 6 批完成态报告 + 出口全局门",
+   "milestone": "W6",
+   "inputs": [
+    "docs/progress-v041.jsonl",
+    "docs/steward/tasks-v041-b6.json"
+   ],
+   "outputs": [
+    "docs/V041-BATCH6-COMPLETION.md"
+   ],
+   "cycles": 1,
+   "estimate_days": 0.5,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/v041 -q",
+   "self_review": true,
+   "owner_review": false,
+   "acceptance": [
+    "全局门五条全绿并把输出逐字贴进报告：ruff check . --no-cache · mypy --strict flint · pytest -q · cd web && npm test -- --run · npx tsc --noEmit",
+    "**pytest 本批 MUST 零 failed**：第 5 批收在 4316 passed / 1 failed，那条由 FIX-09 修掉；仍有红则记 blocked 并点名是哪条",
+    "出口判据三个：切区后广场卡片集合真的变（REGION-10 取证）· 卡面六槽里首见日期与陈旧标记真显示（SLOT-01/02 取证）· 对账器 backend_unused_by_frontend 重新计数后误报为 0",
+    "未解决的逐条列名并说明卡在谁那里，NEVER 用一句「其余无异常」收口"
+   ],
+   "context_refs": [
+    "docs/V041-BATCH5-COMPLETION.md"
+   ],
+   "depends_on": [
+    "REGION-10",
+    "SLOT-02",
+    "SLOT-03",
+    "ENTRY-01",
+    "ENTRY-02",
+    "SPEC-01",
+    "FIX-09",
+    "FIX-10",
+    "FIX-11",
+    "FIX-12",
+    "FIX-13",
+    "FIX-14",
+    "GAUGE-14"
+   ],
+   "blocked_by": null
+  }
+ ]
+}

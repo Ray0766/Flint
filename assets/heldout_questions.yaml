@@ -1,0 +1,236 @@
+question_bank_id: heldout
+bank_version: v1.0
+locale: zh-CN
+authored_at: 2026-07-28T18:05:36Z   # 机器钟 UTC（台账时间戳说明纪元锚后纪律）
+authored_by: owner
+
+provenance: >
+  由 owner 侧起草并裁定。NEVER 由工作 AI 生成或修改；NEVER 从
+  assets/templates/*.yaml#check_questions、harness 提示词或任何组稿产物
+  派生。起草时只读六套模板的 section_id / ratio 与 v3 已产内容，
+  未参照 harness/prod_caliber.py 的任何提示词文本。
+
+purpose: >
+  作答率的独立考核面。背景：v3 实测按 harness 指引覆盖与否分组，
+  作答率 48/68=71%（覆盖）vs 35/104=34%（未覆盖），差 2.1 倍——
+  组稿输入与考核面同为 check_questions 时，喂则虚高、不喂则虚低。
+  本题库把考核面与组稿输入彻底分离：check_questions 进组稿，
+  held-out 只进判分。
+
+question_form: >
+  全部题面为**抽取式提问**（问「是什么/哪一个/依据为何」），
+  NEVER 使用「是否…？」判断句式。理由：判断句在内容缺失时可被判官
+  以「答：否」判为已作答，语义歧义；抽取式在内容缺失时必然
+  answered=false，判定面干净。新增题目 MUST 沿用此形式。
+
+loader_contract:
+  - 题库覆盖的 (template_id, section_id) 与六套模板完全一致：43 对，
+    缺一或多一即报错
+  - 每题的 id MUST 全局唯一且稳定；改写题面 MUST 同时提升 bank_version，
+    NEVER 原地改写已有 id 的题面（历史留痕据 id 对齐）
+  - 题面与全部模板 check_questions 零交集，MUST 断言，有交集即报错
+  - 本文件 NEVER 被任何组稿路径读取；取题函数与组稿注入路径
+    MUST 分离，不得共用
+
+threshold_note: >
+  eval.doc_metrics.CHECK_ANSWER_LINE = 0.90 是对旧考核面（模板
+  check_questions）所定，考核面已更换，该常量 NEVER 直接沿用。
+  本题库首轮跑批一律 report_only：不出达标判定、不画线。门槛由 owner
+  在拿到首组真实数字后另裁。预期首轮数字低于 v3 的 0.44 属正常
+  （本题在实质覆盖面上更难），NEVER 因数字下降而调整任何提示词。
+
+known_limitations:
+  - 跨模板同名 section（budget / risks / resources / timeline）的部分题面
+    有意复用，便于横向比较；去重后 125 题面 / 129 题
+  - 题面刻意避开学籍、导师、答辩、资助期、评审机构等上下文——harness
+    TOPICS 给的是商业题材，thesis/grant 模板配商业题材本身是场景配对
+    缺陷（v3 中 thesis/timeline 因「学制」不可答而 0/8），该配对问题
+    另行登记，本题库先行规避
+  - vibe_pack 九节的模板 check_question 为同一句重复九次，本身不构成
+    分节考核面；held-out 对该模板承担全部考核职能
+
+templates:
+
+  generic:
+    summary:
+      - {id: generic/summary/q1, q: 本节写明这个项目服务的具体使用者是谁？}
+      - {id: generic/summary/q2, q: 本节明确排除在范围之外的是哪些内容？}
+      - {id: generic/summary/q3, q: 本节把哪些条件列为结论成立的前提？}
+    opportunity:
+      - {id: generic/opportunity/q1, q: 按本节，这个机会为何是现在出现而非更早？}
+      - {id: generic/opportunity/q2, q: 本节指出当前替代做法的不足具体在哪里？}
+      - {id: generic/opportunity/q3, q: 本节用什么量化描述刻画机会的规模或紧迫程度？}
+    market:
+      - {id: generic/market/q1, q: 本节把市场口径界定在哪个范围（人群、地区或细分）？}
+      - {id: generic/market/q2, q: 按本节，初期可实际触达的部分与总体市场如何区分？}
+      - {id: generic/market/q3, q: 本节把哪些因素列为市场变化的驱动力？}
+    competition:
+      - {id: generic/competition/q1, q: 本节点名了哪些具体竞品或替代做法？}
+      - {id: generic/competition/q2, q: 按本节，在什么条件下本项目会输给对手？}
+      - {id: generic/competition/q3, q: 本节把差异落在哪些可观察的产品能力上？}
+    plan:
+      - {id: generic/plan/q1, q: 本节说明各阶段之间存在哪些先后依赖？}
+      - {id: generic/plan/q2, q: 本节把哪一步标为最不确定或风险最高？}
+      - {id: generic/plan/q3, q: 各阶段的产出物在本节分别是什么？}
+    budget:
+      - {id: generic/budget/q1, q: 本节各项支出分别对应哪项具体工作？}
+      - {id: generic/budget/q2, q: 按本节，支出在时间上如何分布或发生在哪个阶段？}
+      - {id: generic/budget/q3, q: 占比最大的一项支出是什么，本节给的理由是什么？}
+    risks:
+      - {id: generic/risks/q1, q: 本节把哪些风险归为可控、哪些归为不可控？}
+      - {id: generic/risks/q2, q: 本节为各条风险给出的可观察触发信号是什么？}
+      - {id: generic/risks/q3, q: 本节提到缓解措施本身要付出什么代价？}
+
+  startup:
+    one_liner:
+      - {id: startup/one_liner/q1, q: 按本节，这个产品面向企业还是面向个人，依据是什么？}
+      - {id: startup/one_liner/q2, q: 本节说明在此之前用户是如何将就解决的？}
+      - {id: startup/one_liner/q3, q: 本节给出的可验证具体承诺是什么？}
+    problem:
+      - {id: startup/problem/q1, q: 本节描述该痛点当前被如何将就处理？}
+      - {id: startup/problem/q2, q: 本节用什么数据刻画痛点的发生频率或严重程度？}
+      - {id: startup/problem/q3, q: 按本节，谁在为这个问题付出成本？}
+    solution:
+      - {id: startup/solution/q1, q: 本节描述用户实际使用的流程分哪几步？}
+      - {id: startup/solution/q2, q: 本节把核心技术或工程难点指在哪里？}
+      - {id: startup/solution/q3, q: 按本节，哪些部分自建、哪些依赖外部？}
+    market_size:
+      - {id: startup/market_size/q1, q: 本节把市场口径的边界划在哪里？}
+      - {id: startup/market_size/q2, q: 本节如何区分总体市场与初期可触达市场？}
+      - {id: startup/market_size/q3, q: 本节规模估算的推导路径是怎样的？}
+    go_to_market:
+      - {id: startup/go_to_market/q1, q: 本节对获客成本或获客效率的预期是多少？}
+      - {id: startup/go_to_market/q2, q: 按本节，首批用户与规模化阶段的获取方式有何不同？}
+      - {id: startup/go_to_market/q3, q: 本节把渠道上最大的不确定性指在哪里？}
+    business_model:
+      - {id: startup/business_model/q1, q: 按本节，付费方与使用方是否为同一主体，依据是什么？}
+      - {id: startup/business_model/q2, q: 本节说明收入随用户规模增长如何变化？}
+      - {id: startup/business_model/q3, q: 本节列出的主要成本项是什么，随规模如何变化？}
+    team:
+      - {id: startup/team/q1, q: 本节写明团队与本项目直接相关的经验是什么？}
+      - {id: startup/team/q2, q: 本节指出当前缺失的关键角色或能力是什么？}
+      - {id: startup/team/q3, q: 本节如何划分成员之间的分工边界？}
+    financials:
+      - {id: startup/financials/q1, q: 本节把资金主要分配到哪些用途？}
+      - {id: startup/financials/q2, q: 按本节，这笔资金可支撑多长时间？}
+      - {id: startup/financials/q3, q: 本节说明哪些关键假设变化会改变财务结果？}
+
+  thesis:
+    abstract:
+      - {id: thesis/abstract/q1, q: 本节写明所解决问题此前的困难在哪里？}
+      - {id: thesis/abstract/q2, q: 本节把工作的适用范围或成立前提界定为什么？}
+      - {id: thesis/abstract/q3, q: 本节用什么可衡量的改进来说明结果的意义？}
+    related_work:
+      - {id: thesis/related_work/q1, q: 本节把已有工作分成哪几类？}
+      - {id: thesis/related_work/q2, q: 本节指出已有工作共同的未解问题是什么？}
+      - {id: thesis/related_work/q3, q: 本工作与最接近的一条已有工作分界在哪里？}
+    method:
+      - {id: thesis/method/q1, q: 本节列出方法成立所依赖的假设有哪些？}
+      - {id: thesis/method/q2, q: 本节关键步骤的输入与输出分别是什么？}
+      - {id: thesis/method/q3, q: 按本节，方法在什么情形下会失效？}
+    evaluation_plan:
+      - {id: thesis/evaluation_plan/q1, q: 按本节，如何判定结果支持还是推翻假设？}
+      - {id: thesis/evaluation_plan/q2, q: 本节设置了哪些对照、消融或参照？}
+      - {id: thesis/evaluation_plan/q3, q: 多个指标冲突时本节给的取舍原则是什么？}
+    timeline:
+      - {id: thesis/timeline/q1, q: 各阶段的产出物在本节分别是什么？}
+      - {id: thesis/timeline/q2, q: 本节说明阶段之间存在哪些先后依赖？}
+      - {id: thesis/timeline/q3, q: 本节把哪个环节标为最可能延期？}
+    resources:
+      - {id: thesis/resources/q1, q: 本节各项资源分别用于哪个阶段？}
+      - {id: thesis/resources/q2, q: 本节把哪一项列为获取难度最高？}
+      - {id: thesis/resources/q3, q: 资源不足时本节给出的替代方案是什么？}
+
+  engineering:
+    goal:
+      - {id: engineering/goal/q1, q: 按本节，目标达成后使用者的行为会发生什么具体变化？}
+      - {id: engineering/goal/q2, q: 本节明确排除在本次范围外的目标是哪些？}
+      - {id: engineering/goal/q3, q: 多个目标冲突时本节给的优先级是什么？}
+    architecture:
+      - {id: engineering/architecture/q1, q: 本节描述主要组件之间的数据流向是怎样的？}
+      - {id: engineering/architecture/q2, q: 本节把该架构的主要瓶颈或单点指在哪里？}
+      - {id: engineering/architecture/q3, q: 本节提到被放弃的替代架构是什么，放弃理由为何？}
+    milestones:
+      - {id: engineering/milestones/q1, q: 各里程碑的前置依赖在本节分别是什么？}
+      - {id: engineering/milestones/q2, q: 本节指出的关键路径或最长链是哪条？}
+      - {id: engineering/milestones/q3, q: 某个里程碑失败时本节说明后续如何调整？}
+    resources:
+      - {id: engineering/resources/q1, q: 按本节，资源需求随规模如何变化？}
+      - {id: engineering/resources/q2, q: 本节如何区分一次性投入与持续开销？}
+      - {id: engineering/resources/q3, q: 本节给出的资源获取周期或前置时间是多久？}
+    risks:
+      - {id: engineering/risks/q1, q: 本节把哪些风险归为技术风险、哪些归为交付风险？}
+      - {id: engineering/risks/q2, q: 本节为各条风险给出的可观察触发信号是什么？}
+      - {id: engineering/risks/q3, q: 本节提到缓解措施本身要付出什么代价？}
+    budget:
+      - {id: engineering/budget/q1, q: 本节各项支出分别对应哪个具体工作项？}
+      - {id: engineering/budget/q2, q: 按本节，支出在时间上如何分布？}
+      - {id: engineering/budget/q3, q: 占比最大的一项支出是什么，本节给的理由是什么？}
+
+  grant:
+    significance:
+      - {id: grant/significance/q1, q: 按本节，不做这件事会带来什么后果？}
+      - {id: grant/significance/q2, q: 本节指认的受益方具体是谁？}
+      - {id: grant/significance/q3, q: 本节把影响的时间尺度界定为近期还是长期？}
+    innovation:
+      - {id: grant/innovation/q1, q: 按本节，该创新点此前为何未被做成？}
+      - {id: grant/innovation/q2, q: 本节把创新界定在方法层面还是应用层面？}
+      - {id: grant/innovation/q3, q: 若创新点被证明无效，本节指出的剩余价值是什么？}
+    approach:
+      - {id: grant/approach/q1, q: 本节给出主路线切换到备选路线的条件是什么？}
+      - {id: grant/approach/q2, q: 各步骤的产出物在本节分别是什么？}
+      - {id: grant/approach/q3, q: 本节把技术上最不确定的一步指在哪里？}
+    feasibility:
+      - {id: grant/feasibility/q1, q: 本节列举了哪些已完成的前期工作作为依据？}
+      - {id: grant/feasibility/q2, q: 本节指出尚未验证的关键环节是什么？}
+      - {id: grant/feasibility/q3, q: 本节的可行性判断依赖哪些外部条件？}
+    team_resources:
+      - {id: grant/team_resources/q1, q: 本节各成员承担的具体工作分别是什么？}
+      - {id: grant/team_resources/q2, q: 本节指出当前缺失的能力或岗位是什么？}
+      - {id: grant/team_resources/q3, q: 本节如何建立设备与任务之间的对应关系？}
+    budget_justification:
+      - {id: grant/budget_justification/q1, q: 本节为各项预算给出的必要性理由是什么？}
+      - {id: grant/budget_justification/q2, q: 本节金额的估算依据是什么？}
+      - {id: grant/budget_justification/q3, q: 占比最大的一项预算是什么，本节如何论证其合理性？}
+    timeline:
+      - {id: grant/timeline/q1, q: 各阶段的交付物在本节分别是什么？}
+      - {id: grant/timeline/q2, q: 本节说明阶段之间存在哪些依赖关系？}
+      - {id: grant/timeline/q3, q: 本节安排的缓冲在哪里，或把哪个环节标为最可能延期？}
+
+  vibe_pack:
+    S1_charter:
+      - {id: vibe_pack/S1_charter/q1, q: 本章写明本包要交付的最终产物是什么？}
+      - {id: vibe_pack/S1_charter/q2, q: 按本章，执行者在什么条件下算完成？}
+      - {id: vibe_pack/S1_charter/q3, q: 本章界定不属于本次范围的是哪些内容？}
+    S2_invariants:
+      - {id: vibe_pack/S2_invariants/q1, q: 本章为各条不变量规定的违反时处理动作是什么？}
+      - {id: vibe_pack/S2_invariants/q2, q: 本章说明这些不变量由什么手段强制执行？}
+      - {id: vibe_pack/S2_invariants/q3, q: 两条不变量相互冲突时本章给的优先级是什么？}
+    S3_contracts:
+      - {id: vibe_pack/S3_contracts/q1, q: 本章指明不允许修改的是哪些内容？}
+      - {id: vibe_pack/S3_contracts/q2, q: 按本章，类型或接口不够用时执行者该怎么办？}
+      - {id: vibe_pack/S3_contracts/q3, q: 本章把契约的权威来源点名到哪个文件？}
+    S4_decision_log:
+      - {id: vibe_pack/S4_decision_log/q1, q: 本章为各条决策记录的被否决替代方案是什么？}
+      - {id: vibe_pack/S4_decision_log/q2, q: 按本章，决策在什么条件下可被推翻？}
+      - {id: vibe_pack/S4_decision_log/q3, q: 本章如何建立决策与其影响模块之间的对应关系？}
+    S5_task_dag:
+      - {id: vibe_pack/S5_task_dag/q1, q: 本章如何表达任务之间的前置依赖？}
+      - {id: vibe_pack/S5_task_dag/q2, q: 本章指出的关键路径或最长链是哪条？}
+      - {id: vibe_pack/S5_task_dag/q3, q: 本章为单个任务规定的完成判据落到什么可执行检查动作？}
+    S6_context_manifest:
+      - {id: vibe_pack/S6_context_manifest/q1, q: 按本章，每个任务应装载哪些文件？}
+      - {id: vibe_pack/S6_context_manifest/q2, q: 本章给单次装载量规定的上限或预算是多少？}
+      - {id: vibe_pack/S6_context_manifest/q3, q: 本章如何让装载清单与具体任务的对应关系可查？}
+    S7_verification:
+      - {id: vibe_pack/S7_verification/q1, q: 本章如何区分机器可判与需人工判定的验收？}
+      - {id: vibe_pack/S7_verification/q2, q: 按本章，验证失败时的回退动作是什么？}
+      - {id: vibe_pack/S7_verification/q3, q: 本章规定测试需覆盖到什么程度才算通过？}
+    S8_progress_ledger:
+      - {id: vibe_pack/S8_progress_ledger/q1, q: 本章规定每条记录必须包含哪些字段？}
+      - {id: vibe_pack/S8_progress_ledger/q2, q: 按本章，新会话如何据此恢复工作现场？}
+      - {id: vibe_pack/S8_progress_ledger/q3, q: 本章对记录只增不改这一性质是如何规定的？}
+    S9_escalation:
+      - {id: vibe_pack/S9_escalation/q1, q: 本章枚举必须上报而不得自行决定的情形有哪些？}
+      - {id: vibe_pack/S9_escalation/q2, q: 按本章，上报时需要提交哪些材料？}
+      - {id: vibe_pack/S9_escalation/q3, q: 等待裁决期间本章要求执行者做什么？}

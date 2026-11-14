@@ -1,0 +1,6684 @@
+﻿{
+ "spec_version": "2.0-vibe",
+ "frozen_against": "PDD v0.3.3 + models.py/protocols.py（v0.3.3 修订）",
+ "generated_at": "2026-07-26T17:56:06.264665+00:00",
+ "tasks": [
+  {
+   "task_id": "M1-001",
+   "title": "仓库脚手架与工具链（冻结件入 flint/domain）",
+   "depends_on": [],
+   "acceptance": [
+    "mypy --strict flint/domain 零错误",
+    "ruff check 全仓通过"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "repo-skeleton",
+    "flint.domain"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "frozen:models.py",
+    "frozen:protocols.py"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "mypy --strict flint/domain && ruff check . && pytest tests/m1/test_m1_001.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py",
+    "contracts/protocols.py",
+    "CLAUDE.md#S3"
+   ]
+  },
+  {
+   "task_id": "M1-002",
+   "title": "Docker Compose 开发环境（pg16+pgvector / redis7 / api / worker）",
+   "depends_on": [
+    "M1-001"
+   ],
+   "acceptance": [
+    "compose up 后 CREATE EXTENSION vector 成功",
+    "redis PING=PONG"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "compose.yaml"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.domain",
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_002.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E1"
+   ]
+  },
+  {
+   "task_id": "M1-003",
+   "title": "Alembic 基线迁移：索引层五表 + 向量索引",
+   "depends_on": [
+    "M1-002"
+   ],
+   "acceptance": [
+    "upgrade→downgrade→upgrade 干净往返",
+    "keywords.embedding=vector(1024)+HNSW(m=16)"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "migration-0001"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "compose.yaml"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "alembic upgrade head && alembic downgrade base && alembic upgrade head && pytest tests/m1/test_m1_003.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E2"
+   ]
+  },
+  {
+   "task_id": "M1-004",
+   "title": "Job 三表迁移（jobs/job_steps/job_events）",
+   "depends_on": [
+    "M1-003"
+   ],
+   "acceptance": [
+    "job_events(job_id,seq) 唯一索引",
+    "六类 JobCheckpoint 序列化往返测试通过"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "migration-0002"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "migration-0001"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_004.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E2",
+    "contracts/models.py#Job"
+   ]
+  },
+  {
+   "task_id": "M1-005",
+   "title": "配置加载与 feature flag 骨架（E8）",
+   "depends_on": [
+    "M1-001"
+   ],
+   "acceptance": [
+    "缺必填 env 启动即失败并列出缺项",
+    "flag 表读写+5min 缓存单测通过"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.config"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.domain",
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_005.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E8"
+   ]
+  },
+  {
+   "task_id": "M1-006",
+   "title": "结构化日志（structlog JSON，E7）",
+   "depends_on": [
+    "M1-001"
+   ],
+   "acceptance": [
+    "任意日志行为含 request_id/job_id 的合法 JSON"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.obs"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.domain",
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_006.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E7"
+   ]
+  },
+  {
+   "task_id": "M1-007",
+   "title": "CI 流水线（lint+mypy+单测+compose 冒烟）",
+   "depends_on": [
+    "M1-002"
+   ],
+   "acceptance": [
+    "PR 检查四阶段全绿"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "ci.yaml"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "compose.yaml"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "ruff check . && mypy --strict flint && pytest -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E9"
+   ]
+  },
+  {
+   "task_id": "M1-008",
+   "title": "HTTP 录制回放机制（respx，E12）",
+   "depends_on": [
+    "M1-001"
+   ],
+   "acceptance": [
+    "同一测试联网录制/离线回放双模式通过"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.testing.replay"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.domain",
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_008.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M1-009",
+   "title": "四源首批 fixture（每源 ≥3 天原始样本）",
+   "depends_on": [
+    "M1-008"
+   ],
+   "acceptance": [
+    "回放器可加载全部样本",
+    "样本含限频/失败场景各 1"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "fixtures/4src"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.testing.replay"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_009.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12",
+    "fixtures/"
+   ]
+  },
+  {
+   "task_id": "M1-010",
+   "title": "SourceRegistry（配置驱动注册/启停）",
+   "depends_on": [
+    "M1-005"
+   ],
+   "acceptance": [
+    "按配置启停任一源",
+    "未注册 kind 抛显式错误"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.sources.registry"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.config"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_010.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E1",
+    "contracts/protocols.py"
+   ]
+  },
+  {
+   "task_id": "M1-011",
+   "title": "Google Trends 适配器（TrendSource）",
+   "depends_on": [
+    "M1-009",
+    "M1-010"
+   ],
+   "acceptance": [
+    "fixture 回放产出 TrendItem 全字段非空",
+    "限频器在假时钟单测下生效"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.sources.gtrends"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "fixtures/4src",
+    "flint.sources.registry"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m1/test_m1_011.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "fixtures/gtrends/",
+    "contracts/protocols.py#TrendSource"
+   ]
+  },
+  {
+   "task_id": "M1-012",
+   "title": "微博热搜适配器（TrendSource）",
+   "depends_on": [
+    "M1-009",
+    "M1-010"
+   ],
+   "acceptance": [
+    "榜单解析 ≥50 条字段齐",
+    "页面结构变更抛 ParseDrift 而非静默错数据"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.sources.weibo"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "fixtures/4src",
+    "flint.sources.registry"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m1/test_m1_012.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "fixtures/weibo/",
+    "contracts/protocols.py#TrendSource"
+   ]
+  },
+  {
+   "task_id": "M1-013",
+   "title": "GitHub Trending 适配器（TrendSource）",
+   "depends_on": [
+    "M1-009",
+    "M1-010"
+   ],
+   "acceptance": [
+    "repo→关键词映射三来源(名称/topic/描述)单测覆盖"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.sources.ghtrend"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "fixtures/4src",
+    "flint.sources.registry"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_013.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "fixtures/ghtrend/",
+    "contracts/protocols.py#TrendSource"
+   ]
+  },
+  {
+   "task_id": "M1-014",
+   "title": "arXiv 适配器（TrendSource 侧）",
+   "depends_on": [
+    "M1-009",
+    "M1-010"
+   ],
+   "acceptance": [
+    "Atom 解析产出当日关键词候选",
+    "类目过滤配置化"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.sources.arxiv"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "fixtures/4src",
+    "flint.sources.registry"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_014.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "fixtures/arxiv/",
+    "contracts/protocols.py#TrendSource"
+   ]
+  },
+  {
+   "task_id": "M1-015",
+   "title": "单源降级机制（E6 行 1）",
+   "depends_on": [
+    "M1-011",
+    "M1-012",
+    "M1-013",
+    "M1-014"
+   ],
+   "acceptance": [
+    "kill 任一源 fixture → 其余三源照常",
+    "DegradationNote 落库且卡片带缺口标注位"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "degradation"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.sources.arxiv",
+    "flint.sources.ghtrend",
+    "flint.sources.gtrends",
+    "flint.sources.weibo"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_015.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E6"
+   ]
+  },
+  {
+   "task_id": "M1-016",
+   "title": "限频与合规层（令牌桶 per 源；只存元数据+链接）",
+   "depends_on": [
+    "M1-010"
+   ],
+   "acceptance": [
+    "令牌桶按源独立生效",
+    "docs 表抽查无正文全文字段"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.sources.throttle"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.sources.registry"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_016.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E4",
+    "产品描述文档-v0.2.md#3.5"
+   ]
+  },
+  {
+   "task_id": "M1-017",
+   "title": "关键词清洗管道（A3 第一段）",
+   "depends_on": [
+    "M1-001"
+   ],
+   "acceptance": [
+    "20 组脏样本(emoji/繁简/全半角)黄金用例全过"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.norm.clean"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.domain",
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_017.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.1"
+   ]
+  },
+  {
+   "task_id": "M1-018",
+   "title": "中英术语映射表 v0（首批 200 条+加载器）",
+   "depends_on": [
+    "M1-017"
+   ],
+   "acceptance": [
+    "yaml 加载校验",
+    "命中率统计钩子有输出"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/term-map"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.norm.clean"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_018.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.1"
+   ]
+  },
+  {
+   "task_id": "M1-019",
+   "title": "canonical 生成与别名归并",
+   "depends_on": [
+    "M1-018"
+   ],
+   "acceptance": [
+    "30 组同义样本归并正确率 100%（黄金用例）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.norm.canonical"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "assets/term-map"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_019.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.1"
+   ]
+  },
+  {
+   "task_id": "M1-020",
+   "title": "embedding 服务（bge-m3 封装+缓存）",
+   "depends_on": [
+    "M1-002"
+   ],
+   "acceptance": [
+    "批量 512/次",
+    "内容 hash 缓存命中不再计算（计数器断言）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.embed"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "compose.yaml"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_020.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E1",
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M1-021",
+   "title": "Keyword 仓储（幂等 upsert）",
+   "depends_on": [
+    "M1-003",
+    "M1-019",
+    "M1-020"
+   ],
+   "acceptance": [
+    "canonical+lang 幂等",
+    "first_seen 不被覆盖"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.repo.keyword"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.embed",
+    "flint.norm.canonical",
+    "migration-0001"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_021.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Keyword"
+   ]
+  },
+  {
+   "task_id": "M1-022",
+   "title": "大类目录种子（12 类）",
+   "depends_on": [
+    "M1-003"
+   ],
+   "acceptance": [
+    "12 大类入库",
+    "只读端点返回全表"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/categories"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "migration-0001"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_022.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M1-023",
+   "title": "当日聚类候选（凝聚聚类 cosine 阈值）",
+   "depends_on": [
+    "M1-020",
+    "M1-021"
+   ],
+   "acceptance": [
+    "阈值配置化",
+    "1e4 关键词/日 CPU <60s"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.cluster.daily"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.embed",
+    "flint.repo.keyword"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_023.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E1"
+   ]
+  },
+  {
+   "task_id": "M1-024",
+   "title": "血缘①延续匹配（cluster_id 跨日稳定）",
+   "depends_on": [
+    "M1-023"
+   ],
+   "acceptance": [
+    "已知延续样本 continued 命中",
+    "簇 ID 不变"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.lineage.s1"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.cluster.daily"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_024.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.2",
+    "contracts/models.py#Cluster"
+   ]
+  },
+  {
+   "task_id": "M1-025",
+   "title": "血缘②③分裂与合并检测",
+   "depends_on": [
+    "M1-024"
+   ],
+   "acceptance": [
+    "构造分裂/合并各 5 例全部检出",
+    "parent_cluster_ids/merged_into 正确"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.lineage.s23"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.lineage.s1"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m1/test_m1_025.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.2",
+    "contracts/models.py#Cluster"
+   ]
+  },
+  {
+   "task_id": "M1-026",
+   "title": "血缘④休眠与复活（dormant 不删）",
+   "depends_on": [
+    "M1-024"
+   ],
+   "acceptance": [
+    "N 日无热度→dormant",
+    "复活标 reactivated 且 ID 复用"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.lineage.s4"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.lineage.s1"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_026.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.2"
+   ]
+  },
+  {
+   "task_id": "M1-027",
+   "title": "血缘⑤新簇建档+LLM 命名（结构化输出）",
+   "depends_on": [
+    "M1-005",
+    "M1-022",
+    "M1-023"
+   ],
+   "acceptance": [
+    "命名走 schema 校验",
+    "失败降级为 top 关键词不阻塞"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.lineage.s5"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "assets/categories",
+    "flint.cluster.daily",
+    "flint.config"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_027.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.2",
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M1-028",
+   "title": "centroid 增量更新与漂移防护",
+   "depends_on": [
+    "M1-024"
+   ],
+   "acceptance": [
+    "EMA 更新",
+    "单日移动超限触发防护并留审计"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.cluster.centroid"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.lineage.s1"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_028.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.2"
+   ]
+  },
+  {
+   "task_id": "M1-029",
+   "title": "LineageResult 落库+血缘审计视图",
+   "depends_on": [
+    "M1-025",
+    "M1-026",
+    "M1-027",
+    "M1-028"
+   ],
+   "acceptance": [
+    "任一簇可查完整血缘链",
+    "视图可被标注工具导出"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.lineage.store"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.cluster.centroid",
+    "flint.lineage.s23",
+    "flint.lineage.s4",
+    "flint.lineage.s5"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_029.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#LineageResult"
+   ]
+  },
+  {
+   "task_id": "M1-030",
+   "title": "HeatPoint 写入与源内 90 天分位归一",
+   "depends_on": [
+    "M1-021",
+    "M1-015"
+   ],
+   "acceptance": [
+    "跨源原始值不可比（类型层断言）",
+    "分位黄金用例通过"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.heat"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "degradation",
+    "flint.repo.keyword"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_030.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.3",
+    "contracts/models.py#HeatPoint"
+   ]
+  },
+  {
+   "task_id": "M1-031",
+   "title": "SignalFlag 判定（novelty/momentum/revival）",
+   "depends_on": [
+    "M1-030",
+    "M1-026"
+   ],
+   "acceptance": [
+    "三规则阈值配置化",
+    "构造样本各 3 例全中"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.signals"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.heat",
+    "flint.lineage.s4"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_031.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#3.3"
+   ]
+  },
+  {
+   "task_id": "M1-032",
+   "title": "EvidenceCard 构建（七要素）",
+   "depends_on": [
+    "M1-029",
+    "M1-030",
+    "M1-031"
+   ],
+   "acceptance": [
+    "卡片七要素齐全",
+    "top_links 排序规则单测"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.cards"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.heat",
+    "flint.lineage.store",
+    "flint.signals"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_032.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#EvidenceCard"
+   ]
+  },
+  {
+   "task_id": "M1-033",
+   "title": "JobRunner 最小实现（arq；状态机+权限）",
+   "depends_on": [
+    "M1-004",
+    "M1-005"
+   ],
+   "acceptance": [
+    "submit/get/cancel 走通",
+    "越权取消被拒（审6 用例）",
+    "非法状态迁移抛错"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.jobs.runner"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.config",
+    "migration-0002"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m1/test_m1_033.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Job",
+    "技术方案-v1.1.md#E4"
+   ]
+  },
+  {
+   "task_id": "M1-034",
+   "title": "JobEventStream（seq 单调+replay）",
+   "depends_on": [
+    "M1-033"
+   ],
+   "acceptance": [
+    "replay(after_seq) 补发正确",
+    "断线重连集成用例通过"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.jobs.events"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.jobs.runner"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_034.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E3",
+    "contracts/models.py#JobEvent"
+   ]
+  },
+  {
+   "task_id": "M1-035",
+   "title": "daily_ingest 编排+断点续跑",
+   "depends_on": [
+    "M1-015",
+    "M1-016",
+    "M1-032",
+    "M1-033",
+    "M1-034"
+   ],
+   "acceptance": [
+    "kill -9 后重跑从断点续",
+    "产物与一次跑完 diff 为空"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.jobs.ingest"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "degradation",
+    "flint.cards",
+    "flint.jobs.events",
+    "flint.jobs.runner",
+    "flint.sources.throttle"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m1/test_m1_035.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E4"
+   ]
+  },
+  {
+   "task_id": "M1-036",
+   "title": "调度与重叠保护（cron ×2/日 + 分布式锁）",
+   "depends_on": [
+    "M1-035"
+   ],
+   "acceptance": [
+    "同批次并发触发只执行一个",
+    "锁超时自动释放"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.jobs.sched"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.jobs.ingest"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_036.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E4"
+   ]
+  },
+  {
+   "task_id": "M1-037",
+   "title": "30 天回放 harness（make dev-replay）",
+   "depends_on": [
+    "M1-035",
+    "M1-009"
+   ],
+   "acceptance": [
+    "离线 30 天全绿",
+    "产出逐日 trace（inputs 来源清单+断点日志）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "harness.replay30"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "fixtures/4src",
+    "flint.jobs.ingest"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "make dev-replay DAYS=30 && pytest tests/m1/test_m1_037.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M1-038",
+   "title": "血缘标注工具（抽 50 簇导出 yaml）",
+   "depends_on": [
+    "M1-029",
+    "M1-037"
+   ],
+   "acceptance": [
+    "标注格式含延续/分裂/合并/新生四类"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "tool.labeling"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.lineage.store",
+    "harness.replay30"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_038.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#§7"
+   ]
+  },
+  {
+   "task_id": "M1-039",
+   "title": "血缘准确率评测脚本（≥90% 断言）",
+   "depends_on": [
+    "M1-038"
+   ],
+   "acceptance": [
+    "对照标注输出准确率报告",
+    "<90% 定时任务标红"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.lineage"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "tool.labeling"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "python -m eval.lineage --labels assets/labels.yaml --min 0.90",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#§7"
+   ]
+  },
+  {
+   "task_id": "M1-040",
+   "title": "7 天日更演练与监控断言",
+   "depends_on": [
+    "M1-036",
+    "M1-006"
+   ],
+   "acceptance": [
+    "回放加速 7 天零人工干预",
+    "degraded 场景标注正确",
+    "四指标计数器齐"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "runbook.7d"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "flint.jobs.sched",
+    "flint.obs"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "python -m harness.drill7 && pytest tests/m1/test_m1_040.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E7"
+   ]
+  },
+  {
+   "task_id": "M1-041",
+   "title": "M1 出口报告（对照 §7 M1 行逐条勾选）",
+   "depends_on": [
+    "M1-007",
+    "M1-037",
+    "M1-039",
+    "M1-040"
+   ],
+   "acceptance": [
+    "血缘≥90% 证据+演练日志+trace 附件成册"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "report.m1-exit"
+   ],
+   "milestone": "M1",
+   "inputs": [
+    "ci.yaml",
+    "eval.lineage",
+    "harness.replay30",
+    "runbook.7d"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_m1_041.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#§7"
+   ]
+  },
+  {
+   "task_id": "M2-001",
+   "title": "迁移 0006：证据层四表（docs/citations/pricing_records/snapshots）",
+   "depends_on": [
+    "M1-003"
+   ],
+   "acceptance": [
+    "upgrade→downgrade→upgrade 干净往返",
+    "docs.origin/access 判别字段与 snapshots 180 天保留期字段齐全"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "migration-0006"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "migration-0001"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_001.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E2",
+    "contracts/models.py#Doc"
+   ]
+  },
+  {
+   "task_id": "M2-002",
+   "title": "LLMProvider anthropic 适配器（限流+超时+退避）",
+   "depends_on": [
+    "M1-005",
+    "M1-008"
+   ],
+   "acceptance": [
+    "进程内令牌桶 30req/200k tok 每分钟配置化生效（假时钟单测）",
+    "429/超时走 tenacity 退避且录制回放双模式通过"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.llm.provider"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.config",
+    "flint.testing.replay"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_002.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5",
+    "contracts/protocols.py#LLMProvider"
+   ]
+  },
+  {
+   "task_id": "M2-003",
+   "title": "generate_structured 主路与分级降级（D9）",
+   "depends_on": [
+    "M2-002",
+    "M2-004"
+   ],
+   "acceptance": [
+    "schema 校验失败回喂重试上限 2（计数断言）",
+    "verdict 类全败 job failed 绝不猜；章节类降级标缺口；失败数记入 GenerationRecord"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.llm.structured"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.llm.provider",
+    "prompts/"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m2/test_m2_003.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E5",
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-004",
+   "title": "prompt 版本库（文件即版本+内容 hash）",
+   "depends_on": [
+    "M1-001"
+   ],
+   "acceptance": [
+    "prompts/ 加载器输出内容 hash 供 GenerationRecord.prompt_version",
+    "改 prompt = 新文件：同名内容变更被测试拒绝"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "prompts/"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_004.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M2-005",
+   "title": "分级模型路由与成本记账",
+   "depends_on": [
+    "M2-002",
+    "M1-033"
+   ],
+   "acceptance": [
+    "判别类走小模型、生成类走大模型（配置化并写入 GenerationRecord.model）",
+    "usage 逐调用累加 Job.cost_accum 且 step 粒度落 JobStep.cost"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.llm.router"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.llm.provider",
+    "flint.jobs.runner"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_005.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M2-006",
+   "title": "LLM 幂等判别缓存",
+   "depends_on": [
+    "M2-002"
+   ],
+   "acceptance": [
+    "相关性判定与簇命名按内容 hash 缓存命中不再调用（计数断言）",
+    "生成类调用不缓存（负例断言）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.llm.cache"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.llm.provider"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_006.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M2-007",
+   "title": "SnapshotStore（180 天保留）",
+   "depends_on": [
+    "M2-001"
+   ],
+   "acceptance": [
+    "put/get 字节级往返且 snapshot_id 通道对接 GenerationRecord",
+    "过期清理只删 >180 天（边界测试）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.store.snapshot"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "migration-0006"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_007.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#SnapshotStore",
+    "技术方案-v1.1.md#E2"
+   ]
+  },
+  {
+   "task_id": "M2-008",
+   "title": "证据六源首批 fixtures",
+   "depends_on": [
+    "M1-008"
+   ],
+   "acceptance": [
+    "六源每源 >=3 组查询样本可回放",
+    "限频与失败场景每源各 1"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "fixtures/evidence6"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.testing.replay"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_008.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12",
+    "fixtures/"
+   ]
+  },
+  {
+   "task_id": "M2-009",
+   "title": "PaperSource 适配器（arXiv/Crossref）",
+   "depends_on": [
+    "M2-001",
+    "M2-008"
+   ],
+   "acceptance": [
+    "fixture 回放产出 Doc 全字段非空且 origin=retrieved",
+    "DOI/URL 合并去重单测"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.evidence.paper"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "migration-0006",
+    "fixtures/evidence6"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_009.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py",
+    "产品描述文档-v0.2.md#4.1"
+   ]
+  },
+  {
+   "task_id": "M2-010",
+   "title": "PatentSource 适配器",
+   "depends_on": [
+    "M2-001",
+    "M2-008"
+   ],
+   "acceptance": [
+    "专利 Doc 携带同族规模与法律状态 meta",
+    "结构漂移抛 ParseDrift 而非静默错数据"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.evidence.patent"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "migration-0006",
+    "fixtures/evidence6"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_010.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py"
+   ]
+  },
+  {
+   "task_id": "M2-011",
+   "title": "NewsSource 适配器",
+   "depends_on": [
+    "M2-001",
+    "M2-008"
+   ],
+   "acceptance": [
+    "新闻 Doc 携带媒体等级与独立信源数 meta",
+    "发布日期解析黄金用例全过"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.evidence.news"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "migration-0006",
+    "fixtures/evidence6"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_011.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py"
+   ]
+  },
+  {
+   "task_id": "M2-012",
+   "title": "CompetitorSource 适配器",
+   "depends_on": [
+    "M2-001",
+    "M2-008"
+   ],
+   "acceptance": [
+    "竞品 Doc 每条含可达来源 url（回放断言）",
+    "竞品名称归一与去重单测"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.evidence.competitor"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "migration-0006",
+    "fixtures/evidence6"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_012.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py"
+   ]
+  },
+  {
+   "task_id": "M2-013",
+   "title": "FundingSource v1 占位",
+   "depends_on": [
+    "M2-001"
+   ],
+   "acceptance": [
+    "search 返回空并标 not_available",
+    "前端提示位（信息不足/升级解锁）在响应结构中"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.evidence.funding"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "migration-0006"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_013.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#FundingSource"
+   ]
+  },
+  {
+   "task_id": "M2-014",
+   "title": "PricingParser（抓取→结构化→置信度）",
+   "depends_on": [
+    "M2-003",
+    "M2-008"
+   ],
+   "acceptance": [
+    "抓取→LLM 结构化→PricingRecord 全链回放通过",
+    "无置信度数字被拒绝输出；低置信标定价待确认"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.evidence.pricing"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.llm.structured",
+    "fixtures/evidence6"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m2/test_m2_014.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.5",
+    "contracts/models.py#PricingRecord"
+   ]
+  },
+  {
+   "task_id": "M2-015",
+   "title": "证据溯源合规与快照接入",
+   "depends_on": [
+    "M2-009",
+    "M2-010",
+    "M2-011",
+    "M2-012",
+    "M2-013",
+    "M2-007"
+   ],
+   "acceptance": [
+    "六源结果 source_id/url/fetched_at 三字段抽查零缺失",
+    "检索结果全量入 SnapshotStore 且按 snapshot_id 可回放"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.evidence.compliance"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.evidence.paper",
+    "flint.evidence.patent",
+    "flint.evidence.news",
+    "flint.evidence.competitor",
+    "flint.evidence.funding",
+    "flint.store.snapshot"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_015.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E2",
+    "产品描述文档-v0.2.md#3.5"
+   ]
+  },
+  {
+   "task_id": "M2-016",
+   "title": "证伪素材通道（撤稿/停更/关停）",
+   "depends_on": [
+    "M2-009",
+    "M2-011",
+    "M2-012"
+   ],
+   "acceptance": [
+    "撤稿记录、archived 仓库、产品关停新闻三类素材各有回放用例",
+    "素材带 refute 意图标记供 B2 消费"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.evidence.negative"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.evidence.paper",
+    "flint.evidence.news",
+    "flint.evidence.competitor"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_016.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.2"
+   ]
+  },
+  {
+   "task_id": "M2-017",
+   "title": "查询术语标准化步",
+   "depends_on": [
+    "M1-019",
+    "M2-006"
+   ],
+   "acceptance": [
+    "中→英走映射表且命中率钩子有输出",
+    "映射缺失走 LLM 提案并入判别缓存"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.retrieval.terms"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.norm.canonical",
+    "flint.llm.cache"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_017.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.1"
+   ]
+  },
+  {
+   "task_id": "M2-018",
+   "title": "同义/上下位扩展步",
+   "depends_on": [
+    "M2-017"
+   ],
+   "acceptance": [
+    "同义/上位/下位各 1~2 条（结构化输出 schema 校验）",
+    "扩展失败降级为原词不阻塞"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.retrieval.expand"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.retrieval.terms"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_018.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.1"
+   ]
+  },
+  {
+   "task_id": "M2-019",
+   "title": "多 query 生成与合并去重",
+   "depends_on": [
+    "M2-018",
+    "M1-020"
+   ],
+   "acceptance": [
+    "多 query 并发结果按 DOI/URL 合并去重",
+    "embedding 近邻辅助去重阈值配置化"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.retrieval.multiquery"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.retrieval.expand",
+    "flint.embed"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_019.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.1"
+   ]
+  },
+  {
+   "task_id": "M2-020",
+   "title": "证伪检索模板族",
+   "depends_on": [
+    "M2-019",
+    "M2-016"
+   ],
+   "acceptance": [
+    "limitations/failure/replication/撤稿/停更五族模板逐一有用例",
+    "intent=refute 时五族模板全部激活"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.retrieval.refute_templates"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.retrieval.multiquery",
+    "flint.evidence.negative"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_020.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.2"
+   ]
+  },
+  {
+   "task_id": "M2-021",
+   "title": "QueryBuilder 协议装配",
+   "depends_on": [
+    "M2-019",
+    "M2-020"
+   ],
+   "acceptance": [
+    "build() 对 support/refute/landscape 三 intent 输出合规 Query 列表",
+    "与冻结签名逐字一致（mypy strict 兜底）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.retrieval.query_builder"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.retrieval.multiquery",
+    "flint.retrieval.refute_templates"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_021.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#QueryBuilder"
+   ]
+  },
+  {
+   "task_id": "M2-022",
+   "title": "RelevanceJudge（小模型判相关率）",
+   "depends_on": [
+    "M2-003",
+    "M2-006"
+   ],
+   "acceptance": [
+    "hit_rate 采样 top-k 摘要判定（回放）",
+    "θ_rel 配置化（初值 0.6，S4 Open Question 在案）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.retrieval.relevance"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.llm.structured",
+    "flint.llm.cache"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_022.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.1",
+    "contracts/protocols.py#RelevanceJudge"
+   ]
+  },
+  {
+   "task_id": "M2-023",
+   "title": "改写重检环（真没有 vs 没搜对）",
+   "depends_on": [
+    "M2-021",
+    "M2-022"
+   ],
+   "acceptance": [
+    "低于 θ_rel 触发改写重检且上限 R=2 轮（计数断言）",
+    "重检后仍低才输出信息不足（分界用例双向）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.retrieval.rewrite_loop"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.retrieval.query_builder",
+    "flint.retrieval.relevance"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m2/test_m2_023.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.1"
+   ]
+  },
+  {
+   "task_id": "M2-024",
+   "title": "B4 论文强度公式",
+   "depends_on": [
+    "M2-009"
+   ],
+   "acceptance": [
+    "30/20/20/15/15 五分量加权可配置（初值入 Open Questions）",
+    "引用分位与时效衰减边界黄金用例"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.scoring.paper"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.evidence.paper"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_024.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.3"
+   ]
+  },
+  {
+   "task_id": "M2-025",
+   "title": "专利/新闻公式变体",
+   "depends_on": [
+    "M2-010",
+    "M2-011",
+    "M2-024"
+   ],
+   "acceptance": [
+    "专利变体含同族规模与法律状态分量",
+    "新闻变体含媒体等级与独立信源数分量"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.scoring.variants"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.evidence.patent",
+    "flint.evidence.news",
+    "flint.scoring.paper"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_025.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.3"
+   ]
+  },
+  {
+   "task_id": "M2-026",
+   "title": "user_provided 评分尺",
+   "depends_on": [
+    "M2-024"
+   ],
+   "acceptance": [
+    "40 可核验+35 一手+25 时效独立公式",
+    "axis 回填且跨尺分数比较被类型层拒绝"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.scoring.user_scale"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.scoring.paper"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_026.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.2-终轮补丁.md"
+   ]
+  },
+  {
+   "task_id": "M2-027",
+   "title": "EvidenceScorer 装配与徽标",
+   "depends_on": [
+    "M2-025",
+    "M2-026"
+   ],
+   "acceptance": [
+    "按 doc.origin 自动选尺（审7 双尺）",
+    "徽标分档 >=70/40~69/<40 且同结论内按强度排序"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.scoring.scorer"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.scoring.variants",
+    "flint.scoring.user_scale"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_027.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/protocols.py#EvidenceScorer"
+   ]
+  },
+  {
+   "task_id": "M2-028",
+   "title": "对齐第一段（verdict 前）",
+   "depends_on": [
+    "M2-003"
+   ],
+   "acceptance": [
+    "只校验关键证据且上限 K=8 配置化（S4 Open Question 在案）",
+    "未通过降 D（绝不带病判定）用例"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.align.stage1"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.llm.structured"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_028.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2",
+    "contracts/protocols.py#CitationAligner"
+   ]
+  },
+  {
+   "task_id": "M2-029",
+   "title": "对齐第二段（终稿前）",
+   "depends_on": [
+    "M2-028"
+   ],
+   "acceptance": [
+    "全量 (claim,citation) 对判 supports/partial/unsupported",
+    "unsupported 去引用标 speculative；alignment_rate 记账红线 >=0.95"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.align.stage2"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.align.stage1"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_029.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.4"
+   ]
+  },
+  {
+   "task_id": "M2-030",
+   "title": "竞品记录抽取",
+   "depends_on": [
+    "M2-012",
+    "M2-003"
+   ],
+   "acceptance": [
+    "Doc → Competitor 实体结构化抽取（schema 校验）",
+    "每竞品 >=1 可达来源断言"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.competitor.extract"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.evidence.competitor",
+    "flint.llm.structured"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_030.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-031",
+   "title": "四 signal 判定器",
+   "depends_on": [
+    "M2-030",
+    "M2-014",
+    "M2-016"
+   ],
+   "acceptance": [
+    "funded_or_scaled/mature_pricing/same_target_user/active_last_12m 逐一证据驱动",
+    "无证据的 signal 不产生（负例）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.competitor.signals"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.competitor.extract",
+    "flint.evidence.pricing",
+    "flint.evidence.negative"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_031.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-032",
+   "title": "竞品强度判定（strong/unknown 保守面）",
+   "depends_on": [
+    "M2-031"
+   ],
+   "acceptance": [
+    "任二 signal = strong；信号不足 = unknown（非 weak）",
+    "定价待确认不参与强度判定（只丢一个 signal）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.competitor.strength"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.competitor.signals"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_032.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2",
+    "contracts/models.py#Competitor"
+   ]
+  },
+  {
+   "task_id": "M2-033",
+   "title": "竞品扫描覆盖判定",
+   "depends_on": [
+    "M2-030",
+    "M2-023"
+   ],
+   "acceptance": [
+    "计划 query 全执行且新增边际竞品 <1 判饱和；确认空集需相关率达标",
+    "unknown 竞品清单产出 GapHint 素材"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.competitor.coverage"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.competitor.extract",
+    "flint.retrieval.rewrite_loop"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_033.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-034",
+   "title": "A 档规则（证伪硬门槛）",
+   "depends_on": [
+    "M2-020",
+    "M2-028",
+    "M2-026"
+   ],
+   "acceptance": [
+    ">=1 条过第一段对齐的证伪证据才判 A",
+    "user_provided 单独支撑判 A 需显式 optin 并回填 GenerationRecord"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.gate.rule_a"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.retrieval.refute_templates",
+    "flint.align.stage1",
+    "flint.scoring.user_scale"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_034.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-035",
+   "title": "B 档规则（数量或强度双路径）",
+   "depends_on": [
+    "M2-032"
+   ],
+   "acceptance": [
+    ">=3 竞品各有可达来源触发 B",
+    ">=1 strong 竞品单独触发 B（两路径分别用例）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.gate.rule_b"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.competitor.strength"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_035.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-036",
+   "title": "C 档规则（四必要条件+否定条件）",
+   "depends_on": [
+    "M2-033",
+    "M2-034",
+    "M2-035"
+   ],
+   "acceptance": [
+    "refute 已执行相关率达标+覆盖达标+>=1 支持证据对齐 逐一有失败降档用例",
+    "存在 strong 或 unknown 竞品即阻断 C"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.gate.rule_c"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.competitor.coverage",
+    "flint.gate.rule_a",
+    "flint.gate.rule_b"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_036.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-037",
+   "title": "D 兜底与缺口清单",
+   "depends_on": [
+    "M2-036"
+   ],
+   "acceptance": [
+    "落 D 必输出缺口清单 + GapHint",
+    "missing_data 与 missing_permission 分流（审8）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.gate.rule_d"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.gate.rule_c"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_037.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#GapHint"
+   ]
+  },
+  {
+   "task_id": "M2-038",
+   "title": "判定顺序引擎（A>B>C>D + all_satisfied）",
+   "depends_on": [
+    "M2-034",
+    "M2-035",
+    "M2-036",
+    "M2-037"
+   ],
+   "acceptance": [
+    "顺序写死且 all_satisfied 记录全部命中档位",
+    "A+B 同时满足展示 A 且可展开 B（四档对称测试矩阵）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.gate.engine"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.gate.rule_a",
+    "flint.gate.rule_b",
+    "flint.gate.rule_c",
+    "flint.gate.rule_d"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_038.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#VerdictResult",
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-039",
+   "title": "verdict 零猜测（D9 落地）",
+   "depends_on": [
+    "M2-038",
+    "M2-003"
+   ],
+   "acceptance": [
+    "verdict 结构化输出全败 → job failed 并说明（绝不猜）",
+    "失败计数与降级路径记入 GenerationRecord"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.gate.no_guess"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.gate.engine",
+    "flint.llm.structured"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_039.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M2-040",
+   "title": "gate1_analysis 编排（断点续跑+SSE）",
+   "depends_on": [
+    "M1-033",
+    "M1-034",
+    "M2-021",
+    "M2-038",
+    "M2-015",
+    "M2-027"
+   ],
+   "acceptance": [
+    "plan→retrieve→judge→validate 走 AnalysisCheckpoint 断点续跑",
+    "kill -9 重跑产物 diff 为空且 SSE 事件序完整"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.jobs.gate1"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.jobs.runner",
+    "flint.jobs.events",
+    "flint.retrieval.query_builder",
+    "flint.gate.engine",
+    "flint.evidence.compliance",
+    "flint.scoring.scorer"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m2/test_m2_040.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E4",
+    "contracts/models.py#Job"
+   ]
+  },
+  {
+   "task_id": "M2-041",
+   "title": "边界 schema 与错误体",
+   "depends_on": [
+    "M1-001"
+   ],
+   "acceptance": [
+    "pydantic 仅边界（域层 dataclass 零污染断言）",
+    "错误体 {code,message,detail} 机器可读枚举（E3）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.api.schemas"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_041.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M2-042",
+   "title": "Analysis API 与 SSE 端点",
+   "depends_on": [
+    "M2-040",
+    "M2-041"
+   ],
+   "acceptance": [
+    "POST 幂等键 (principal,key) 重复提交返回原 job_id",
+    "SSE Last-Event-ID 断线补发且审6 权限矩阵生效"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.api.analysis"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.jobs.gate1",
+    "flint.api.schemas"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_042.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M2-043",
+   "title": "B7 预算降级阶梯",
+   "depends_on": [
+    "M2-040",
+    "M2-005"
+   ],
+   "acceptance": [
+    "超限按 L1→L4 固定顺序逐级降级（顺序断言）",
+    "每级降级写质量卡对用户可见"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.gate.budget_ladder"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.jobs.gate1",
+    "flint.llm.router"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_043.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.7"
+   ]
+  },
+  {
+   "task_id": "M2-044",
+   "title": "金标 20 例资产",
+   "depends_on": [
+    "M2-015"
+   ],
+   "acceptance": [
+    "A/B/C/D 四档各 >=4 例且 >=1 跨大类",
+    "每例证据 fixture 化可离线复跑"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "assets/goldcases"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.evidence.compliance"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_044.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M2-045",
+   "title": "金标评测（精确率/召回率）",
+   "depends_on": [
+    "M2-044",
+    "M2-039"
+   ],
+   "acceptance": [
+    "逐例判定与金标对照输出精确率/召回率报告",
+    "低于线退出码 1；线值 X/Y 配置化（初值待 owner 定，S4 Open Question 新登记）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.gate1"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "assets/goldcases",
+    "flint.gate.no_guess"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_045.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#§7"
+   ]
+  },
+  {
+   "task_id": "M2-046",
+   "title": "对齐抽检一致率评测（>=95%）",
+   "depends_on": [
+    "M2-029",
+    "M2-044"
+   ],
+   "acceptance": [
+    "抽检 (claim,citation) 对照金标输出一致率报告",
+    "<95% 退出码 1（§7 M2 线）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.alignment"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.align.stage2",
+    "assets/goldcases"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_046.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#§7"
+   ]
+  },
+  {
+   "task_id": "M2-047",
+   "title": "判 D 漏检率评测（<=10%）",
+   "depends_on": [
+    "M2-045"
+   ],
+   "acceptance": [
+    "可检索到证据却判 D 的漏检率报告",
+    ">10% 退出码 1（§7 M2 线）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.missed_d"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "eval.gate1"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_047.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#§7"
+   ]
+  },
+  {
+   "task_id": "M2-048",
+   "title": "质量卡组装",
+   "depends_on": [
+    "M2-043",
+    "M2-046"
+   ],
+   "acceptance": [
+    "QualityCard 全字段填充（含降级记录与盲区声明）",
+    "blocking_reviews_open 联动位就绪（审11 导出门禁归 M3）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.gate.quality_card"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.gate.budget_ladder",
+    "eval.alignment"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_048.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#QualityCard"
+   ]
+  },
+  {
+   "task_id": "M2-049",
+   "title": "检索快照回放复现（F2）",
+   "depends_on": [
+    "M2-007",
+    "M2-040"
+   ],
+   "acceptance": [
+    "任一 Analysis 经 retrieval_snapshot_id 完整复现",
+    "复现产物与原跑 diff 为空"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.gate.replay"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.store.snapshot",
+    "flint.jobs.gate1"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_049.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E2"
+   ]
+  },
+  {
+   "task_id": "M2-050",
+   "title": "证据源降级（E6 行 2）",
+   "depends_on": [
+    "M2-015",
+    "M2-036"
+   ],
+   "acceptance": [
+    "单证据源不可用换备源（回放用例）",
+    "维度全灭覆盖不达标按 §2.2 落 D 并出盲区声明"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.evidence.degradation"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.evidence.compliance",
+    "flint.gate.rule_c"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_050.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E6",
+    "产品描述文档-v0.3.1.md#2.2"
+   ]
+  },
+  {
+   "task_id": "M2-051",
+   "title": "Gate① 回归 harness（金标离线全跑）",
+   "depends_on": [
+    "M2-045",
+    "M2-046",
+    "M2-047",
+    "M2-049",
+    "M2-050"
+   ],
+   "acceptance": [
+    "金标 20 例离线全跑绿（零联网，S2-7）",
+    "逐例 trace（inputs 清单+判定依据）产出"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "harness.gate1_regress"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "eval.gate1",
+    "eval.alignment",
+    "eval.missed_d",
+    "flint.gate.replay",
+    "flint.evidence.degradation"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "python -m harness.gate1_regress && pytest tests/m2/test_m2_051.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M2-052",
+   "title": "M2 出口报告（对照 §7 M2 行逐条勾选）",
+   "depends_on": [
+    "M2-042",
+    "M2-048",
+    "M2-051",
+    "M2-043"
+   ],
+   "acceptance": [
+    "§7 M2 行逐条勾选：精确/召回/一致率/漏检率证据成册",
+    "X/Y 线值经 owner 裁决记录在案（人审节点）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "report.m2-exit"
+   ],
+   "milestone": "M2",
+   "inputs": [
+    "flint.api.analysis",
+    "flint.gate.quality_card",
+    "harness.gate1_regress",
+    "flint.gate.budget_ladder"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m2/test_m2_052.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#§7"
+   ]
+  },
+  {
+   "task_id": "M3-001",
+   "title": "迁移 0008：账本表族（facts_ledgers/facts/claims 版本链）",
+   "depends_on": [
+    "M2-052"
+   ],
+   "acceptance": [
+    "三表建成：版本链外键 + reason 四枚举 CHECK + fact status/origin 判别 CHECK",
+    "alembic upgrade/downgrade 往返干净"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "migrations/0008"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_001.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E2",
+    "contracts/models.py#FactsLedger",
+    "contracts/models.py#Fact"
+   ]
+  },
+  {
+   "task_id": "M3-002",
+   "title": "Claim/Fact 序列化装配（判别联合 JSONB 往返）",
+   "depends_on": [
+    "M3-001"
+   ],
+   "acceptance": [
+    "Claim confidence/alignment 与 Fact status/origin 判别往返无损（审16 不留裸 dict）",
+    "promoted_claim 必带 source_claim_id 校验"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.ledger.entities"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "migrations/0008"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_002.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Claim",
+    "contracts/models.py#Fact",
+    "产品描述文档-v0.3.2-终轮补丁.md"
+   ]
+  },
+  {
+   "task_id": "M3-003",
+   "title": "PgLedgerStore.derive 乐观锁",
+   "depends_on": [
+    "M3-002"
+   ],
+   "acceptance": [
+    "expected_parent_version 不匹配抛 LedgerVersionConflict（携带 current_version + current_facts）",
+    "reason 四来源派生各有版本+1 用例；并发双写仅一胜"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.ledger.store"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.entities"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_003.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/protocols.py#LedgerStore",
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-004",
+   "title": "版本读取与 initial 建账",
+   "depends_on": [
+    "M3-003"
+   ],
+   "acceptance": [
+    "get(project_id, version) 精确取版；缺版 KeyError",
+    "initial 派生从零建账（parent_version=0 语义）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.ledger.read"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.store"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_004.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#LedgerStore"
+   ]
+  },
+  {
+   "task_id": "M3-005",
+   "title": "FactDiff 与 needs_review 映射",
+   "depends_on": [
+    "M3-004",
+    "M3-009"
+   ],
+   "acceptance": [
+    "changed→advisory / removed→blocking / disputed→advisory 三映射逐一用例（审11）",
+    "只有引用变更 fact 的 block 被标 needs_review（无关 block 零污染）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.ledger.diff"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.read",
+    "flint.compose.blocks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_005.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#LedgerStore",
+    "contracts/models.py#FactDiff",
+    "contracts/models.py#Block"
+   ]
+  },
+  {
+   "task_id": "M3-006",
+   "title": "ClaimPromoter 提升不变量",
+   "depends_on": [
+    "M3-002"
+   ],
+   "acceptance": [
+    "仅 confidence==cited 且 alignment==supports 提升；partial NEVER（test_partial_never_promoted）",
+    "回填 source_claim_id/promoted_from/promoted_fact_id 三字段"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.ledger.promoter"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.entities"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_006.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.2-终轮补丁.md",
+    "contracts/protocols.py#ReportComposer",
+    "技术方案-v1.1.md#E9"
+   ]
+  },
+  {
+   "task_id": "M3-007",
+   "title": "disputed 排除面",
+   "depends_on": [
+    "M3-006"
+   ],
+   "acceptance": [
+    "status==disputed 的 fact 从新生成可用池排除（S2-4）",
+    "既有引用 block 标 advisory 不阻塞"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.ledger.disputed"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.promoter"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_007.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Dispute",
+    "产品描述文档-v0.3.1.md"
+   ]
+  },
+  {
+   "task_id": "M3-008",
+   "title": "迁移 0009：blocks/deliverables 表 + Block 判别序列化",
+   "depends_on": [
+    "M2-052"
+   ],
+   "acceptance": [
+    "BlockContent 判别联合（审16）JSONB 往返无损",
+    "author 永不翻转 / locked / user_modified / needs_review 字段面齐"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "migrations/0009",
+    "flint.compose.block_io"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_008.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Block",
+    "产品描述文档-v0.3.2-终轮补丁.md"
+   ]
+  },
+  {
+   "task_id": "M3-009",
+   "title": "Block 树存取与版本",
+   "depends_on": [
+    "M3-008"
+   ],
+   "acceptance": [
+    "树序稳定（父子+序号）；revision 单调",
+    "保护三条件（locked ∨ author==user ∨ user_modified）查询谓词单点实现"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.blocks"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.block_io"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_009.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Block",
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-010",
+   "title": "Deliverable 版本与 GenerationRecord 落库",
+   "depends_on": [
+    "M3-009"
+   ],
+   "acceptance": [
+    "再生成版本+1 且旧版本可回读",
+    "GenerationRecord 全字段落库并与 deliverable/job 关联（含 optin/alignment_rate 进账位）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.deliverable"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.blocks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_010.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#GenerationRecord",
+    "技术方案-v1.1.md#E2"
+   ]
+  },
+  {
+   "task_id": "M3-011",
+   "title": "迁移 0010：PriceBook 表 + 种子 60 条",
+   "depends_on": [
+    "M2-052"
+   ],
+   "acceptance": [
+    "字段面齐 v0.3.1 §3.2（updated_at/stale_after_months/source 必填）",
+    "种子 60 条资产载入且 source 无一为空"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "migrations/0010",
+    "assets/pricebook"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_011.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#3.2",
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M3-012",
+   "title": "PriceBook 时效语义",
+   "depends_on": [
+    "M3-011"
+   ],
+   "acceptance": [
+    "过期判定（updated_at+stale_after_months）与黄标标注位",
+    "质量卡「单价数据为 {year} 年」注记产出（price_data_notes 进账）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.pricebook.stale"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "assets/pricebook"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_012.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#3.2",
+    "contracts/models.py#QualityCard"
+   ]
+  },
+  {
+   "task_id": "M3-013",
+   "title": "PriceCell 通道执行器",
+   "depends_on": [
+    "M3-012"
+   ],
+   "acceptance": [
+    "预算表数字只经 PriceCell 构造（直写数字被类型/校验双拒）",
+    "无出处（source 空）条目 NEVER 被引用——违规抛错用例"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.pricebook.cell"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.pricebook.stale"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_013.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#PriceCell",
+    "产品描述文档-v0.3.2-终轮补丁.md"
+   ]
+  },
+  {
+   "task_id": "M3-014",
+   "title": "Profile 存储与敏感度",
+   "depends_on": [
+    "M2-052"
+   ],
+   "acceptance": [
+    "Profile 字段组落库 + 敏感度分级（D12）",
+    "读取按 scope 过滤（无权字段不出库）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "migrations/0011",
+    "flint.profile.store"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_014.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "M0-决策记录.md",
+    "contracts/models.py#Profile"
+   ]
+  },
+  {
+   "task_id": "M3-015",
+   "title": "ProfileRef 通道与 missing_permission 接线",
+   "depends_on": [
+    "M3-014"
+   ],
+   "acceptance": [
+    "涉我章节引用只经 ProfileRef（裸 Profile 值进 block 被拒）",
+    "无权字段组 → GapHint(missing_permission, required_scope)（审8）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.profile.ref"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.profile.store"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_015.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#ProfileRef",
+    "contracts/models.py#GapHint"
+   ]
+  },
+  {
+   "task_id": "M3-016",
+   "title": "三通道互不混用执行器（铁律 2）",
+   "depends_on": [
+    "M3-013",
+    "M3-015",
+    "M3-006"
+   ],
+   "acceptance": [
+    "Fact/PriceCell/ProfileRef 三通道跨用逐组合违规用例全拒",
+    "合法同文档三通道并存正例"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.channels"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.pricebook.cell",
+    "flint.profile.ref",
+    "flint.ledger.promoter"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_016.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.2-终轮补丁.md",
+    "CLAUDE.md#S2"
+   ]
+  },
+  {
+   "task_id": "M3-017",
+   "title": "五套人类模板规则表资产",
+   "depends_on": [
+    "M2-052"
+   ],
+   "acceptance": [
+    "generic/thesis/startup/engineering/grant 五套 sections+Ratio+check_questions 资产化",
+    "Ratio unit=words 且 share 合计=1 校验"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/templates"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_017.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#TemplateSpec",
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M3-018",
+   "title": "vibe_pack 章节族资产（S1~S9）",
+   "depends_on": [
+    "M3-017"
+   ],
+   "acceptance": [
+    "S1~S9 固定章节族 + Human Digest 附件位（不进 AI 上下文）",
+    "Ratio unit=tokens 双单位互斥校验"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/templates/vibe_pack"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "assets/templates"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_018.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.3.md",
+    "contracts/models.py#TemplateSpec"
+   ]
+  },
+  {
+   "task_id": "M3-019",
+   "title": "outline（TemplateSpec → 章节序）",
+   "depends_on": [
+    "M3-017",
+    "M3-010"
+   ],
+   "acceptance": [
+    "五模板各出确定 outline；vibe_pack 出 S1~S9",
+    "locale 规则表按套维护（非翻译）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.outline"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "assets/templates",
+    "flint.compose.deliverable"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_019.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#ReportComposer"
+   ]
+  },
+  {
+   "task_id": "M3-020",
+   "title": "freeze_ledger（聚合 + 提升）",
+   "depends_on": [
+    "M3-006",
+    "M3-004"
+   ],
+   "acceptance": [
+    "deliverable_ids 聚合 claim → ClaimPromoter 提升 → 新 ledger 版本",
+    "重复冻结幂等（同输入同版本内容）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.freeze"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.promoter",
+    "flint.ledger.read"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_020.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#ReportComposer",
+    "产品描述文档-v0.3.2-终轮补丁.md"
+   ]
+  },
+  {
+   "task_id": "M3-021",
+   "title": "draft claim 抽取（章节类降级）",
+   "depends_on": [
+    "M3-010"
+   ],
+   "acceptance": [
+    "章节草稿结构化抽取 Claim 全量（D9 章节类：失败标缺口不阻塞）",
+    "claim 文本与引用 doc 绑定进 stage2 输入面"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.claims"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.deliverable"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_021.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5",
+    "contracts/models.py#Claim"
+   ]
+  },
+  {
+   "task_id": "M3-022",
+   "title": "draft_section：ledger-only 引用",
+   "depends_on": [
+    "M3-020",
+    "M3-007",
+    "M3-009"
+   ],
+   "acceptance": [
+    "各段引用只允许 ledger 内 fact_id（B6；外部 id 拒绝）",
+    "disputed fact 从可用池排除（审10）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.draft"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.freeze",
+    "flint.ledger.disputed",
+    "flint.compose.blocks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_022.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#ReportComposer",
+    "产品描述文档-v0.2.md#4.4"
+   ]
+  },
+  {
+   "task_id": "M3-023",
+   "title": "draft_section 三通道约束接线",
+   "depends_on": [
+    "M3-022",
+    "M3-016"
+   ],
+   "acceptance": [
+    "涉我章节只经 ProfileRef、预算数字只经 PriceCell（违规草稿被拒）",
+    "通道材料在 block 内可溯源（fact_ids/refs 判别）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.draft_channels"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.draft",
+    "flint.compose.channels"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_023.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.2-终轮补丁.md",
+    "contracts/protocols.py#ReportComposer"
+   ]
+  },
+  {
+   "task_id": "M3-024",
+   "title": "stage2 全量对齐接线（红线 0.95）",
+   "depends_on": [
+    "M3-021",
+    "M3-022"
+   ],
+   "acceptance": [
+    "draft 段全量 (claim,citation) 对齐；unsupported 去引用降 speculative",
+    "alignment_rate 写入 GenerationRecord 且 <0.95 拒绝出稿"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.align_gate"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.claims",
+    "flint.compose.draft"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_024.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#CitationAligner",
+    "产品描述文档-v0.2.md#4.4"
+   ]
+  },
+  {
+   "task_id": "M3-025",
+   "title": "rule A 编排接线（证伪 claim 构造）",
+   "depends_on": [
+    "M3-021"
+   ],
+   "acceptance": [
+    "refute 检索 doc → 证伪 claim 对构造 → gate1 rule_a 非空输入（M2 遗留 4 收口）",
+    "金标 A 类经编排链路（非仅规则层）复验"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.refute_claims"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.claims"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_025.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2",
+    "docs/M2-出口报告.md"
+   ]
+  },
+  {
+   "task_id": "M3-026",
+   "title": "shrink（保护条件下压缩）",
+   "depends_on": [
+    "M3-022"
+   ],
+   "acceptance": [
+    "shrink 只动未受保护 block；受保护块原样保留",
+    "压缩后引用完整性不破（fact_id 不悬空）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.shrink"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.draft"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_026.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#ReportComposer"
+   ]
+  },
+  {
+   "task_id": "M3-027",
+   "title": "expand（GapHint 拒绝注水）",
+   "depends_on": [
+    "M3-022"
+   ],
+   "acceptance": [
+    "无新证据 → 返回 GapHint 列表（D13）且 missing_data/permission 分流（审8）",
+    "有新证据 → 产出新 block 且仍守 ledger-only 引用"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.expand"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.draft"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_027.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#ReportComposer",
+    "contracts/models.py#GapHint"
+   ]
+  },
+  {
+   "task_id": "M3-028",
+   "title": "保护条件执行器（S2-5）",
+   "depends_on": [
+    "M3-026",
+    "M3-027"
+   ],
+   "acceptance": [
+    "locked ∨ author==user ∨ user_modified 三条件逐一 + 组合：regenerate/shrink/expand 全 NEVER 改写（test_protected_block_never_rewritten）",
+    "改写尝试被拒时不产生半写（原树不动）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.protect"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.shrink",
+    "flint.compose.expand"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_028.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.2-终轮补丁.md",
+    "技术方案-v1.1.md#E9"
+   ]
+  },
+  {
+   "task_id": "M3-029",
+   "title": "五模板逐套跑通",
+   "depends_on": [
+    "M3-019",
+    "M3-024"
+   ],
+   "acceptance": [
+    "五套模板各一黄金例：outline+ratio+check_questions 全过",
+    "任两套产物结构可区分（模板真的在起作用）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.human_templates"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.outline",
+    "flint.compose.align_gate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_029.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#TemplateSpec"
+   ]
+  },
+  {
+   "task_id": "M3-030",
+   "title": "vibe_pack S1/S2/S4 拼装",
+   "depends_on": [
+    "M3-018",
+    "M3-024"
+   ],
+   "acceptance": [
+    "规则表拼装 + 少量改写（章节类调用）产出 S1 Charter/S2 Invariants/S4 决策表",
+    "S2 禁用词自检过（产出的包自身守 S2-8）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.vibe_core"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "assets/templates/vibe_pack",
+    "flint.compose.align_gate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_030.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5",
+    "产品描述文档-v0.3.3.md"
+   ]
+  },
+  {
+   "task_id": "M3-031",
+   "title": "vibe_pack S5 任务卡结构化输出",
+   "depends_on": [
+    "M3-030"
+   ],
+   "acceptance": [
+    "TaskSpec 判别字段全集 schema（estimate_cycles/verify_cmd/context_refs/review_gate）结构化产出",
+    "失败降级同章节类（该章标缺口不猜任务）；卡自身过 DagValidator 形校验"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.vibe_tasks"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.vibe_core"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_031.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E5",
+    "contracts/models.py#TaskSpec"
+   ]
+  },
+  {
+   "task_id": "M3-032",
+   "title": "audience 分叉入口",
+   "depends_on": [
+    "M3-029",
+    "M3-031"
+   ],
+   "acceptance": [
+    "ProposalContext.audience 必选无默认；ai_executor 强制 vibe_pack 模板拒混用",
+    "同 report 双受众版本钉同一 ledger 版本、sibling 互链"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.audience"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.human_templates",
+    "flint.compose.vibe_tasks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_032.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.3.md",
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M3-033",
+   "title": "markdown 渲染",
+   "depends_on": [
+    "M3-010"
+   ],
+   "acceptance": [
+    "block 树 → markdown 确定性渲染；渲染不回写（树 hash 前后一致）",
+    "引用/图表 spec 按判别渲染"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.render.markdown"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.deliverable"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_033.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#Renderer",
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-034",
+   "title": "html 渲染",
+   "depends_on": [
+    "M3-033"
+   ],
+   "acceptance": [
+    "markdown-it 管线出 html；质量卡与声明 block 定位正确",
+    "同树重渲染字节稳定"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.render.html"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.render.markdown"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_034.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#Renderer"
+   ]
+  },
+  {
+   "task_id": "M3-035",
+   "title": "pdf 渲染（weasyprint）",
+   "depends_on": [
+    "M3-034"
+   ],
+   "acceptance": [
+    "html → pdf 出件非空且页结构含质量卡",
+    "中文字形不豆腐（字体面断言）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.render.pdf"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.render.html"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_035.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#Renderer",
+    "技术方案-v1.1.md#E1"
+   ]
+  },
+  {
+   "task_id": "M3-036",
+   "title": "docx 渲染（python-docx）",
+   "depends_on": [
+    "M3-033"
+   ],
+   "acceptance": [
+    "块级结构映射（标题/段落/表格）完整",
+    "同树重渲染结构稳定"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.render.docx"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.render.markdown"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_036.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#Renderer"
+   ]
+  },
+  {
+   "task_id": "M3-037",
+   "title": "导出门禁（审11）",
+   "depends_on": [
+    "M3-033",
+    "M3-005"
+   ],
+   "acceptance": [
+    "blocking_reviews_open>0 → 拒绝导出（EXPORT_BLOCKED 错误体）",
+    "advisory 不拦但质量卡列示「N 项待处理」"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.render.gatekeeper"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.render.markdown",
+    "flint.ledger.diff"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_037.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/protocols.py#Renderer",
+    "产品描述文档-v0.3.1.md#1.2"
+   ]
+  },
+  {
+   "task_id": "M3-038",
+   "title": "private 证据导出标注（审5）",
+   "depends_on": [
+    "M3-037"
+   ],
+   "acceptance": [
+    "private 证据导出强制「引自用户提供材料，外部不可核验」标注",
+    "链接不外链（导出件内无 private url）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.render.private_marks"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.render.gatekeeper"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_038.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Doc",
+    "产品描述文档-v0.3.1.md"
+   ]
+  },
+  {
+   "task_id": "M3-039",
+   "title": "vibe_pack zip 导出",
+   "depends_on": [
+    "M3-031",
+    "M3-037"
+   ],
+   "acceptance": [
+    "zip 含 CLAUDE.md 形态渲染 + tasks.json + contracts 只读副本（E3）",
+    "M4 校验器挂钩位就绪（DagValidator/registry 未过 → 整包禁导出位）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.render.pack"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.vibe_tasks",
+    "flint.render.gatekeeper"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_039.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3",
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M3-040",
+   "title": "决策边界声明 block",
+   "depends_on": [
+    "M3-009"
+   ],
+   "acceptance": [
+    "系统级 disclaimer（locked=true, author=system）恒钉质量卡上方",
+    "不可编辑删除（保护执行器复用）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.disclaimer"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.blocks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_040.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#3.1",
+    "contracts/models.py#Block"
+   ]
+  },
+  {
+   "task_id": "M3-041",
+   "title": "lock（block/section）",
+   "depends_on": [
+    "M3-009"
+   ],
+   "acceptance": [
+    "两级锁落库并进保护谓词",
+    "重复锁幂等；解锁归 owner 语义留位"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.intervene.lock"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.blocks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_041.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#InterventionService"
+   ]
+  },
+  {
+   "task_id": "M3-042",
+   "title": "regenerate_section",
+   "depends_on": [
+    "M3-028",
+    "M3-041",
+    "M3-010"
+   ],
+   "acceptance": [
+    "只动未受保护 block；受保护原样保留（S2-5 复验于干预路径）",
+    "产出新 GenerationRecord 且 Deliverable 版本+1；返回 job_id"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.intervene.regenerate"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.protect",
+    "flint.intervene.lock",
+    "flint.compose.deliverable"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_042.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/protocols.py#InterventionService"
+   ]
+  },
+  {
+   "task_id": "M3-043",
+   "title": "inject_evidence 全管道",
+   "depends_on": [
+    "M3-003",
+    "M2-052"
+   ],
+   "acceptance": [
+    "origin=user_provided/access=private；解析→双尺评分→对齐全管道不豁免",
+    "默认不单独支撑判 A（optin 进 GenerationRecord）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.intervene.inject"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.store"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_043.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#InterventionService",
+    "产品描述文档-v0.3.2-终轮补丁.md"
+   ]
+  },
+  {
+   "task_id": "M3-044",
+   "title": "inject 冲突自动重放",
+   "depends_on": [
+    "M3-043"
+   ],
+   "acceptance": [
+    "LedgerVersionConflict → 自动重放 ≤3（审4）；第 4 次不再盲试上抛",
+    "重放在新版本上语义等效（幂等键控）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.intervene.inject_retry"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.intervene.inject"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_044.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "M0-决策记录.md",
+    "contracts/protocols.py#LedgerStore"
+   ]
+  },
+  {
+   "task_id": "M3-045",
+   "title": "dispute 流",
+   "depends_on": [
+    "M3-007",
+    "M3-005"
+   ],
+   "acceptance": [
+    "接受 → fact 标 disputed → 新生成排除 + 引用 block 标 advisory",
+    "resolved_kept/resolved_replaced 两态派生新版本并清除 disputed 与相关 review"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.intervene.dispute"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.disputed",
+    "flint.ledger.diff"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_045.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#Dispute",
+    "产品描述文档-v0.3.1.md"
+   ]
+  },
+  {
+   "task_id": "M3-046",
+   "title": "dispute 冲突确认重提",
+   "depends_on": [
+    "M3-045"
+   ],
+   "acceptance": [
+    "版本冲突 → 不自动重放，提示用户确认后重新提交（审4 与 inject 相反路径）",
+    "确认重提在新版本生效"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.intervene.dispute_retry"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.intervene.dispute"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_046.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-047",
+   "title": "EditEvent 沉淀（F3）",
+   "depends_on": [
+    "M3-009"
+   ],
+   "acceptance": [
+    "七枚举动作全落库；edit_text 命中 system block → user_modified=True",
+    "before/after 快照留痕可回放"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.intervene.edits"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.blocks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_047.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#EditEvent",
+    "产品描述文档-v0.3.2-终轮补丁.md"
+   ]
+  },
+  {
+   "task_id": "M3-048",
+   "title": "干预 API（/interventions）",
+   "depends_on": [
+    "M3-042",
+    "M3-044",
+    "M3-046",
+    "M3-047"
+   ],
+   "acceptance": [
+    "lock/regenerate/inject/dispute 四动作端点 + 审6 权限",
+    "错误体机器码（LEDGER_CONFLICT 等）与幂等键复用 M2-042 面"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.api.interventions"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.intervene.regenerate",
+    "flint.intervene.inject_retry",
+    "flint.intervene.dispute_retry",
+    "flint.intervene.edits"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_048.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M3-049",
+   "title": "scheduled 触发（年龄阶梯）",
+   "depends_on": [
+    "M2-052"
+   ],
+   "acceptance": [
+    "<30 不扫 / 30~90 每 30 天 / >90 每 60 天 逐档用例",
+    "到期清单确定性（假时钟）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.revalidate.schedule"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_049.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E4",
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-050",
+   "title": "event 触发（revival/momentum/refute 强证据）",
+   "depends_on": [
+    "M3-049"
+   ],
+   "acceptance": [
+    "三事件源各一触发用例；非事件不触发",
+    "触发去重（同 deliverable 同事件窗口一次）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.revalidate.events"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.revalidate.schedule"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_050.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#Revalidator"
+   ]
+  },
+  {
+   "task_id": "M3-051",
+   "title": "run → 完整 gate1 重跑",
+   "depends_on": [
+    "M3-050",
+    "M2-052"
+   ],
+   "acceptance": [
+    "verdict_shift 必经完整 gate1_analysis 重跑（VerdictShift.rerun_analysis_id 必填；test_verdict_shift_requires_rerun）",
+    "无启发式偏移路径（代码面断言单一判定逻辑）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.revalidate.run"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.revalidate.events"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_051.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.2-终轮补丁.md",
+    "contracts/protocols.py#Revalidator",
+    "技术方案-v1.1.md#E9"
+   ]
+  },
+  {
+   "task_id": "M3-052",
+   "title": "复核报告只检测不改状态",
+   "depends_on": [
+    "M3-051"
+   ],
+   "acceptance": [
+    "run 产出对比报告实体；账本/交付物零改动（D6）",
+    "报告含 shift 前后档位与依据引用"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.revalidate.report"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.revalidate.run"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_052.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-053",
+   "title": "accept → ledger 派生 + 统一 stale",
+   "depends_on": [
+    "M3-052",
+    "M3-003"
+   ],
+   "acceptance": [
+    "accept 走 LedgerStore.derive(reason=revalidation)",
+    "引用旧 fact 的 block 经 diff 统一 stale 机制标注（D8）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.revalidate.accept"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.revalidate.report",
+    "flint.ledger.store"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_053.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#Revalidator",
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-054",
+   "title": "版本冲突整 job 失效重跑",
+   "depends_on": [
+    "M3-053"
+   ],
+   "acceptance": [
+    "accept 遇 LedgerVersionConflict → 整 job 失效重跑（审4 第三路径）",
+    "重跑基于新版本产新报告（旧报告标废弃）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.revalidate.retry"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.revalidate.accept"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_054.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "M0-决策记录.md"
+   ]
+  },
+  {
+   "task_id": "M3-055",
+   "title": "revalidation 调度 job",
+   "depends_on": [
+    "M3-049",
+    "M2-052"
+   ],
+   "acceptance": [
+    "每日 04:00 扫描到期项目逐个 submit（E4；录制态假时钟）",
+    "与 daily_ingest 锁语义互不干扰"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.jobs.revalidation"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.revalidate.schedule"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_055.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E4"
+   ]
+  },
+  {
+   "task_id": "M3-056",
+   "title": "API 硬化（M2 遗留 2 收口）",
+   "depends_on": [
+    "M2-052"
+   ],
+   "acceptance": [
+    "幂等并发竞态：INSERT..ON CONFLICT 后回读胜者 job_id（并发同键仅一 job 可见）",
+    "Last-Event-ID 畸形头 → 400 VALIDATION_FAILED（不再 500）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.api.hardening"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_056.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "docs/M2-出口报告.md",
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M3-057",
+   "title": "report/proposal 提交端点",
+   "depends_on": [
+    "M3-032",
+    "M3-056"
+   ],
+   "acceptance": [
+    "POST /projects/{id}/proposal：audience 必选缺省 422；ai_executor 锁 vibe_pack",
+    "report 端点提交 compose job；幂等键复用"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.api.compose"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.audience",
+    "flint.api.hardening"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_057.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M3-058",
+   "title": "deliverable 读取与 render 端点",
+   "depends_on": [
+    "M3-037",
+    "M3-039",
+    "M3-056"
+   ],
+   "acceptance": [
+    "GET /deliverables/{id} + /render?fmt= 四类 + fmt=pack",
+    "门禁拒绝 → EXPORT_BLOCKED 错误体（审11 经 API 面）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.api.deliverables"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.render.gatekeeper",
+    "flint.render.pack",
+    "flint.api.hardening"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_058.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M3-059",
+   "title": "PartialBlockEvent 渐进交付",
+   "depends_on": [
+    "M3-022",
+    "M2-052"
+   ],
+   "acceptance": [
+    "draft 逐 block 产出 PartialBlockEvent（seq 单调续 M1-034 流）",
+    "partial_output_ref 随段更新可断线续读（D8）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.compose.progressive"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.draft"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_059.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#PartialBlockEvent",
+    "产品描述文档-v0.3.1.md#4"
+   ]
+  },
+  {
+   "task_id": "M3-060",
+   "title": "compose job 编排（断点续跑）",
+   "depends_on": [
+    "M3-024",
+    "M3-023",
+    "M3-059",
+    "M3-010"
+   ],
+   "acceptance": [
+    "outline→freeze→draft→align→render 走 DraftCheckpoint 断点续跑",
+    "kill -9 重跑产物 diff 为空且事件序完整（M2-040 同规格）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.jobs.compose"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.align_gate",
+    "flint.compose.progressive",
+    "flint.compose.deliverable"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m3/test_m3_060.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E4",
+    "contracts/models.py#DraftCheckpoint"
+   ]
+  },
+  {
+   "task_id": "M3-061",
+   "title": "文书金标资产（生成器直出真值）",
+   "depends_on": [
+    "M3-029",
+    "M3-032"
+   ],
+   "acceptance": [
+    "五模板×2 + vibe_pack×2 共 12 样例：期望结构/通道占位/保护位由构造直出",
+    "离线完整性（引用闭合/判别往返/确定性再生成）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/golddocs"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.compose.human_templates",
+    "flint.compose.audience"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_061.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M3-062",
+   "title": "对齐红线评测（draft 段）",
+   "depends_on": [
+    "M3-061",
+    "M3-024"
+   ],
+   "acceptance": [
+    "alignment_rate 全量口径评测报告；<0.95 exit 1",
+    "unsupported 去引用后不复入统计（口径防重）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.draft_alignment"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "assets/golddocs",
+    "flint.compose.align_gate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_062.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.2.md#4.4"
+   ]
+  },
+  {
+   "task_id": "M3-063",
+   "title": "复现评测（F2 + 审9 例外）",
+   "depends_on": [
+    "M3-061",
+    "M3-060"
+   ],
+   "acceptance": [
+    "GenerationRecord→快照→重组→重渲染 diff 空",
+    "RedactionRecord 在场 → 质量卡「不可完整复现」标注（唯一例外留痕）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.doc_replay"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "assets/golddocs",
+    "flint.jobs.compose"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_063.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#RedactionRecord",
+    "产品描述文档-v0.3.1.md#3.3"
+   ]
+  },
+  {
+   "task_id": "M3-064",
+   "title": "不变量回归族并册",
+   "depends_on": [
+    "M3-006",
+    "M3-028",
+    "M3-051",
+    "M3-016"
+   ],
+   "acceptance": [
+    "E9 点名三测试 + 通道执行器汇为单命令回归入口",
+    "任一不变量破 → exit 1 且指认破处"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.invariants"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "flint.ledger.promoter",
+    "flint.compose.protect",
+    "flint.revalidate.run",
+    "flint.compose.channels"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_064.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E9"
+   ]
+  },
+  {
+   "task_id": "M3-065",
+   "title": "M3 回归 harness（文书线离线全跑）",
+   "depends_on": [
+    "M3-062",
+    "M3-063",
+    "M3-064",
+    "M3-058",
+    "M3-048",
+    "M3-054",
+    "M3-055",
+    "M3-038",
+    "M3-040",
+    "M3-047",
+    "M3-012",
+    "M3-025",
+    "M3-026",
+    "M3-034",
+    "M3-035",
+    "M3-036",
+    "M3-044",
+    "M3-046",
+    "M3-052",
+    "M3-053",
+    "M3-057"
+   ],
+   "acceptance": [
+    "金标 12 样例离线全跑绿（零联网硬断言）",
+    "逐样例 trace（inputs+组稿依据）产出且字节稳定"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "harness.m3_regress"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "eval.draft_alignment",
+    "eval.doc_replay",
+    "eval.invariants"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "python -m harness.m3_regress && pytest tests/m3/test_m3_065.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M3-066",
+   "title": "M3 出口报告（§7 M3 行 + owner 人审）",
+   "depends_on": [
+    "M3-065"
+   ],
+   "acceptance": [
+    "§7 M3 行逐条勾选：证据成册且与实测绑定",
+    "owner 签字记录在案（人审节点）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "report.m3-exit"
+   ],
+   "milestone": "M3",
+   "inputs": [
+    "harness.m3_regress"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_066.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#7"
+   ]
+  },
+  {
+   "task_id": "M4-001",
+   "title": "spec 数据面（TaskSpec 持久化与读取）",
+   "depends_on": [
+    "M3-066"
+   ],
+   "acceptance": [
+    "TaskSpec 全字段（双单位判别）JSONB 往返无损",
+    "按 project/deliverable 读取确定序"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "migrations/0016",
+    "flint.spec.store"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.compose.vibe_tasks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_001.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#TaskSpec",
+    "技术方案-v1.1.md#E2"
+   ]
+  },
+  {
+   "task_id": "M4-002",
+   "title": "human 路径 spec_export（独立交付物）",
+   "depends_on": [
+    "M4-001"
+   ],
+   "acceptance": [
+    "human_reader 路径产 spec 类 Deliverable（audience 分叉不混排）",
+    "导出条目含 acceptance 可转测试断言标注"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.export_human"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.store",
+    "flint.compose.audience"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_002.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#SpecExporter",
+    "产品描述文档-v0.3.3.md"
+   ]
+  },
+  {
+   "task_id": "M4-003",
+   "title": "ai 路径并入 vibe_pack S5（任务卡章）",
+   "depends_on": [
+    "M4-001"
+   ],
+   "acceptance": [
+    "S5 章由 TaskSpec 集渲染（表格 + 机读 tasks.json 同步）",
+    "shape_check 违规卡 NEVER 入章（生成期即校验，E5）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.vibe_s5"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.compose.vibe_tasks",
+    "flint.spec.store"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_003.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5",
+    "产品描述文档-v0.3.3.md"
+   ]
+  },
+  {
+   "task_id": "M4-004",
+   "title": "S6 Context Manifest 章生成",
+   "depends_on": [
+    "M4-003"
+   ],
+   "acceptance": [
+    "每任务 context_refs 汇总为 S6 装载规则（恒装+按需+预算行）",
+    "引用锚点存在性校验（悬空 ref 拒绝）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.vibe_s6"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.vibe_s5"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_004.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "CLAUDE.md#S6",
+    "产品描述文档-v0.3.3.md"
+   ]
+  },
+  {
+   "task_id": "M4-005",
+   "title": "S7 Verification Harness 章生成",
+   "depends_on": [
+    "M4-003"
+   ],
+   "acceptance": [
+    "verify_cmd 汇总 + 全局门声明 + 返工环规则渲染",
+    "无 verify_cmd 任务零容忍（S7 章生成即拒）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.vibe_s7"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.vibe_s5"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_005.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "CLAUDE.md#S7",
+    "产品描述文档-v0.3.3.md"
+   ]
+  },
+  {
+   "task_id": "M4-006",
+   "title": "S8/S9 章生成（台账约定 + 升级规则）",
+   "depends_on": [
+    "M4-004",
+    "M4-005"
+   ],
+   "acceptance": [
+    "S8 progress.jsonl 约定 + trace 规格渲染；S9 六停一审清单渲染",
+    "与本仓自用 CLAUDE.md 同构性断言（双重狗粮）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.vibe_s89"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.vibe_s6",
+    "flint.spec.vibe_s7"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_006.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "CLAUDE.md#S8",
+    "CLAUDE.md#S9"
+   ]
+  },
+  {
+   "task_id": "M4-007",
+   "title": "vibe_pack 全包装配（S1~S9 合卷）",
+   "depends_on": [
+    "M3-066",
+    "M4-006"
+   ],
+   "acceptance": [
+    "九章合卷 + Human Digest 附件（不进 AI 上下文）",
+    "全包过 S2-8 自检（banned_word_hits 零命中）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.pack_assemble"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.compose.vibe_core",
+    "flint.spec.vibe_s89"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_007.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.3.md",
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M4-008",
+   "title": "tasks.json 机读同步导出",
+   "depends_on": [
+    "M4-007"
+   ],
+   "acceptance": [
+    "包内 tasks.json 与 S5 章同源单真相（互相校验）",
+    "dag_report 附带（acyclic 与关键路径数据）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.tasks_json"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.pack_assemble"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_008.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#DagReport"
+   ]
+  },
+  {
+   "task_id": "M4-009",
+   "title": "contracts 只读副本打包",
+   "depends_on": [
+    "M4-007"
+   ],
+   "acceptance": [
+    "包内 contracts/ 副本与源逐字节一致 + 只读标注",
+    "副本篡改检测（hash 清单）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.contracts_copy"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.pack_assemble"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_009.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M4-010",
+   "title": "zip 完整包导出（M3-039 挂钩位接线）",
+   "depends_on": [
+    "M4-008",
+    "M4-009"
+   ],
+   "acceptance": [
+    "zip = CLAUDE.md 形态 + tasks.json + contracts 副本（E3 三件）",
+    "fmt=pack 端点出件；门禁挂钩位就绪（M4-030 接实调）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.pack_zip"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.tasks_json",
+    "flint.spec.contracts_copy",
+    "flint.render.pack"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_010.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M4-011",
+   "title": "registry 客户端（PyPI，录制回放）",
+   "depends_on": [
+    "M3-066"
+   ],
+   "acceptance": [
+    "PyPI JSON API 存在性 + latest_stable 解析（respx 录制回放，CI 零联网）",
+    "404/网络错误判别（不可用 != 不存在）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.registry.pypi"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.testing.replay"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_011.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#RegistryValidator",
+    "技术方案-v1.1.md#E1"
+   ]
+  },
+  {
+   "task_id": "M4-012",
+   "title": "registry 客户端（npm/crates）",
+   "depends_on": [
+    "M4-011"
+   ],
+   "acceptance": [
+    "npm registry 与 crates.io 同协议面（每源一录制 fixture）",
+    "三生态 PackageStatus 判别一致"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.registry.npm_crates"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.registry.pypi"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_012.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#PackageStatus"
+   ]
+  },
+  {
+   "task_id": "M4-013",
+   "title": "版本锁定联动",
+   "depends_on": [
+    "M4-012"
+   ],
+   "acceptance": [
+    "校验通过 → 锁版写入包内 lock 清单（版本钉死）",
+    "latest_stable 与请求版本冲突 → 以锁版为准 + 提示位"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.registry.lock"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.registry.npm_crates"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_013.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "CLAUDE.md#S2"
+   ]
+  },
+  {
+   "task_id": "M4-014",
+   "title": "替换标记 [replaced]",
+   "depends_on": [
+    "M4-012"
+   ],
+   "acceptance": [
+    "不存在包 → 替换建议 + [replaced: 原因] 标注进 S3 章",
+    "无替换方案 → 该章 GapHint（不猜包名）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.registry.replace"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.registry.npm_crates"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_014.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#RegistryValidator"
+   ]
+  },
+  {
+   "task_id": "M4-015",
+   "title": "registry 批量校验器",
+   "depends_on": [
+    "M4-013",
+    "M4-014"
+   ],
+   "acceptance": [
+    "S3 tech_choices 全清单批校验 → 通过率报告",
+    "任一不可用 → 校验不可用态（区别于不存在）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.registry.batch"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.registry.lock",
+    "flint.registry.replace"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_015.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M4-016",
+   "title": "registry 不可用 → 整包禁导出（E6 行）",
+   "depends_on": [
+    "M4-015"
+   ],
+   "acceptance": [
+    "校验不可用 → 该章 GapHint + 整包禁导出（质量门 registry=100% 不可降级）",
+    "人类模板路径不受影响（分叉断言）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.registry.gate"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.registry.batch"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_016.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E6"
+   ]
+  },
+  {
+   "task_id": "M4-017",
+   "title": "生成期校验前移接线",
+   "depends_on": [
+    "M4-015",
+    "M4-003"
+   ],
+   "acceptance": [
+    "proposal job 内 S3/S5 产物生成时即校验（M4 校验器前移，E5）",
+    "不通过 → 对应章 GapHint，错误早暴露一个阶段"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.early_validate"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.registry.batch",
+    "flint.spec.vibe_s5"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_017.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M4-018",
+   "title": "registry 评测（fixture 全景）",
+   "depends_on": [
+    "M4-016",
+    "M4-017"
+   ],
+   "acceptance": [
+    "存在/不存在/不可用/替换四态回放用例全景",
+    "通过率 100% 语义 = 全部存在且锁版成功"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.registry"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.registry.gate",
+    "flint.spec.early_validate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_018.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E9"
+   ]
+  },
+  {
+   "task_id": "M4-019",
+   "title": "无环与可达性",
+   "depends_on": [
+    "M3-066"
+   ],
+   "acceptance": [
+    "环检出（路径指认）；孤儿（无人依赖且非出口）与不可达检出",
+    "DagReport 四字段冻结构造"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.dag.graph"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.compose.vibe_tasks"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_019.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#DagValidator",
+    "contracts/models.py#DagReport"
+   ]
+  },
+  {
+   "task_id": "M4-020",
+   "title": "inputs 溯源校验",
+   "depends_on": [
+    "M4-019"
+   ],
+   "acceptance": [
+    "每任务 inputs 须为前置任务 outputs 或外部既有物（白名单）",
+    "悬空 inputs 指认到卡"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.dag.inputs"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.graph"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_020.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/models.py#TaskSpec"
+   ]
+  },
+  {
+   "task_id": "M4-021",
+   "title": "双单位互斥必填校验",
+   "depends_on": [
+    "M4-019"
+   ],
+   "acceptance": [
+    "human_reader：estimate_days 必填 ≤0.5 且 cycles 必空；ai_executor：cycles 必填 ≤2 + verify_cmd 必填且 days 必空",
+    "违规逐卡指认（v0.3.3 增补口径）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.dag.dual_unit"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.graph"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_021.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#DagValidator",
+    "产品描述文档-v0.3.3.md"
+   ]
+  },
+  {
+   "task_id": "M4-022",
+   "title": "vibe 质量门（覆盖率与预算）",
+   "depends_on": [
+    "M4-021"
+   ],
+   "acceptance": [
+    "verify 覆盖率=100% 硬门（ai 卡无 verify_cmd 即 0 容忍）",
+    "context 超预算任务数=0（refs 估算 ≤40k）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.dag.quality_gate"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.dual_unit"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_022.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "contracts/protocols.py#DagValidator",
+    "CLAUDE.md#S6"
+   ]
+  },
+  {
+   "task_id": "M4-023",
+   "title": "DagValidator 装配（冻结协议实现）",
+   "depends_on": [
+    "M4-020",
+    "M4-022"
+   ],
+   "acceptance": [
+    "validate(tasks) 一次给全量 DagReport（errors 聚合）",
+    "本仓 tasks.json（159+ 卡）自校验通过（双重狗粮）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.dag.validator"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.inputs",
+    "flint.dag.quality_gate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_023.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/protocols.py#DagValidator"
+   ]
+  },
+  {
+   "task_id": "M4-024",
+   "title": "估算超限拆分信号",
+   "depends_on": [
+    "M4-023"
+   ],
+   "acceptance": [
+    "cycles>2 → 拆分信号（不自动拆，产 GapHint 指认）",
+    "拆分建议携依赖重连提示"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.dag.split_signal"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.validator"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_024.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "CLAUDE.md#S5"
+   ]
+  },
+  {
+   "task_id": "M4-025",
+   "title": "关键路径与并行前沿报告",
+   "depends_on": [
+    "M4-023"
+   ],
+   "acceptance": [
+    "critical path cycles + 就绪前沿清单（多 agent 并行依据）",
+    "与本仓 dag_report 数字对账"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.dag.frontier"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.validator"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_025.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "CLAUDE.md#S5"
+   ]
+  },
+  {
+   "task_id": "M4-026",
+   "title": "dag 评测（构造违规全景）",
+   "depends_on": [
+    "M4-024",
+    "M4-025"
+   ],
+   "acceptance": [
+    "环/孤儿/悬空/双单位/覆盖率五类违规构造用例全景",
+    "干净 DAG 零误报"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.dag"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.split_signal",
+    "flint.dag.frontier"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_026.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E9"
+   ]
+  },
+  {
+   "task_id": "M4-027",
+   "title": "vibe 附加门禁装配",
+   "depends_on": [
+    "M4-023",
+    "M4-016"
+   ],
+   "acceptance": [
+    "vibe_pack 导出门禁 = 审11 blocking + DagValidator 通过 + registry 100%（三与）",
+    "任一不过 → EXPORT_BLOCKED（detail 分类指认）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.spec.export_gate"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.dag.validator",
+    "flint.registry.gate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_027.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M4-028",
+   "title": "fmt=pack 端点接实调",
+   "depends_on": [
+    "M4-027",
+    "M4-010"
+   ],
+   "acceptance": [
+    "GET /deliverables/{id}/render?fmt=pack 全链（门禁 → zip 出件）",
+    "fmt=markdown 单文件预览端点"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.api.pack"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.export_gate",
+    "flint.spec.pack_zip"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_028.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M4-029",
+   "title": "spec_export job 编排",
+   "depends_on": [
+    "M4-002",
+    "M4-027"
+   ],
+   "acceptance": [
+    "SpecExportCheckpoint 断点续跑（kill -9 diff 空）",
+    "事件序完整（M2-040 同规格）"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "flint.jobs.spec_export"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.spec.export_human",
+    "flint.spec.export_gate"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m4/test_m4_029.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E4",
+    "contracts/models.py#SpecExportCheckpoint"
+   ]
+  },
+  {
+   "task_id": "M4-030",
+   "title": "禁导出全景评测",
+   "depends_on": [
+    "M4-028"
+   ],
+   "acceptance": [
+    "blocking/dag 失败/registry 不可用三路禁导出各回放用例",
+    "解除后重导成功（门禁可恢复性）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.export_gate"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.api.pack"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_030.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E6"
+   ]
+  },
+  {
+   "task_id": "M4-031",
+   "title": "包完整性评测",
+   "depends_on": [
+    "M4-028"
+   ],
+   "acceptance": [
+    "zip 三件齐 + contracts hash 清单过 + tasks.json 与 S5 同源校验",
+    "包内 CLAUDE.md 过 S2-8 自检"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.pack_integrity"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.api.pack"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_031.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E3"
+   ]
+  },
+  {
+   "task_id": "M4-032",
+   "title": "S4 open question Z 线登记",
+   "depends_on": [
+    "M4-029"
+   ],
+   "acceptance": [
+    "任务一次通过率 Z 线值配置化（初值待 owner，S4 登记）",
+    "试跑报告按 Z 判定（未定线只报告）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.pass_rate"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.jobs.spec_export"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_032.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#7"
+   ]
+  },
+  {
+   "task_id": "M4-033",
+   "title": "试跑样本一：金标 C 档 → 全链 spec",
+   "depends_on": [
+    "M4-029",
+    "M4-010"
+   ],
+   "acceptance": [
+    "goldcase C 档场景 → 计划书 → vibe_pack 全链产包",
+    "包过全部门禁（dag/registry/S2-8）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/trial_specs/one"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.jobs.spec_export",
+    "flint.spec.pack_zip"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_033.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M4-034",
+   "title": "试跑样本二：B 档竞争密集场景",
+   "depends_on": [
+    "M4-033"
+   ],
+   "acceptance": [
+    "B 档场景差异化包（竞争面章节权重可辨）",
+    "与样本一结构可区分"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/trial_specs/two"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "assets/trial_specs/one"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_034.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M4-035",
+   "title": "试跑样本三：ai_executor 跨大类",
+   "depends_on": [
+    "M4-034"
+   ],
+   "acceptance": [
+    "跨大类场景（M0 判例回归）产包",
+    "三样本合卷索引"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "assets/trial_specs/three"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "assets/trial_specs/two"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_035.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M4-036",
+   "title": "执行器模拟试跑 harness",
+   "depends_on": [
+    "M4-035",
+    "M4-032"
+   ],
+   "acceptance": [
+    "三包逐卡模拟执行：context_refs 可装载 + verify_cmd 形态可执行 + DAG 可调度",
+    "一次通过率报告（按 M4-032 Z 口径）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "harness.spec_trial"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "assets/trial_specs/three",
+    "eval.pass_rate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_036.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#7"
+   ]
+  },
+  {
+   "task_id": "M4-037",
+   "title": "试跑缺陷回填环",
+   "depends_on": [
+    "M4-036"
+   ],
+   "acceptance": [
+    "试跑发现的包缺陷回填生成器/校验器（闭环记录）",
+    "回填后三包重产重跑全绿"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "docs/trial-findings"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "harness.spec_trial"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_037.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M4-038",
+   "title": "M4 回归 harness",
+   "depends_on": [
+    "M4-018",
+    "M4-026",
+    "M4-030",
+    "M4-031",
+    "M4-037"
+   ],
+   "acceptance": [
+    "registry/dag/导出门禁/包完整性/试跑五线合跑（离线）",
+    "逐包 trace 产出字节稳定"
+   ],
+   "estimate_days": 0.5,
+   "outputs": [
+    "harness.m4_regress"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "eval.registry",
+    "eval.dag",
+    "eval.export_gate",
+    "eval.pack_integrity",
+    "docs/trial-findings"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/m4/test_m4_038.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "技术方案-v1.1.md#E12"
+   ]
+  },
+  {
+   "task_id": "M4-039",
+   "title": "真 LLM provider 接线（生产口径地基）",
+   "depends_on": [
+    "M3-066"
+   ],
+   "acceptance": [
+    "AnthropicProvider 经配置接入组稿链（离线 CI 仍走确定性 provider）",
+    "调用记账进 GenerationRecord（model/cost 实值）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "flint.llm.production"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.llm.provider",
+    "flint.jobs.compose"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_039.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "技术方案-v1.1.md#E5"
+   ]
+  },
+  {
+   "task_id": "M4-040",
+   "title": "生产口径验证：语义作答率（携带条件①）",
+   "depends_on": [
+    "M4-039"
+   ],
+   "acceptance": [
+    "接真 LLM 后 N>=12 份真实组稿逐 check 问题语义作答留痕",
+    "作答率 >=90%（同一 doc_metrics 度量器）；不可得时如实 blocked（owner 供 key/内容源）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.semantic_answers"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.llm.production",
+    "eval.doc_metrics"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_040.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "docs/M3-出口报告.md"
+   ]
+  },
+  {
+   "task_id": "M4-041",
+   "title": "生产口径验证：真实配比偏差（携带条件②）",
+   "depends_on": [
+    "M4-039"
+   ],
+   "acceptance": [
+    "N>=12 真实组稿渲染字量实际配比对声明配比相对偏差 <=±15% 留痕",
+    "同一度量器执行；不可得时如实 blocked"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "eval.real_ratio"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "flint.llm.production",
+    "eval.doc_metrics"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_041.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "docs/M3-出口报告.md"
+   ]
+  },
+  {
+   "task_id": "M4-042",
+   "title": "遗留非阻断项消化批",
+   "depends_on": [
+    "M3-066"
+   ],
+   "acceptance": [
+    "v0.4 备忘可代码化项处置：drill7 mypy 修复确认 + S7 全局门扩面（flint eval harness）落 Makefile",
+    "处置清单逐项记录（不可代码化项保留给 owner 修订通道）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "docs/v04-digest"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "repo-skeleton"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_042.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "docs/v0.4-问题单.md"
+   ]
+  },
+  {
+   "task_id": "M4-043",
+   "title": "M4 预出口对账",
+   "depends_on": [
+    "M4-038",
+    "M4-040",
+    "M4-041",
+    "M4-042",
+    "M4-032"
+   ],
+   "acceptance": [
+    "§7 M4 行证据成册（DAG 0 例外 / registry 100% / 一次通过率对 Z）",
+    "M3 携带条件兑现状态如实汇总（含 blocked 情形）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "docs/M4-预出口"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "harness.m4_regress",
+    "eval.semantic_answers",
+    "eval.real_ratio",
+    "docs/v04-digest",
+    "eval.pass_rate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_043.py -q",
+   "review_gate": false,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#7",
+    "docs/M3-出口报告.md"
+   ]
+  },
+  {
+   "task_id": "M4-044",
+   "title": "M4 出口报告（gate + owner 人审）",
+   "depends_on": [
+    "M4-043"
+   ],
+   "acceptance": [
+    "§7 M4 行逐条勾选证据成册；Z 线经 owner 裁决记录在案",
+    "MUST：对照 docs/M3-出口报告.md#四·补充 兑现判据产出「生产口径验证」节并关门——该条未过则 M4 出口不成立（owner Ray 硬性要求 @2026-07-30）"
+   ],
+   "estimate_days": 0.25,
+   "outputs": [
+    "report.m4-exit"
+   ],
+   "milestone": "M4",
+   "inputs": [
+    "docs/M4-预出口"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m4/test_m4_044.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#7",
+    "docs/M3-出口报告.md"
+   ]
+  },
+  {
+   "task_id": "FE-000",
+   "title": "结构化 Block 树 JSON 读端点（L0 只读渲染器读契约）",
+   "depends_on": [
+    "M3-058"
+   ],
+   "acceptance": [
+    "GET /deliverables/{id}/blocks 回结构化 Block 树 JSON：稳定序 (section_id, block_order) + content 判别联合 kind 保真 + 保护标志 (locked/author/user_modified) + needs_review",
+    "未知 deliverable 回 404 NOT_FOUND"
+   ],
+   "outputs": [
+    "api:deliverables_blocks"
+   ],
+   "milestone": "FE",
+   "inputs": [
+    "flint.api.deliverables",
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m3/test_m3_058.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#Block",
+    "flint/api/deliverables.py",
+    "技术方案-v1.1.md#E10"
+   ]
+  },
+  {
+   "task_id": "FE-001",
+   "title": "L0 只读渲染器：Block 树 → 只读页面（Next.js 16.2.12）",
+   "depends_on": [
+    "FE-000"
+   ],
+   "acceptance": [
+    "GET /deliverables/{id}/blocks 的结构化 Block 树逐块只读渲染：8 类 BlockType（heading/paragraph/table/chart/declaration/quality_card/citation_list/gap_notice）各一只读组件，无一落空",
+    "按 Block.order 稳定排序、按 section_id 分节；同树重渲染 DOM 稳定",
+    "保护块（locked ∨ author=='user' ∨ user_modified）渲染为只读态、无编辑控件",
+    "chart 只按 ChartSpec.derived_from 数据渲染，前端零计算（D3 铁律）"
+   ],
+   "outputs": [
+    "web:l0_renderer"
+   ],
+   "milestone": "FE",
+   "inputs": [
+    "api:deliverables_blocks",
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npm test -- --run",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#Block",
+    "技术方案-v1.1.md#E10"
+   ]
+  },
+  {
+   "task_id": "FE-002",
+   "title": "L1 Job + SSE 渐进交付",
+   "depends_on": [
+    "FE-001",
+    "M2-042"
+   ],
+   "acceptance": [
+    "发起 Job（POST /projects/{id}/analysis|report|proposal）回 job_id",
+    "EventSource 订阅 GET /jobs/{id}/events，按 PartialBlockEvent 增量挂载（复用 L0 只读组件）",
+    "断线以 Last-Event-ID 续订：重放已见 seq 不重复挂载（重复即忽略）",
+    "status 终态收束停止订阅；GET /jobs/{id} 查状态快照"
+   ],
+   "outputs": [
+    "web:l1_job_sse"
+   ],
+   "milestone": "FE",
+   "inputs": [
+    "web:l0_renderer",
+    "flint.api.analysis",
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npm test -- --run",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#JobEvent",
+    "flint/api/analysis.py",
+    "技术方案-v1.1.md#E10"
+   ]
+  },
+  {
+   "task_id": "FE-003",
+   "title": "L2 干预客户端 + S2-5 门控（4 动作 lib/reducer）",
+   "depends_on": [
+    "FE-002",
+    "M3-048"
+   ],
+   "acceptance": [
+    "interventionClient 忠实 flint/api/interventions.py 四动作契约：lock(204) / regenerate(→job_id) / dispute(→ledger_version) / evidence(→对齐结果)",
+    "类型化边界：403 PermissionDenied / 404 NotFound / dispute 409 DisputeConfirmationRequired(current_version) 确认流 / evidence 409 LedgerConflict(current_version) 重放耗尽",
+    "availableBlockInterventions 门控：保护块（locked ∨ author=='user' ∨ user_modified）→ 空集（S2-5）",
+    "全离线单测（mock fetch），四动作各交互 + 边界覆盖"
+   ],
+   "outputs": [
+    "web:l2_intervention_client"
+   ],
+   "milestone": "FE",
+   "inputs": [
+    "web:l1_job_sse",
+    "flint.api.interventions",
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npm test -- --run",
+   "review_gate": true,
+   "context_refs": [
+    "flint/api/interventions.py",
+    "contracts/models.py#Dispute",
+    "技术方案-v1.1.md#E10"
+   ]
+  },
+  {
+   "task_id": "FE-004",
+   "title": "L2 干预 UI + Job/SSE 集成（BlockInterventionPanel + EvidencePanel）",
+   "depends_on": [
+    "FE-003"
+   ],
+   "acceptance": [
+    "保护块前端强制只读、无任何改写控件（S2-5 硬断言：保护块面板 button 数=0）",
+    "非保护块 lock/regenerate/dispute 控件在场；lock 成功 → onLocked 转保护态",
+    "regenerate 复用 L1 openJobStream 流式反映重写 Job 状态（NEVER 另造 SSE）",
+    "dispute 409 → 确认 UI（携当前版本）→ 带 confirmed_version 重提成功",
+    "evidence inject 成功 → 展示后端对齐结果（只反映后端回值）；409 → 冲突提示当前版本"
+   ],
+   "outputs": [
+    "web:l2_intervention_ui"
+   ],
+   "milestone": "FE",
+   "inputs": [
+    "web:l2_intervention_client",
+    "web:l0_renderer",
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npm test -- --run",
+   "review_gate": true,
+   "context_refs": [
+    "flint/api/interventions.py",
+    "contracts/models.py#Block",
+    "技术方案-v1.1.md#E10"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-001",
+   "title": "冻结件最小修订：regenerate_section 加 guidance + block_id（扩参）",
+   "depends_on": [
+    "M3-048"
+   ],
+   "acceptance": [
+    "InterventionService.regenerate_section 尾加两可选参 guidance:str|None / block_id:str|None（默认 None，向后兼容）；lock/inject_evidence/dispute 签名逐字不变",
+    "contracts/ 与 flint/domain/ 同改、M1-001 保真（仅 import 行差异）；mypy --strict flint 净",
+    "确切 diff 写进 docs/trace/FE-CORE.md + v0.4-问题单"
+   ],
+   "outputs": [
+    "contract:regenerate_v2"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "frozen:protocols.py"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/m1/test_regenerate_contract_v2.py tests/m1/test_m1_001.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/protocols.py#InterventionService",
+    "tests/m1/test_m1_001.py"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-002",
+   "title": "生产章节起草 prompt 实体（版本化 + prompts.lock 登记）",
+   "depends_on": [
+    "M3-023"
+   ],
+   "acceptance": [
+    "prompts/ 下章节起草 prompt 正式实体（版本化），prompts.lock.json 登记（与 cluster_naming 同规格）",
+    "loader 按版本装载；prompt 含 SectionSpec 规格 + 证据注入位 + 三通道/引用约束提示",
+    "test-first：loader 装载 + 版本锁一致断言（离线）"
+   ],
+   "outputs": [
+    "prompt:section_draft"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/fe_core/test_section_prompt.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#SectionSpec",
+    "flint/compose/draft_channels.py"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-003",
+   "title": "生产 LLM BlockGenerator（qwen3.6/LocalProvider，替换桩，过通道门）",
+   "depends_on": [
+    "FE-CORE-002"
+   ],
+   "acceptance": [
+    "正式 LLM BlockGenerator 按 SectionSpec + 检索证据生成块，经 generator_factory 注入",
+    "_default_generator 桩保留（离线确定性测试用，NEVER 删）",
+    "生成输出过 draft_section_with_channels（fact_ids 必在账本内、三通道、账本外 DraftViolation 拒稿）",
+    "test-first 全离线：LLM 走录制回放/合成 fixture（M1-008），CI 零联网零付费（S2-7）"
+   ],
+   "outputs": [
+    "prod:block_generator"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "prompt:section_draft",
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/fe_core/test_prod_generator.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/compose/draft.py",
+    "flint/llm/local.py",
+    "flint/compose/draft_channels.py"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-004",
+   "title": "块级重生成架构（只重生成目标块，保护未选中兄弟块 + S2-5，版本+1）",
+   "depends_on": [
+    "FE-CORE-001",
+    "FE-CORE-003"
+   ],
+   "acceptance": [
+    "块址重生成：只重生成 block_id 目标块，**同节未选中兄弟块（含未保护的）逐字节不动**（关键承诺，test-first 断言）",
+    "保护块（locked∨author=='user'∨user_modified）NEVER 被改写（S2-5，复用 guard_rewrite 原样比对）",
+    "版本语义：重生成后 Deliverable 版本+1 换绑、节整体自洽；产出同过 draft_section_with_channels（M3-042 备忘）",
+    "test-first 全离线（合成 fixture）"
+   ],
+   "outputs": [
+    "backend:block_regen"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "contract:regenerate_v2",
+    "prod:block_generator",
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/fe_core/test_block_regen.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/intervene/regenerate.py",
+    "contracts/models.py#Block"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-005",
+   "title": "Job→worker 接线（派发 action=regenerate_section/block → PgRegenerateService）",
+   "depends_on": [
+    "FE-CORE-004"
+   ],
+   "acceptance": [
+    "worker 消费 action=regenerate_section/block → PgRegenerateService 用真生成器执行",
+    "regenerate Job 端到端真跑通（不再只前端 mock）；渐进事件复用 L1（PartialBlockEvent）",
+    "test-first 全离线（合成 fixture / 本地 PG）"
+   ],
+   "outputs": [
+    "backend:regen_executor"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "backend:block_regen",
+    "flint.api.interventions"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/fe_core/test_regen_worker.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/jobs/compose.py",
+    "flint/api/interventions.py"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-006",
+   "title": "guidance 穿透 + 铁律断言（指令只引导、NEVER 变事实）",
+   "depends_on": [
+    "FE-CORE-003",
+    "FE-CORE-004"
+   ],
+   "acceptance": [
+    "guidance 穿进块级生成 prompt（bounded），只引导方向（语气/侧重/结构）",
+    "**test-first 铁律断言**：指令要证据外的数字/事实 → 走 gap / 不断言，账本外事实经通道门拒稿，NEVER 编造出处",
+    "全离线"
+   ],
+   "outputs": [
+    "backend:guidance_passthrough"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "prompt:section_draft",
+    "backend:block_regen"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/fe_core/test_guidance_ironlaw.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/compose/draft_channels.py",
+    "contracts/models.py#GapHint"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-007",
+   "title": "前端块级指令框（复用 L1，S2-5 门控）+ 最小 i18n 地基",
+   "depends_on": [
+    "FE-CORE-005",
+    "FE-CORE-006",
+    "FE-004",
+    "FE-CORE-008"
+   ],
+   "acceptance": [
+    "非保护块旁指令框 → 调块级 guided-regenerate 端点 → 复用 L1 openJobStream 流式挂载重生成块",
+    "保护块无指令框（S2-5，复用 isProtected/availableBlockInterventions 门）；「指令重生成」并进干预动作集受同一门控",
+    "新文案走 i18n key（④留缝）；最小 i18n 地基（key 约定 + loader）随本轮落，旧串回填另起一卡",
+    "test-first 全离线（mock fetch + FakeEventSource，S2-7）"
+   ],
+   "outputs": [
+    "web:block_instruction_regen"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "backend:regen_executor",
+    "backend:guidance_passthrough",
+    "web:l2_intervention_ui",
+    "backend:naked_number_scan"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npm test -- --run",
+   "review_gate": true,
+   "context_refs": [
+    "web/components/BlockInterventionPanel.tsx",
+    "技术方案-v1.1.md#E10"
+   ]
+  },
+  {
+   "task_id": "FE-CORE-008",
+   "title": "正文裸数字 needs_review 软扫描（软标非硬拒，了结裸数字观察）",
+   "depends_on": [
+    "FE-CORE-003"
+   ],
+   "acceptance": [
+    "扫段落 TextSpan 带单位数字（初始单位集 %、万、亿、$，正则见 trace）→ 命中置 block.needs_review=True + review_severity=advisory + 回报触发 token；无出处 40%/500万/$3000 在正文 → 置位",
+    "防误报：日期/序号/个/节/项（计数类）无单位数字 → NEVER 标（test-first 断言）",
+    "结构化 fact/price 单元里的数字不由本扫描经手（走 validate_channels 硬门）",
+    "软标 NEVER 硬拒：NEVER 进 validate_channels hard violations、NEVER DraftViolation；走现成 Block.needs_review（L0 已渲染），不新造机制；functional 不就地改输入"
+   ],
+   "outputs": [
+    "backend:naked_number_scan"
+   ],
+   "milestone": "FE-CORE",
+   "inputs": [
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/fe_core/test_naked_numbers.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#Block",
+    "flint/compose/channels.py"
+   ]
+  },
+  {
+   "task_id": "FV-001",
+   "title": "前半程三读端点（广场/工作台/Gate，既有模型只读端点）",
+   "depends_on": [
+    "M3-058"
+   ],
+   "acceptance": [
+    "GET /plaza/hot?day= → 当日热点簇（clusters × heat_points，按 norm_score 排，带四源 arxiv/ghtrend/gtrends/weibo 分值 + category）；坏 day → 400",
+    "GET /clusters/{id}/evidence-cards → 证据卡（keyword_ids/flags/top_links）；未知簇 → 空列表",
+    "GET /jobs/{id}/verdict → Gate① 四分类全字段（verdict/key_citation_ids/rationale_fact_ids/competitors/constraints_checked/gaps，取自 snap-{job}-verdict）；无 → 404",
+    "既有模型只读、NEVER 改冻结件、NEVER 造数据；test-first 本地 PG 种子"
+   ],
+   "outputs": [
+    "api:views_read"
+   ],
+   "milestone": "FE-VIEWS",
+   "inputs": [
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/fe_views/test_read_endpoints.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#VerdictResult",
+    "flint/jobs/gate1.py",
+    "flint/api/deliverables.py"
+   ]
+  },
+  {
+   "task_id": "FV-002",
+   "title": "前半程三界面前端（广场/工作台/Gate 视图，复用 L0/L1，i18n，零自判）",
+   "depends_on": [
+    "FV-001",
+    "FE-004"
+   ],
+   "acceptance": [
+    "广场列簇（后端已排，前端零计算）+ 四源分值 + category；点簇 → onSelectCluster",
+    "工作台证据卡只读（引用=top_links 源链接据实，无编辑控件）；关联假设留白（Q-010）",
+    "Gate 四分类全引用据实呈现（verdict/引用/理由/竞品/gaps），**前端 NEVER 自判分类**（verdict 直取后端值）",
+    "文案全走 i18n key（④留缝，复用 web/lib/i18n.ts）；主题/关联假设界面位留白标 V1 不含",
+    "test-first 全离线（mock fetch，S2-7）"
+   ],
+   "outputs": [
+    "web:front_half_views"
+   ],
+   "milestone": "FE-VIEWS",
+   "inputs": [
+    "api:views_read",
+    "web:l0_renderer"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npm test -- --run",
+   "review_gate": true,
+   "context_refs": [
+    "web/lib/viewsClient.ts",
+    "技术方案-v1.1.md#E10"
+   ]
+  },
+  {
+   "task_id": "TS-001",
+   "title": "主题子系统持久化：origins/topic_seeds/topics/projects 四表迁移 0017 + 四 repo（照冻结件 Origin/TopicSeed/Topic/Project）",
+   "depends_on": [
+    "M3-058"
+   ],
+   "acceptance": [
+    "迁移 0017 建 origins/topic_seeds/topics/projects 四表；topics.embedding vector(1024) + HNSW cosine 索引；topic_seeds.hypothesis 可空（combo 必填、其余留空）",
+    "PgOriginStore/PgTopicSeedStore/PgTopicStore/PgProjectStore save→load 逐字段保真；WhyNow/Principal 判别嵌套往返；embedding 往返 1024 浮点",
+    "PgTopicStore.by_seed(seed_id) 按 topic_id 序返回该 seed 全部 Topic",
+    "只读消费冻结件 NEVER 改契约；mypy --strict 净（NEVER type:ignore，Literal 字段走 cast）"
+   ],
+   "outputs": [
+    "store:topic_subsystem",
+    "migration:0017"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "frozen:models.py"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_001_stores.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#Origin",
+    "contracts/models.py#TopicSeed",
+    "contracts/models.py#Topic",
+    "contracts/models.py#Project",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-002",
+   "title": "Origin 五类创建 + combo 校验（card_ids∈evidence_cards、2~5 卡跨簇允许、hypothesis 必填）+ Origin→TopicSeed",
+   "depends_on": [
+    "TS-001"
+   ],
+   "acceptance": [
+    "combo 校验：card_ids 数目 2~5 越界→拒；每 card_id 须 ∈ evidence_cards；hypothesis 缺失→拒；跨簇组合允许，NEVER 限同簇",
+    "idea/domain/competitor/document 四类各自 payload 建 Origin；hypothesis 留空",
+    "Origin→TopicSeed：combo keywords 取所选卡 keyword_ids 去重；hypothesis 透传；context_text 据入口上下文",
+    "verify 覆盖 越界/缺假设/未知卡/跨簇通过 四路"
+   ],
+   "outputs": [
+    "service:origin_create",
+    "service:origin_to_seed"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "store:topic_subsystem"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_002_origin.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#Origin",
+    "contracts/models.py#TopicSeed",
+    "产品描述文档-v0.3.1.md#2.2",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-003",
+   "title": "非 combo 入口关键词抽取器（LLMProvider 注入、合成 fixture、CI 离线；真机 qwen3.6=资源触点单独授权）",
+   "depends_on": [
+    "TS-002"
+   ],
+   "acceptance": [
+    "KeywordExtractor 经注入 LLMProvider（模型无关）从 idea/domain/competitor/document 上下文抽 keywords",
+    "全部测试用合成 fixture provider（零联网零付费）；prompt 版本化 prompts/keyword_extract@1",
+    "结构化输出失败重试 ≤2 后 job failed，NEVER 猜测（第三铁律）",
+    "真机 qwen3.6 录制/端到端未触（资源触点，STOP 报 owner 单独授权，同 FE-CORE-005 口径）"
+   ],
+   "outputs": [
+    "service:keyword_extract",
+    "prompt:keyword_extract@1"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:origin_to_seed"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_003_extract.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/protocols.py#LLMProvider",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-004",
+   "title": "Topic 生成器：prompt 实体 topic_gen@1 + LLM 生成 one_liner/两维 tag/why_now/keyword_mapping + embedding(embed.py) + GenerationRecord",
+   "depends_on": [
+    "TS-002",
+    "TS-003"
+   ],
+   "acceptance": [
+    "TopicGenerator 经注入 LLMProvider 按 seed 生成 one_liner/target_user_tag/form_factor_tag/why_now/keyword_mapping",
+    "embedding 由 flint/embed.py 对 one_liner 编码（确定性、非 LLM）得 1024 维",
+    "每次生成走 GenerationRecord 记 prompt_version+model（第三铁律可复现）；prompt 版本化 topic_gen@1",
+    "接地铁律：why_now.evidences.citation_id 须可溯，无据→speculative 或留空，LLM NEVER 编造出处",
+    "合成 fixture provider（CI 离线）；真机 qwen3.6 未触"
+   ],
+   "outputs": [
+    "service:topic_gen",
+    "prompt:topic_gen@1"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:origin_to_seed",
+    "service:keyword_extract"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_004_topicgen.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "contracts/models.py#Topic",
+    "contracts/models.py#WhyNow",
+    "contracts/protocols.py#LLMProvider",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-005",
+   "title": "[C1] 差异约束（两维 tag ≥1 不同 且 embedding 距离 ≥ δ、定点重生成 ≤3）+ [C2] why-now speculative + 诚实降级",
+   "depends_on": [
+    "TS-004"
+   ],
+   "acceptance": [
+    "combo 出 5~8 Topic 落硬校验；越下界触发补生成，越上界截断",
+    "[C1]：任意两 Topic target_user_tag/form_factor_tag ≥1 维不同 且 embedding cosine 距离 ≥ δ；违者定点重生成 ≤3 轮；δ 从嵌入空间提临时初值真跑，NEVER report_only",
+    "重生成 ≤3 仍不满足→诚实降级：少出 Topic + 标冲突，NEVER 硬造假差异",
+    "[C2]：why_now.evidences 空→speculative=true，排序降权"
+   ],
+   "outputs": [
+    "service:topic_differentiate"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:topic_gen"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_005_diff.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "产品描述文档-v0.3.1.md#2.2",
+    "docs/v0.4-问题单.md",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-006",
+   "title": "Project 建 + chosen_topic + Gate 集成（chosen Topic→派生 keywords→run_gate1 内核逐字不变；/analysis 加可选 topic_id 向后兼容）",
+   "depends_on": [
+    "TS-001",
+    "TS-005"
+   ],
+   "acceptance": [
+    "Origin→TopicSeed→topics 落库后建 Project{origin_id,topic_ids}；选 Topic 写 chosen_topic_id",
+    "Gate 集成：chosen Topic→取 keyword_mapping/keywords 派生 keywords→run_gate1(keywords) 内核逐字不变",
+    "/projects/{id}/analysis 加可选 topic_id：带 topic_id 走派生 keywords；不带仍走 body.keywords（旧测保持绿）",
+    "hypothesis=人类判断 NEVER 喂 gate；verdict↔topic 经 Project.chosen_topic_id 链接"
+   ],
+   "outputs": [
+    "service:project_gate",
+    "api:analysis_topic"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "store:topic_subsystem",
+    "service:topic_differentiate"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_006_gate.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/jobs/gate1.py",
+    "contracts/models.py#Project",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-007",
+   "title": "主题只读端点 GET /projects/{id}/topics、GET /topics/{id}（FV-001 只读模式）",
+   "depends_on": [
+    "TS-006"
+   ],
+   "acceptance": [
+    "GET /projects/{id}/topics 返回该 project topic_ids 对应 Topic 全字段（one_liner/两维 tag/why_now/keyword_mapping）；未知 project→空",
+    "GET /topics/{id} 返回单 Topic 全字段；未知→404",
+    "只读零写；未改冻结件"
+   ],
+   "outputs": [
+    "api:topic_read"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "store:topic_subsystem",
+    "service:project_gate"
+   ],
+   "estimate_cycles": 1,
+   "oneshot": true,
+   "verify_cmd": "pytest tests/topic/test_ts_007_read.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/api/views.py",
+    "contracts/models.py#Topic",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-008",
+   "title": "前端：combo 入口（选卡+写假设）+ 主题呈现（广场/工作台 two-tag/why-now 灰标/选 Topic）",
+   "depends_on": [
+    "TS-007",
+    "FV-002"
+   ],
+   "acceptance": [
+    "combo 入口：工作台复选 evidence cards（2~5）+ 写一句话假设→建 Origin→触发生成→建 Project",
+    "主题呈现：广场/工作台展示 Topic（one_liner/两维 tag/why_now speculative 灰标/keywords）；选 Topic→chosen_topic_id→发起 gate 分析",
+    "文案走 i18n key；纯呈现组件（复用 FV 视图模式）；tsc 净"
+   ],
+   "outputs": [
+    "web:topic_views"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "api:topic_read",
+    "api:analysis_topic"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npx vitest run topic",
+   "review_gate": true,
+   "context_refs": [
+    "web/lib/i18n.ts",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-009",
+   "title": "combo 生成编排器：Origin→生成 N 主题→[C1] 差异约束→建 Project（注入 provider，模型无关）",
+   "depends_on": [
+    "TS-004",
+    "TS-005",
+    "TS-006"
+   ],
+   "acceptance": [
+    "orchestrate_combo(provider, seed, embed_service, ...)：循环 generate_topic 生成目标数主题→differentiate([C1] δ 真跑、重生成 ≤3、诚实降级)→build_project；产出 (topics, records, outcome, project)",
+    "combo 目标 5~8：越下界 backfill 续生成、越上界截断；每主题走 GenerationRecord",
+    "provider 注入（模型无关），合成 fixture 全测（CI 离线，真机 qwen3.6=资源触点 NEVER 在此触）",
+    "接地铁律照走：why_now 集合外 citation 丢弃、evidences 空→speculative"
+   ],
+   "outputs": [
+    "service:combo_orchestrate"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:topic_gen",
+    "service:topic_differentiate",
+    "service:project_gate"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_009_orchestrate.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/topic/generate.py",
+    "flint/topic/differentiate.py",
+    "flint/topic/project.py",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-010",
+   "title": "POST /projects/combo 端点（建 Origin→编排 N 主题→建 Project）+ analysis topic_keywords_for 接线",
+   "depends_on": [
+    "TS-009",
+    "TS-001",
+    "TS-002"
+   ],
+   "acceptance": [
+    "POST /projects/combo：body {card_ids(2~5), hypothesis}→create_origin(combo 校验)→origin_to_seed→orchestrate_combo→持久化 origin/seed/topics/project→返 {project_id, topic_ids}",
+    "analysis topic_keywords_for 接线：resolver=PgTopicStore.load→topic_to_keywords，/analysis 带 topic_id 走真实派生（旧路径不变、旧测绿）",
+    "provider 注入（合成 fixture 测），真机 qwen3.6 NEVER 在此触",
+    "组合校验/接地照 TS-002/004，未改冻结件"
+   ],
+   "outputs": [
+    "api:combo_create"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:combo_orchestrate",
+    "service:origin_create",
+    "store:topic_subsystem"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_010_combo_api.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/api/analysis.py",
+    "flint/topic/create.py",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-011",
+   "title": "两次授权模型跑：qwen3.6 combo 端到端录制 + Claude 对比一轮 + 诚实质量报告（资源触点）",
+   "depends_on": [
+    "TS-009"
+   ],
+   "acceptance": [
+    "harness 跑 combo 端到端：qwen3.6（免费本地，load_local_tier）经 HttpReplay 录制 fixture（M1-008）→建 Origin→生成 5~8 主题→[C1] 真跑→建 Project；产出录 assets",
+    "Claude 对比一轮（load_anthropic_tier 读环境变量；未设→STOP 报 owner 去设，NEVER 贴 key）：同一 combo 经模型无关 provider 生成同批（仅一轮、几条），录制",
+    "qwen3.6 vs Claude 并排质量报告，如实评估差距（NEVER 粉饰）",
+    "replay 测试离线回放（CI 零联网），录制 fixture 是运行出处；两次跑外 NEVER 再跑模型"
+   ],
+   "outputs": [
+    "asset:topic_caliber",
+    "fixture:topic_runs"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:combo_orchestrate"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_011_replay.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/llm/production.py#load_local_tier",
+    "flint/testing/replay.py",
+    "harness/prod_caliber.py",
+    "docs/v0.4-问题单.md"
+   ]
+  },
+  {
+   "task_id": "TS-012",
+   "title": "demo 路由前端（广场→点簇→工作台→combo→主题→选主题→Gate→报告）+ 文档化本地启动",
+   "depends_on": [
+    "TS-010",
+    "TS-007",
+    "TS-008"
+   ],
+   "acceptance": [
+    "可点击 demo 路由把广场/工作台/combo 入口/主题呈现/Gate/报告串成端到端页面流（复用 L0/L1/L2 + 指令重生成）",
+    "文档化本地启动方式（README/docs）让人能点开跑 demo",
+    "纯呈现 + 客户端接线（mock fetch 测），tsc 净、既有 vitest 不回归",
+    "文案走 i18n key，未改冻结件"
+   ],
+   "outputs": [
+    "web:demo_route"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "api:combo_create",
+    "api:topic_read",
+    "web:topic_views"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "cd web && npx vitest run demo",
+   "review_gate": true,
+   "context_refs": [
+    "web/components/views/TopicListView.tsx",
+    "web/lib/i18n.ts",
+    "docs/主题子系统-方案.md"
+   ]
+  },
+  {
+   "task_id": "TS-013",
+   "title": "云端档读取器 load_deepseek_tier/load_openai_tier（仿 load_anthropic_tier）+ CloudOpenAIProvider 接 combo 生成器",
+   "depends_on": [
+    "TS-011"
+   ],
+   "acceptance": [
+    "load_deepseek_tier/load_openai_tier 严格读 FLINT_DEEPSEEK_*/FLINT_OPENAI_*（API_KEY/MODEL/USD_PER_MTOK_INPUT/_OUTPUT），base_url 厂商内置默认；缺任一→ProviderWiringError 只列缺失变量名，NEVER 回显 key",
+    "非数字价目→ProviderWiringError 不回显 key；空串视同缺失",
+    "CloudOpenAIProvider（V2-002 地基）接 combo 生成器：模型无关一行切档，付费按注入 ModelPricing 计量",
+    "env 注入可测（不读真实进程环境，CI 零外部依赖零联网）；harness check-cloud 自检两家 env 读取（未设→STOP 只列变量名）"
+   ],
+   "outputs": [
+    "service:cloud_tiers"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:combo_orchestrate"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_013_cloud_tiers.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "flint/llm/production.py#load_anthropic_tier",
+    "flint/llm/cloud.py",
+    "harness/topic_caliber.py"
+   ]
+  },
+  {
+   "task_id": "TS-014",
+   "title": "两次授权云端跑（DeepSeek + GPT 各一轮小额付费）+ 四家并排诚实报告 + 泛化离线回放",
+   "depends_on": [
+    "TS-013"
+   ],
+   "acceptance": [
+    "DeepSeek 一轮 + GPT 一轮（同一 combo、同一 hypothesis，经模型无关 CloudOpenAIProvider）录制 assets/topic_caliber/ + fixtures/topic_runs/（与 qwen/claude 同格式）",
+    "四家并排（qwen/claude/deepseek/gpt）如实报：①speculative 比例 ②是否真从白名单取证（citation_id=真实 card_id）③差异化 ④每轮成本；某家结构化取证不干净→如实报，NEVER 硬造",
+    "离线回放两云端档零联网忠实复现（ordered transport，耗尽 ReplayMiss）",
+    "key 绝不进仓/日志/会话/fixture（x-api-key 不录）；仅授权轮次 NEVER 超；env 未设→STOP 报 owner"
+   ],
+   "outputs": [
+    "asset:cloud_caliber",
+    "fixture:cloud_runs"
+   ],
+   "milestone": "TS",
+   "inputs": [
+    "service:cloud_tiers"
+   ],
+   "estimate_cycles": 2,
+   "oneshot": false,
+   "verify_cmd": "pytest tests/topic/test_ts_014_cloud_replay.py -q",
+   "review_gate": true,
+   "context_refs": [
+    "harness/topic_caliber.py",
+    "flint/llm/cloud.py",
+    "docs/主题生成-模型口径报告.md"
+   ]
+  }
+ ],
+ "dag_report": {
+  "acyclic": true,
+  "tasks": 232,
+  "total_cycles": 270,
+  "critical_path_cycles": 53,
+  "review_gates": [
+   "M1-007",
+   "M1-015",
+   "M1-029",
+   "M1-032",
+   "M1-034",
+   "M1-035",
+   "M1-037",
+   "M1-039",
+   "M1-040",
+   "M1-041",
+   "M2-003",
+   "M2-014",
+   "M2-015",
+   "M2-023",
+   "M2-027",
+   "M2-029",
+   "M2-032",
+   "M2-038",
+   "M2-039",
+   "M2-040",
+   "M2-043",
+   "M2-051",
+   "M2-052",
+   "M3-003",
+   "M3-006",
+   "M3-013",
+   "M3-016",
+   "M3-023",
+   "M3-025",
+   "M3-028",
+   "M3-031",
+   "M3-032",
+   "M3-037",
+   "M3-042",
+   "M3-048",
+   "M3-051",
+   "M3-060",
+   "M3-065",
+   "M3-066",
+   "M4-007",
+   "M4-015",
+   "M4-023",
+   "M4-029",
+   "M4-036",
+   "M4-038",
+   "M4-040",
+   "M4-041",
+   "M4-044",
+   "FE-000",
+   "FE-001",
+   "FE-002",
+   "FE-003",
+   "FE-004",
+   "FE-CORE-001",
+   "FE-CORE-002",
+   "FE-CORE-003",
+   "FE-CORE-004",
+   "FE-CORE-005",
+   "FE-CORE-006",
+   "FE-CORE-007",
+   "FE-CORE-008",
+   "FV-001",
+   "FV-002",
+   "TS-001",
+   "TS-002",
+   "TS-003",
+   "TS-004",
+   "TS-005",
+   "TS-006",
+   "TS-007",
+   "TS-008",
+   "TS-009",
+   "TS-010",
+   "TS-011",
+   "TS-012",
+   "TS-013",
+   "TS-014"
+  ],
+  "verify_coverage": 1.0,
+  "terminal_besides_exit": [],
+  "total_estimate_days_ref": 63.25,
+  "errors": []
+ },
+ "audience": "ai_executor",
+ "rules": {
+  "cycle_def": "一次 装载→执行→验证→落盘 闭环",
+  "task_cycle_max": 2,
+  "context_budget_tokens": 40000,
+  "global_context": [
+   "CLAUDE.md#S2",
+   "CLAUDE.md#S3"
+  ],
+  "verify_convention": "每任务 tests/{milestone}/test_{task_id}.py；verify_cmd exit 0 = 机器验收",
+  "review_gate": "true = 通过审核 agent 复核后才解锁下游任务",
+  "estimate_days_note": "人日估算降为参考值保留（v0.3.3 §5）"
+ },
+ "m2_expanded_at": "2026-07-28T05:00:00+00:00",
+ "m3_expanded_at": "2026-07-29T10:00:00+00:00",
+ "m4_expanded_at": "2026-07-30T21:00:00+00:00",
+ "ts_expanded_at": "2026-07-30T14:00:00+00:00",
+ "ts2_expanded_at": "2026-07-31T00:00:00+00:00",
+ "ts3_expanded_at": "2026-07-31T02:00:00+00:00"
+}

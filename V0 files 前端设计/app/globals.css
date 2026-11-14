@@ -1,0 +1,411 @@
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   Flint 设计 token —— 唯一真相集中于此，组件内不得写死颜色。
+   Tailwind v4：主题即 @theme inline，无 tailwind.config.ts。
+
+   ── 双主题 ──────────────────────────────────────────────
+   :root  = 日间（纸感，默认）
+   .dark  = 夜间（暗色），由 next-themes 打在 <html> 上；
+            defaultTheme=system → 首次访问跟随 prefers-color-scheme，
+            手动切换后写 localStorage 持久化。
+   两套**必须取值不同**：token 值相同 = 主题没翻转。
+
+   ── 语义命名（本轮由 Tailwind 调色板名改为语义名）──────────
+   旧 --stone-50 / --stone-100 是 Tailwind 调色板形状的名字，
+   在暗色下「stone-50 = #0A0A0B」自相矛盾。现改为：
+     --base   页底      （旧 stone-50）
+     --surface 卡面     （不变）
+     --raised 抬升层    （旧 stone-100）
+
+   ── 对比度（WCAG 2.1 实算，机器可验：scripts/check_contrast.py）──
+   判据：正文 ≥4.5 / 大字 ≥3.0。日间最差底 = --raised #E3E5DA，
+   夜间最差底 = --raised #232326，下列取值按**最差底**选定。
+   ============================================================ */
+
+:root {
+  /* ── 日间 · 底与面（纸感三阶，取自 Claude _ds） ── */
+  --base: #edeee6;    /* 生纸底，微带灰绿 */
+  --surface: #f7f8f3; /* 卡面，比纸亮一档 */
+  --raised: #e3e5da;  /* 次级底 / 抬升层（日间最差对比底） */
+
+  /* ── 日间 · 墨三阶 ──
+     _ds 的 --ink-2 #5A6A6E 在 --raised 上只有 4.43、--ink-3 #8B9799 只有 2.57，
+     **两者均不达正文标准**，故未照抄：本项目 11px 元信息按正文级要求。
+     现取值在最差底上：ink 11.63 / ink-2 6.02 / ink-3 4.84，三阶全过 AA 且层次不塌。 */
+  --ink: #1b2a2e;
+  --ink-2: #46565a;
+  --ink-3: #54646a;
+
+  --rule: #d2d6c9;
+  /* --rail 由 #B9BFAE 加深到 #7E866F：rail 承载「虚线 = unknown / degraded / 保护只读」
+     这套状态词汇，属传达信息的非文本元素，须过 3:1（原值压卡面只有 1.77）。
+     --rule 是纯分隔细线、不承载状态，故不入对比度门。 */
+  --rail: #7e866f;
+
+  /* ── 日间 · 告警色 ──
+     MUST 双值：#FF6B4A 在纸底只有 2.41（FAIL），故日间必须用铁锈 #B4472C（纸底 4.63 PASS）。
+     只属于 blocking / 409 EXPORT_BLOCKED / 503；装饰与强调 NEVER 挪用。
+     --spark-wash 由 _ds 的 #F0DAD2 调亮到 #F9EAE6：
+     spark 文字压在 wash 底上原为 4.04（FAIL），现 4.63（PASS）。 */
+  --spark: #b4472c;
+  --spark-wash: #f9eae6;
+
+  /* ── 日间 · 结构色与强调色 ──
+     --sulfur 硫磺在纸底仅 1.57 → **NEVER 作文字色**，只能作背景（黄底 + 深字，
+     深字 --on-accent 压其上为 8.07）。--indigo 作链接/结构（纸底 7.51）。 */
+  --indigo: #2e4a7d;
+  --sulfur: #e8b93c;
+  --on-accent: #1b2a2e;
+  --cta-bg: var(--sulfur);
+  --cta-fg: var(--on-accent);
+
+  /* ── 日间 · 源色（仅 2px 方形类别印记，不表强弱） ── */
+  --src-trends: #3f6b8e;
+  --src-weibo: #a65a4e;
+  --src-github: #4a5d52;
+  --src-arxiv: #6b5c7a;
+
+  /* ── 首页 glow 品牌渐变：仅夜间首页使用。
+     日间 NEVER 用光晕（浅底上发光会糊成脏污），日间首页走硫磺 CTA + 克制留白。 ── */
+  --glow-1: #6e8bff;
+  --glow-2: #a855f7;
+  --glow-3: #22d3ee;
+
+  --radius: 4px;
+  --radius-card: 6px;
+  --radius-cta: 6px;
+  --radius-hero: 40px;
+}
+
+.dark {
+  /* ── 夜间 · 底与面 ── */
+  --base: #0a0a0b;
+  --surface: #1a1a1c;
+  --raised: #232326;
+
+  /* ── 夜间 · 墨三阶（最差底 --raised #232326：15.77 / 6.17 / 4.99） ── */
+  --ink: #f2f4f7;
+  --ink-2: #9ca3af;
+  --ink-3: #8a929e;
+
+  --rule: rgba(255, 255, 255, 0.1);
+  /* 同上：0.20 压卡面只有 1.90，提到 0.36 得 3.34 过门。 */
+  --rail: rgba(255, 255, 255, 0.36);
+
+  /* ── 夜间 · 告警色：铁锈 #B4472C 在暗底只有 3.21（FAIL），故夜间提亮为 #FF6B4A（卡面 6.17 PASS）。 ── */
+  --spark: #ff6b4a;
+  --spark-wash: #2e1a16;
+
+  /* ── 夜间 · 结构色与强调色：CTA 走反白按钮，不用硫磺（暗底上黄块过跳且抢告警注意力）。 ── */
+  --indigo: #8fa9d8;
+  --sulfur: #e8b93c;
+  --on-accent: #0a0a0b;
+  --cta-bg: var(--ink);
+  --cta-fg: var(--base);
+
+  /* ── 夜间 · 源色（提亮，对卡面均 ≥6.1） ── */
+  --src-trends: #6fa8dc;
+  --src-weibo: #e08b7e;
+  --src-github: #7fb39a;
+  --src-arxiv: #a98fc4;
+}
+
+/* shadcn 变量映射：两套主题共用同一组映射，值随上面的语义 token 自动翻转。 */
+:root,
+.dark {
+  --background: var(--base);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--base);
+  --secondary: var(--raised);
+  --secondary-foreground: var(--ink);
+  --muted: var(--raised);
+  --muted-foreground: var(--ink-2);
+  --accent: var(--raised);
+  --accent-foreground: var(--ink);
+  --destructive: var(--spark);
+  --destructive-foreground: var(--base);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: var(--ink-2);
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: var(--font-fraunces), var(--font-noto-serif-sc), 'Songti SC', 'SimSun', Georgia, serif;
+  --font-serif: var(--font-fraunces), var(--font-noto-serif-sc), 'Songti SC', 'SimSun', Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Flint 语义色（供 text- / bg- / border- 工具类使用） */
+  --color-base: var(--base);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rail: var(--rail);
+  --color-spark: var(--spark);
+  --color-spark-wash: var(--spark-wash);
+  --color-indigo: var(--indigo);
+  --color-sulfur: var(--sulfur);
+  --color-on-accent: var(--on-accent);
+  --color-cta-bg: var(--cta-bg);
+  --color-cta-fg: var(--cta-fg);
+  --color-src-trends: var(--src-trends);
+  --color-src-weibo: var(--src-weibo);
+  --color-src-github: var(--src-github);
+  --color-src-arxiv: var(--src-arxiv);
+
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius-card);
+  --radius-card: var(--radius-card);
+  --radius-cta: var(--radius-cta);
+  --radius-hero: var(--radius-hero);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-variant-numeric: normal;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  /* 所有类型化出处值、id、分值一律等宽对齐 */
+  .tabular,
+  code,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  /* —— 颗粒质地（纸感 DNA）：日间明显、夜间压到几乎不可见（暗底上起雾） —— */
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .dark .noise-overlay::after {
+    opacity: 0.022;
+  }
+
+  /* —— 出处槽轨（竖向虚线） —— */
+  .gutter-rail {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--rail) 0,
+      var(--rail) 3px,
+      transparent 3px,
+      transparent 7px
+    );
+    background-size: 1px 100%;
+    background-repeat: no-repeat;
+  }
+
+  /* —— 缺口切口：有物理感的撕边 + 压印。两套主题各自的内凹方向。 —— */
+  .gap-cut {
+    position: relative;
+    background-color: var(--raised);
+    box-shadow:
+      inset 0 3px 6px -4px rgba(27, 42, 46, 0.3),
+      inset 0 -3px 6px -4px rgba(27, 42, 46, 0.2);
+  }
+  .dark .gap-cut {
+    background-color: color-mix(in srgb, var(--base) 70%, #000);
+    box-shadow:
+      inset 0 3px 8px -4px rgba(0, 0, 0, 0.9),
+      inset 0 -3px 8px -4px rgba(0, 0, 0, 0.7);
+  }
+  .gap-cut::before,
+  .gap-cut::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background-image:
+      linear-gradient(45deg, var(--background) 50%, transparent 50%),
+      linear-gradient(-45deg, var(--background) 50%, transparent 50%);
+    background-size: 12px 8px;
+    background-repeat: repeat-x;
+    background-position: bottom;
+  }
+  .gap-cut::before {
+    top: 0;
+    transform: scaleY(-1);
+  }
+  .gap-cut::after {
+    bottom: 0;
+  }
+
+  /* —— 硫磺高亮划线（日间强调；夜间降为下划线，不铺黄块） —— */
+  .sulfur-underline {
+    background-image: linear-gradient(
+      transparent 62%,
+      var(--sulfur) 62% 94%,
+      transparent 94%
+    );
+  }
+
+  /* —— 功能屏唯一动效：火星击打（blocking 标出现时一次） —— */
+  .spark-strike {
+    animation: spark-strike 200ms cubic-bezier(0.2, 0.8, 0.2, 1) 1;
+    transform-origin: center;
+  }
+  @keyframes spark-strike {
+    0% {
+      transform: scale(0.55) rotate(-6deg);
+      opacity: 0;
+    }
+    45% {
+      transform: scale(1.18) rotate(1deg);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+
+  /* ==========================================================
+     glow 语言 —— **仅夜间首页**。日间 NEVER 用（浅底发光 = 脏污）。
+     故每条都挂在 .dark 作用域下，日间自动退化为无光晕的实边卡。
+     ========================================================== */
+  .glow-frame {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-hero);
+    background: var(--surface);
+  }
+  .dark .glow-frame {
+    border: 8px solid transparent;
+    background-image:
+      linear-gradient(var(--surface), var(--surface)),
+      linear-gradient(135deg, var(--glow-1), var(--glow-2) 52%, var(--glow-3));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  .glow-halo {
+    position: relative;
+  }
+  .dark .glow-halo::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    z-index: -1;
+    border-radius: calc(var(--radius-hero) + 6px);
+    background: linear-gradient(135deg, var(--glow-1), var(--glow-2) 52%, var(--glow-3));
+    filter: blur(45px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .glow-bloom {
+    display: none;
+  }
+  .dark .glow-bloom {
+    display: block;
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(45px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* 标题强调：日间用硫磺划线（黄底深字），夜间用冷色渐变字。 */
+  .accent-word {
+    background-image: linear-gradient(
+      transparent 62%,
+      var(--sulfur) 62% 94%,
+      transparent 94%
+    );
+    color: var(--ink);
+  }
+  .dark .accent-word {
+    background-image: linear-gradient(100deg, var(--glow-1), var(--glow-2) 50%, var(--glow-3));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* 入场：淡入 + 上移 30px，用 --enter-delay 错开。纯 CSS，零动效库。 */
+  .enter {
+    animation: enter-rise 620ms cubic-bezier(0.22, 0.8, 0.28, 1) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+  @keyframes enter-rise {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* —— 全站兜底：用户要求减少动效时，停掉一切动画/过渡/平滑滚动。 —— */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .enter {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

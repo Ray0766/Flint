@@ -1,0 +1,987 @@
+{
+  "_note": "机审结果，非人工审校。human_confirmed 由人改成 true。",
+  "reviewed_by_model": "deepseek-chat",
+  "human_confirmed": false,
+  "entries": {
+    "app.name": {
+      "kind": "ok",
+      "note": "Correct and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.protected.readonly": {
+      "kind": "ok",
+      "note": "Correct punctuation and meaning.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.action.lock": {
+      "kind": "ok",
+      "note": "Simple, correct action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.action.regenerate": {
+      "kind": "ok",
+      "note": "Correct action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.action.dispute": {
+      "kind": "ok",
+      "note": "Correct action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.ledger.advanced": {
+      "kind": "grammar",
+      "note": "Missing article 'the' before 'ledger' and 'confirm' is ambiguous without a subject.",
+      "suggestion": "Ledger advanced to v{version}; confirm to resubmit.",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.dispute.done": {
+      "kind": "ok",
+      "note": "Correct and concise.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.chart.caption": {
+      "kind": "machine-translated",
+      "note": "Parenthetical reads like a technical note from a spec, not user-facing copy.",
+      "suggestion": "Chart {id} (data from derived_from; no front-end computation)",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.quality_card.ref": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.gap_notice.ref": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "evidence.submit": {
+      "kind": "ok",
+      "note": "Correct action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "evidence.ledger_version": {
+      "kind": "ok",
+      "note": "Correct and informative.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "evidence.conflict": {
+      "kind": "grammar",
+      "note": "Missing article 'the' before 'ledger' and 'auto-replay' is awkward.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "library.filtered.empty": {
+      "kind": "ok",
+      "note": "Natural and friendly.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "library.empty.cta": {
+      "kind": "ok",
+      "note": "Natural and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "library.empty": {
+      "kind": "ok",
+      "note": "Correct and simple.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.section.verdict": {
+      "kind": "terminology",
+      "note": "Uses 'Gate①' symbol which is inconsistent with plain English elsewhere; suggest spelling out.",
+      "suggestion": "Gate 1 verdict",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.section.evidence": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.verdict.loading": {
+      "kind": "ok",
+      "note": "Correct and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.verdict.unjudged": {
+      "kind": "terminology",
+      "note": "Same 'Gate①' symbol issue as above.",
+      "suggestion": "This hotspot has not been through Gate 1 yet",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.verdict.error": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.verdict.citations": {
+      "kind": "ok",
+      "note": "Correct and concise.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.evidence.loading": {
+      "kind": "ok",
+      "note": "Correct and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.evidence.empty": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.evidence.error": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "analysis.evidence.counts": {
+      "kind": "ok",
+      "note": "Clear and correctly formatted with placeholders.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "source.columns.empty": {
+      "kind": "ok",
+      "note": "Grammatically correct and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "source.columns.unknown_region": {
+      "kind": "ok",
+      "note": "Simple, correct, and consistent with similar labels.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "share.menu.add_to_workbench": {
+      "kind": "ok",
+      "note": "Correct and concise.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "share.menu.friend": {
+      "kind": "ok",
+      "note": "Natural phrasing with a clear parenthetical.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "share.menu.share_link": {
+      "kind": "ok",
+      "note": "Correct and descriptive.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "share.menu.add_failed": {
+      "kind": "ok",
+      "note": "Grammatically correct, though 'retry' is a bit terse but acceptable.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.analysis.drawer.title": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.analysis.drawer.close": {
+      "kind": "ok",
+      "note": "Correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.role.primary": {
+      "kind": "ok",
+      "note": "Correct imperative.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.role.secondary": {
+      "kind": "ok",
+      "note": "Correct imperative.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.role.auxiliary": {
+      "kind": "ok",
+      "note": "Correct imperative.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.role.demoted": {
+      "kind": "grammar",
+      "note": "Missing article before 'previous primary' and 'now secondary' is slightly awkward.",
+      "suggestion": "The previous primary {node} is now secondary",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.role.failed": {
+      "kind": "ok",
+      "note": "Correct and consistent with other failure messages.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.edge.hypothesis.label": {
+      "kind": "ok",
+      "note": "Natural question phrasing.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.edge.hypothesis.required": {
+      "kind": "grammar",
+      "note": "Run-on sentence; semicolon or period needed.",
+      "suggestion": "Write a hypothesis to connect them. An edge without one cannot say why they are linked.",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.edge.create_failed": {
+      "kind": "ok",
+      "note": "Correct and consistent.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.edge.submit": {
+      "kind": "ok",
+      "note": "Correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.edge.cancel": {
+      "kind": "ok",
+      "note": "Correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.summary.primary": {
+      "kind": "ok",
+      "note": "Correct and concise.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.summary.no_primary": {
+      "kind": "ok",
+      "note": "Correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.summary.edges": {
+      "kind": "ok",
+      "note": "Correct pluralization.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.summary.hypotheses": {
+      "kind": "ok",
+      "note": "Correct and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.gate.missing_hypotheses": {
+      "kind": "grammar",
+      "note": "Missing article before 'edges' and comma splice.",
+      "suggestion": "{count} edges have no hypothesis — click to locate them.",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.gate.generate": {
+      "kind": "ok",
+      "note": "Correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.batch.primary": {
+      "kind": "ok",
+      "note": "Clear and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.batch.secondary": {
+      "kind": "ok",
+      "note": "Clear and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.batch.failed": {
+      "kind": "ok",
+      "note": "Concise and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.tree.detached": {
+      "kind": "ok",
+      "note": "Natural phrasing.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.mobile.readonly": {
+      "kind": "grammar",
+      "note": "Missing article before 'desktop' and slightly awkward comma usage.",
+      "suggestion": "View-only on touch devices: drag and connect on a desktop computer",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "graph.mobile.connect": {
+      "kind": "ok",
+      "note": "Simple and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.empty": {
+      "kind": "ok",
+      "note": "Natural and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.empty.hint": {
+      "kind": "grammar",
+      "note": "Missing article before 'plaza' and 'card' is singular but 'relations' plural is fine; also 'drag its card in' is slightly informal but acceptable.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.empty.cta": {
+      "kind": "ok",
+      "note": "Clear and direct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.tab.graph": {
+      "kind": "ok",
+      "note": "Standard label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.tab.tree": {
+      "kind": "ok",
+      "note": "Standard label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.preset.ai": {
+      "kind": "ok",
+      "note": "Clear and consistent.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.ai_panel.toggle": {
+      "kind": "ok",
+      "note": "Clear label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.chat.empty": {
+      "kind": "ok",
+      "note": "Natural and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.chat.streaming": {
+      "kind": "ok",
+      "note": "Standard ellipsis usage.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.renderer.title": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.tools.toggle": {
+      "kind": "ok",
+      "note": "Clear label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.tools.summary": {
+      "kind": "grammar",
+      "note": "Missing article before 'failed' count; should be 'failed' as a noun is fine but reads slightly clipped.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.clarify.defer": {
+      "kind": "ok",
+      "note": "Natural and idiomatic.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.clarify.defer_all": {
+      "kind": "ok",
+      "note": "Clear and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.clarify.pending": {
+      "kind": "ok",
+      "note": "Clear and concise.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.clarify.blocked": {
+      "kind": "machine-translated",
+      "note": "The phrasing 'leaving them open forces the system to guess' is wordy and literal; a native copy would be more direct.",
+      "suggestion": "Answer the questions above first — otherwise the system will guess what you mean",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.clarify.input_placeholder": {
+      "kind": "ok",
+      "note": "Natural and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.comment.degraded": {
+      "kind": "grammar",
+      "note": "Missing article before 'element' and 'pinned to' is fine but 'is gone' is okay; also 'may be off' is fine.",
+      "suggestion": "The element this comment was pinned to is gone; its position may be off",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.comment.ask_ai": {
+      "kind": "ok",
+      "note": "Clear and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.check.passed": {
+      "kind": "ok",
+      "note": "Clear and concise, consistent with the failed variant.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.check.failed": {
+      "kind": "ok",
+      "note": "Parallel structure with passed, correct grammar.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.check.unreported": {
+      "kind": "machine-translated",
+      "note": "Parenthetical 'not run or no reply' sounds literal and clunky; native copy would be simpler.",
+      "suggestion": "{name}: no result (not run or no response)",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.present.page_title": {
+      "kind": "ok",
+      "note": "Standard slide indicator phrasing.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.model.unconfigured": {
+      "kind": "ok",
+      "note": "Clear and actionable, consistent with config terminology.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.doc.outline": {
+      "kind": "ok",
+      "note": "Simple and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.dep.action": {
+      "kind": "machine-translated",
+      "note": "Long, run-on sentence with awkward 'calls out to third parties' — reads like a literal translation of a technical note.",
+      "suggestion": "These external references were removed. Switch to self-hosted assets (put them under _ds or inline them), otherwise the delivered file will depend on third-party servers.",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.shortcut.send": {
+      "kind": "ok",
+      "note": "Short and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.shortcut.undo": {
+      "kind": "ok",
+      "note": "Short and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.shortcut.toggle_ai": {
+      "kind": "ok",
+      "note": "Standard toggle phrasing.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.shortcut.tab_graph": {
+      "kind": "ok",
+      "note": "Consistent with tab_tree.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.shortcut.tab_tree": {
+      "kind": "ok",
+      "note": "Consistent with tab_graph.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "design.shortcut.palette": {
+      "kind": "ok",
+      "note": "Standard command palette phrasing.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "block.claim.disputed": {
+      "kind": "ok",
+      "note": "Simple and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "instruct.placeholder": {
+      "kind": "ok",
+      "note": "Natural and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "instruct.submit": {
+      "kind": "ok",
+      "note": "Clear action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "instruct.streaming": {
+      "kind": "ok",
+      "note": "Standard progressive verb form.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "instruct.done": {
+      "kind": "ok",
+      "note": "Simple past tense, correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "instruct.failed": {
+      "kind": "ok",
+      "note": "Parallel with done, correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "plaza.title": {
+      "kind": "terminology",
+      "note": "'Hotspot plaza' is odd; 'plaza' is not a common English term for a feed — consider 'Hotspot hub' or 'Trending plaza' for consistency with product naming.",
+      "suggestion": "Hotspot hub (four sources, daily)",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "plaza.heat": {
+      "kind": "terminology",
+      "note": "'Heat' is a literal translation of 热度; in English UI, 'Popularity' or 'Trending score' is more natural.",
+      "suggestion": "Popularity",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "plaza.empty": {
+      "kind": "ok",
+      "note": "Clear and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "plaza.topic_deferred": {
+      "kind": "machine-translated",
+      "note": "Uses «» quotes and 'pending Q-009' — reads like an internal note, not user-facing copy.",
+      "suggestion": "Topic layer not included in V1 — pending Q-009",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.title": {
+      "kind": "ok",
+      "note": "Clear and consistent with 'evidence cards' concept.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.flags": {
+      "kind": "ok",
+      "note": "Simple and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.links": {
+      "kind": "ok",
+      "note": "Clear and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.hypothesis_deferred": {
+      "kind": "grammar",
+      "note": "Quotation marks around 'Linked hypothesis' are unnecessary and the dash usage is awkward; also 'pending' should be followed by a noun phrase.",
+      "suggestion": "Linked hypothesis not in V1 — pending Q-010",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "gate.title": {
+      "kind": "machine-translated",
+      "note": "The '①' symbol and 'feasibility verdict' phrasing feel like a literal carryover from Chinese formatting, not natural product copy.",
+      "suggestion": "Gate feasibility verdict",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "gate.verdict": {
+      "kind": "ok",
+      "note": "Simple and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "gate.citations": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "gate.rationale": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "gate.competitors": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "gate.gaps": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "gate.not_ready": {
+      "kind": "ok",
+      "note": "Natural and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "combo.title": {
+      "kind": "terminology",
+      "note": "Uses 'evidence card combo' but other entries say 'evidence cards' — inconsistent pluralization.",
+      "suggestion": "Linked hypothesis · evidence cards combo",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "combo.hint": {
+      "kind": "ok",
+      "note": "Natural and clear.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "combo.hypothesis_placeholder": {
+      "kind": "ok",
+      "note": "Natural placeholder text.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "combo.submit": {
+      "kind": "ok",
+      "note": "Clear action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "combo.count_error": {
+      "kind": "ok",
+      "note": "Clear and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.title": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.target_user": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.form_factor": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.keywords": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.why_now": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.speculative": {
+      "kind": "machine-translated",
+      "note": "The parenthetical 'weighted down' is a literal translation of a Chinese concept; native copy would say 'downweighted' or 'given less weight'.",
+      "suggestion": "Speculative (no timing evidence; downweighted)",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.choose": {
+      "kind": "ok",
+      "note": "Clear action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.chosen": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "topic.empty": {
+      "kind": "ok",
+      "note": "Clear and standard.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "demo.load_plaza": {
+      "kind": "ok",
+      "note": "Clear and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "demo.view_progress": {
+      "kind": "ok",
+      "note": "Clear and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "app.title": {
+      "kind": "ok",
+      "note": "Correct and concise product name.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "app.description": {
+      "kind": "ok",
+      "note": "Clear and natural English for a product tagline.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "deliverable.not_found": {
+      "kind": "ok",
+      "note": "Standard error message with placeholder, grammatically correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "job.status.connecting": {
+      "kind": "ok",
+      "note": "Parenthetical status is acceptable in UI context.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "card.name.translated_mark": {
+      "kind": "terminology",
+      "note": "Abbreviation 'MT' is not explained elsewhere; consider using 'Machine translated' for clarity.",
+      "suggestion": "Machine translated",
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "quote.expand_original": {
+      "kind": "ok",
+      "note": "Clear and natural action label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "settings.region.label": {
+      "kind": "ok",
+      "note": "Simple and correct label.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "deref.unavailable": {
+      "kind": "ok",
+      "note": "Concise and clear error message.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.switch.label": {
+      "kind": "ok",
+      "note": "Natural and understandable.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.switch.empty": {
+      "kind": "ok",
+      "note": "Simple and correct.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.switch.archive": {
+      "kind": "ok",
+      "note": "Standard verb for this action.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.switch.unarchive": {
+      "kind": "terminology",
+      "note": "'Restore' is used in the archived section note, but here it's 'Unarchive' — inconsistent.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.switch.showArchived": {
+      "kind": "ok",
+      "note": "Clear and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.switch.archivedSection": {
+      "kind": "ok",
+      "note": "Parenthetical explanation is clear and natural.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    },
+    "workbench.switch.lastOne": {
+      "kind": "ok",
+      "note": "Grammatically correct and explains consequence clearly.",
+      "suggestion": null,
+      "needs_review": true,
+      "reviewed_by": "machine"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+body{margin:0;background-color:var(--paper);background-image:var(--tex-paper);color:var(--ink);font-family:var(--font-body);font-size:var(--text-ui);line-height:var(--lh-ui);letter-spacing:var(--ls-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--ink);text-decoration-color:var(--sulfur);text-decoration-thickness:2px}
+::selection{background:var(--sulfur-soft);color:var(--ink)}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.num,code,kbd{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}

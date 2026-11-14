@@ -1,0 +1,16 @@
+{
+ "name": "three",
+ "case_id": "gold-C-04",
+ "tier": "C_opportunity",
+ "category": "cat-quantum×cat-geology",
+ "goal": "量子传感地质勘探：量子磁力仪跨入地质勘探大类（M0 跨大类判例回归）",
+ "task_count": 6,
+ "competition_task_ids": [
+  "T-04"
+ ],
+ "gates": {
+  "dag_errors": 0,
+  "registry_violations": 0,
+  "export_allowed": true
+ }
+}

@@ -1,0 +1,241 @@
+/* ── v4 调色板（PAL-01 / DEC-060 第一条，2026-08-12）───────────────────
+ *
+ * 唯一颜色来源仍是**这一个文件**——`DEC-060` 换的是**值**不是位置。
+ * 值取自 owner 2026-08-12 放进来的交接包
+ * `前端设计/应用前端设计需求/design-handoff/Flint v4.dc.html` 那两行 body 声明。
+ *
+ * **v4 的 12 个变量名（--bg / --panel / --accent …）NEVER 进本仓**：只搬值。
+ * 搬了名字的代价是两套命名并存（`--bg` 与 `--paper`、`--accent` 与 `--sulfur`），
+ * 而组件读的是哪一套**在屏上看不出来**——两套值一旦分叉，只会显得「有几处颜色不太对」。
+ * 下面每一行的注释里记着它对应 v4 的哪个变量，那是这次换板留下的线索。
+ *
+ * 组件侧改动为 0：它们本来就只读 token。这一条是**数得出来**的——
+ * 换板前的 `var()` 出现次数与 `web/` 下每个文件的内容指纹在
+ * `.ui-probe/palette/var-usage-before.json` 里，判据 `tests/v041/test_palette_v4.py` 逐条比。
+ *
+ * ## 两处**没有照抄 v4 原值**，因为照抄过不了本仓既有的线
+ *
+ * ① 明色 `--ink-2`：v4 `--sub #867b67` 在 `--paper #f2ede4` 上只有 **3.57**，
+ *    低于 AA 正文线 4.5。压暗到 **#736a59** 实测 **4.58**。
+ * ② 暗色 `--ink`：v4 `#ede5d7` 在暗 `--surface #211d17` 上 **13.4**，
+ *    低于明色同一对的 14.79——`DARK-01` acceptance③ 要求暗色**不退化**。
+ *    提亮到 **#f9f0e2** 实测 **14.84**。
+ *
+ * 两处的改前值、改后值、实测比值都写在上面这两行里，判据也逐条比对它们。
+ *
+ * ## `--indigo` 与 `--sulfur` 在 v4 里是同一档
+ *
+ * v4 自己写的就是 `a{color:var(--accent)}`——它**没有第二个性格色**，
+ * 「结构 / 链接」与「高亮 / CTA」共用同一个 accent。所以这两个 token 在本版取同值。
+ * **这不是拷贝时的手滑，是照 v4 原意做的合并**；反悔只需把 `--indigo` 一族三行
+ * 改回各自的蓝值（明 `#2E4A7D` / `#DDE3EE` / `#8FA3C4`，暗 `#8AA9DE` / `#1E2A3E` / `#5C7099`）。
+ *
+ * ## soft 一族是**算出来的**，不是另挑的色
+ *
+ * v4 那边 `--ok-soft` / `--bad-soft` / `--warn-soft` 是 `rgba(...)`，而 `_ds` 的 soft
+ * 一族全是不透明 hex。落地值 = **v4 的 rgba 合成到同主题 `--bg` 上**。
+ * `--indigo-mist`（降权档）v4 没有，按「accent 与同主题 soft 的逐通道中点」定，
+ * 判据算一遍再比——随手挑一个色号的话，下一个人无从判断它是量出来的还是拍出来的。
+ *
+ * ## 缺一格：`--warn` 一族没落
+ *
+ * 卡面要落 `--warn`/`--warn-soft`，而 `DEC-060` 把 `--warn` 逐字列进
+ * 「NEVER 引进本仓」的 12 个名字里——两处矛盾，按 `worker.md §1.4` 停下开单：
+ * `docs/blocked/WARN-TOKEN-NAME-CONTRADICTS-DEC-060.md`（值已算好，定名即可落）。
+ * ─────────────────────────────────────────────────────────────────────── */
+
+:root{
+/* 纸与墨（v4：--bg / --panel2 / --panel / --ink / --sub / --unk / --line） */
+--paper:#f2ede4; /* v4 --bg。暖纸底 */
+--paper-2:#ece5d7; /* v4 --panel2。次级底、纹理区、贴纸底 */
+--surface:#faf7f1; /* v4 --panel。卡面，比纸亮一档 */
+--ink:#26221c; /* v4 --ink。墨，暖黑。/--paper 13.56 · /--surface 14.79 */
+--ink-2:#736a59; /* v4 --sub #867b67 只有 3.57（AA 4.5）→ 压暗，实测 4.58 */
+--ink-3:#8f8574; /* v4 --unk。标签、元信息 */
+--rule:#ded4c2; /* v4 --line。细线 */
+/* 性格色（v4 只有一个 accent，见文件头） */
+--indigo:#d1531f; /* v4 --accent。结构、链接、印记、已证态 */
+--sulfur:#d1531f; /* v4 --accent。重点、高亮、CTA、首屏主角 */
+--rust:#b03a2e; /* v4 --bad。唯一告警色，全站仅三处 */
+--moss:#4f7d43; /* v4 --ok。插画与纹理辅助 */
+/* 派生淡色（语义域可用） */
+--indigo-soft:#f6ded0; /* v4 --accent-soft */
+--indigo-mist:#e39877; /* accent 与 soft 的逐通道中点 */
+--moss-soft:#dddfcf; /* v4 --ok-soft rgba(90,140,75,.14) 合成到 --paper 上 */
+--sulfur-soft:#f6ded0; /* v4 --accent-soft */
+--rust-soft:#ead8ce; /* v4 --bad-soft rgba(176,58,46,.12) 合成到 --paper 上 */
+/* 赭（v4 --warn。名字照本仓的材料名法：paper / ink / rule / indigo / sulfur /
+   rust / moss 全是材料，而 `--warn` 是语义名且被 DEC-060 逐字列进
+   「NEVER 引进本仓」——单 docs/blocked/WARN-TOKEN-NAME-CONTRADICTS-DEC-060.md）。
+   **用途边界**：明色 #a3701c 在 --surface 上实测 **4.01**——够图形对比（3:1）
+   **不够正文**（AA 4.5）。所以只许用于图形 / 边框 / 图标 / 状态点，
+   NEVER 用作正文或链接文字（判据 tests/v041/test_tail_01.py 两条，含阴性对照）。
+   暗色 #c99a4a 在暗 --surface 上 6.55，那一档正文也够，但边界按明色定。 */
+--ochre:#a3701c; /* v4 --warn */
+--ochre-soft:#e9deca; /* v4 --warn-soft rgba(180,130,40,.14) 合成到 --paper 上 */
+/* 语义别名 */
+--bg-page:var(--paper);
+--surface-card:var(--surface);
+--text-body:var(--ink);
+--text-secondary:var(--ink-2);
+--text-meta:var(--ink-3);
+--border-rule:var(--rule);
+--accent-structure:var(--indigo);
+--accent-highlight:var(--sulfur);
+--alert-blocking:var(--rust); /* 只用于：阻塞级复核标 / 导出被阻断 409 / 服务不可用 503 */
+--link:var(--indigo);
+--focus-ring:var(--indigo);
+/* ── 药丸导航条与吉祥物（TAIL-01 从 app/globals.css 搬来，2026-08-12）──
+ *
+ * **搬的是位置不是值**：下面每一行与 `NAV-ANIME-01` 当初写在 globals.css 里的
+ * 逐字相同（判据在真浏览器上量了搬前搬后的 computed color，两主题逐个相等）。
+ * 搬的理由：它们是颜色的**第二个来源**——不在这个文件里，换板时不会跟着变，
+ * 而屏上只显得「那条导航条与其余部分不是同一套颜色」
+ * （单 docs/blocked/NAV-MASCOT-COLOURS-ARE-A-SECOND-SOURCE.md）。
+ *
+ * 下面五行**不跟主题翻**：吉祥物是蓝本的美术设定（白脸 / 黑眼 / 粉腮红），
+ * 两个主题下都长这样；`--nav-ink-on-*` 是给 `--nav-ink-active` 取用的两端。
+ * 所以它们只在 `:root` 出现一次，暗色块里 NEVER 覆盖。 */
+--mascot-face:rgb(255 255 255);
+--mascot-ink:rgb(0 0 0);
+--mascot-blush:rgb(249 168 212);
+--nav-ink-on-dark:rgb(255 255 255);
+--nav-ink-on-light:rgb(16 20 24);
+/* 吉祥物那一圈描边：亮底上白脸会与浅色纸糊成一团，所以本仓补了它。
+   它引用 `--nav-border`（跟主题翻），故本身只定义一次。
+   暗色下整圈由 `:root[data-theme="dark"] .anime-nav__mascot-head` 关掉，
+   那条规则留在 globals.css——它是**规则**不是颜色。 */
+--mascot-shadow:0 0 0 1px var(--nav-border), 0 2px 6px rgba(27, 42, 46, 0.18);
+/* 药丸条明色一套：半透明白 + 深色字 + **更轻**的投影（owner 逐字）。
+   直接照抄暗底会得到一块糊在浅色纸上的黑影——那不是「浮起来」，是「脏了」。 */
+--nav-surface:rgba(255, 255, 255, 0.72);
+--nav-border:rgba(27, 42, 46, 0.12);
+--nav-shadow:0 6px 20px rgba(27, 42, 46, 0.12);
+--nav-ink:rgba(27, 42, 46, 0.68);
+--nav-ink-active:var(--nav-ink-on-light);
+--nav-hover-bg:rgba(27, 42, 46, 0.06);
+}
+
+/* ── 暗色板（DARK-01，owner 2026-08-04 裁决：允许暗色）────────────────
+ *
+ * 取值不是明色取反：取反会把色相翻到补色去，「纸与墨」会变成「霓虹与荧光」。
+ * 做法是**纸与墨互换角色、色相留在同一族**——v4 的暗板自己就是这么做的：
+ * 暗「纸」`#191612` 仍是暖族（r 25 ≥ b 18，max-min=7，看得出色相不是中性灰）。
+ *
+ * 对比度（换板后实测）：暗色 ink/paper **15.96**、ink/surface **14.84**，
+ * 都**不低于**明色下的 13.56 / 14.79——`DARK-01` acceptance③ 那条「暗色不退化」
+ * 的线仍然成立（判据 tests/v041/test_dark_palette.py + test_palette_v4.py）。
+ *
+ * 两条通道同值：跟随系统（prefers-color-scheme）与手动切（data-theme）。
+ * **顺序有意义**：显式 data-theme 写在 media 之后，所以手动选择压得过系统偏好——
+ * 只做 media 的话，系统是暗色时用户在应用里切不回明色，那不是支持暗色，是强制暗色。
+ */
+@media (prefers-color-scheme: dark) {
+:root{
+--paper:#191612;
+--paper-2:#2c261d;
+--surface:#211d17;
+--ink:#f9f0e2; /* v4 #ede5d7 在 --surface 上 13.4 < 明色 14.79 → 提亮，实测 14.84 */
+--ink-2:#9a8e7d;
+--ink-3:#93887a;
+--rule:#393226;
+--indigo:#e8763a;
+--sulfur:#e8763a;
+--rust:#d4695e;
+--moss:#7fae72;
+--indigo-soft:#43301f;
+--indigo-mist:#95532c;
+--moss-soft:#292e21;
+--sulfur-soft:#43301f;
+--rust-soft:#37231e;
+--bg-page:var(--paper);
+--surface-card:var(--surface);
+--text-body:var(--ink);
+--text-secondary:var(--ink-2);
+--text-meta:var(--ink-3);
+--border-rule:var(--rule);
+--accent-structure:var(--indigo);
+--accent-highlight:var(--sulfur);
+--alert-blocking:var(--rust);
+--link:var(--indigo);
+--focus-ring:var(--indigo);
+--ochre:#c99a4a;
+--ochre-soft:#352b1b; /* v4 rgba(200,155,75,.16) 合成到暗 --paper #191612 上 */
+/* 药丸条暗色一套（照蓝本：半透明黑 + 白字 + 重投影）。
+   吉祥物那五行不在这里——它们不跟主题翻，见 `:root` 那一段。 */
+--nav-surface:rgba(0, 0, 0, 0.5);
+--nav-border:rgba(255, 255, 255, 0.1);
+--nav-shadow:0 8px 32px rgba(0, 0, 0, 0.4);
+--nav-ink:rgba(255, 255, 255, 0.7);
+--nav-ink-active:var(--nav-ink-on-dark);
+--nav-hover-bg:rgba(255, 255, 255, 0.08);
+}
+}
+
+[data-theme="dark"]{
+--paper:#191612;
+--paper-2:#2c261d;
+--surface:#211d17;
+--ink:#f9f0e2;
+--ink-2:#9a8e7d;
+--ink-3:#93887a;
+--rule:#393226;
+--indigo:#e8763a;
+--sulfur:#e8763a;
+--rust:#d4695e;
+--moss:#7fae72;
+--indigo-soft:#43301f;
+--indigo-mist:#95532c;
+--moss-soft:#292e21;
+--sulfur-soft:#43301f;
+--rust-soft:#37231e;
+--bg-page:var(--paper);
+--surface-card:var(--surface);
+--text-body:var(--ink);
+--text-secondary:var(--ink-2);
+--text-meta:var(--ink-3);
+--border-rule:var(--rule);
+--accent-structure:var(--indigo);
+--accent-highlight:var(--sulfur);
+--alert-blocking:var(--rust);
+--link:var(--indigo);
+--focus-ring:var(--indigo);
+--ochre:#c99a4a;
+--ochre-soft:#352b1b;
+--nav-surface:rgba(0, 0, 0, 0.5);
+--nav-border:rgba(255, 255, 255, 0.1);
+--nav-shadow:0 8px 32px rgba(0, 0, 0, 0.4);
+--nav-ink:rgba(255, 255, 255, 0.7);
+--nav-ink-active:var(--nav-ink-on-dark);
+--nav-hover-bg:rgba(255, 255, 255, 0.08);
+}
+
+/* 显式选明色：压过系统的暗色偏好（写在 media 之后才压得住）。
+   **药丸条那六行也要在这里出现一次**：少了的话，系统是暗色而用户手动切明色时，
+   上面 media 里那套暗色药丸条没人覆盖得掉——整页是明的，只有导航条还是黑的。 */
+[data-theme="light"]{
+--paper:#f2ede4;
+--paper-2:#ece5d7;
+--surface:#faf7f1;
+--ink:#26221c;
+--ink-2:#736a59;
+--ink-3:#8f8574;
+--rule:#ded4c2;
+--indigo:#d1531f;
+--sulfur:#d1531f;
+--rust:#b03a2e;
+--moss:#4f7d43;
+--indigo-soft:#f6ded0;
+--indigo-mist:#e39877;
+--moss-soft:#dddfcf;
+--sulfur-soft:#f6ded0;
+--rust-soft:#ead8ce;
+--ochre:#a3701c;
+--ochre-soft:#e9deca;
+--nav-surface:rgba(255, 255, 255, 0.72);
+--nav-border:rgba(27, 42, 46, 0.12);
+--nav-shadow:0 6px 20px rgba(27, 42, 46, 0.12);
+--nav-ink:rgba(27, 42, 46, 0.68);
+--nav-ink-active:var(--nav-ink-on-light);
+--nav-hover-bg:rgba(27, 42, 46, 0.06);
+}

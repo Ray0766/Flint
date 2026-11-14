@@ -2,6 +2,7 @@
 
 import type { JSX } from "react";
 import { t } from "../../../lib/i18n/t";
+import { enumLabel } from "../../../lib/i18n/enumLabel";
 import { use, useEffect, useState } from "react";
 import { useJobStream } from "../../../lib/useJobStream";
 import { API_BASE } from "../../../lib/apiBase";
@@ -100,8 +101,11 @@ export default function JobPage({
       <div data-job-id={id}>
         <div className="data-row">
           <span className="data-row__label">{t("job.field.status")}</span>
-          <span className="data-row__value" data-job-status>
-            {s.status ?? t("job.status.connecting")}
+          {/* `UIR-03`：屏上给人话（「起草中」），原值留在属性上（`data-job-status="drafting"`）——
+              与项目总览那一格 `data-row-state` 同一个做法（`DS-03`）。
+              表里没有的值 `enumLabel` 原样返回并告警，NEVER 编一个。 */}
+          <span className="data-row__value" data-job-status={s.status ?? ""}>
+            {s.status ? enumLabel("job_state", s.status) : t("job.status.connecting")}
           </span>
         </div>
         <div className="data-row">

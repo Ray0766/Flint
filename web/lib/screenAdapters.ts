@@ -90,6 +90,7 @@ export function toProjectOverviewView(payload: unknown): ProjectOverviewView {
       state: typeof row.state === "string" ? row.state
         : typeof row.status === "string" ? row.status : null,
       kind: typeof row.kind === "string" ? row.kind : null,
+      type: typeof row.type === "string" ? row.type : null,
       // 版本与「取代哪一份」是后端给的原值（`DEC-063`：交付物只认 `deliverables` 表那一份）。
       // 没有就是 `null`，NEVER 补一个 1。
       version: typeof row.version === "number" ? row.version : null,

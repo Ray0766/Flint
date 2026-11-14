@@ -42,6 +42,8 @@ export type OverviewRow = {
   state?: string | null;
   /** 作业的 kind（后端原值）。 */
   kind?: string | null;
+  /** 交付物的 type（后端原值）。 */
+  type?: string | null;
   /** 交付物的版本号（后端原值；没有就是 `null`，NEVER 补一个 1）。 */
   version?: number | null;
   /** 这一份取代的那一份的 id。 */
@@ -71,12 +73,19 @@ export type ProjectOverviewView = {
   deliverables: OverviewRow[];
 };
 
-function Section({ name, rows, emptyKey, idCell, trailing, footer }: {
+function Section({ name, rows, emptyKey, idCell, labelCell, trailing, footer }: {
   name: string;
   rows: OverviewRow[];
   emptyKey: string;
   /** id 那一格怎么画（缺省是纯文字）。 */
   idCell?: (row: OverviewRow) => ReactNode;
+  /**
+   * 标签那一格怎么画（缺省印 `row.label`）。
+   *
+   * `UIR-03`：作业与交付物的「标签」原先是后端的枚举原值（`proposal`）或退回成 id
+   * （于是 id 在一行里印两遍）。这两段各自给人话，原值留在 `data-*` 上。
+   */
+  labelCell?: (row: OverviewRow) => ReactNode;
   /** 行尾多出来的东西（按钮、版本号）。 */
   trailing?: (row: OverviewRow) => ReactNode;
   footer?: ReactNode;
@@ -93,7 +102,9 @@ function Section({ name, rows, emptyKey, idCell, trailing, footer }: {
           {rows.map((row) => (
             <li key={row.id} className="overview__row">
               <span className="overview__row-id">{idCell ? idCell(row) : row.id}</span>
-              <span className="overview__row-label">{row.label}</span>
+              {labelCell ? labelCell(row) : (
+                <span className="overview__row-label">{row.label}</span>
+              )}
               {row.state ? (
                 <span className="overview__row-state" data-row-state={row.state}>
                   {/* DS-03：屏上给人话，`data-row-state` 上留原值——
@@ -141,6 +152,15 @@ export function ProjectOverview(
       <Section name="topics" rows={overview.topics} emptyKey="overview.topics.empty" />
       <Section
         name="jobs" rows={overview.jobs} emptyKey="overview.jobs.empty"
+        labelCell={(row) => (
+          row.kind ? (
+            <span className="overview__row-label" data-job-kind={row.kind}>
+              {enumLabel("job_kind", row.kind)}
+            </span>
+          ) : (
+            <span className="overview__row-label">{row.label}</span>
+          )
+        )}
         trailing={(row) => (
           report && row.kind === REPORT_SOURCE_KIND && row.state === REPORT_SOURCE_STATE ? (
             <button
@@ -169,6 +189,14 @@ export function ProjectOverview(
           <a data-deliverable-link href={`/deliverables/${encodeURIComponent(row.id)}`}>
             {row.id}
           </a>
+        )}
+        labelCell={(row) => (
+          // 没有 type 就这一格不画：id 已经在前面印过了，NEVER 再印一遍当标签。
+          row.type ? (
+            <span className="overview__row-label" data-deliverable-type={row.type}>
+              {enumLabel("deliverable_type", row.type)}
+            </span>
+          ) : null
         )}
         trailing={(row) => (
           <>

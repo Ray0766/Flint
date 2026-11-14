@@ -127,7 +127,11 @@ with sync_playwright() as p:
     link = page.query_selector("[data-gate-link]")
     row["gate_link"] = link.get_attribute("href") if link else None
     status = page.query_selector("[data-job-status]")
-    row["job_status"] = status.inner_text().strip() if status else None
+    # `UIR-03` 之后那一格的文字是标签（「已完成」），原值在属性上。读原值；
+    # 属性是空的（改前的屏）就退回读文字。
+    row["job_status"] = (
+        (status.get_attribute("data-job-status") or status.inner_text().strip())
+        if status else None)
     row["denied"] = page.query_selector("[data-job-denied]") is not None
 
     job = "job-gate1-live-qwen"

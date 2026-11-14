@@ -2942,7 +2942,9 @@ body {
 
 .overview__row-state {
   font-size: var(--fs-13);
-  color: var(--text-label);
+  /* 第一版写的是 `var(--text-label)`——那是个**字号** token（12px），不是颜色。
+     照 `.data-row__label` 抄来的，而那一处本身就是错的（见 `UIR-03` 段里的更正）。 */
+  color: var(--text-secondary);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -3203,4 +3205,378 @@ body {
     position: static;
     box-shadow: var(--shadow-sticker);
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * UIR-03 · 基础层：每一屏都用得上的那几样
+ *
+ * 逐屏实看（`docs/trace/UIR-PLAN.md`）之后发现「丑」有一个共同的来处：
+ * 通用件没有样式。`.state` 一族（空态、错误、加载、无权、断线）与 `.screen__state` 一族
+ * 在本文件里**一条规则都没有**；没有类名的 `<button>`、`<select>`、`<input>` 是浏览器默认长相；
+ * 正文区默认 14px。于是十几屏长成同一个样子：左上角几行小字，其余整屏空白。
+ *
+ * 这一段补的是这一层。两条纪律：
+ *
+ * 1. **控件的兜底样式只管没有类名的控件**（`:not([class])`），且特异度为零（包在 `:where()` 里）。
+ *    第一版只做了后一半：特异度为零压不过既有规则，可既有规则**没写到的属性**照样漏进去——
+ *    卡堆那排小圆点（`.plaza-stack__dot`）没写 `min-block-size`，当场被撑成 36px 高的竖条
+ *    （2026-11-14 真浏览器里见到）。带类名的控件由它自己的规则全权负责，这里一个属性都不给。
+ * 2. 全部取 `_ds` 的 token，没有新增色值。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 一、正文区的默认字号：14 → 16。只影响没有自己字号规则的文字。
+ *    计划书工作台是三栏密排，它自己另有一套字号，不跟着提。 */
+.screen__body {
+  font-size: var(--fs-16);
+  line-height: var(--lh-ui);
+}
+
+.screen--workbench .screen__body {
+  font-size: var(--text-ui);
+}
+
+/* 散在正文区顶层的段落：一行不超过好读的长度，段与段之间有间距。 */
+:where(.screen__body) > :where(p) {
+  max-inline-size: 44em;
+  margin-block: 0 var(--sp-3);
+}
+
+:where(.screen__body) :where(h2) {
+  margin-block: var(--sp-6) var(--sp-3);
+  font-size: var(--fs-25);
+  line-height: var(--lh-display);
+  color: var(--ink);
+}
+
+:where(.screen__body) :where(h3) {
+  margin-block: var(--sp-5) var(--sp-3);
+  font-size: var(--fs-20);
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* ── 二、数据行：标签与值各有固定的位置，整行不再横跨 1760px。 */
+.data-row {
+  max-inline-size: 60em;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+}
+
+.data-row__label {
+  flex: 0 0 9em;
+  font-size: var(--fs-14);
+  /* 文件前面那条写的是 `color: var(--text-label)`，而 `--text-label` 是字号（12px）。
+     当颜色用是无效值，浏览器回退成继承来的正文色——标签与值一直是同一个颜色。 */
+  color: var(--text-secondary);
+}
+
+.data-row__value {
+  font-size: var(--fs-16);
+  overflow-wrap: anywhere;
+}
+
+/* ── 三、没有类名的控件：兜底长相。特异度为零，见段首第 1 条。 */
+:where(.screen__body) :where(button, select, textarea, input:not([type="checkbox"], [type="radio"])):where(:not([class])) {
+  box-sizing: border-box;
+  min-block-size: 36px;
+  padding: var(--sp-2) var(--sp-4);
+  font: inherit;
+  font-size: var(--fs-14);
+  color: var(--ink);
+  background-color: var(--surface);
+  border: 1px solid var(--ink-3);
+  border-radius: var(--r-data);
+}
+
+:where(.screen__body) :where(select, textarea, input:not([type="checkbox"], [type="radio"])):where(:not([class])) {
+  padding-inline: var(--sp-3);
+  border-color: var(--rule);
+}
+
+:where(.screen__body) :where(button:not([class])) {
+  cursor: pointer;
+}
+
+:where(.screen__body) :where(button:not([class])):hover {
+  border-color: var(--ink);
+  background-color: var(--paper-2);
+}
+
+:where(.screen__body) :where(button:not([class])):disabled {
+  color: var(--ink-3);
+  border-color: var(--rule);
+  background-color: var(--paper-2);
+  cursor: not-allowed;
+}
+
+:where(.screen__body) :where(input[type="checkbox"], input[type="radio"]):where(:not([class])) {
+  inline-size: var(--sp-4);
+  block-size: var(--sp-4);
+  accent-color: var(--sulfur);
+}
+
+/* ── 四、状态件：空态、加载、错误、无权、断线。
+ *    居中的一块，不再是贴在左上角的一行字。 */
+.state,
+.screen__state {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  max-inline-size: 36em;
+  margin: var(--sp-7) auto;
+  padding: var(--sp-6) var(--sp-5);
+  text-align: center;
+  background-color: var(--surface);
+  background-image: var(--tex-paper);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-card);
+  color: var(--text-secondary);
+}
+
+.state__title {
+  margin: 0;
+  font-size: var(--fs-20);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.state__hint,
+.screen__state-hint,
+.state__label {
+  margin: 0;
+  max-inline-size: 30em;
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
+}
+
+.state__action {
+  margin-top: var(--sp-3);
+}
+
+.state__detail,
+.screen__state-detail {
+  max-inline-size: 100%;
+  margin: var(--sp-2) 0 0;
+  padding: var(--sp-3);
+  overflow-x: auto;
+  text-align: start;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: var(--fs-13);
+  color: var(--ink);
+  background: var(--paper);
+  border-radius: var(--r-data);
+}
+
+/* 错误与无权是坏消息：实线、墨色的边，底换成 `--paper-2`——与空态那圈虚线分得开。
+ *
+ * 第一版用的是另一个更醒目的强调色，被 `tools/check_design_constraints.mjs` 的 A5 当场拦下：
+ * 那个颜色全站只留给阻塞级复核标、导出被拦、服务不可用三处。它拦得对——
+ * 通用错误态到处都会出现，用了它，那三处就不再是「这一屏上唯一的坏消息」。 */
+.state--error,
+.state--denied,
+.screen__state[data-screen-state="failed"] {
+  border-style: solid;
+  border-color: var(--ink);
+  background-color: var(--paper-2);
+  background-image: none;
+}
+
+/* 断线是「可能过时」不是「坏了」：`--ochre`，且不居中占一大块——它出现在正文上方。 */
+.state--disconnected {
+  align-items: flex-start;
+  max-inline-size: 60em;
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  text-align: start;
+  border-style: solid;
+  border-color: var(--ochre);
+  background-color: var(--ochre-soft);
+  background-image: none;
+}
+
+.state--disconnected .state__title {
+  font-size: var(--fs-16);
+}
+
+/* `--ochre-soft` 底上的字用墨色：次要文字色压在这块底上对比不够。 */
+.state--disconnected,
+.state--disconnected .state__hint {
+  color: var(--ink);
+}
+
+/* 加载骨架：三条灰带，明暗来回一次。系统说不要动效时停住（文件前面那条全局规则管着）。 */
+.state--loading {
+  align-items: stretch;
+  border-style: solid;
+}
+
+.state__skeleton-row {
+  display: block;
+  block-size: var(--sp-3);
+  border-radius: var(--r-data);
+  background: var(--paper-2);
+  animation: uir-skeleton 1.4s ease-in-out infinite;
+}
+
+.state__skeleton-row:nth-child(odd) {
+  inline-size: 70%;
+}
+
+@keyframes uir-skeleton {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+.state__retry {
+  margin-top: var(--sp-3);
+}
+
+/* 收藏图书馆的空态：标记是它自己的（`.favorites__empty` + `.favorites__to-plaza`），
+ * 长相与通用空态件同一块——同一种状态在两屏上不该是两种样子。 */
+.favorites[data-favorites-state="empty"] {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  max-inline-size: 36em;
+  margin: var(--sp-7) auto;
+  padding: var(--sp-6) var(--sp-5);
+  text-align: center;
+  background-color: var(--surface);
+  background-image: var(--tex-paper);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-card);
+}
+
+.favorites__empty {
+  margin: 0;
+  font-size: var(--fs-20);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.favorites__to-plaza {
+  font-size: var(--fs-16);
+}
+
+/* ── 五、账户、计费、项目总览：一块有底有边的面板。
+ *    这三屏的内容区原先一条样式都没有（`.account*` / `.billing*` / `.overview` 本体），
+ *    是贴在页面底色上的几行字。 */
+.account,
+.billing,
+.overview {
+  box-sizing: border-box;
+  max-inline-size: 60em;
+  padding: var(--sp-5);
+  background-color: var(--surface);
+  background-image: var(--tex-paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+.account__identity {
+  display: grid;
+  grid-template-columns: 9em minmax(0, 1fr);
+  gap: var(--sp-3) var(--sp-4);
+  margin: 0;
+}
+
+.account__identity dt {
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
+}
+
+.account__identity dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.account__memberships,
+.billing__quota,
+.billing__events {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--rule);
+}
+
+.billing__status {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-20);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.billing__reason {
+  margin: 0;
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
+}
+
+.overview__title {
+  margin: 0 0 var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-20);
+  overflow-wrap: anywhere;
+}
+
+.overview__section + .overview__section {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--rule);
+}
+
+.overview__section-title {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-16);
+  font-weight: 600;
+}
+
+.overview__empty {
+  margin: 0;
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
+}
+
+/* ── 六、长文屏（报告、计划书）：那一列居中。
+ *    行长仍是 `--measure-longform`（那是排版事实，一个字没动）；改前这一列贴在左边，
+ *    1920 宽的屏上右边空着 1300 多像素。字号与行高取 `_ds` 给长文留的那一档。 */
+.screen--longform > * {
+  margin-inline: auto;
+}
+
+.screen--longform .screen__body {
+  font-size: var(--text-longform);
+  line-height: var(--lh-longform);
+}
+
+/* ── 七、正文区里最小的那一档字：12 → 13。
+ *
+ * 实测 `/plaza`（1920×1080）正文区 590 个文字节点里 262 个是 12px：元信息、出处、时间戳、按钮。
+ * 那些规则散在本文件一百多处，各自写的是 `var(--fs-12)`。这里**不逐条去改**，
+ * 而是在正文区这一层把这个 token 重定义一次——下一次要调这一档，只有这一行。
+ *
+ * 只作用于 `.screen__body` 之内：顶栏、吉祥物、浮动导航条照旧用 `_ds` 的原值。
+ * `_ds/tokens/typography.css` 一个字没动。 */
+.screen__body {
+  --fs-12: 13px;
+}
+
+/* ── 八、计划书工作台：同样把小字提一档。
+ *
+ * 这一屏不在 `.screen__body` 里（它自己占满一屏、三栏各自滚动），上面那条够不着它。
+ * 实测 1920×1080 下三栏里 56 个文字节点，50 个 12px、6 个 13px——全屏没有一个字大于 13。
+ * 12 → 13、13 → 14，栏宽不变。 */
+.workbench {
+  --fs-12: 13px;
+  --fs-13: 14px;
 }

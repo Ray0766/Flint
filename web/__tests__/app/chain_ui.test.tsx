@@ -113,6 +113,32 @@ describe("CHAIN-UI-01-a · 适配：后端给的那几格原样到屏", () => {
   });
 });
 
+describe("UIR-03 · 屏上给人话，原值留在 data-* 上", () => {
+  it("作业那一行印的是标签，不是 `gate1_analysis` 这种原值；原值在 data-job-kind 上", () => {
+    const { container } = render(<ProjectOverview overview={view()} />);
+    const rows = [...container.querySelectorAll(
+      '[data-overview-section="jobs"] .overview__row')];
+
+    expect(rows.map((r) => r.querySelector("[data-job-kind]")?.getAttribute("data-job-kind")))
+      .toEqual(["gate1_analysis", "gate1_analysis", "report"]);
+    expect(rows[0].querySelector("[data-job-kind]")?.textContent)
+      .toBe(zh["enum.job_kind.gate1_analysis"]);
+    expect(rows[0].textContent).not.toContain("gate1_analysis");
+  });
+
+  it("交付物那一行印的是类型的标签，id 只出现一次", () => {
+    const { container } = render(<ProjectOverview overview={view()} />);
+    const first = container.querySelectorAll(
+      '[data-overview-section="deliverables"] .overview__row')[0];
+
+    expect(first.querySelector("[data-deliverable-type]")?.getAttribute(
+      "data-deliverable-type")).toBe("report");
+    expect(first.querySelector("[data-deliverable-type]")?.textContent)
+      .toBe(zh["enum.deliverable_type.report"]);
+    expect(first.textContent?.split("d-1").length).toBe(2);
+  });
+});
+
 describe("CHAIN-UI-01-a · 「生成报告」只出现在跑完的分析旁边", () => {
   it("跑完的分析有；没跑完的分析、跑完的成文作业都没有", () => {
     const { container } = render(<ProjectOverview overview={view()} report={{
@@ -229,6 +255,15 @@ describe("CHAIN-UI-01-a · 作业页跑完后回得去总览", () => {
     expect(container.querySelector("[data-project-link]")?.getAttribute("href"))
       .toBe("/projects/p-1");
     expect(screen.getByText(zh["job.project_entry.open"])).toBeTruthy();
+  });
+
+  it("状态那一格印的是标签；原值留在 data-job-status 上（`UIR-03`）", async () => {
+    const container = await openJob("?project=p-1");
+
+    await waitFor(() => expect(container.querySelector("[data-job-status]")).toBeTruthy());
+    const slot = container.querySelector("[data-job-status]")!;
+    expect(slot.getAttribute("data-job-status")).toBe("done");
+    expect(slot.textContent).toBe(zh["enum.job_state.done"]);
   });
 
   it("没带项目号 → 不给入口。作业快照不回项目号，NEVER 猜一个", async () => {

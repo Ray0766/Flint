@@ -85,6 +85,19 @@ export const ENUM_FAMILIES: readonly EnumFamily[] = [
     values: ["pending", "supports", "partial", "unsupported"],
   },
   {
+    // `UIR-03`：项目总览把作业的 kind 直接印在屏上（`proposal`、`gate1_analysis`）。
+    prefix: "job_kind",
+    source: "contracts.models::JobKind",
+    values: ["gate1_analysis", "report", "proposal", "spec_export",
+             "revalidation", "daily_ingest", "pricebook_scan"],
+  },
+  {
+    prefix: "deliverable_type",
+    source: "contracts.models::DeliverableType",
+    values: ["analysis", "report", "proposal", "vibe_pack", "spec", "chart",
+             "revalidation_report"],
+  },
+  {
     prefix: "availability",
     source: "WIRE-12 three states: checked / not checked / not wired",
     values: ["ok", "not_checked", "not_provided", "down"],

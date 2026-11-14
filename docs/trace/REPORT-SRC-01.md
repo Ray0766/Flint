@@ -1,6 +1,6 @@
 # REPORT-SRC-01 · 成文端点收分析作业号（`DEC-061`）
 
-**状态**：实现已写，**verify 未跑**（本机 Docker 起不来，见 §三）。
+**状态**：verified @2026-11-14（macOS 上首跑，见 §五）。2026-10-27 那一版的状态是「实现已写，verify 未跑」，§三 原样保留。
 
 ## 一、装载清单
 
@@ -40,3 +40,30 @@ Docker 的卡点：`%LOCALAPPDATA%\Docker\run\dockerInference` 与
 
 `ruff check --no-cache flint/api/compose.py tests/v041/test_report_src.py` → All checks passed
 `mypy --strict flint/api/compose.py` → Success: no issues found in 1 source file
+
+## 五、macOS 上收卡（2026-11-14）
+
+owner 2026-11-14 恢复第 17 批。库在这台机器上起得来（`docs/trace/MAC-01.md` §七）。
+
+```
+$ pytest tests/v041/test_report_src.py -q
+..........                                                               [100%]
+10 passed in 0.96s
+```
+
+第一次跑就是绿的。§三 欠着的那一次红补不回原样——改前的 `flint/api/compose.py` 不在 git 历史里
+（首个提交导入的就是改后的版本）。改成对实现的五处核查各注入一次变异，看判据抓不抓得住：
+
+| 变异 | 结果 | 红的是哪条 |
+|---|---|---|
+| 不核作业属不属于本项目 | 1 failed | `test_an_unknown_job_and_another_projects_job_look_the_same[rsrc01-job-elsewhere]` |
+| 不核 kind | 1 failed | `test_a_job_that_is_not_an_analysis_is_refused_and_named` |
+| 不核 state | 2 failed | `test_an_analysis_that_has_not_finished_is_refused_and_says_its_state`（queued、failed 各一） |
+| 不换算，原样把作业号交出去 | 1 failed | `test_a_finished_analysis_job_becomes_its_product_id_on_the_queue` |
+| 两格都给也放行 | 1 failed | `test_exactly_one_source_field_or_422[body2]` |
+
+五次都抓住了，每次还原后 `flint/api/compose.py` 与改前逐字节相同（`cmp` 无输出）。
+
+`ruff check .` 与 `mypy --strict flint eval harness` 在本卡之前已是零条（`MAC-03`）。
+单据 `docs/blocked/ANALYSIS-ID-HAS-NO-PATH-FROM-AN-ANALYSIS.md` 的状态行补了一句：
+后端这一半落地了，屏上那一半归 `CHAIN-UI-01`，单子不关。

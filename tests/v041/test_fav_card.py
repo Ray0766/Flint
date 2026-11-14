@@ -45,6 +45,8 @@ from pathlib import Path
 
 import pytest
 
+from tools.probe_evidence import require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 PROBE = REPO / ".ui-probe" / "favcard"
 REPORT = PROBE / "report.json"
@@ -241,6 +243,7 @@ def test_the_adapter_never_falls_back_to_the_target_id() -> None:
 @pytest.mark.parametrize("viewport,theme", SHOTS)
 def test_the_screenshot_is_on_disk(viewport: int, theme: str) -> None:
     """三视口 × 两主题共六张，逐张在盘上且不是空文件。"""
+    require_probe_evidence(PROBE, "起栈后跑 tools/ui_probe_fav_card.py")
     matches = list(PROBE.glob(f"favorites-{viewport}x*-{theme}.png"))
 
     assert matches, f"缺这一张：{viewport} × {theme}"

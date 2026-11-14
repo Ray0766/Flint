@@ -37,6 +37,8 @@ from pathlib import Path
 
 import pytest
 
+from tools.probe_evidence import require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 PROBE = REPO / ".ui-probe" / "wb"
 REPORT = PROBE / "cards.json"
@@ -246,6 +248,7 @@ def test_the_left_column_scrolls_instead_of_growing_the_page() -> None:
 
 @pytest.mark.parametrize("theme", ("light", "dark"))
 def test_the_screenshot_is_on_disk(theme: str) -> None:
+    require_probe_evidence(REPORT, "起栈后跑 tools/ui_probe_wb_cards.py")
     matches = list(PROBE.glob(f"workbench-cards-*-{theme}.png"))
 
     assert matches, f"缺这一张：{theme}"

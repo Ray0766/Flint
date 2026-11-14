@@ -22,6 +22,8 @@ from pathlib import Path
 
 import pytest
 
+from tools.probe_evidence import ONLY_ON_THE_ORIGINAL_MACHINE, require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 PROBE = REPO / ".ui-probe"
 PALETTE = PROBE / "palette"
@@ -141,6 +143,7 @@ def test_the_swap_changed_the_pixels_not_just_the_file() -> None:
 
 def test_the_inventory_lists_which_artifacts_have_judges_reading_them() -> None:
     """先数清楚再重拍：清单落盘，且它是**跑出来的**，不是手写的。"""
+    require_probe_evidence(INVENTORY, "起栈后跑 tools/ui_probe_palette.py")
     assert INVENTORY.exists(), "没有清点清单"
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
 
@@ -156,6 +159,7 @@ def test_the_old_shots_are_labelled_instead_of_left_as_current() -> None:
     旧板的图与新板的图混在一个目录里，下一个人无从分辨——
     而他会把先看到的那张当成今天的样子。
     """
+    require_probe_evidence(NOTICE, ONLY_ON_THE_ORIGINAL_MACHINE)
     assert NOTICE.exists(), "旧图没有任何说明"
     body = NOTICE.read_text(encoding="utf-8")
 

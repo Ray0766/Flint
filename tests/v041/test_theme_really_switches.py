@@ -47,6 +47,7 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 from tools import visual_assert as va
+from tools.probe_evidence import require_probe_evidence
 
 DS_ROOT = REPO / "web" / "public" / "_ds"
 PROBE = REPO / ".ui-probe"
@@ -389,6 +390,7 @@ def _recorded_ds_reports() -> list[tuple[str, dict[str, object]]]:
 
 def test_there_is_recorded_evidence_to_judge() -> None:
     """判据要有真东西可判：一份都扫不到时报红，NEVER 空转成绿。"""
+    require_probe_evidence(PROBE, "起栈后跑 scripts/ui_probe.py --tokens --json")
     assert _recorded_ds_reports(), f"{PROBE} 下没有可判的 _ds 取证"
 
 
@@ -419,6 +421,7 @@ def test_the_browser_level_negative_control_is_recorded() -> None:
     上面那条对照走的是注入驱动（判据面），这一条走的是 `C:\\pwenv` 的 playwright
     真量（量测面）。两层都要，因为它们坏的方式不一样。
     """
+    require_probe_evidence(ARTIFACT, "用装了 playwright 的解释器直接跑本文件")
     assert ARTIFACT.exists(), (
         f"没有 {ARTIFACT.name}：用 C:\\pwenv\\Scripts\\python.exe 跑本文件生成")
     data = json.loads(ARTIFACT.read_text(encoding="utf-8"))
@@ -433,6 +436,7 @@ def test_the_browser_level_negative_control_is_recorded() -> None:
 
 def test_the_two_recorded_runs_differ_only_by_the_dark_blocks() -> None:
     """两次真量的唯一变量就是那三块暗色声明——否则对照不成立。"""
+    require_probe_evidence(ARTIFACT, "用装了 playwright 的解释器直接跑本文件")
     data = json.loads(ARTIFACT.read_text(encoding="utf-8"))
 
     assert data["with_dark"]["fragment_sha"] != data["without_dark"]["fragment_sha"]

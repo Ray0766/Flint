@@ -24,6 +24,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from tools.probe_evidence import require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 WEB = REPO / "web"
 APP = WEB / "app"
@@ -264,6 +266,7 @@ def test_the_chain_shows_no_endpoint_paths_on_screen() -> None:
 
 
 def _rows() -> list[dict[str, object]]:
+    require_probe_evidence(SMOKE, "起栈后跑 harness/fe_smoke.py")
     assert SMOKE.exists(), "没有 .ui-probe/fe_smoke.json：起栈后跑 harness/fe_smoke.py"
     return list(json.loads(SMOKE.read_text(encoding="utf-8"))["screens"])
 

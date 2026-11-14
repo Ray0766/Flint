@@ -36,6 +36,8 @@ from pathlib import Path
 
 import pytest
 
+from tools.probe_evidence import require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 PROBE = REPO / ".ui-probe" / "wb"
 REPORT = PROBE / "annotate.json"
@@ -273,6 +275,7 @@ def test_the_seam_for_switching_to_the_new_version_is_still_there() -> None:
 
 @pytest.mark.parametrize("theme", ("light", "dark"))
 def test_the_screenshot_is_on_disk(theme: str) -> None:
+    require_probe_evidence(REPORT, "起栈后跑 tools/ui_probe_wb_annotate.py")
     matches = list(PROBE.glob(f"workbench-annotate-*-{theme}.png"))
 
     assert matches, f"缺这一张：{theme}"

@@ -139,9 +139,11 @@ PYTHONIOENCODING=utf-8 .venv/bin/ruff check . && .venv/bin/mypy --strict flint e
 
 - `PYTHONIOENCODING=utf-8` 是为 Windows 的 GBK 管道加的固定前提（`Makefile` 里有说明），
   macOS 上不带它也该成立，带着无害；
-- `.ui-probe/` 没有进仓（79MB 截图，本机运行产物）。读它的那批判据在新机器上**一部分 skip、
-  一部分红**：2026-11-14 实测 354 条 skip、68 条红（「缺这一张」「没有 .ui-probe/fe_smoke.json」）。
-  重跑各自的取证脚本之后恢复，这一步还没在 Mac 上做过；
+- `.ui-probe/` 没有进仓（79MB 截图，本机运行产物）。读它的那批判据在新机器上 skip，
+  并写明缺哪一份、怎么补（口径在 `tools/probe_evidence.py`；2026-11-14 首跑时其中 68 条是红的，
+  `MAC-06` 统一成了 skip）。跑过取证而缺某一张图，仍然判红。
+  重跑各自的取证脚本之后恢复，这一步还没在 Mac 上做过；其中 6 条读的是开工前拍的历史对照，
+  只在原来那台 Windows 机的 `.ui-probe/` 里，重跑造不出来；
 - playwright 不是本项目依赖，NEVER 装进 `.venv`。探针脚本的报错文案里写的
   `C:\pwenv` 是 Windows 上那个隔离环境的位置；macOS 上另建一个 venv 装它即可，位置自定。
 

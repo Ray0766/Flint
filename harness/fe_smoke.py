@@ -34,6 +34,7 @@ HTTP 状态、控制台报错数、页高、横向溢出、截图名。缺任何
 from __future__ import annotations
 
 import argparse
+import importlib
 import json
 import re
 import socket
@@ -278,7 +279,9 @@ def run_smoke(screens: list[Screen], themes: tuple[str, ...] = THEMES) -> dict[s
         return build_report([], stack_down=down)
 
     try:
-        from playwright.sync_api import sync_playwright
+        # 按名字动态导入（同 `flint/render/pdf.py` 导 weasyprint 的写法）：playwright 恒在
+        # 项目外，本解释器里没有它的类型面，静态 import 会让 mypy --strict 报缺桩。
+        sync_playwright = importlib.import_module("playwright.sync_api").sync_playwright
     except ModuleNotFoundError:
         print("playwright 不在当前解释器里：用 C:\\pwenv\\Scripts\\python.exe 跑本文件",
               file=sys.stderr)

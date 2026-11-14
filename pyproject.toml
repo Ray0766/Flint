@@ -22,12 +22,6 @@ follow_imports = "skip"
 follow_imports_for_stubs = true
 ignore_missing_imports = true
 
-# playwright 恒在项目外的隔离环境里（NEVER 装进 .venv），本解释器里没有它的类型面。
-# 用到它的两处（harness/fe_smoke.py 与各取证脚本）都是 import 失败即退出，不消费其类型。
-[[tool.mypy.overrides]]
-module = ["playwright.*"]
-ignore_missing_imports = true
-
 [tool.ruff]
 line-length = 100
 target-version = "py311"

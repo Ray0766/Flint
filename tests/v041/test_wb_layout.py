@@ -37,6 +37,8 @@ from pathlib import Path
 
 import pytest
 
+from tools.probe_evidence import require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 PROBE = REPO / ".ui-probe" / "wb"
 REPORT = PROBE / "layout.json"
@@ -378,6 +380,7 @@ def test_the_blueprint_font_link_was_not_copied() -> None:
 @pytest.mark.parametrize("theme", THEMES)
 def test_the_screenshot_is_on_disk(viewport: int, theme: str) -> None:
     """三视口 × 两主题共六张，逐张在盘上且不是空文件。"""
+    require_probe_evidence(REPORT, "起栈后跑 tools/ui_probe_wb_layout.py")
     matches = list(PROBE.glob(f"workbench-{viewport}x*-{theme}.png"))
 
     assert matches, f"缺这一张：{viewport} × {theme}"

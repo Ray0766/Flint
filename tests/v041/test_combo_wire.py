@@ -41,6 +41,8 @@ from typing import Any
 
 import pytest
 
+from tools.probe_evidence import ONLY_ON_THE_ORIGINAL_MACHINE, require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 SCRIPT = REPO / "start-demo.ps1"
 HARNESS = REPO / "harness"
@@ -412,6 +414,7 @@ def test_the_document_column_renders_real_blocks() -> None:
     "shot", ("plaza", "picked", "typed", "receipt", "topics", "doc"))
 def test_every_step_left_a_screenshot(shot: str) -> None:
     """逐屏留图：这条路上每一步都有一张，且不是空白图。"""
+    require_probe_evidence(PROBE, "起栈后跑 tools/ui_probe_combo_wire.py")
     matches = list(PROBE.glob(f"combo-{shot}-*.png"))
 
     assert matches, f"缺这一步的截图：{shot}"
@@ -472,6 +475,7 @@ def test_this_card_changed_nothing_under_web() -> None:
     白名单里那两个是同批 `TAIL-01` 明示要搬色号的文件——
     第三个文件变了，这条当场红。
     """
+    require_probe_evidence(FINGERPRINT, ONLY_ON_THE_ORIGINAL_MACHINE)
     recorded = json.loads(FINGERPRINT.read_text(encoding="utf-8"))["files"]
     changed: list[str] = []
     for rel, digest in recorded.items():

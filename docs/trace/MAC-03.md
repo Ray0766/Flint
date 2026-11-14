@@ -37,3 +37,24 @@ ruff 1 条、mypy 3 条 / 371 文件。没有另写测试文件。
 `Makefile` 的 `gate` 与 `docs/macOS-安装.md` §六写的是三个包。两处口径不一，这三条 mypy 红
 就是从那道缝里攒出来的。CI 里还钉着 Python 3.11（`docs/blocked/CLAUDE-S3-LAG.md` 那件未决事），
 本卡没有碰 CI。
+
+## 六、更正（2026-11-14，`MAC-06` 收尾跑全量时发现）
+
+§三第四行那处改动是错的，已撤回。`pyproject.toml` 里一出现 `playwright` 这个词，
+两条既有判据就红：
+
+```
+FAILED tests/v041/test_ui_probe_contract.py::test_playwright_is_absent_from_all_three_dependency_files
+FAILED tests/v041/test_visual_assert.py::test_playwright_stays_out_of_the_dependency_files
+```
+
+它们守的是「playwright NEVER 进依赖清单」，扫的是三份依赖文件的全文。我加的那段 mypy override
+不是依赖声明，但判据分不出来，也不该为了我这段配置去教它分——把它放宽成「只看依赖段」，
+下一次真有人把 playwright 写进依赖时它就少了一层。
+
+改法换成不碰 `pyproject.toml`：`harness/fe_smoke.py` 里那句静态 import 改成
+`importlib.import_module("playwright.sync_api").sync_playwright`，与 `flint/render/pdf.py:16`
+导 weasyprint 的写法相同。`pyproject.toml` 回到本卡之前的样子（`git diff` 对 `MAC-03` 之前那个提交无差异）。
+
+改后：`mypy --strict flint eval harness` 371 文件零条；那两条判据与 `tests/v041/test_fe_smoke.py`
+一族全过。**教训**：`MAC-03` 收卡时只跑了 ruff、mypy 与金标那几条，没跑全量，这两条红在仓里挂了三个提交。

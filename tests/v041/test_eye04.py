@@ -32,6 +32,8 @@ from pathlib import Path
 
 import pytest
 
+from tools.probe_evidence import require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 PROBE = REPO / ".ui-probe" / "eye04"
 REPORT = PROBE / "report.json"
@@ -61,6 +63,7 @@ def test_every_screenshot_is_on_disk(viewport: int, theme: str) -> None:
 
     文件名里带视口与主题，是为了 owner 不用打开就知道自己在看哪一张。
     """
+    require_probe_evidence(PROBE, "跑 EYE-04 的取证脚本")
     matches = list(PROBE.glob(f"plaza-{viewport}x*-{theme}.png"))
 
     assert matches, f"缺这一张：{viewport} × {theme}"

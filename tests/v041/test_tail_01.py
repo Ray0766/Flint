@@ -36,6 +36,8 @@ from typing import Any
 
 import pytest
 
+from tools.probe_evidence import ONLY_ON_THE_ORIGINAL_MACHINE, require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 DS = REPO / "web" / "public" / "_ds" / "flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724"
 COLORS = DS / "tokens" / "colors.css"
@@ -297,6 +299,7 @@ def test_the_only_colour_literals_under_web_are_in_the_token_dir() -> None:
 
 def _nav_snapshot() -> tuple[dict[str, Any], dict[str, Any]]:
     """搬前那份是**开工前**拍的；搬后这份现拍（输入变了就重拍）。"""
+    require_probe_evidence(BEFORE, ONLY_ON_THE_ORIGINAL_MACHINE)
     assert BEFORE.exists(), "缺搬家前那份取证——那是这条判据唯一的对照"
     stamp = hashlib.sha256(
         COLORS.read_bytes() + GLOBALS.read_bytes() + PROBE_TOOL.read_bytes()

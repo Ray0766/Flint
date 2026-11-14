@@ -39,6 +39,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
 
+from tools.probe_evidence import ONLY_ON_THE_ORIGINAL_MACHINE, require_probe_evidence
 from tools.visual_assert import contrast_ratio, parse_color
 
 DESIGN = REPO / "前端设计" / "应用前端设计需求" / "design-handoff" / "Flint v4.dc.html"
@@ -355,6 +356,7 @@ def test_the_swap_itself_touched_only_the_palette_file() -> None:
     连同下面两条「颜色只有一个来源」的判据一起，
     守的仍是那句话：**换的是值，不是位置**。
     """
+    require_probe_evidence(BEFORE, ONLY_ON_THE_ORIGINAL_MACHINE)
     snapshot = json.loads(BEFORE.read_text(encoding="utf-8"))
 
     assert snapshot["excluded"].endswith("tokens/colors.css")

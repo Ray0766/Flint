@@ -17,6 +17,8 @@ from pathlib import Path
 
 import pytest
 
+from tools.probe_evidence import require_probe_evidence
+
 REPO = Path(__file__).resolve().parents[2]
 PROBE = REPO / ".ui-probe" / "eye05"
 REPORT = PROBE / "report.json"
@@ -79,6 +81,7 @@ def _screen(key: str) -> dict[str, object]:
 @pytest.mark.parametrize("theme", THEMES)
 def test_the_screenshot_is_on_disk(viewport: str, theme: str) -> None:
     """六种组合**逐一** parametrize：缺一种就红（`EYE-04` 的既有形状）。"""
+    require_probe_evidence(PROBE, "起栈后跑 tools/ui_probe_eye05.py")
     shot = PROBE / f"workbench-{viewport}-{theme}.png"
 
     assert shot.exists(), f"缺这一张：{shot.name}"
@@ -170,6 +173,7 @@ def test_every_console_error_is_one_of_the_named_two(
     "flow-1-empty", "flow-2-picked", "flow-3-submitted",
     "flow-4-blocks", "flow-5-annotate"))
 def test_the_flow_screenshot_is_on_disk(step: str) -> None:
+    require_probe_evidence(PROBE, "起栈后跑 tools/ui_probe_eye05.py")
     shot = PROBE / f"{step}.png"
 
     assert shot.exists(), f"流程缺这一张：{step}"

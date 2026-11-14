@@ -43,6 +43,7 @@ from tools.css_sections import (
     section_after,
     tokens_used,
 )
+from tools.probe_evidence import require_probe_evidence
 
 WEB = REPO / "web"
 GLOBALS = WEB / "app" / "globals.css"
@@ -216,6 +217,7 @@ def test_the_shell_never_links_to_a_route_that_does_not_exist() -> None:
 
 
 def _smoke() -> dict[str, object]:
+    require_probe_evidence(SMOKE, "起栈后跑 harness/fe_smoke.py")
     assert SMOKE.exists(), (
         "没有 .ui-probe/fe_smoke.json：起栈后用 C:\\pwenv 的解释器跑 harness/fe_smoke.py")
     return json.loads(SMOKE.read_text(encoding="utf-8"))

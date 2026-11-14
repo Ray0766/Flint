@@ -1868,3 +1868,11 @@ section.cluster-source-lines > h3 {
 [data-demo-load-plaza] ~ .plaza {
   margin-top: var(--sp-4);
 }
+
+/* ── 提示语的颜色（REDESIGN-04）──
+ * 暗色回看时量到：模板工具输入框的提示语是浏览器的默认灰，在暗色的卡面上对比度 4.0。
+ * 默认灰不随主题变。所有提示语统一取次要文字的颜色；`opacity` 写满是因为火狐默认给它叠一层半透明。 */
+::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}

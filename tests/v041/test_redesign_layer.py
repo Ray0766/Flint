@@ -194,3 +194,25 @@ def test_the_retired_pieces_are_hidden_and_labels_stay_readable() -> None:
     assert not [r for r in label_rules if re.search(r"display:\s*none", r)], (
         "导航标签用了 display: none——读屏里那条链接就没有名字了")
     assert any("clip-path" in r for r in label_rules), "窄屏下标签没有做成视觉隐藏"
+
+
+def test_placeholder_text_takes_its_colour_from_the_palette() -> None:
+    """`REDESIGN-04`：输入框的提示语 NEVER 留给浏览器的默认灰。
+
+    暗色下量到的现象：模板工具那个输入框的提示语是 `rgb(117, 117, 117)`——Chrome 的默认值，
+    不是本仓任何一个 token。它在亮色的白底上是 4.6，在暗色的 `--surface` 上是 4.0，不到 4.5。
+    默认灰不随主题变，所以两个主题里总有一个不达标。
+
+    这一层给所有提示语一条通用规则，取 `--ink-3`：那个 token 对 `--surface` / `--paper` /
+    `--paper-2` 的对比度由 `test_text_on_its_background_is_readable` 在两个主题下守着。
+    """
+    # 要的是**通用**那一条：选择器整行就是 `::placeholder`。某个具体输入框自己的
+    # `…textarea::placeholder` 不算——它只管那一个框，别的框照旧落回默认灰。
+    rule = re.search(r"(?m)^::placeholder\s*\{([^}]*)\}", _strip_comments(_css()))
+    assert rule, "设计层没有通用的 ::placeholder 规则，提示语会落回浏览器默认灰"
+    block = {m.group(1): m.group(2).strip()
+             for m in re.finditer(r"([\w-]+)\s*:\s*([^;]+);", rule.group(1))}
+
+    assert block.get("color") == "var(--ink-3)", f"提示语的颜色不是 --ink-3：{block}"
+    # 火狐给提示语叠了一层半透明；不写这一行，同一个 token 在火狐里会更淡。
+    assert block.get("opacity") == "1"

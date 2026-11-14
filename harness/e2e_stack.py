@@ -78,7 +78,7 @@ def build_runner(cfg: E2EStackConfig) -> PgJobRunner:
         role_resolver=build_role_resolver(cfg.dsn),   # AUTH-05：真解析器
         id_factory=cfg.job_ids,
         now=cfg.now,
-        enqueue=cfg.enqueue,                    # type: ignore[arg-type]
+        enqueue=cfg.enqueue,
     )
 
 

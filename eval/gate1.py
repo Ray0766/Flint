@@ -132,7 +132,9 @@ def run_case(case: dict[str, Any]) -> CaseResult:
         if lands_on_d
         else []
     )
-    verdict = decide(rule_a, rule_b, rule_c, gaps=gaps, competitors=competitors)
+    verdict = decide(
+        rule_a, rule_b, rule_c, gaps=[d.hint for d in gaps], competitors=competitors,
+    )
     expected = case["expected"]
     return CaseResult(
         case_id=str(case["case_id"]),

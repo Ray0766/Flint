@@ -26,6 +26,13 @@
 **后端算不出的值不返回、不填假值**：前端最想要的「完成度 60%」这类数，
 后端算不出（没有总量、没有权重口径），给一个就是编。
 
+## 交付物只有一份清单（`OVERVIEW-01` / `DEC-063`）
+
+`projects` 表里另有一列同名的旧清单：建项时写一次，此后组稿与重写都不回写。
+它与下面现查的那份清单对不上（单 `PROJECT-DOES-NOT-LIST-ITS-OWN-DELIVERABLES`）。
+本模块**不读那一列**：交付物只认 `deliverables` 表，带 `version` / `supersedes`。
+那一列留在库里没有删——删列是数据删除，`DEC-063` 不授权。
+
 ## 按 owner 过滤放在 SQL 里
 
 不是取回来再判。取回来再判的写法，哪天有人删掉那两行 Python 判断，
@@ -47,7 +54,7 @@ from flint.api.schemas import ErrorBody, ErrorCode
 # 项目本体 + 归属一次判掉：owner 不符时**与不存在同一个结果**（都是 row is None）。
 _PROJECT_SQL = """
 SELECT project_id, owner, origin_id, topic_ids, chosen_topic_id,
-       deliverable_ids, status, created_at
+       status, created_at
 FROM projects
 WHERE project_id = $1
   AND owner ->> 'kind' = 'user'
@@ -96,7 +103,7 @@ def _error(status: int, code: ErrorCode, message: str) -> JSONResponse:
 # 这几列在库里是 `jsonb`，asyncpg 取回来是**字符串**。逐个列名写死解码，
 # NEVER 「看着像 JSON 就解」——那会把一个正好以 `[` 开头的正文字段解坏。
 _JSONB_COLUMNS = frozenset({
-    "owner", "owner_scope", "topic_ids", "deliverable_ids", "stale_reasons",
+    "owner", "owner_scope", "topic_ids", "stale_reasons",
     "change_log", "inputs", "meta", "progress", "budget", "cost_accum",
     "keyword_mapping", "why_now",
 })

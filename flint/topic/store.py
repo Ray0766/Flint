@@ -254,6 +254,9 @@ class PgProjectStore:
         它是这条记录的出生时间，一次更新把它改成「现在」，
         等于让这个项目看起来是刚建的。
         """
+        # `deliverable_ids` 这一列照冻结件 `Project` 原样落库，但它**不是交付物清单的真相**：
+        # 组稿与重写都不回写它。项目有哪些交付物只认 `deliverables` 表
+        # （`flint/api/project_overview.py`，`DEC-063` / `OVERVIEW-01`）。NEVER 拿这一列去列产物。
         conn = await asyncpg.connect(self._dsn)
         try:
             if expected_version is None:

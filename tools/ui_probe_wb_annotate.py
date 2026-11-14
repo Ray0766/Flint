@@ -37,6 +37,11 @@ def _api(path: str) -> dict:
         return dict(json.load(res))
 
 
+def _listed(project_id: str) -> list[str]:
+    """项目总览列出来的交付物 id——总览现查 `deliverables` 表的那一份（`DEC-063`）。"""
+    return [str(d["deliverable_id"]) for d in _api(f"/projects/{project_id}")["deliverables"]]
+
+
 def _blocks(deliverable_id: str) -> dict[str, str]:
     body = _api(f"/deliverables/{deliverable_id}/blocks")
     return {b["block_id"]: json.dumps(b["content"], ensure_ascii=False)
@@ -92,7 +97,7 @@ def main() -> int:
 
         old_blocks = _blocks(REAL)
         old_meta = _api(f"/deliverables/{REAL}")
-        before_list = list(_api(f"/projects/{PROJECT}").get("deliverable_ids", []))
+        before_list = _listed(PROJECT)
 
         page.screenshot(path=str(OUT / "workbench-annotate-1920x1080-light.png"),
                         full_page=True)
@@ -118,8 +123,10 @@ def main() -> int:
         job_on_screen = page.get_attribute("[data-wb-annotate-phase]", "data-wb-annotate-job")
 
         # ── 产物那一层：**去库那一侧核**。
-        # 屏够不着它（项目总览那一列不会变——`before_list` 就是证据），
-        # 而「产物是不是真的」与「屏够不够得着」是两件事。
+        # `OVERVIEW-01` 之前这里读的是 `projects` 表里那条建项时写死的旧列，它从不变，
+        # 于是取证恒记「总览没变」。现在读总览现查的那份清单：新版本落库后它会多一条。
+        # 屏今天仍不读它（那是 `CHAIN-UI-01` 的事）——
+        # 「产物是不是真的」与「屏够不够得着」是两件事。
         # 探针按 `{原id}-r-{作业id}` 去问是**核实一件已知的事实**（作业 id 是刚拿到的）；
         # 产品 NEVER 这么做——它那时候是在猜一个不知道的 id。
         new_id = f"{REAL}-r-{job_on_screen}" if job_on_screen else ""
@@ -131,7 +138,7 @@ def main() -> int:
                 page.wait_for_timeout(5_000)
         else:
             new_id = ""
-        after_list = list(_api(f"/projects/{PROJECT}").get("deliverable_ids", []))
+        after_list = _listed(PROJECT)
         result: dict[str, object] = {
             "phase": phase, "screenText": screen_text,
             "pickedBlockId": picked, "typedGuidance": GUIDANCE,

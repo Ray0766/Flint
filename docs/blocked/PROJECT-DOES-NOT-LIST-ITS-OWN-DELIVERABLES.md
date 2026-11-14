@@ -1,6 +1,6 @@
 # 项目总览列不出它自己产出的交付物：`deliverable_ids` 是建项时写死的一列
 
-**状态** open · 2026-08-12 · `WB-06`（连带 `WB-03-b`） · owner 已答复 `DEC-063`（2026-10-27），待落地
+**状态** closed @2026-11-14 · `OVERVIEW-01`（`DEC-063`） · 开单 2026-08-12 `WB-06`（连带 `WB-03-b`）
 
 ## 一、实测（2026-08-12，真栈 + 真库）
 
@@ -53,3 +53,17 @@ GET /projects/proj-demo-fixture
 选**乙 · 总览改查**：`project_overview` 改查 `deliverables` 表并回 `version` / `supersedes`；`projects.deliverable_ids` 列保留、不再读（删列属数据删除，未授权）。
 
 选项文本由 Claude 在会话里拟、owner 点选——出处与措辞的处置见 `DECISIONS-v04.md#DEC-063`。
+
+## 关闭（2026-11-14 · `OVERVIEW-01`）
+
+`DEC-063` 落地的是「总览改查表」那一半：`GET /projects/{id}` 不再回 `deliverable_ids`，
+交付物只认 `deliverables[]`（现查 `deliverables` 表，带 `version` / `supersedes`）。
+
+**本单开单时的一句要更正**：「项目总览列不出新产出」只对那条旧列成立。`deliverables[]`
+从 `BE-01` 起就在响应里，也一直列得出新版本（`docs/trace/B17-PLAN.md` 的 stale_premise 一节）。
+断的是读的人——取证脚本 `tools/ui_probe_wb_annotate.py` 读的是旧列。它已改读 `deliverables[]`。
+
+`projects.deliverable_ids` 那一列**留在库里，没有删也没有清**（删列是数据删除，`DEC-063` 不授权）。
+屏上「提交之后去总览找产物」那一步归 `CHAIN-UI-01`，不在本单。
+
+判据：`tests/v041/test_overview_deliverables.py`。

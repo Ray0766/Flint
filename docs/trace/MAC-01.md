@@ -89,5 +89,6 @@ PID 会被系统复用，只凭一个数字发信号，杀到的可以是任何�
 
 - S9 审核检查单第 ④ 项「trace 与 progress.jsonl 完整」——`tests/m4/test_m4_006.py:66`
   逐字比对检查单条目，改它判据会红；
-- `AGENTS.md`——它是 `CLAUDE.md` 的同文副本（仅标题行不同），owner 的指令只点了 `CLAUDE.md`。
-  **两份现在在 S8 上不一致**，留给 owner 定要不要同步。
+- `AGENTS.md`——它是 `CLAUDE.md` 的同文副本（仅标题行不同），owner 的第一条指令只点了 `CLAUDE.md`，
+  当时没动。**随后 owner 同日指令「同步 AGENTS.md」，已同步**：同样四处改动，
+  `diff CLAUDE.md AGENTS.md` 只剩标题行一处不同。

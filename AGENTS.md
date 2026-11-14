@@ -104,10 +104,11 @@ tests/  fixtures/  assets/  migrations/  prompts/  docs/  web/
 
 ## S8 Progress Ledger（会话必死前提）
 
-- `docs/progress.jsonl`（append-only，机器可读进度真相）——每行：
+- `docs/progress-v041.jsonl`（**现行台账**；append-only，机器可读进度真相）——每行：
   `{"ts","task_id","event":"started|verified|review_passed|review_failed|blocked","cycles_used","note"}`
 - `docs/trace/{task_id}.md`：实际装载清单（inputs 来源）+ 断点与决策日志 + 拆分/返工记录——与 M0 推演 trace 同构；
-- **新会话启动 MUST**：读 `progress.jsonl` 末 20 行 → 定位在跑/被阻任务 → 读对应 trace → 再动手。NEVER 依赖上一会话的记忆；NEVER 重做 event=verified 之后的任务除非 review_failed。
+- 历史台账（只在查旧卡时读）：`docs/progress.jsonl`（M1~M4，末行 2026-08-01）、`docs/progress-v04.jsonl`（v0.4，末行 2026-08-03）；
+- **新会话启动 MUST**：读 `docs/progress-v041.jsonl` 末 20 行 → 定位在跑/被阻任务 → 读对应 trace → 再动手。NEVER 依赖上一会话的记忆；NEVER 重做 event=verified 之后的任务除非 review_failed。
 
 ## S9 Escalation Rules
 
@@ -128,6 +129,6 @@ tests/  fixtures/  assets/  migrations/  prompts/  docs/  web/
 ## 附：Human Digest（监工视图 · 1 页 · 不进 AI 上下文）
 
 - **现在在做什么**：M1 数据与索引层，41 个任务，AI 口径总量 47 cycles、关键路径 18 cycles——多 agent 并行时瓶颈是关键路径而非总量。
-- **怎么看进度**：`docs/progress.jsonl` 尾部即最新状态；10 个 review_gate 是质量节点，出口在 M1-041。
+- **怎么看进度**：`docs/progress-v041.jsonl` 尾部即最新状态；10 个 review_gate 是质量节点，出口在 M1-041。
 - **什么时候会被叫**：只有六种情况（S9 清单）+ 三个人审节点；其余时间流水线自转。
 - **怎么干预**：改需求走 PDD 修订（owner 变更通道），别直接改 contracts/；对产出不满 → 在对应任务 trace 写意见，标 review_failed。

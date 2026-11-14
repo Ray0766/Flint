@@ -159,4 +159,7 @@ function main(argv) {
   return 1;
 }
 
-process.exit(main(process.argv.slice(2)));
+// `process.exitCode`，不是 `process.exit()`：后者不等 stdout 排空就退。stdout 接的是管道时
+// （pytest 的 `capture_output`），macOS 上超过 64KB 的那一截会被直接丢掉——`--json` 的报告
+// 在 65536 字节处断开，读的人拿到半截 JSON（`CHAIN-UI-01-a` 加了 6 个键之后实测撞上）。
+process.exitCode = main(process.argv.slice(2));

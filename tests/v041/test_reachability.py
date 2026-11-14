@@ -337,16 +337,25 @@ def test_removing_one_link_turns_a_screen_into_an_island() -> None:
     改后摘 `/gate/[id] → /deliverables/[id]`：报告那一族只有这一条路进得去，
     摘掉它，报告与它的四个同族屏一起掉下来。**级联仍然量得到**，
     而判定屏自己因为有第二条路，照样在可达名单上——这一点比改前判得更细。
+
+    ## `CHAIN-UI-01-a` 那天又改了一次，同一个道理
+
+    项目总览的交付物清单点得进去了（`/projects/[id] → /deliverables/[id]`），
+    报告那一族从此有两条路。只摘一条，它不再掉下来。
+    这里把**两条**进报告的边都摘掉：要量的仍是「进不去了就整族掉下来」，
+    而不是「恰好只有一条路」那个已经过期的前提。
     """
     from tools.check_reachability import check
 
+    into_reports = ("/gate/[id]", "/projects/[id]")
     graph = _graph()
     for screen in graph["screens"]:
-        if screen["route"] == "/gate/[id]":
-            screen["goes_to"] = []
+        if screen["route"] in into_reports:
+            screen["goes_to"] = [
+                e for e in screen["goes_to"] if e["to"] != "/deliverables/[id]"]
         if screen["route"] == "/deliverables/[id]":
             screen["reached_by"] = [
-                e for e in screen["reached_by"] if e["from"] != "/gate/[id]"
+                e for e in screen["reached_by"] if e["from"] not in into_reports
             ]
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -410,6 +419,16 @@ def test_a_second_level_island_is_not_counted_as_reachable() -> None:
     graph = _graph()
     plaza = next(s for s in graph["screens"] if s["route"] == "/plaza")
     plaza["goes_to"] = [e for e in plaza["goes_to"] if e["to"] != "/combo"]
+    # `CHAIN-UI-01-a` 之后项目那一族多了一条来路：作业屏跑完后回项目总览
+    # （`/jobs/[id] → /projects/[id]`），而总览指着主题列表。人造图里把这一条也摘掉，
+    # 那一屏才退回「有来路、起点走不到」的形状——这条判据量的是遍历，不是哪一条具体的边。
+    for screen in graph["screens"]:
+        if screen["route"] == "/jobs/[id]":
+            screen["goes_to"] = [
+                e for e in screen["goes_to"] if e["to"] != "/projects/[id]"]
+        if screen["route"] == "/projects/[id]":
+            screen["reached_by"] = [
+                e for e in screen["reached_by"] if e["from"] != "/jobs/[id]"]
 
     incoming = next(
         s for s in graph["screens"] if s["route"] == "/projects/[id]/topics")

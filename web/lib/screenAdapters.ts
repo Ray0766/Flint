@@ -84,7 +84,17 @@ export function toProjectOverviewView(payload: unknown): ProjectOverviewView {
       // 标题取第一个**非空**的候选键；一个都没有就退回 id，
       // NEVER 编一句「未命名」——那会让「没标题」和「标题就叫未命名」分不开。
       label: String(labelKeys.map((k) => row[k]).find((v) => v) ?? row[idKey] ?? ""),
-      state: typeof row.status === "string" ? row.status : null,
+      // 作业的状态在 `state`（`flint/api/project_overview.py#_JOBS_SQL`）。改前这里只读 `status`，
+      // 而总览回的三个列表里没有一个带这个键——作业那一列的状态槽在真数据上恒为空
+      // （`CHAIN-UI-01-a` 实测）。`status` 留作后备，不删。
+      state: typeof row.state === "string" ? row.state
+        : typeof row.status === "string" ? row.status : null,
+      kind: typeof row.kind === "string" ? row.kind : null,
+      // 版本与「取代哪一份」是后端给的原值（`DEC-063`：交付物只认 `deliverables` 表那一份）。
+      // 没有就是 `null`，NEVER 补一个 1。
+      version: typeof row.version === "number" ? row.version : null,
+      supersedes: typeof row.supersedes === "string" && row.supersedes !== ""
+        ? row.supersedes : null,
     }));
   return {
     projectId: String(body.project_id ?? ""),

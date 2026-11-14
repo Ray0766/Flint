@@ -236,3 +236,24 @@ pango 1.57.0_2（Homebrew，开工前已装）。
    未被 `allowScripts` 覆盖（`@parcel/watcher`、`fsevents`、`@swc/core`、`sharp`）。前端照常起来了；
 7. `compose.yaml` 里的 `api` / `worker` 两个占位容器（`python:3.11-slim` + `sleep infinity`）也被一并拉起；
 8. Python 3.11 与 3.13 那条未决项原样留着。本次只在 3.13.18 上跑过。
+
+## 八、补跑：`stop-demo.sh` 与重复起栈（2026-11-14，`CHAIN-UI-01-a` 换新代码时）
+
+§7.2 第 3、4 条当时没走到，这次走到了：
+
+- `./stop-demo.sh` → exit 0。前端 `:3000`、后端 `:8000` 都停了，三个 PID 文件删掉，
+  `docker compose stop` 之后四个监听端口都空了，数据卷 `flint_pgdata` 还在。
+  后端那一行打印了两遍（按端口停一次、按 PID 文件又停一次，同一个 PID），无害；
+- `./start-demo.sh` 第二次跑：后端、前端两处走到了「已在运行，复用」，worker 新起。
+
+**两件新看到的**：
+
+1. **worker 在首跑那天 17:28:59 就死了**，之后一直没人发现。`.run/worker.log` 末尾是
+   `redis.exceptions.ConnectionError: … Connection reset by peer`，时间落在第一遍全量 pytest 开跑后不久。
+   是哪条判据重置了 redis 连接没有查出来；后来几遍全量 pytest 跑完 worker 都还活着，没有复现。
+   `stop-demo.sh` 报的是「worker 未在运行」——它如实说了，只是在那之前没有任何东西会提醒；
+2. **`pgrep -f "harness.run_worker"` 会认错人**。我第一次重起时把 `./start-demo.sh` 与一句含有
+   `harness.run_worker` 字样的命令写在同一行 shell 里，脚本的查重匹配到了那个 shell 自己，
+   报「worker 已在运行，复用」而实际没有 worker。单独再跑一次脚本就正常起了。
+   正常在终端里敲 `./start-demo.sh` 不会撞上，但这个查重对「命令行里恰好带这串字的任何进程」都会误判。
+   脚本没有改。

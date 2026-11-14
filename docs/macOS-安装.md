@@ -5,9 +5,11 @@
 > 第二节装依赖、第四节 `./start-demo.sh` 四步、第五节回放都一次走完，脚本一个字没改。
 > 脚本的静态面仍由 `tests/v041/test_start_demo_sh.py` 守着（脚本文本逐项对 `start-demo.ps1`
 > + `bash -n` 语法检查）。
-> **第六节的门禁在这台机器上是红的**：ruff 1 条、mypy 3 条、pytest 79 failed + 3 errors，
-> 逐条原因见 `docs/trace/MAC-01.md` §七。
-> 没走到的：Docker 冷启动那段轮询、`.env` 导入、重复起栈、`stop-demo.sh`、任何调模型的功能
+> 第六节的门禁首跑时是红的（ruff 1 条、mypy 3 条、pytest 79 failed + 3 errors，
+> 逐条原因见 `docs/trace/MAC-01.md` §七）；`MAC-03` 至 `MAC-07` 之后同日转绿，
+> 最近一遍：ruff / mypy 零条，`pytest` 5426 passed、422 skipped。
+> `stop-demo.sh` 与重复起栈同日稍后补跑过，都正常（`docs/trace/MAC-01.md` §八）。
+> 没走到的：Docker 冷启动那段轮询、`.env` 导入、任何调模型的功能
 > ——这几样仍是「没在 Mac 上跑过」。本文其余写着「没有核过」的句子原样保留。
 
 ## 一、前置

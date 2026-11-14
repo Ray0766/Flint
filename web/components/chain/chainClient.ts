@@ -98,6 +98,30 @@ export async function submitAnalysis(
   return read(res);
 }
 
+/**
+ * 成文（`CHAIN-UI-01-a`）。成功回 `{job_id}`——调用方据此进 Job 进度屏。
+ *
+ * 体里**只有** `analysis_job_id`：屏上手里有的就是分析作业号，换算成产物 id 是服务端的事
+ * （`REPORT-SRC-01` / `DEC-061`）。NEVER 在前端拼一个产物 id，也不带 `template_id`——
+ * 不带时服务端用它自己的默认，前端填一个就多出一处要跟着改的默认值。
+ */
+export async function submitReport(
+  projectId: string, analysisJobId: string, opts: { baseUrl?: string } = {},
+): Promise<ActionOutcome> {
+  const base = opts.baseUrl ?? API_BASE;
+  let res: Response;
+  try {
+    res = await fetch(`${base}/projects/${encodeURIComponent(projectId)}/report`, {
+      method: "POST",
+      headers: headers(),
+      body: JSON.stringify({ analysis_job_id: analysisJobId }),
+    });
+  } catch (err: unknown) {
+    return { kind: "failed", status: 0, message: String(err) };
+  }
+  return read(res);
+}
+
 /** combo 建项（P3）。成功回 `{project_id, topic_ids, degraded}`。 */
 export async function submitCombo(
   cardIds: string[], hypothesis: string, opts: { baseUrl?: string } = {},

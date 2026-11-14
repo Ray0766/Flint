@@ -2,7 +2,7 @@
 
 import type { JSX } from "react";
 import { t } from "../../../lib/i18n/t";
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import { useJobStream } from "../../../lib/useJobStream";
 import { API_BASE } from "../../../lib/apiBase";
 import { EmptyState } from "../../../components/shell/EmptyState";
@@ -41,6 +41,13 @@ export default function JobPage({
 }): JSX.Element {
   const { id } = use(params);
   const s = useJobStream(id, { baseUrl: API_BASE });
+  // `CHAIN-UI-01-a`：这条作业属于哪个项目，**只从地址栏 `?project=` 认**。
+  // 作业快照（`GET /jobs/{id}`）不回项目号；没带就是 `null`，下面那个入口就不画。
+  // 两个 hook 写在所有早退之前（写在后面就是「Rendered more hooks」那个坑）。
+  const [projectId, setProjectId] = useState<string | null>(null);
+  useEffect(() => {
+    setProjectId(new URLSearchParams(window.location.search).get("project"));
+  }, []);
   // UIX-04：**第五态，而且它排在骨架之前**。
   //
   // 后端对这条作业回 403（或 401）时，`status` 恒为 `null`——落到下面那个加载分支，
@@ -146,6 +153,22 @@ export default function JobPage({
             <span className="data-row__label">{t("job.gate_entry.label")}</span>
             <a className="data-row__value" data-gate-link href={`/gate/${id}`}>
               {t("job.gate_entry.open")}
+            </a>
+          </p>
+        ) : null}
+        {/* `CHAIN-UI-01-a`：跑完了、且知道它属于哪个项目，才给回总览的入口。
+            产物是哪一份，从总览那份交付物清单里找（`DEC-063`：那是唯一的一份）。
+
+            **NEVER 在这里拼一个产物 id**：`del-{作业号}` 那个形状今天成立，
+            但它是实现细节（`DEC-012` 判死过同形的手）。
+
+            没带项目号就不给：给一个猜出来的链接，点过去是别人的项目或者 404。 */}
+        {s.status === "done" && projectId ? (
+          <p className="data-row" data-project-entry>
+            <span className="data-row__label">{t("job.project_entry.label")}</span>
+            <a className="data-row__value" data-project-link
+              href={`/projects/${encodeURIComponent(projectId)}`}>
+              {t("job.project_entry.open")}
             </a>
           </p>
         ) : null}

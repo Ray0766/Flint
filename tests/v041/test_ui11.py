@@ -56,11 +56,17 @@ def test_the_page_never_stitches_three_requests() -> None:
         "取数点不止一处——三个时刻的库拼成一张快照，正是这条判据要挡的")
     assert 'useScreenData<unknown>(`/projects/${id}`)' in code, "取的不是那条一次查齐的端点"
 
-    # 三个子串仍然只许出现在**导航**里（`href=`），NEVER 出现在别的位置。
+    # 三个子串仍然只许出现在**导航**里，NEVER 出现在别的位置。
+    #
+    # 导航有两种写法：`href=`，与提交成功后的 `window.location.assign(`。
+    # 后一种是 `CHAIN-UI-01-a` 加的——从一条跑完的分析去成文，提交回 `{job_id}` 之后进作业屏
+    # （与发起分析那一屏同一个写法）。改前这里只认 `href=`，那条跳转当场被判成「拼请求」。
+    # 它要挡的那件事没有变：这三个路径 NEVER 出现在取数里（上面那句 `fetch(` 守着）。
     for path in ("/topics", "/jobs", "/deliverables"):
         for line in code.splitlines():
             if path in line:
-                assert "href=" in line, f"{path} 出现在了一个不是链接的地方：{line.strip()}"
+                assert "href=" in line or "window.location.assign(" in line, (
+                    f"{path} 出现在了一个不是导航的地方：{line.strip()}")
 
 
 def test_the_component_takes_one_object_not_three_lists() -> None:

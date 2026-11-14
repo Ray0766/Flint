@@ -2908,3 +2908,39 @@ body {
   font-size: var(--fs-12);
   color: var(--text-meta);
 }
+
+/* CHAIN-UI-01-a：项目总览的行。改前这一族一条样式都没有——id、标签、状态在屏上连成一串
+ * （实测屏上是 `job-…proposal失败`）。这里只排版：一行内留间距、放不下就折行；
+ * 字号与颜色沿用数据行那一套 token，没有新增任何色值。 */
+.overview__list {
+  list-style: none;
+  margin: var(--sp-3) 0 0;
+  padding: 0;
+}
+
+.overview__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-2) var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.overview__row-id {
+  font-family: var(--font-mono);
+  font-size: var(--fs-13);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-meta);
+  overflow-wrap: anywhere;
+}
+
+.overview__row-label {
+  font-size: var(--fs-14);
+  color: var(--text-body);
+}
+
+.overview__row-state {
+  font-size: var(--fs-13);
+  color: var(--text-label);
+}

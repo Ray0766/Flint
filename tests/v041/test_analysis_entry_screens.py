@@ -89,7 +89,9 @@ def test_each_screen_posts_to_its_own_endpoint() -> None:
 
     assert "/analysis`" in code, "没打 POST /projects/{id}/analysis"
     assert '"/projects/combo"' in code or "/projects/combo" in code
-    assert code.count('method: "POST"') == 2
+    # `CHAIN-UI-01-a` 加了第三条：成文（`POST /projects/{id}/report`，带 `analysis_job_id`）。
+    assert "/report`" in code, "没打 POST /projects/{id}/report"
+    assert code.count('method: "POST"') == 3, "写端点的条数变了——来这里对一遍是哪一条"
 
 
 def test_the_analysis_body_matches_the_frozen_request_shape() -> None:

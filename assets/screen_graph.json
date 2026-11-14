@@ -122,6 +122,11 @@
           "from": "/deliverables/[id]/export",
           "how": "返回报告",
           "where": "web/app/deliverables/[id]/export/page.tsx"
+        },
+        {
+          "from": "/projects/[id]",
+          "how": "交付物清单里的每一份",
+          "where": "web/components/project-overview/ProjectOverview.tsx"
         }
       ],
       "goes_to": [
@@ -283,6 +288,11 @@
           "from": "/projects/[id]/analysis",
           "how": "发起分析后跳进度屏",
           "where": "web/app/projects/[id]/analysis/page.tsx"
+        },
+        {
+          "from": "/projects/[id]",
+          "how": "跑完的分析旁的「生成报告」，提交后跳进度屏",
+          "where": "web/app/projects/[id]/page.tsx"
         }
       ],
       "goes_to": [
@@ -291,6 +301,12 @@
           "how": "跑完了才给的「查看 Gate① 判定」",
           "where": "web/app/jobs/[id]/page.tsx",
           "when": "status === \"done\" 时才出现。作业还在跑时点过去，判定屏会如实说「未判定」——那句话没错，可它读起来像「这次没判出结果」，而真相是「还没跑到」。"
+        },
+        {
+          "to": "/projects/[id]",
+          "how": "跑完了才给的「回项目总览找这次的产物」",
+          "where": "web/app/jobs/[id]/page.tsx",
+          "when": "CHAIN-UI-01-a：status === \"done\" 且地址栏带了 ?project= 才出现。作业快照不回项目号，没带就不给，NEVER 猜一个。"
         }
       ]
     },
@@ -341,6 +357,11 @@
           "from": "/projects/[id]/topics",
           "how": "「项目总览」",
           "where": "web/app/projects/[id]/topics/page.tsx"
+        },
+        {
+          "from": "/jobs/[id]",
+          "how": "跑完了才给的「回项目总览找这次的产物」",
+          "where": "web/app/jobs/[id]/page.tsx"
         }
       ],
       "goes_to": [
@@ -358,6 +379,17 @@
           "to": "/projects/[id]/proposal",
           "how": "「计划书受众」",
           "where": "web/app/projects/[id]/page.tsx"
+        },
+        {
+          "to": "/jobs/[id]",
+          "how": "跑完的分析旁的「生成报告」，提交后跳进度屏",
+          "where": "web/app/projects/[id]/page.tsx",
+          "when": "CHAIN-UI-01-a：只在 kind=gate1_analysis 且 state=done 的作业旁出现。地址栏带着 ?project=，作业屏靠它回得来。"
+        },
+        {
+          "to": "/deliverables/[id]",
+          "how": "交付物清单里的每一份",
+          "where": "web/components/project-overview/ProjectOverview.tsx"
         }
       ],
       "note": "改前是孤岛，理由是「这一族没有活的入口」。入口在 `/projects/[id]/topics` 那一侧，而那条链的头 `/combo` 此前没人指向它——**头一通，整条链跟着通**。本屏自己一行都没改：孤岛从来不是它的病。"

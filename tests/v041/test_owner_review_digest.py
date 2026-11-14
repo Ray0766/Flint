@@ -52,6 +52,17 @@ COVERED = {
 }
 
 
+# `NARROW-01`（`DEC-066`，owner 2026-11-14）：项目收窄之后，**剩下没被裁决覆盖的 28 张统一搁置**。
+# 也判等值：26 张整行搁置，`UI-01`/`UI-02` 是「部分覆盖、余下几条搁置」。
+# 搁置不是销账——每行「要 owner 定的那个点」原样留着，由下面那条「说清定什么」的判据看着。
+SHELVED = {
+    "BL-04", "BL-11", "BL-12", "CAL-02", "COMP-01", "DARK-01", "DOC-01", "DOC-03",
+    "EYE-03", "FB-09", "FB-10", "GAUGE-02", "JUDGE-01", "JUDGE-02", "JUDGE-03",
+    "JUDGE-04", "JUDGE-05", "K1-01", "K2-01", "K3-01", "K6-01", "PAY-01", "PAY-02",
+    "PAY-03", "SHIP-01", "Z-01", "UI-01", "UI-02",
+}
+
+
 def _digest() -> str:
     return DIGEST.read_text(encoding="utf-8")
 
@@ -149,9 +160,37 @@ def test_both_covered_and_open_rows_exist() -> None:
         f"覆盖名单变了：多出 {sorted(covered - COVERED)}、少了 {sorted(COVERED - covered)}"
     )
     assert still, "全被覆盖了？那 owner 一张都不用看，这份摘要就没有存在的必要"
-    assert all("待看" in rows[c] for c in still), (
-        f"这些行既没标已覆盖、也没说仍待看：{sorted(c for c in still if '待看' not in rows[c])}"
+    assert all("搁置" in _status(rows[c]) for c in still), (
+        "这些行既没标已覆盖、也没标搁置："
+        f"{sorted(c for c in still if '搁置' not in _status(rows[c]))}"
     )
+
+
+def _status(row: str) -> str:
+    """一行的最后一格（覆盖状态）。只看这一格：`UI-01` 的「要定的点」里也写着「仍待看」。"""
+    return row.split("|")[-1].strip()
+
+
+def test_what_was_left_is_shelved_by_the_narrowing() -> None:
+    """`NARROW-01`：没被裁决覆盖的 28 张，状态一格写「搁置」并点名 `DEC-066`。
+
+    判等值，不判「至少有一张」：少一张就是有卡没跟着搁置、还在等 owner；
+    多一张就是把一张已被裁决覆盖的卡改成了搁置，它原来的裁决出处会被盖掉。
+    状态一格再不许出现「待看」——那是这一步要换掉的字。
+    """
+    status = {card: _status(row) for card, row in _rows().items()}
+    shelved = {card for card, cell in status.items() if "搁置" in cell}
+
+    assert shelved == SHELVED, (
+        f"搁置名单不对：多出 {sorted(shelved - SHELVED)}、少了 {sorted(SHELVED - shelved)}"
+    )
+    assert all("DEC-066" in status[card] for card in shelved), (
+        f"这些行标了搁置却没点名裁决：{sorted(c for c in shelved if 'DEC-066' not in status[c])}"
+    )
+    assert not [c for c, cell in status.items() if "待看" in cell], (
+        f"状态一格还写着待看：{sorted(c for c, cell in status.items() if '待看' in cell)}"
+    )
+    assert len(SHELVED) + len(COVERED) == 38
 
 
 # ───────────────────────── acceptance④：NEVER 替 owner 下结论
@@ -176,7 +215,8 @@ def test_every_open_row_says_what_the_decision_is() -> None:
     """
     vague: list[str] = []
     for card, rest in _rows().items():
-        if "待看" not in rest:
+        # 搁置的行同样要说清「定什么」：搁置不是销账，解冻时要从这一格接着看。
+        if "待看" not in rest and "搁置" not in rest:
             continue
         point = rest.split("|")[1].strip() if rest.count("|") >= 1 else ""
         if len(point) < 8 or point in {"待定", "—", "-"}:

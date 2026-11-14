@@ -1,9 +1,14 @@
 # macOS 安装与起栈（MAC-01 @2026-11-14）
 
-> **本文写于 Windows 主机，macOS 实机一次都没跑过。**
-> 已验的只有静态面：`tests/v041/test_start_demo_sh.py`（脚本文本逐项对 `start-demo.ps1`
-> + `bash -n` 语法检查）。下面每一步第一次在 Mac 上跑通之后，把这段话换成实跑日期与机型；
-> 哪一步走不通，照实记进 `docs/trace/MAC-01.md`，NEVER 悄悄改文档了事。
+> **实机跑过一次：2026-11-14，MacBook Air 15 英寸（`Mac15,13`，Apple M3，16 GB），macOS 27.2.1。**
+> Python 3.13.18（Homebrew）、Node v24.21.0、Docker Desktop 29.7.2、pango 1.57.0_2。
+> 第二节装依赖、第四节 `./start-demo.sh` 四步、第五节回放都一次走完，脚本一个字没改。
+> 脚本的静态面仍由 `tests/v041/test_start_demo_sh.py` 守着（脚本文本逐项对 `start-demo.ps1`
+> + `bash -n` 语法检查）。
+> **第六节的门禁在这台机器上是红的**：ruff 1 条、mypy 3 条、pytest 79 failed + 3 errors，
+> 逐条原因见 `docs/trace/MAC-01.md` §七。
+> 没走到的：Docker 冷启动那段轮询、`.env` 导入、重复起栈、`stop-demo.sh`、任何调模型的功能
+> ——这几样仍是「没在 Mac 上跑过」。本文其余写着「没有核过」的句子原样保留。
 
 ## 一、前置
 
@@ -120,8 +125,9 @@ PYTHONIOENCODING=utf-8 .venv/bin/ruff check . && .venv/bin/mypy --strict flint e
   再跑 `.venv/bin/python scripts/provision_test_db.py`）；
 - `PYTHONIOENCODING=utf-8` 是为 Windows 的 GBK 管道加的固定前提（`Makefile` 里有说明），
   macOS 上不带它也该成立，带着无害；
-- `.ui-probe/` 没有进仓（79MB 截图，本机运行产物）。读它的那批判据在新机器上会 skip，
-  并写明「本机没跑过真栈冒烟」——重跑 `scripts/ui_probe.py` 之后恢复；
+- `.ui-probe/` 没有进仓（79MB 截图，本机运行产物）。读它的那批判据在新机器上**一部分 skip、
+  一部分红**：2026-11-14 实测 354 条 skip、68 条红（「缺这一张」「没有 .ui-probe/fe_smoke.json」）。
+  重跑各自的取证脚本之后恢复，这一步还没在 Mac 上做过；
 - playwright 不是本项目依赖，NEVER 装进 `.venv`。探针脚本的报错文案里写的
   `C:\pwenv` 是 Windows 上那个隔离环境的位置；macOS 上另建一个 venv 装它即可，位置自定。
 
@@ -139,3 +145,4 @@ PYTHONIOENCODING=utf-8 .venv/bin/ruff check . && .venv/bin/mypy --strict flint e
 | 后端 90 秒内未就绪 | 看 `.run/backend.log` | 连不上 55432 → `docker compose ps` |
 | 作业永远停在 `queued` | worker 没起 | `pgrep -fl harness.run_worker`；看 `.run/worker.log` |
 | 广场是空的 | 库里没有数据 | 跑第五节的回放 |
+| `/demo` 显「该区当日无数据」 | 这一屏不自动取数 | 点「加载当日热点广场」；点了仍空才是库里没有数据 |

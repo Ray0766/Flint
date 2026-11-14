@@ -21,6 +21,9 @@ out/
 .ui-probe/
 .pdf-probe/
 
+# PID and log files written by start-demo.sh
+.run/
+
 # Per-machine Claude Code permissions
 .claude/settings.local.json
 

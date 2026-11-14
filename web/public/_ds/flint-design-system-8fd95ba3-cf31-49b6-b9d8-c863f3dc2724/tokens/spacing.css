@@ -2,10 +2,10 @@
 /* 间距 4/8/12/16/24/32/48/64/96/160 */
 --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--sp-8:64px;--sp-9:96px;--sp-10:160px;
 /* 圆角：2 表格与数据面 / 8 卡片、贴纸 / 999 仅标签纸 */
---r-data:2px;--r-card:8px;--r-tag:999px;
+--r-data:8px;--r-card:14px;--r-tag:999px; /* REDESIGN-01：改前 2 / 8 */
 /* 投影：极淡，仅贴纸与浮层 */
---shadow-sticker:0 1px 2px rgba(27,42,46,.10);
---shadow-overlay:0 8px 32px rgba(27,42,46,.16),0 2px 6px rgba(27,42,46,.08);
+--shadow-sticker:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
+--shadow-overlay:0 10px 30px rgba(16,24,40,.12),0 2px 8px rgba(16,24,40,.06);
 --emboss:inset 1px 1.5px 3px rgba(27,42,46,.09),inset -1px -1px 2px rgba(255,255,255,.65); /* @kind shadow */
 /* WIDTH-01：**容器宽度**档。与 typography.css 的 `--measure-longform` 各自命名——
    那一个是「长文一行最多多少字才好读」（排版事实），这一个是「应用外壳有多宽」（布局决定）。

@@ -1,6 +1,6 @@
 :root{
---font-display:"Smiley Sans Oblique","Smiley Sans","得意黑","Noto Sans SC",sans-serif; /* 只用于首屏大字与页面级标题 */
---font-body:Inter,"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+--font-display:Inter,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; /* REDESIGN-01：标题不再用斜体展示字，与正文同一套无衬线。改前是 "Smiley Sans Oblique" 一族 */
+--font-body:Inter,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
 --font-mono:"IBM Plex Mono","JetBrains Mono",ui-monospace,monospace; /* 一切带出处的数值 + tabular-nums */
 /* 字阶 12/13/14/16/20/25/31/48/72/112 */
 --fs-12:12px;--fs-13:13px;--fs-14:14px;--fs-16:16px;--fs-20:20px;--fs-25:25px;--fs-31:31px;--fs-48:48px;--fs-72:72px;--fs-112:112px;
@@ -18,6 +18,6 @@
    大屏上小得像个小标签，小屏上又挤。
    下界照卡面（24 / 20），上界照蓝本主标那一档（56 / 32）。
    **NEVER 在组件里写死 px**：写死之后下一次调档没人找得到它。 */
---text-screen-title:clamp(24px, 2.6vw, 48px); /* @kind other 屏头 h1 */
---text-wordmark:clamp(20px, 1.6vw, 30px); /* @kind other 顶栏品牌字 */
+--text-screen-title:clamp(22px, 1.6vw, 28px); /* @kind other 屏头 h1。REDESIGN-01：屏头改成「粗体标题 + 一枚标签同一行」，不再是 48px 的大字。改前 clamp(24px, 2.6vw, 48px) */
+--text-wordmark:18px; /* @kind other 侧栏品牌字。REDESIGN-01：侧栏宽度固定，品牌字不随视口缩放。改前 clamp(20px, 1.6vw, 30px) */
 }

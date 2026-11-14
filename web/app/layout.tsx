@@ -1,6 +1,9 @@
 import type { JSX, ReactNode } from "react";
 
 import "./globals.css"; // FB-01：把 _ds 接进应用。此前这里零 CSS import —— 终检 F-09 的根因
+// REDESIGN-01：新设计层。**必须排在 globals.css 之后**——它整层压在旧样式之上
+// （新 token、侧边导航外壳、各屏组件）。撤回新设计只有这一行。
+import "./redesign.css";
 import { AppShell } from "../components/shell/AppShell";
 import { DS_BUNDLE_SRC, DsBundleMount } from "../components/shell/dsBundle";
 import { t } from "../lib/i18n/t";

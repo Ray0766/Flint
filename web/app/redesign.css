@@ -1,0 +1,1119 @@
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+ * 燧石 Flint · 设计层 v5 —— 从 0 重新设计（REDESIGN-01）
+ *
+ * owner 2026-11-14 在会话里的两句原话：
+ *   「重构整个 UI，现在的 UI 难用而且丑」
+ *   「这重构的幅度也太小了，我说的是重构，那就是从 0 重新设计」
+ *
+ * ## 这一层是什么
+ *
+ * 一套新的视觉语言与外壳，**整层压在 `globals.css` 之上**（`layout.tsx` 里它排在后面）：
+ *
+ *   一、token      这一层自己的布局尺寸；关掉麻纸底纹。新配色、字体、圆角、投影写在 `_ds/tokens/` 里
+ *   二、外壳       浮动药丸条 → 左侧固定导航（窄屏：顶栏 + 底部标签栏）；吉祥物与跟随发光块退役
+ *   三、屏框       屏头、正文区、卡、按钮、表单、数据行、状态件
+ *   四、各屏       广场 / 工作台 / 总览 / 作业 / 报告 / 收藏 / 设计 / 其余
+ *
+ * ## 为什么是「压一层」而不是把 `globals.css` 删掉重写
+ *
+ * 那份文件三千多行，是十七批、上百张卡攒下来的，许多规则旁边写着它当初为什么存在。
+ * 删掉重写，没被这一层重新照顾到的角落会直接变成无样式——而那在屏上长得像「坏了」。
+ * 压一层：新设计管得到的地方全部换新，管不到的地方至少还是旧的完整样子。
+ * 撤回也只有一步：把 `layout.tsx` 里那一行 import 去掉。
+ * 新设计定下来之后，`globals.css` 里被整段盖掉的旧规则（药丸条、吉祥物、麻纸）可以另开一卡清掉。
+ *
+ * ## DOM 没有换
+ *
+ * 导航仍是 `<nav class="anime-nav">` 那一棵树，各屏的 `data-*` 断言面一个没动。
+ * 换的是它们长什么样、摆在哪。
+ *
+ * ## 本文件里一个色值都没有
+ *
+ * 全部走 token。新板的色值在 `_ds/tokens/colors.css`——颜色只有那一个来源。
+ * ═══════════════════════════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────────────────────── 一、token ───────────────────────────────── */
+
+/* **颜色、字体、圆角、投影的新取值不在这里**——它们各自写进了 `_ds/tokens/` 下的那几份文件
+ * （`colors.css` / `typography.css` / `spacing.css`）。颜色只有一个来源，这条规矩没有变：
+ * 第一版把新配色写在本文件里，被 `tests/v041/test_palette_v4.py` 与 `test_tail_01.py` 当场拦下
+ * （「颜色有了第二个来源」）。它们拦得对。
+ *
+ * 这里只留两类：这一层自己新增的布局尺寸，以及要关掉的质感。
+ * `:root:root`：特异度比 `_ds` 的 `:root` 高一档，不靠样式表的先后次序取胜。 */
+:root:root {
+  /* 外壳尺寸 */
+  --nav-w: 232px;
+  --bar-h: 56px;
+  --tabbar-h: 60px;
+  /* 质感：麻纸噪点与压印关掉。`_ds/tokens/texture.css` 里那两段噪点图没有删，只是不再用。 */
+  --tex-paper: none;
+  --tex-paper-strong: none;
+  --emboss: none;
+}
+
+/* ───────────────────────────────── 二、外壳 ───────────────────────────────── */
+
+body {
+  background: var(--paper);
+  background-image: none;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--indigo);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--indigo);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: block;
+}
+
+/* 顶栏那一层不再是「高度为零的浮层」：它就是侧栏的容器。 */
+.app-shell__bar {
+  position: static;
+  display: block;
+  block-size: auto;
+  pointer-events: auto;
+  z-index: auto;
+}
+
+.app-shell__inner {
+  max-inline-size: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* 侧栏：左边一条，上品牌、中导航、下三个控件。 */
+.anime-nav {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inset-inline-end: auto;
+  z-index: 50;
+  box-sizing: border-box;
+  inline-size: var(--nav-w);
+  max-inline-size: none;
+  margin: 0;
+  padding: var(--sp-4) var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  gap: 2px;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 0;
+  border-inline-end: 1px solid var(--rule);
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  animation: none;
+}
+
+.anime-nav > * {
+  block-size: auto;
+}
+
+/* 跟随发光块与吉祥物：退役。节点还在（组件没动），不占位、不显示。 */
+.anime-nav__glow,
+.anime-nav__mascot {
+  display: none;
+}
+
+.anime-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-2) var(--sp-3);
+  border: 0;
+}
+
+/* 品牌字前的一枚火花：一个旋转 45° 的小方块，纯 CSS，不引图标。 */
+.anime-nav__brand::before {
+  content: "";
+  flex: 0 0 auto;
+  inline-size: 14px;
+  block-size: 14px;
+  border-radius: 3px;
+  background: var(--sulfur);
+  transform: rotate(45deg);
+}
+
+.anime-nav .app-shell__wordmark {
+  font-family: var(--font-body);
+  font-size: var(--text-wordmark);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.anime-nav__tab {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--sp-3);
+  min-block-size: 40px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-data);
+  font-size: var(--fs-14);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.anime-nav__tab:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.anime-nav__tab[data-active="true"] {
+  background: var(--sulfur-soft);
+  color: var(--indigo);
+  font-weight: 600;
+}
+
+/* 图标与文字都显示（旧设计宽屏只显示文字、窄屏只显示图标）。 */
+.anime-nav__label,
+.anime-nav__icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.anime-nav__icon svg {
+  inline-size: 18px;
+  block-size: 18px;
+  stroke-width: 2;
+}
+
+/* 控件区：沉到侧栏底部，一行一个。 */
+.anime-nav__controls {
+  margin: auto 0 0;
+  padding: var(--sp-4) var(--sp-3) 0;
+  border: 0;
+  border-block-start: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--sp-3);
+}
+
+.anime-nav .app-shell__spacer {
+  display: none;
+}
+
+.anime-nav__controls > * {
+  block-size: auto;
+  display: flex;
+}
+
+.anime-nav__controls .app-shell__locale,
+.anime-nav__controls .app-shell__theme,
+.anime-nav__controls .region-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--sp-3);
+  white-space: normal;
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+}
+
+.anime-nav__controls label,
+.anime-nav__controls .region-switch span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+}
+
+/* 地区那一个的标记是「字 + 下拉」并列的两个节点，不像另外两个包在同一个 label 里；
+   让它也排成「左字右控件」的一行。 */
+.anime-nav__controls .region-switch {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.anime-nav__controls select,
+.anime-nav__controls button {
+  block-size: 32px;
+  min-inline-size: 104px;
+  padding: 0 var(--sp-2);
+  font: inherit;
+  font-size: var(--fs-13);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+}
+
+/* 主体：让开侧栏；左右留白，内容区不再顶到 1760。 */
+.app-shell__body {
+  box-sizing: border-box;
+  inline-size: auto;
+  max-inline-size: none;
+  margin: 0 0 0 var(--nav-w);
+  padding: var(--sp-6) var(--sp-7) var(--sp-8);
+}
+
+/* 窄屏：顶栏（品牌）+ 底部标签栏（七个入口）。三个控件收进「语言与地区」那一屏已有，
+ * 顶栏右侧只留主题切换放不下，所以控件区在窄屏整体隐藏——它们在设置屏里都找得到。 */
+@media (max-width: 899px) {
+  .anime-nav {
+    inset-block: 0 auto;
+    inset-inline: 0;
+    inline-size: auto;
+    block-size: var(--bar-h);
+    flex-direction: row;
+    align-items: center;
+    padding: 0 var(--sp-4);
+    overflow: visible;
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--rule);
+  }
+
+  .anime-nav__brand {
+    margin: 0;
+    padding: 0;
+  }
+
+  .anime-nav__controls {
+    display: none;
+  }
+
+  .anime-nav__tab {
+    position: fixed;
+    inset-block-end: 0;
+    z-index: 50;
+    box-sizing: border-box;
+    inline-size: calc(100% / 7);
+    block-size: var(--tabbar-h);
+    min-block-size: 0;
+    padding: 6px 2px 8px;
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 0;
+    border-block-start: 1px solid var(--rule);
+    background: var(--surface);
+    font-size: 10px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .anime-nav__tab[data-active="true"] {
+    background: var(--surface);
+    box-shadow: inset 0 2px 0 var(--sulfur);
+  }
+
+  .anime-nav__tab:hover {
+    background: var(--surface);
+  }
+
+  /* 七个入口各 56px 宽，放不下六个字的标签（「计划书工作台」）。
+     只有当前项带字，其余只留图标。
+     **其余项的字是「看不见但读得到」**（裁成 1px），NEVER 用 `display: none`：
+     那会把它从无障碍树里拿掉，链接就成了一个没有名字的图标。 */
+  .anime-nav__label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .anime-nav__tab[data-active="true"] .anime-nav__label {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    max-inline-size: 100%;
+    clip-path: none;
+    text-overflow: ellipsis;
+  }
+
+  .anime-nav__icon svg {
+    inline-size: 22px;
+    block-size: 22px;
+  }
+
+  .anime-nav__tab:nth-of-type(1) { inset-inline-start: 0; }
+  .anime-nav__tab:nth-of-type(2) { inset-inline-start: calc(100% / 7); }
+  .anime-nav__tab:nth-of-type(3) { inset-inline-start: calc(200% / 7); }
+  .anime-nav__tab:nth-of-type(4) { inset-inline-start: calc(300% / 7); }
+  .anime-nav__tab:nth-of-type(5) { inset-inline-start: calc(400% / 7); }
+  .anime-nav__tab:nth-of-type(6) { inset-inline-start: calc(500% / 7); }
+  .anime-nav__tab:nth-of-type(7) { inset-inline-start: calc(600% / 7); }
+
+  .app-shell__body {
+    margin: 0;
+    padding: calc(var(--bar-h) + var(--sp-4)) var(--sp-4) calc(var(--tabbar-h) + var(--sp-5));
+  }
+}
+
+/* ───────────────────────────────── 三、屏框与通用件 ───────────────────────────────── */
+
+/* 屏头：标题 + 一枚说明标签，同一行；底下不再画那条横线。 */
+.screen__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2) var(--sp-3);
+  margin: 0 0 var(--sp-5);
+  padding: 0;
+  border: 0;
+}
+
+.screen__title {
+  font-family: var(--font-body);
+  font-size: var(--text-screen-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+/* 说明标签：一枚素的圆角标签。
+ *
+ * 里面那层是 `_ds` 的贴纸标签组件，自带纸感的内联样式（底色、投影、微微的旋转）。
+ * 标签的长相由外面这一层 `.screen__meta` 给，里面那层全部压平——否则是两枚标签套在一起。 */
+.screen__meta {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 2px var(--sp-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border-radius: var(--r-tag);
+}
+
+.screen__meta * {
+  padding: 0 !important;
+  margin: 0 !important;
+  font: inherit !important;
+  color: inherit !important;
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.screen__body {
+  font-size: var(--fs-14);
+  line-height: 1.6;
+}
+
+:where(.screen__body) :where(h2) {
+  font-size: var(--fs-20);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+:where(.screen__body) :where(h3) {
+  font-size: var(--fs-16);
+  font-weight: 650;
+}
+
+/* 卡面的统一长相：白底、细边、14 圆角、轻投影。 */
+.account,
+.billing,
+.overview,
+.plaza-grid__item,
+.plaza-combo-bar,
+.state,
+.screen__state,
+.favorites[data-favorites-state="empty"] {
+  background-color: var(--surface);
+  background-image: none;
+  border-color: var(--rule);
+  border-radius: var(--r-card);
+}
+
+/* 主按钮：火花橙底、深色字。次按钮：白底细边。全站只有这两种。 */
+.chain-form__submit,
+.plaza-combo-bar > button,
+[data-report-from-job] {
+  min-block-size: 36px;
+  padding: 0 var(--sp-4);
+  font-family: var(--font-body);
+  font-size: var(--fs-14);
+  font-weight: 600;
+  color: var(--on-accent);
+  background: var(--sulfur);
+  border: 1px solid transparent;
+  border-radius: var(--r-data);
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+.chain-form__submit:hover:not(:disabled),
+.plaza-combo-bar > button:hover:not(:disabled),
+[data-report-from-job]:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.chain-form__submit:active:not(:disabled),
+.plaza-combo-bar > button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.chain-form__submit:disabled,
+.plaza-combo-bar > button:disabled,
+[data-report-from-job]:disabled {
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border-color: var(--rule);
+  cursor: not-allowed;
+}
+
+:where(.screen__body) :where(button, select, textarea, input:not([type="checkbox"], [type="radio"])):where(:not([class])) {
+  min-block-size: 36px;
+  border-color: var(--rule);
+  border-radius: var(--r-data);
+  background-color: var(--surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+:where(.screen__body) :where(button:not([class])) {
+  font-weight: 500;
+}
+
+:where(.screen__body) :where(select, textarea, input):focus-visible,
+.plaza-combo-bar__hyp input:focus-visible {
+  outline: none;
+  border-color: var(--sulfur);
+  box-shadow: 0 0 0 3px var(--sulfur-soft);
+}
+
+/* 表单（发起分析这一族）：一块卡，标签在上、控件在下。 */
+.chain-form {
+  box-sizing: border-box;
+  max-inline-size: 36em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+.chain-form__label {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-13);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.chain-form__input {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: 40px;
+  padding: 0 var(--sp-3);
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+}
+
+.chain-form__input:focus-visible {
+  outline: none;
+  border-color: var(--sulfur);
+  box-shadow: 0 0 0 3px var(--sulfur-soft);
+}
+
+.chain-form__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+
+.chain-form__outcome {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-13);
+  color: var(--ink-2);
+}
+
+/* 数据行：不再每行一条横线；放进一块卡里才画分隔。 */
+.data-row {
+  border-bottom: 0;
+  padding: var(--sp-2) 0;
+}
+
+.data-row__label {
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+}
+
+.data-row__value {
+  font-family: var(--font-body);
+  font-size: var(--fs-14);
+  color: var(--ink);
+}
+
+a.data-row__value {
+  color: var(--indigo);
+  font-weight: 500;
+}
+
+/* 状态件 */
+.state,
+.screen__state {
+  border-style: solid;
+  box-shadow: var(--shadow-sticker);
+}
+
+.state--empty,
+.favorites[data-favorites-state="empty"] {
+  border-style: dashed;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.state__title,
+.favorites__empty {
+  font-size: var(--fs-16);
+  font-weight: 650;
+}
+
+/* ───────────────────────────────── 四、各屏 ───────────────────────────────── */
+
+/* ── 广场 ── */
+
+.screen__body > [data-day-origin="fallback"] {
+  border: 1px solid var(--rule);
+  border-inline-start: 3px solid var(--ochre);
+  border-radius: var(--r-data);
+}
+
+/* 今日精选：扇形卡堆 → 一排平铺的卡。
+ *
+ * 卡堆的位置是组件用内联 `transform` 摆的（三维扇形，两侧的卡倾斜、读不了字）。
+ * 这里用 `!important` 把那几样内联定位全部压平：五张卡并排，每张都读得了、点得了。
+ * 组件自己的逻辑（当前张、键盘左右、拖拽）照旧在跑——「当前张」现在显示为一圈强调色的边。
+ * 圆点与那行键盘提示在平铺下是多余的，收起来。 */
+.plaza-stack {
+  margin: 0 0 var(--sp-6);
+}
+
+.plaza-stack__heading,
+.plaza-grid__heading {
+  margin: 0 0 var(--sp-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-16);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.plaza-stack__deck {
+  block-size: auto;
+  height: auto;
+  perspective: none;
+  overflow-x: auto;
+  overflow-y: visible;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: var(--sp-4);
+  padding: 2px 2px var(--sp-3);
+  scroll-snap-type: x proximity;
+}
+
+.plaza-stack__slot {
+  position: static !important;
+  inset: auto !important;
+  inline-size: auto !important;
+  width: auto !important;
+  block-size: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  z-index: auto !important;
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+
+.plaza-stack__slot > .hotspot-card {
+  box-sizing: border-box;
+  block-size: 100%;
+  min-block-size: 132px;
+  padding: var(--sp-4);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.plaza-stack__slot:hover > .hotspot-card {
+  border-color: var(--ink-3);
+  box-shadow: var(--shadow-overlay);
+}
+
+.plaza-stack__dots,
+.plaza-stack__counter {
+  display: none;
+}
+
+/* 卡 */
+.hotspot-card {
+  background-color: var(--surface);
+  background-image: none;
+  border-radius: var(--r-card);
+}
+
+.hotspot-card .native-name {
+  margin-top: var(--sp-2);
+}
+
+.hotspot-card .native-name__primary {
+  font-size: var(--fs-16);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.hotspot-card__foot {
+  border-top: 0;
+  padding-top: var(--sp-2);
+  font-family: var(--font-body);
+  color: var(--ink-3);
+}
+
+.plaza-grid__list {
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: var(--sp-4);
+}
+
+.plaza-grid__item {
+  padding: var(--sp-4);
+  box-shadow: var(--shadow-sticker);
+}
+
+.plaza-grid__item:hover {
+  border-color: var(--ink-3);
+  box-shadow: var(--shadow-overlay);
+}
+
+.plaza-grid__item > .hotspot-card .hotspot-card__foot {
+  margin-top: var(--sp-2);
+  padding-top: 0;
+}
+
+.plaza-grid__select {
+  inset-block-start: var(--sp-3);
+  inset-inline-end: var(--sp-3);
+  background: var(--surface);
+  font-size: var(--fs-12);
+}
+
+.plaza-grid__item .cluster-source-lines {
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--rule);
+}
+
+.plaza-grid__item .hotspot-card__actions {
+  margin-top: var(--sp-3);
+  padding-top: 0;
+  border-top: 0;
+}
+
+.plaza-grid__item .hotspot-card__action,
+.hotspot-card__action {
+  min-block-size: 32px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-13);
+  font-weight: 500;
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+}
+
+.plaza-grid__item .hotspot-card__action:hover,
+.hotspot-card__action:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+  border-color: var(--rule);
+}
+
+.plaza-combo-bar {
+  inset-block-end: var(--sp-4);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-overlay);
+}
+
+@media (max-width: 899px) {
+  /* 底部有标签栏：贴底的组合栏要让开它。 */
+  .plaza-combo-bar {
+    inset-block-end: calc(var(--tabbar-h) + var(--sp-2));
+  }
+}
+
+/* ── 项目总览 ── */
+
+.overview,
+.account,
+.billing {
+  box-shadow: var(--shadow-sticker);
+}
+
+.overview__title {
+  font-family: var(--font-body);
+  font-size: var(--fs-16);
+  font-weight: 650;
+}
+
+.overview__row {
+  border-bottom: 0;
+  border-top: 1px solid var(--rule);
+  padding: var(--sp-3) 0;
+  align-items: center;
+}
+
+.overview__row:first-child {
+  border-top: 0;
+}
+
+.overview__row-id {
+  font-size: var(--fs-12);
+}
+
+.overview__row-label {
+  font-weight: 500;
+}
+
+/* 状态、版本、取代：一枚枚小标签。 */
+.overview__row-state {
+  padding: 2px var(--sp-2);
+  font-size: var(--fs-12);
+  font-weight: 500;
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border-radius: var(--r-tag);
+}
+
+.overview__row-state[data-row-state="done"] {
+  color: var(--moss);
+  background: var(--moss-soft);
+}
+
+.overview__row-state[data-row-state="queued"],
+.overview__row-state[data-row-state="retrieving"],
+.overview__row-state[data-row-state="judging"],
+.overview__row-state[data-row-state="drafting"],
+.overview__row-state[data-row-state="validating"] {
+  /* 进行中：琥珀色的底、墨色的字。字不用琥珀色——`tests/v041/test_tail_01.py` 守着
+     「那个颜色只做图形与底，NEVER 画正文」，这条规矩在新板上照旧成立。 */
+  color: var(--ink);
+  background: var(--ochre-soft);
+}
+
+/* ── 作业屏 ── */
+
+[data-job-id] {
+  box-sizing: border-box;
+  max-inline-size: 60em;
+  padding: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+[data-job-status] {
+  align-self: center;
+  padding: 2px var(--sp-3);
+  font-weight: 600;
+  background: var(--paper-2);
+  border-radius: var(--r-tag);
+}
+
+[data-job-status="done"] {
+  color: var(--moss);
+  background: var(--moss-soft);
+}
+
+[data-job-steps] {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--rule);
+}
+
+[data-job-steps] .data-row__label {
+  font-family: var(--font-mono);
+}
+
+/* ── 计划书工作台 ── */
+
+.workbench {
+  background: var(--surface);
+  border-color: var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+/* ── 长文屏（报告、计划书）：一张居中的纸 ── */
+
+.screen--longform .screen__body {
+  box-sizing: border-box;
+  max-inline-size: calc(var(--measure-longform) + 2 * var(--sp-7));
+  padding: var(--sp-7);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+.screen--longform .screen__header,
+.screen--longform .screen__body {
+  margin-inline: auto;
+}
+
+.screen--longform .screen__header {
+  max-inline-size: calc(var(--measure-longform) + 2 * var(--sp-7));
+}
+
+@media (max-width: 899px) {
+  .screen--longform .screen__body {
+    padding: var(--sp-5) var(--sp-4);
+  }
+}
+
+/* ── 收藏 ── */
+
+.favorites__item {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+.favorites__action {
+  border-radius: var(--r-data);
+}
+
+/* ── 作业屏：无权那一态自己就是一块，外面不再套一层卡 ── */
+
+[data-job-id]:has(> .state--denied) {
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+/* ── 语言与地区 ── */
+
+.locale {
+  box-sizing: border-box;
+  max-inline-size: 32em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+.locale__field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.locale__label {
+  font-size: var(--fs-14);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+select.locale__select {
+  min-inline-size: 12em;
+  min-block-size: 36px;
+  padding: 0 var(--sp-3);
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+}
+
+p.locale__select,
+.locale__unsaved,
+.locale__error {
+  margin: 0;
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+}
+
+.locale__save {
+  align-self: flex-start;
+  min-block-size: 36px;
+  padding: 0 var(--sp-5);
+  font: inherit;
+  font-weight: 600;
+  color: var(--on-accent);
+  background: var(--sulfur);
+  border: 1px solid transparent;
+  border-radius: var(--r-data);
+  cursor: pointer;
+}
+
+.locale__save:disabled {
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border-color: var(--rule);
+  cursor: progress;
+}
+
+/* ── 计划书工作台：栏头、发送键、章节导航 ── */
+
+.workbench__col-head {
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.wb-composer__send,
+.wb-annotate__send {
+  min-block-size: 36px;
+  padding: 0 var(--sp-4);
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--on-accent);
+  background: var(--sulfur);
+  border: 1px solid transparent;
+  border-radius: var(--r-data);
+  cursor: pointer;
+}
+
+.wb-composer__send:disabled,
+.wb-annotate__send:disabled {
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border-color: var(--rule);
+  cursor: not-allowed;
+}
+
+.wb-composer__input,
+.wb-annotate__input {
+  border-radius: var(--r-data);
+}
+
+.wb-composer__input:focus-visible,
+.wb-annotate__input:focus-visible {
+  outline: none;
+  border-color: var(--sulfur);
+  box-shadow: 0 0 0 3px var(--sulfur-soft);
+}
+
+.wb-sections__item {
+  border-radius: var(--r-data);
+}
+
+/* ── 失败原因：`.job-failed` 是全站保留给失败的那一格（色彩纪律第三类，503 / unavailable 同档）── */
+
+.job-failed {
+  margin: var(--sp-3) 0;
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-13);
+  border-radius: var(--r-data);
+  overflow-wrap: anywhere;
+}
+
+/* 工作台是「占满一屏、三栏各自滚动」的布局。旧外壳里它靠 `.app-shell` 是一列 flex 来撑满高度；
+ * 新外壳的 `.app-shell` 不再是 flex，所以正文区自己定成一屏高——
+ * 否则中栏底部的输入框与「生成计划书」会被挤到视口外面（2026-11-14 真浏览器里见到）。 */
+.app-shell:has(.screen--workbench) .app-shell__body {
+  box-sizing: border-box;
+  block-size: 100vh;
+  padding-block: var(--sp-5);
+}
+
+@media (max-width: 899px) {
+  /* 窄屏下三栏竖着叠，整页滚动；让开顶栏与底部标签栏。 */
+  .app-shell:has(.screen--workbench) {
+    block-size: auto;
+    overflow: visible;
+  }
+
+  .app-shell:has(.screen--workbench) .app-shell__body {
+    block-size: auto;
+    padding-block: calc(var(--bar-h) + var(--sp-4)) calc(var(--tabbar-h) + var(--sp-5));
+  }
+}
+
+/* ── 计划书受众二选一：两张可点的选项，选中的那张换强调色的边 ──
+ * 改前选项的名字被挤成竖排的一列字（「给 / 人 / 读」一行一个字）。 */
+.chain-form__choices {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.chain-form__choice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-1) var(--sp-3);
+  align-items: start;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+  cursor: pointer;
+}
+
+.chain-form__choice:hover {
+  border-color: var(--ink-3);
+}
+
+.chain-form__choice:has(input:checked) {
+  border-color: var(--sulfur);
+  background: var(--sulfur-soft);
+}
+
+.chain-form__choice input {
+  grid-row: span 2;
+  margin: 3px 0 0;
+  accent-color: var(--sulfur);
+}
+
+.chain-form__choice-name {
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.chain-form__choice-blurb {
+  grid-column: 2;
+  font-size: var(--fs-13);
+  line-height: 1.6;
+  color: var(--ink-2);
+}

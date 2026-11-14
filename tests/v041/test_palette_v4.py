@@ -42,6 +42,22 @@ sys.path.insert(0, str(REPO))
 from tools.probe_evidence import ONLY_ON_THE_ORIGINAL_MACHINE, require_probe_evidence
 from tools.visual_assert import contrast_ratio, parse_color
 
+# ── REDESIGN-01（owner 2026-11-14，`DEC-065`：「从 0 重新设计」）──────────────────
+#
+# v4 那一板已被 v5 **整板取代**。本文件里有两类判据：
+#
+# - 钉着「调色板文件里就是 v4 的那些值」的——它们守的那件事（照 v4 设计稿搬值）已经不再是目标。
+#   下面用 `superseded_by_v5` 标出来，**留着不删**：v4 是怎么搬进来的、哪两处没照抄、
+#   两个强调色为什么合并，这些记录还查得到。
+# - 与具体取值无关的规矩（颜色只有一个来源、组件里不写死颜色、暗色不退化、v4 的变量名不进仓）
+#   ——**照常生效**，v5 一样要守。
+#
+# v5 自己的取值判据在 `tests/v041/test_redesign_layer.py`（对比度、两条通道同值）。
+# NEVER 为了让这几条重新变绿把期望值改成 v5 的色号：那会让一份讲「怎么搬 v4」的判据去守 v5。
+superseded_by_v5 = pytest.mark.skip(
+    reason="DEC-065 / REDESIGN-01：v4 调色板已被 v5 整板取代，这条钉的是 v4 的取值；"
+           "v5 的判据在 tests/v041/test_redesign_layer.py")
+
 DESIGN = REPO / "前端设计" / "应用前端设计需求" / "design-handoff" / "Flint v4.dc.html"
 COLORS = (REPO / "web" / "public" / "_ds"
           / "flint-design-system-8fd95ba3-cf31-49b6-b9d8-c863f3dc2724"
@@ -143,6 +159,7 @@ def _hex(rgb: tuple[int, int, int]) -> str:
 # ═════════════════ 一、值搬对了（期望值从设计稿现场解析）
 
 
+@superseded_by_v5
 @pytest.mark.parametrize(("theme", "token"), [
     (theme, token) for theme in ("light", "dark") for token in DIRECT])
 def test_every_direct_token_carries_the_v4_value(theme: str, token: str) -> None:
@@ -180,6 +197,7 @@ def test_the_manual_light_block_matches_the_root_block() -> None:
 # ═════════════════ 二、两处过不了线的地方：改前值 / 改后值 / 实测比值
 
 
+@superseded_by_v5
 @pytest.mark.parametrize(("theme", "token"), list(ADJUSTED))
 def test_the_two_adjusted_values_clear_the_line_they_failed(
     theme: str, token: str,
@@ -202,6 +220,7 @@ def test_the_two_adjusted_values_clear_the_line_they_failed(
     assert got > was, f"改后 {got} 并不比 v4 原值 {was} 好——那这次改动没有理由"
 
 
+@superseded_by_v5
 def test_the_reason_for_each_adjustment_is_written_next_to_it() -> None:
     """两处偏离**在 `colors.css` 里就地写明**改前值、改后值与实测比值。
 
@@ -219,6 +238,7 @@ def test_the_reason_for_each_adjustment_is_written_next_to_it() -> None:
 # ═════════════════ 三、soft 一族：算得出来的合成值
 
 
+@superseded_by_v5
 @pytest.mark.parametrize(("theme", "token"), [
     (theme, token) for theme in ("light", "dark") for token in SOFT])
 def test_soft_tokens_are_the_v4_rgba_composited_over_the_paper(
@@ -235,6 +255,7 @@ def test_soft_tokens_are_the_v4_rgba_composited_over_the_paper(
     assert landed[token] == wanted, f"{theme}/{token}：算出来是 {wanted}，落地是 {landed[token]}"
 
 
+@superseded_by_v5
 def test_the_sulfur_soft_family_takes_the_v4_accent_soft_verbatim() -> None:
     """`--sulfur-soft` 直取 v4 `--accent-soft`（它本来就是 hex，不用合成）。"""
     for theme in ("light", "dark"):
@@ -244,6 +265,7 @@ def test_the_sulfur_soft_family_takes_the_v4_accent_soft_verbatim() -> None:
 # ═════════════════ 四、`--indigo` 与 `--sulfur` 合并（照 v4 原意）
 
 
+@superseded_by_v5
 @pytest.mark.parametrize("theme", ("light", "dark"))
 def test_indigo_and_sulfur_are_the_same_accent_now(theme: str) -> None:
     """v4 没有第二个性格色（它自己写的就是 `a{color:var(--accent)}`）。
@@ -257,6 +279,7 @@ def test_indigo_and_sulfur_are_the_same_accent_now(theme: str) -> None:
     assert landed["--indigo-soft"] == landed["--sulfur-soft"]
 
 
+@superseded_by_v5
 def test_the_merge_is_declared_in_the_file_not_left_looking_like_a_slip() -> None:
     """合并这件事 MUST 在 `colors.css` 注释里点名，且写明反悔只需改哪一行。
 
@@ -270,6 +293,7 @@ def test_the_merge_is_declared_in_the_file_not_left_looking_like_a_slip() -> Non
     assert "反悔" in text, "没写清怎么退回两个性格色"
 
 
+@superseded_by_v5
 @pytest.mark.parametrize("theme", ("light", "dark"))
 def test_indigo_mist_is_derived_not_invented(theme: str) -> None:
     """`--indigo-mist`（降权档）= 同主题 accent 与 soft 的**逐通道中点**。

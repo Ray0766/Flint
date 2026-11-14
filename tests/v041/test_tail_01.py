@@ -96,6 +96,15 @@ def _composite(fg: tuple[int, int, int], alpha: float,
 # ═════════════════ ① `--warn` 改名 `--ochre`，值一个字不动
 
 
+# REDESIGN-01（`DEC-065`）：v5 把整板颜色换了，赭色这一族的取值也在其中。下面三条钉的是
+# v4 那一版的具体数（`#a3701c` / `#c99a4a`、合成出来的两个 soft、明色实测 4.01）。
+# 标出来、留着不删：赭色当初为什么只许做图形、那个 4.01 是怎么来的，记录还在。
+# **「赭色 NEVER 画文字」这条规矩本身没有退役**——再往下那两条照常生效，v5 的样式照样守着。
+superseded_by_v5 = pytest.mark.skip(
+    reason="DEC-065 / REDESIGN-01：v4 调色板已被 v5 整板取代，这条钉的是 v4 赭色一族的取值与实测比值")
+
+
+@superseded_by_v5
 def test_the_amber_token_landed_under_a_material_name() -> None:
     """名字照本仓的**材料名**法（paper / ink / rule / indigo / sulfur / rust / moss）。
 
@@ -124,6 +133,7 @@ def test_the_forbidden_v4_name_did_not_sneak_in() -> None:
     assert guilty == [], f"v4 的名字进来了：{guilty}"
 
 
+@superseded_by_v5
 def test_the_soft_shade_is_composited_not_picked() -> None:
     """soft 那一格是**算出来的**：v4 的 rgba 合成到同主题 `--paper` 上。
 
@@ -139,6 +149,7 @@ def test_the_soft_shade_is_composited_not_picked() -> None:
     assert _token(_dark_block(), "--ochre-soft") == dark
 
 
+@superseded_by_v5
 def test_the_ochre_is_good_for_graphics_and_not_for_text() -> None:
     """**用途边界是量出来的**：明色 `#a3701c` 在 `--surface` 上 4.01。
 

@@ -405,3 +405,18 @@ DEC-064（2026-10-27，owner 点选 · 选项文本由 Claude 拟）
   **落地口径的一处更正（Claude 拟选项时没核到，已在会话里当场告知 owner）**：选项里「过 `check_frozen_additive`」读起来像只改 v04 副本；而产品代码用的 `Deliverable` / `GapNoticeContent` 来自 `flint/domain/models.py`，它与 `contracts/models.py` **逐字节相同**（`tests/m1/test_m1_001.py:30` 钉着），不读 `contracts_v04`。所以本窗口的实际改动面是**三个文件同步加同样的可选字段**：`contracts/models.py` · `flint/domain/models.py` · `contracts_v04/models_v04.py`（后者保证 base ⊆ v04，`check_frozen_additive` 仍 exit 0）。
   **窗口边界**：只加带默认值的字段——`GapNoticeContent.missing_what` / `GapNoticeContent.why` / `Deliverable.sibling_deliverable_id`，三个，NEVER 顺手加别的；既有字段与标注一个字不改、不删。
   **改前哈希留档**（2026-10-27 亲验）：`contracts/models.py` `B760C2EEB4E96A96` · `contracts_v04/models_v04.py` `00ED425D85A8C927`。改后哈希在落地卡收卡时补进 trace，并作为新的越界检查对照值。
+
+- **DEC-065**（owner 2026-11-14 裁决 · UI 从 0 重新设计）：**代码块里是 owner 在会话里的两句原话，一字未改**。两句之外的全部设计内容（配色、字体、外壳形态、各屏排版）是 Claude 定的，owner 没有逐项点选——**NEVER 写成「owner 选定了这套配色 / 这个外壳」**。
+
+```
+DEC-065（2026-11-14，owner · 会话原话两句）
+
+重构整个UI，现在的UI难用而且丑
+
+这重构的幅度也太小了，我说的是重构，那就是从0重新设计
+```
+
+  **取代了什么**：`DEC-060` 第一条（v4 调色板的**取值**）——整板换成 v5；`NAV-ANIME-01` / `NAV-ANIME-02`（浮动药丸条与吉祥物，owner 2026-08-10「要，做全」）——外壳换成左侧固定导航，吉祥物与跟随发光块退役；`TITLE-01`（屏头标题随视口放大到 48px）与 `WIDTH-01`（内容区铺到 1760px）的具体数。
+  **没有取代的**：`DEC-060` 第二条「保路由」——24 屏、7 个入口不增不减；「颜色只有一个来源」「组件里不写死颜色」「那一个告警色只留给三处」这几条纪律照旧，新板一样守着；冻结件与 `data-*` 断言面没有动。
+  **影响面**：`web/app/redesign.css`（新增，压在 `globals.css` 之上的整层）· `web/app/layout.tsx`（多一行 import）· `_ds/tokens/colors.css` / `typography.css` / `spacing.css`（新取值）· 钉着 v4 取值的判据标为已被取代（`tests/v041/test_palette_v4.py` 8 条、`test_tail_01.py` 3 条），暗纸色相那条换回冷族。落地卡 `REDESIGN-01`，逐项对照与自己定的那些设计决定在 `docs/trace/REDESIGN-01.md`。
+  **撤回**：去掉 `layout.tsx` 那一行 import，并把 `_ds/tokens/` 三份文件退回上一个提交。

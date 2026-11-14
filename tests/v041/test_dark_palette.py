@@ -296,12 +296,19 @@ def test_the_dark_palette_keeps_the_paper_and_ink_hue_family() -> None:
 
     **NEVER 把这条判据删掉换成「有色相就行」**：那样两个方向都过，
     而「暗纸悄悄漂成蓝黑」这件事就再也没有人看着了。
+
+    ## `REDESIGN-01` 第三次换方向（`DEC-065`，2026-11-14）
+
+    v5 是冷灰的板：暗纸 `#0c0d10`，蓝分量压着红分量（b=16 ≥ r=12，max-min=4）。
+    方向从暖族换回冷族——**换的是板，不是这条判据要守的事**：暗纸仍不是纯黑或中性灰，
+    仍看得出它属于哪一族。上面那句「NEVER 换成有色相就行」照旧：这里钉的是冷族，
+    哪天暗纸悄悄漂暖了，它会红。
     """
     dark = _dark_attr()
     r, g, b = parse_color(_resolve({**_light(), **dark}, "--paper"))
 
     assert max(r, g, b) - min(r, g, b) >= 4, "暗纸退化成了中性灰/纯黑，丢了色相"
-    assert r >= b, "暗纸的色相偏离了暖族（DEC-060 之后的板是暖的）"
+    assert b >= r, "暗纸的色相偏离了冷族（DEC-065 之后的板是冷灰的）"
 
 
 # ───────────────────────── 五、既有面不倒（acceptance⑤）

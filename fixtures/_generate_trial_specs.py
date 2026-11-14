@@ -236,13 +236,14 @@ def generate_all() -> list[Path]:
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "pack.zip").write_bytes(payload)
         (out_dir / "meta.json").write_text(
-            json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8"
+            json.dumps(meta, ensure_ascii=False, indent=1),
+            encoding="utf-8", newline="\n",
         )
         index.append({**meta, "path": f"{scenario.name}/pack.zip"})
         written.append(out_dir / "pack.zip")
     (OUT_ROOT / "index.json").write_text(
         json.dumps({"samples": index}, ensure_ascii=False, indent=1),
-        encoding="utf-8",
+        encoding="utf-8", newline="\n",
     )
     written.append(OUT_ROOT / "index.json")
     return written

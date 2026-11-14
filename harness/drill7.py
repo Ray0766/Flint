@@ -150,7 +150,7 @@ def _write_runbook(report: DrillReport, runbook: Path) -> None:
         ),
     ]
     runbook.parent.mkdir(parents=True, exist_ok=True)
-    runbook.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    runbook.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
 def run_drill(

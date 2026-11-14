@@ -231,7 +231,8 @@ def main() -> int:
     for result in results:
         path = TRACE_DIR / f"{result['sample_id']}.md"
         path.write_text(
-            sample_trace(by_id[result["sample_id"]], result), encoding="utf-8"
+            sample_trace(by_id[result["sample_id"]], result),
+            encoding="utf-8", newline="\n",
         )
 
     summary = {

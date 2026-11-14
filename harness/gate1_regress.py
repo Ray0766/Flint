@@ -70,7 +70,8 @@ def main() -> int:
     by_id = {str(c["case_id"]): c for c in cases}
     for result in results:
         path = TRACE_DIR / f"{result.case_id}.md"
-        path.write_text(case_trace(by_id[result.case_id], result), encoding="utf-8")
+        path.write_text(
+            case_trace(by_id[result.case_id], result), encoding="utf-8", newline="\n")
 
     all_match = all(r.verdict_match and r.all_satisfied_match for r in results)
     alignment_ok = alignment["consistency"] >= MIN_CONSISTENCY

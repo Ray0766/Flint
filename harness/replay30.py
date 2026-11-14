@@ -116,7 +116,8 @@ def _write_trace(
         "",
     ]
     trace_dir.mkdir(parents=True, exist_ok=True)
-    (trace_dir / f"{day.isoformat()}.md").write_text("\n".join(lines), encoding="utf-8")
+    (trace_dir / f"{day.isoformat()}.md").write_text(
+        "\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def run_replay(

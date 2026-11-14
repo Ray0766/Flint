@@ -57,10 +57,23 @@ def _zh() -> dict[str, str]:
     return json.loads((MESSAGES / "zh.json").read_text(encoding="utf-8"))
 
 
+#: 实发那两次请求用的身份：**一个对演示项目没有写权限的人**（`GATE-CLEAN-01`）。
+#:
+#: 请求体的校验（缺 `audience` → 422）发生在端点函数被调用之前，与是谁在问无关；
+#: 权限那道门（→ 403）在端点函数里，校验过了才走得到。所以用一个无权的身份问两次：
+#:
+#: - 不带 `audience` → 422：体没过校验；
+#: - 带上 `audience` → 403：体过了校验、走到了权限那道门，而门把它挡在开作业之前。
+#:
+#: 改前用的是项目属主，第二问会真的开出一个计划书作业（见本文件最后一条实发判据）。
+ASKER = "nobody-aud-pack"
+PROJECT = "proj-demo-fixture"
+
+
 def _post(path: str, body: dict[str, object]) -> int:
     request = urllib.request.Request(
         API + path, data=json.dumps(body).encode(),
-        headers={"Content-Type": "application/json", "x-user-id": "demo-user"})
+        headers={"Content-Type": "application/json", "x-user-id": ASKER})
     try:
         with urllib.request.urlopen(request, timeout=30) as res:
             return int(res.status)
@@ -84,15 +97,52 @@ def test_the_endpoint_really_refuses_a_body_without_an_audience() -> None:
 
 
 def test_the_same_endpoint_does_not_refuse_a_body_that_has_one() -> None:
-    """带上 `audience` 再发一次 → **不是 422**。
+    """带上 `audience` 再发一次 → **不是 422，是 403**。
 
     只断言前一条的话，「这个端点永远 422」也会绿——
     那时受众这一格根本没被读到，而判据看起来很有说服力。
+
+    两问只差 `audience` 这一格（身份、项目、报告都相同），所以 422 与 403 之差就是那一格之差。
+    403 比改前的「不是 422」说得更具体：体过了校验，并且走到了端点函数里的权限门。
+    **改前这一问证到的「属主的完整提交会被收下」不再由这条判据证**——
+    它由 `tests/m3/test_m3_057.py`（收下并开出 `proposal` 作业）与
+    `tests/v041/test_wire_compose.py::test_the_owner_gets_past_the_gate` 在测试库上证，
+    那里开出的作业不进演示库。
     """
     got = _post("/projects/proj-demo-fixture/proposal",
                 {"report_id": "del-demo-fixture-report", "audience": "ai_executor"})
 
-    assert got != 422, f"带了 audience 仍然 422（{got}）——那这条判据证不到东西"
+    assert got == 403, f"带了 audience 之后是 {got}，不是 403——体没过校验，或者权限门没挡住"
+
+
+def _jobs_in_the_demo_project() -> int:
+    """演示项目名下现在有几个作业——问的是总览接口，与屏上那份清单同源。"""
+    request = urllib.request.Request(
+        f"{API}/projects/{PROJECT}", headers={"x-user-id": "demo-user"})
+    try:
+        with urllib.request.urlopen(request, timeout=30) as res:
+            return len(json.load(res)["jobs"])
+    except OSError:
+        pytest.skip("真栈没起（:8000）——这条判据要数演示项目名下的作业")
+
+
+def test_asking_twice_leaves_no_job_behind_in_the_demo_database() -> None:
+    """`GATE-CLEAN-01`：上面那两问**问完之后，演示库里一个作业都不多**。
+
+    改前第二问是以项目属主的身份发一份完整的提交——端点照单全收，开出一个计划书作业。
+    演示栈没有模型，那个作业必然失败。于是每跑一遍整套 pytest，演示项目的总览里就多一行「失败」
+    （2026-11-14 一天攒了 17 行，每行的时间对得上一遍门禁）。
+
+    判据要证的是「422 是因为缺受众」，不需要真的开一个作业。
+    """
+    before = _jobs_in_the_demo_project()
+
+    _post(f"/projects/{PROJECT}/proposal", {"report_id": "del-demo-fixture-report"})
+    _post(f"/projects/{PROJECT}/proposal",
+          {"report_id": "del-demo-fixture-report", "audience": "ai_executor"})
+
+    after = _jobs_in_the_demo_project()
+    assert after == before, f"问了两次，演示项目名下的作业从 {before} 个变成 {after} 个"
 
 
 # ═════════════════ 二、v4 的三处说明文字：逐字进词典、两份对称、屏上看得见

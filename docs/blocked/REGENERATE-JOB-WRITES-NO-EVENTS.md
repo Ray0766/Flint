@@ -1,6 +1,6 @@
 # 单块重写作业**不写事件、也不推状态**：屏上没有任何办法知道它结束了
 
-**状态** open · 2026-08-12 · `WB-06`（不阻断：本卡按实况绕行，绕法与代价写在下面） · owner 已答复 `DEC-063`（2026-10-27），待落地
+**状态** open · 2026-08-12 · `WB-06`（不阻断：本卡按实况绕行，绕法与代价写在下面） · owner 已答复 `DEC-063`（2026-10-27） · 状态与事件那一半已落地：`REGEN-EVT-01`（2026-11-14 verified）；块级 `revision` 那一格 `DEC-063` 明说不在范围，仍待议，本单为它留着
 
 ## 一、实测（2026-08-12，真栈 + 真库 + 本机 Ollama）
 
@@ -95,3 +95,13 @@ regenerate 这一族**连事件流都没有**。
 选**甲**：`run_regenerate_job` 照 `run_compose` 推 `jobs.state=done` 并写终态事件。`blocks.revision` 那一句不在本次答复范围，原样待议。
 
 选项文本由 Claude 在会话里拟、owner 点选——出处与措辞的处置见 `DECISIONS-v04.md#DEC-063`。
+
+## 落地记录（2026-11-14 · `REGEN-EVT-01`）
+
+§三的根因已改：`flint/jobs/regenerate_job.py#run_regenerate_job` 现在走
+`flint/jobs/state.py#enter_state`——开工 `drafting`，落库后 `done`；失败时先追加一条带原因的
+`failed` 事件，再推到 `failed`，异常原样抛回。判据 `tests/v041/test_regen_events.py`。
+
+§四的绕行（屏上不轮询作业、停在「已提交」）**还没有撤**：屏上改成订阅这条作业是 `CHAIN-UI-01` 的事。
+
+本单没有关：块级 `revision` 重写后仍全是 1 这一格，`DEC-063` 写明「不在本条范围，原样保留待议」。

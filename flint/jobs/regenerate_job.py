@@ -7,6 +7,19 @@ deliverable 版本 +1、supersedes 旧版、新 GenerationRecord、新 block 树
 
 NEVER 绕门；guidance 只引导方向（FE-CORE-006）。生成器 provider 由上游注入——CI 用
 录制回放/合成（离线，S2-7）；真机 qwen3.6 端到端为 owner 单一授权跑。
+
+## 状态与事件（`REGEN-EVT-01` / `DEC-063`）
+
+改前本模块只写产物，不碰 `jobs` 也不写 `job_events`：作业跑完了，`jobs.state` 停在
+`queued`、事件流 0 行，屏上没有任何办法知道它结束了；失败时同样一个字没有
+（单 `docs/blocked/REGENERATE-JOB-WRITES-NO-EVENTS.md`，2026-08-12 真栈实测）。
+
+现在照 `run_compose` 的做法走 `flint/jobs/state.py#enter_state`——**那一处真相**，
+库里那一行与事件流一起写：开工 `drafting`，落库后 `done`；任何一步抛了就先追加一条带原因的
+`failed` 事件、再推到 `failed`，然后把异常原样抛回去（worker 那一层还要往 `jobs.error` 落文本）。
+
+作业行不在——没经队列提交的直调（判据、脚本）——照常产出，一条事件都不写。
+NEVER 为了有地方写事件而替调用方造一行作业：那一行的发起人与归属只能是编的。
 """
 from __future__ import annotations
 
@@ -15,13 +28,17 @@ from dataclasses import dataclass, replace
 from datetime import datetime
 from pathlib import Path
 
+import asyncpg
+
 from flint.compose.blocks import PgBlockStore
 from flint.compose.deliverable import PgDeliverableStore
 from flint.compose.llm_generator import build_block_regenerator, llm_generator_factory
 from flint.compose.templates import load_template
-from flint.domain.models import GenerationRecord, UserProfile
+from flint.domain.models import GenerationRecord, JobFailedEvent, UserProfile
 from flint.domain.protocols import LLMProvider
+from flint.jobs.events import PgJobEventStream
 from flint.jobs.regenerate_worker import dispatch_regenerate, parse_regenerate_payload
+from flint.jobs.state import enter_state
 from flint.ledger.read import get_ledger
 
 
@@ -38,7 +55,36 @@ class RegenerateJobDeps:
 async def run_regenerate_job(
     job_id: str, payload: dict[str, object], deps: RegenerateJobDeps,
 ) -> str:
-    """执行一个 regenerate Job → 返回新 deliverable_id。派发块级/章节级、过真门、落库。"""
+    """执行一个 regenerate Job → 返回新 deliverable_id；成功与失败都推状态、写事件。"""
+    events = PgJobEventStream(dsn=deps.dsn)
+    conn = await asyncpg.connect(deps.dsn)
+    try:
+        submitted: bool = await conn.fetchval(
+            "SELECT EXISTS (SELECT 1 FROM jobs WHERE job_id = $1)", job_id)
+        if not submitted:
+            return await _regenerate(job_id, payload, deps)
+        await enter_state(conn, events, job_id, "drafting", deps.now())
+        try:
+            new_deliverable_id = await _regenerate(job_id, payload, deps)
+        except Exception as err:
+            # 先说原因，再说终态：订阅的屏按到达顺序读，最后一条必须是终态。
+            await events.append(
+                job_id,
+                JobFailedEvent(kind="failed", reason=f"{type(err).__name__}: {err}"),
+                ts=deps.now(),
+            )
+            await enter_state(conn, events, job_id, "failed", deps.now())
+            raise
+        await enter_state(conn, events, job_id, "done", deps.now())
+        return new_deliverable_id
+    finally:
+        await conn.close()
+
+
+async def _regenerate(
+    job_id: str, payload: dict[str, object], deps: RegenerateJobDeps,
+) -> str:
+    """派发块级/章节级、过真门、落库。只管产物，不管作业状态。"""
     req = parse_regenerate_payload(payload)
     block_store = PgBlockStore(dsn=deps.dsn)
     deliverable_store = PgDeliverableStore(dsn=deps.dsn)

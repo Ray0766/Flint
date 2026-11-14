@@ -286,6 +286,8 @@
   "job.screen.meta": "实时事件流",
   "job.screen.title": "分析进度",
   "job.status.connecting": "（连接中）",
+  "job.step.phase.end": "完成",
+  "job.step.phase.start": "开始",
   "job.steps.empty": "还没有步骤",
   "job.steps.empty_hint": "作业已经在跑，第一步的进度到达后会出现在这里。",
   "job.unauthenticated.hint": "当前请求没带身份。登录之后再打开这个链接。",

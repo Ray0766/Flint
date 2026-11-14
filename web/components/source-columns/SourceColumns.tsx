@@ -67,16 +67,20 @@ export function SourceColumns({ statements }: SourceColumnsProps): JSX.Element {
     return <p data-testid="source-columns-empty">{t("source.columns.empty")}</p>;
   }
   return (
-    <div data-testid="source-columns">
+    // `REDESIGN-02`：这几层原先一个类名都没有，样式只能挂在 `data-testid` 上。
+    // 补上类名；`data-testid` 一个没动。
+    <div className="source-columns" data-testid="source-columns">
       {columns.map(([region, rows]) => (
-        <section key={region} data-testid="source-column" data-region={region}>
-          <h3 data-testid="source-column-label">
+        <section key={region} className="source-column" data-testid="source-column"
+          data-region={region}>
+          <h3 className="source-column__label" data-testid="source-column-label">
             {region === UNKNOWN_REGION_KEY ? t("source.columns.unknown_region") : region}
           </h3>
-          <ul>
+          <ul className="source-column__list">
             {rows.map((s) => (
               <li
                 key={s.sourceId}
+                className="source-statement"
                 data-testid="source-statement"
                 data-source-id={s.sourceId}
               >

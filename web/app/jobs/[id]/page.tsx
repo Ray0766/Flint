@@ -35,6 +35,13 @@ import { SseDisconnectNotice } from "../../../components/shell/SseDisconnectNoti
 // | 失败 | `failedReason` | 后端明确发来的作业失败（**不是**断线） |
 // | 空 | 收到事件但零 block | 在跑，还没产出 |
 // | 就绪 | 其余 | — |
+// `REDESIGN-02`：步骤的阶段只有两个值。屏上印人话，原值留在 `data-step-phase` 上。
+// 表里没有的值原样印出来——NEVER 编一个（与 `enumLabel` 同一条口径）。
+const STEP_PHASE_KEYS: Record<string, string> = {
+  start: "job.step.phase.start",
+  end: "job.step.phase.end",
+};
+
 export default function JobPage({
   params,
 }: {
@@ -138,7 +145,9 @@ export default function JobPage({
           {s.steps.map((step, i) => (
             <li className="data-row" key={i}>
               <span className="data-row__label">{step.step_name}</span>
-              <span className="data-row__value">{step.phase}</span>
+              <span className="data-row__value" data-step-phase={step.phase}>
+                {STEP_PHASE_KEYS[step.phase] ? t(STEP_PHASE_KEYS[step.phase]) : step.phase}
+              </span>
             </li>
           ))}
         </ol>

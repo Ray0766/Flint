@@ -286,6 +286,8 @@
   "job.screen.meta": "Live event stream",
   "job.screen.title": "Analysis progress",
   "job.status.connecting": "(connecting)",
+  "job.step.phase.end": "Finished",
+  "job.step.phase.start": "Started",
   "job.steps.empty": "No steps yet",
   "job.steps.empty_hint": "The job is running; the first step will appear here once it reports.",
   "job.unauthenticated.hint": "This request carried no identity. Sign in, then open the link again.",

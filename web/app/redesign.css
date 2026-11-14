@@ -1117,3 +1117,344 @@ p.locale__select,
   line-height: 1.6;
   color: var(--ink-2);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+ * REDESIGN-02 · 逐屏细化（owner 2026-11-14 看过第一版：「方向对，继续细化」）
+ * ═══════════════════════════════════════════════════════════════════════════════════════════ */
+
+/* ── 各源怎么说：地区是一枚小标签，后面跟着这个地区的源各自的原话 ──
+ * 改前地区码是孤零零的一行粗体字（`CN`），底下一个带圆点的列表。 */
+.source-columns {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.source-column {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-2);
+  align-items: baseline;
+}
+
+.source-column__label {
+  margin: 0;
+  padding: 1px var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-12);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border-radius: var(--r-tag);
+}
+
+.source-column__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.source-statement {
+  overflow-wrap: anywhere;
+}
+
+.source-statement__who {
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* ── 热点卡脚注：热度是一枚标签 ── */
+
+.hotspot-card__foot {
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+}
+
+.hotspot-card__heat {
+  padding: 1px var(--sp-2);
+  font-weight: 600;
+  color: var(--indigo);
+  background: var(--sulfur-soft);
+  border-radius: var(--r-tag);
+}
+
+/* ── 热点分析页：每一段是一块卡；证据卡排成网格，不再一行一条横贯全屏 ── */
+
+.analysis {
+  box-sizing: border-box;
+  display: block;
+  margin: 0 0 var(--sp-5);
+  padding: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+.analysis__heading {
+  margin: var(--sp-5) 0 var(--sp-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-16);
+  font-weight: 650;
+}
+
+.analysis__heading:first-child {
+  margin-top: 0;
+}
+
+.analysis__note {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-14);
+  color: var(--ink-2);
+  background: var(--paper);
+  border-radius: var(--r-data);
+}
+
+.analysis__evidence {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp-2);
+}
+
+.analysis__evidence-card {
+  margin: 0;
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-13);
+  color: var(--ink-2);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+}
+
+/* 分析页下方那段「各源怎么说」：同样是一块卡。 */
+section.cluster-source-lines {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-sticker);
+}
+
+section.cluster-source-lines > h3 {
+  margin: 0 0 var(--sp-3);
+  font-size: var(--fs-16);
+  font-weight: 650;
+}
+
+/* ── 只有一句话的屏：那句话就是这一屏的空态，做成一块 ──
+ * Gate 判定页（还没判）、关联假设建项页（没从热点卡进来）。 */
+.screen__body > [data-gate-unjudged],
+.screen__body > [data-combo-no-cluster] {
+  box-sizing: border-box;
+  max-inline-size: 36em;
+  margin: var(--sp-6) auto;
+  padding: var(--sp-6) var(--sp-5);
+  text-align: center;
+  font-size: var(--fs-16);
+  font-weight: 600;
+  color: var(--ink);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-card);
+}
+
+/* ── 作业屏：步骤是一条时间线 ── */
+
+[data-job-steps] {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+[data-job-steps] > li.data-row {
+  position: relative;
+  max-inline-size: none;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-5);
+}
+
+[data-job-steps] > li.data-row::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 4px;
+  inset-block-start: 50%;
+  inline-size: 8px;
+  block-size: 8px;
+  margin-block-start: -4px;
+  border-radius: 50%;
+  background: var(--rule);
+}
+
+[data-job-steps] > li.data-row:has([data-step-phase="end"])::before {
+  background: var(--moss);
+}
+
+[data-job-steps] .data-row__label {
+  flex: 0 0 8em;
+  color: var(--ink);
+}
+
+[data-step-phase] {
+  padding: 1px var(--sp-2);
+  font-size: var(--fs-12);
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border-radius: var(--r-tag);
+}
+
+[data-step-phase="end"] {
+  color: var(--moss);
+  background: var(--moss-soft);
+}
+
+/* ── 报告正文（`[data-block-tree]`）──
+ * 块的标记是封版件（`DEC-021`），一个节点没动；这里只按它已有的 `data-*` 属性给长相。 */
+
+[data-block-tree] {
+  font-size: var(--text-longform);
+  line-height: var(--lh-longform);
+  color: var(--ink);
+}
+
+[data-block-tree] h2 {
+  margin: var(--sp-6) 0 var(--sp-3);
+  padding-bottom: var(--sp-2);
+  font-size: var(--fs-20);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--rule);
+}
+
+[data-block-tree] h3 {
+  margin: var(--sp-5) 0 var(--sp-2);
+  font-size: var(--fs-16);
+  font-weight: 650;
+}
+
+[data-block-tree] p {
+  margin: 0 0 var(--sp-3);
+}
+
+/* 开头那段声明：一块浅底的说明，不是正文。 */
+[data-block-tree] aside[data-declaration] {
+  display: block;
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-13);
+  line-height: 1.6;
+  color: var(--ink-2);
+  background: var(--paper);
+  border-radius: var(--r-data);
+}
+
+[data-block-tree] table {
+  inline-size: 100%;
+  margin: var(--sp-3) 0 var(--sp-4);
+  border-collapse: collapse;
+  font-size: var(--fs-14);
+  line-height: 1.5;
+}
+
+[data-block-tree] th,
+[data-block-tree] td {
+  padding: var(--sp-2) var(--sp-3);
+  text-align: start;
+  vertical-align: top;
+  border-bottom: 1px solid var(--rule);
+}
+
+[data-block-tree] th {
+  font-size: var(--fs-12);
+  font-weight: 600;
+  color: var(--ink-3);
+  background: var(--paper);
+}
+
+/* 引用到的实体（事实、价格、引文、图表、质量卡、缺口提示）今天屏上印的是它们的 id。
+ * id 不是正文：做成等宽的小标签，一眼分得出「这是一个指向别处的引用」。 */
+[data-block-tree] [data-deref-id] {
+  display: inline-block;
+  padding: 0 var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-12);
+  line-height: 1.6;
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+  vertical-align: baseline;
+}
+
+[data-block-tree] sup[data-citation-id] {
+  margin-inline-start: 2px;
+  line-height: 1;
+}
+
+[data-block-tree] [data-profile-path] {
+  font-family: var(--font-mono);
+  font-size: var(--fs-13);
+  color: var(--ink-2);
+}
+
+[data-block-tree] figure[data-chart-id],
+[data-block-tree] [data-quality-card-ref] {
+  display: block;
+  margin: var(--sp-3) 0 var(--sp-4);
+  padding: var(--sp-4);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-data);
+}
+
+[data-block-tree] figure[data-chart-id] figcaption {
+  font-size: var(--fs-13);
+  color: var(--ink-3);
+}
+
+[data-block-tree] [data-gap-notice-ref] {
+  margin: var(--sp-3) 0;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--ochre-soft);
+  border-inline-start: 3px solid var(--ochre);
+  border-radius: var(--r-data);
+}
+
+[data-block-tree] ol[data-citation-list] {
+  margin: var(--sp-3) 0 var(--sp-4);
+  padding-inline-start: var(--sp-5);
+  font-size: var(--fs-14);
+  line-height: 1.7;
+}
+
+/* 正文下面那两行入口：与正文之间隔一条线，链接做成次按钮。 */
+.screen--longform .screen__body > .data-row {
+  max-inline-size: none;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.screen--longform .screen__body > .data-row:first-of-type {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--rule);
+}
+
+.screen--longform .screen__body > .data-row a.data-row__value {
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-13);
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-data);
+  text-decoration: none;
+}
+
+.screen--longform .screen__body > .data-row a.data-row__value:hover {
+  background: var(--paper-2);
+}

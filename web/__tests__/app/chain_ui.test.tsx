@@ -32,7 +32,8 @@ import JobPage from "../../app/jobs/[id]/page";
 
 const stream = {
   status: "done" as string | null, connection: "open", access: "unknown",
-  steps: [], arrivedBlockIds: [], failedReason: null, designText: "",
+  steps: [] as Array<{ kind: "step"; step_name: string; phase: "start" | "end"; cost: number | null }>,
+  arrivedBlockIds: [], failedReason: null, designText: "",
   lastEventId: 3, done: true,
 };
 vi.mock("../../lib/useJobStream", () => ({ useJobStream: () => stream }));
@@ -64,6 +65,7 @@ beforeEach(() => {
     value: { ...window.location, search: "", assign: (u: string) => went.push(u) },
   });
   stream.status = "done";
+  stream.steps = [];
 });
 
 afterEach(() => {
@@ -264,6 +266,20 @@ describe("CHAIN-UI-01-a · 作业页跑完后回得去总览", () => {
     const slot = container.querySelector("[data-job-status]")!;
     expect(slot.getAttribute("data-job-status")).toBe("done");
     expect(slot.textContent).toBe(zh["enum.job_state.done"]);
+  });
+
+  it("步骤的阶段印的是人话，原值留在 data-step-phase 上（`REDESIGN-02`）", async () => {
+    stream.steps = [
+      { kind: "step", step_name: "outline", phase: "start", cost: null },
+      { kind: "step", step_name: "outline", phase: "end", cost: 0 },
+    ];
+    const container = await openJob("?project=p-1");
+
+    await waitFor(() => expect(container.querySelectorAll("[data-step-phase]").length).toBe(2));
+    const slots = [...container.querySelectorAll("[data-step-phase]")];
+    expect(slots.map((n) => n.getAttribute("data-step-phase"))).toEqual(["start", "end"]);
+    expect(slots.map((n) => n.textContent)).toEqual(
+      [zh["job.step.phase.start"], zh["job.step.phase.end"]]);
   });
 
   it("没带项目号 → 不给入口。作业快照不回项目号，NEVER 猜一个", async () => {

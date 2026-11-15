@@ -5,6 +5,7 @@ import type { JSX } from "react";
 import { AccountPanel } from "../../components/account-billing/AccountPanel";
 import { Screen } from "../../components/shell/Screen";
 import { ScreenFetchState } from "../../lib/ScreenFetchState";
+import { FROZEN } from "../../lib/frozen";
 import { t } from "../../lib/i18n/t";
 import { toAccountView } from "../../lib/screenAdapters";
 import { useScreenData } from "../../lib/useScreenData";
@@ -43,12 +44,15 @@ export default function AccountPage(): JSX.Element {
           入口放在取数状态**外面**：账户端点回什么都不影响用户去看账单，
           放在里面的话，账户读失败会把账单入口一起带走——
           而那两件事之间没有任何关系。 */}
-      <p className="data-row" data-billing-entry>
-        <span className="data-row__label">{t("billing.title")}</span>
-        <a className="data-row__value" data-billing-link href="/billing">
-          {t("account.billing.open")}
-        </a>
-      </p>
+      {/* NARROW-05: billing is a `DEC-066` frozen item; the account screen stays. */}
+      {FROZEN.billing ? null : (
+        <p className="data-row" data-billing-entry>
+          <span className="data-row__label">{t("billing.title")}</span>
+          <a className="data-row__value" data-billing-link href="/billing">
+            {t("account.billing.open")}
+          </a>
+        </p>
+      )}
     </Screen>
   );
 }

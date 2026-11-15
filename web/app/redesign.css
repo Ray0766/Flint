@@ -307,7 +307,7 @@ a:hover {
     inset-block-end: 0;
     z-index: 50;
     box-sizing: border-box;
-    inline-size: calc(100% / 7);
+    inline-size: calc(100% / var(--tab-count, 7));
     block-size: var(--tabbar-h);
     min-block-size: 0;
     padding: 6px 2px 8px;
@@ -358,13 +358,14 @@ a:hover {
     block-size: 22px;
   }
 
+  /* NARROW-05: positions follow `--tab-count` (set on the nav from the number of tabs). */
   .anime-nav__tab:nth-of-type(1) { inset-inline-start: 0; }
-  .anime-nav__tab:nth-of-type(2) { inset-inline-start: calc(100% / 7); }
-  .anime-nav__tab:nth-of-type(3) { inset-inline-start: calc(200% / 7); }
-  .anime-nav__tab:nth-of-type(4) { inset-inline-start: calc(300% / 7); }
-  .anime-nav__tab:nth-of-type(5) { inset-inline-start: calc(400% / 7); }
-  .anime-nav__tab:nth-of-type(6) { inset-inline-start: calc(500% / 7); }
-  .anime-nav__tab:nth-of-type(7) { inset-inline-start: calc(600% / 7); }
+  .anime-nav__tab:nth-of-type(2) { inset-inline-start: calc(100% / var(--tab-count, 7)); }
+  .anime-nav__tab:nth-of-type(3) { inset-inline-start: calc(200% / var(--tab-count, 7)); }
+  .anime-nav__tab:nth-of-type(4) { inset-inline-start: calc(300% / var(--tab-count, 7)); }
+  .anime-nav__tab:nth-of-type(5) { inset-inline-start: calc(400% / var(--tab-count, 7)); }
+  .anime-nav__tab:nth-of-type(6) { inset-inline-start: calc(500% / var(--tab-count, 7)); }
+  .anime-nav__tab:nth-of-type(7) { inset-inline-start: calc(600% / var(--tab-count, 7)); }
 
   .app-shell__body {
     margin: 0;

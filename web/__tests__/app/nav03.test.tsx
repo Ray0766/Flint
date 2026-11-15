@@ -18,6 +18,16 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+// NARROW-05: the buttons this suite drives are closed by the DEC-066 freeze
+// (lib/frozen.ts). The code behind them is kept, so the suite turns the freeze
+// off and keeps testing it; __tests__/app/frozen_entries.test.tsx checks that
+// the entries are closed.
+vi.mock("../../lib/frozen", async (importOriginal) => {
+  const real = await importOriginal<typeof import("../../lib/frozen")>();
+  const open = Object.fromEntries(Object.keys(real.FROZEN).map((k) => [k, false]));
+  return { ...real, FROZEN: open, isFrozenNavHref: () => false };
+});
+
 import { PlazaCards } from "../../components/plaza/PlazaCards";
 import { workbenchTarget } from "../../components/plaza/cardActions";
 import { t } from "../../lib/i18n/t";

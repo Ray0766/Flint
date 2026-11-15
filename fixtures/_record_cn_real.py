@@ -108,6 +108,7 @@ from flint.sources.provenance import (
     manifest_path_for,
     write_manifest,
 )
+from flint.sources.registry import FROZEN_SOURCE_IDS
 from flint.sources.throttle import SourceThrottle
 from flint.sources.weibo import WeiboHotSource
 from flint.sources.weibo_visitor import handshake as visitor_handshake
@@ -260,7 +261,9 @@ def main(argv: list[str] | None = None) -> int:
         print("  --owner-is-here          owner 此刻在场（红线卡 CN-01 那一次）")
         print("  --authorized-by=DEC-052  DEC-052 预授权的运行（owner 不在场）")
         print()
-        print(f"将要抓：{', '.join(CN_SOURCES)}（日期 {day.isoformat()}）")
+        live = [s for s in CN_SOURCES if s not in FROZEN_SOURCE_IDS]
+        print(f"将要抓：{', '.join(live)}（日期 {day.isoformat()}）；"
+              f"{', '.join(sorted(FROZEN_SOURCE_IDS))} 已冻结（DEC-066），不抓")
         for row in plan:
             print(f"  {row['source']:8s} -> {row['fixture']}  +  {row['manifest']}")
         print(f"\n合规裁决（照实记录、不阻断）：{OWNER_DECISION.scope} "
@@ -271,7 +274,15 @@ def main(argv: list[str] | None = None) -> int:
     for source_id, (capacity, refill) in THROTTLE.items():
         throttle.configure(source_id, capacity=capacity, refill_per_second=refill)
 
-    results = [_record_one(source_id, day, throttle) for source_id in CN_SOURCES]
+    # `NARROW-05`: the two sources `DEC-066` froze are not fetched, even on an authorised run.
+    # They still get a line in the receipt, so "frozen" never reads as "forgot to run".
+    results = [
+        {"source": source_id, "outcome": "frozen",
+         "detail": "DEC-066 froze this source; unfreezing takes a new owner ruling"}
+        if source_id in FROZEN_SOURCE_IDS
+        else _record_one(source_id, day, throttle)
+        for source_id in CN_SOURCES
+    ]
     receipt = {
         "schema": "cn-01/1",
         "day": day.isoformat(),

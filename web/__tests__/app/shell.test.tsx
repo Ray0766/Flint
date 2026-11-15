@@ -23,7 +23,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { AppShell, NAV_ITEMS } from "../../components/shell/AppShell";
+import { AppShell, NAV_ITEMS, SHELL_NAV_ITEMS } from "../../components/shell/AppShell";
 import { NotProvided } from "../../components/shell/NotProvided";
 import { Screen } from "../../components/shell/Screen";
 import zh from "../../messages/zh.json";
@@ -61,9 +61,12 @@ describe("S0 外壳", () => {
     renderShell();
     const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".app-shell__nav-link"));
 
-    expect(links.length).toBe(NAV_ITEMS.length);
-    expect(links.map((a) => a.getAttribute("href"))).toEqual(NAV_ITEMS.map((i) => i.href));
-    expect(NAV_ITEMS.length).toBeGreaterThan(0);
+    // NARROW-05: the shell renders `SHELL_NAV_ITEMS` (NAV_ITEMS minus the DEC-066
+    // frozen entries). Every rendered link is still a real route from the table.
+    expect(links.length).toBe(SHELL_NAV_ITEMS.length);
+    expect(links.map((a) => a.getAttribute("href"))).toEqual(SHELL_NAV_ITEMS.map((i) => i.href));
+    expect(SHELL_NAV_ITEMS.every((i) => NAV_ITEMS.includes(i))).toBe(true);
+    expect(SHELL_NAV_ITEMS.length).toBeGreaterThan(0);
   });
 
   it("当前那一项标出来了，别的没有", () => {

@@ -4,6 +4,7 @@ import { AnimeNav } from "./AnimeNav";
 import type { JSX, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 
+import { FROZEN, isFrozenNavHref } from "../../lib/frozen";
 import { t } from "../../lib/i18n/t";
 
 import { LocaleControls } from "./LocaleControls";
@@ -106,6 +107,13 @@ export const NAV_ITEMS: ReadonlyArray<{ href: string; key: string }> = [
 ];
 
 /**
+ * What the shell actually shows: `NAV_ITEMS` minus the entries `DEC-066` froze
+ * (`NARROW-05`, switches in `lib/frozen.ts`). The table above keeps every route,
+ * so unfreezing one is a switch flip, not a re-add.
+ */
+export const SHELL_NAV_ITEMS = NAV_ITEMS.filter((item) => !isFrozenNavHref(item.href));
+
+/**
  * <768 时替代文字的图标（蓝本 `iconDisplay` 那一路）。
  *
  * 尺寸与描边照蓝本：18×18 · `stroke-width: 2.5` · `currentColor`。
@@ -193,13 +201,13 @@ export function AppShell({ children }: { children: ReactNode }): JSX.Element {
       <header className="app-shell__bar" data-shell="s0">
         <div className="app-shell__inner">
           <AnimeNav
-            items={NAV_ITEMS.map((item) => ({
+            items={SHELL_NAV_ITEMS.map((item) => ({
               href: item.href,
               key: item.href,
               label: t(item.key),
               icon: NAV_ICONS[item.href] ?? null,
             }))}
-            activeKey={NAV_ITEMS.some((i) => i.href === pathname) ? pathname : null}
+            activeKey={SHELL_NAV_ITEMS.some((i) => i.href === pathname) ? pathname : null}
             brand={
               <span className="app-shell__wordmark">{t("app.name.wordmark")}</span>
             }
@@ -209,7 +217,8 @@ export function AppShell({ children }: { children: ReactNode }): JSX.Element {
                 右边缘在 390，「右上角」只做到了「在顶栏里」。
                 药丸条里同理：没有它，三个控件会紧贴最后一个导航项。 */}
             <span className="app-shell__spacer" />
-            <LocaleControls />
+            {/* NARROW-05: region and language dropdowns are a `DEC-066` frozen entry. */}
+            {FROZEN.regionsAndLanguages ? null : <LocaleControls />}
             {/* SHELL-02：三态切换排在地区/语言之后。 */}
             <ThemeControl />
           </AnimeNav>

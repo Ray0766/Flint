@@ -24,6 +24,7 @@
 import type { JSX } from "react";
 
 import type { ActionOutcome } from "../plaza/cardActions";
+import { FROZEN } from "../../lib/frozen";
 import { t } from "../../lib/i18n/t";
 
 export type HotspotCardActionsProps = {
@@ -63,7 +64,11 @@ export function HotspotCardActions({
   outcome = null,
   outcomeOf = null,
   note = null,
-}: HotspotCardActionsProps): JSX.Element {
+}: HotspotCardActionsProps): JSX.Element | null {
+  // Nothing to press and nothing to report: no empty row on the card.
+  if (FROZEN.favorites && FROZEN.graphWorkbench && FROZEN.share && !outcome && !note) {
+    return null;
+  }
   return (
     <div
       className="hotspot-card__actions"
@@ -71,30 +76,38 @@ export function HotspotCardActions({
       // 点击排除区：动作区内的点击不冒泡到卡片
       onClick={(e) => e.stopPropagation()}
     >
-      <button
-        type="button"
-        className="hotspot-card__action"
-        data-testid="action-favorite"
-        onClick={onFavorite}
-      >
-        {t("card.action.favorite")}
-      </button>
-      <button
-        type="button"
-        className="hotspot-card__action"
-        data-testid="action-workbench"
-        onClick={onAddToWorkbench}
-      >
-        {t("card.action.workbench")}
-      </button>
-      <button
-        type="button"
-        className="hotspot-card__action"
-        data-testid="action-share"
-        onClick={onShare}
-      >
-        {t("card.action.share")}
-      </button>
+      {/* NARROW-05: all three buttons lead into `DEC-066` frozen items (收藏,
+          图谱工作台 via `/workbenches/{id}`, 分享). Each one reads its own switch. */}
+      {FROZEN.favorites ? null : (
+        <button
+          type="button"
+          className="hotspot-card__action"
+          data-testid="action-favorite"
+          onClick={onFavorite}
+        >
+          {t("card.action.favorite")}
+        </button>
+      )}
+      {FROZEN.graphWorkbench ? null : (
+        <button
+          type="button"
+          className="hotspot-card__action"
+          data-testid="action-workbench"
+          onClick={onAddToWorkbench}
+        >
+          {t("card.action.workbench")}
+        </button>
+      )}
+      {FROZEN.share ? null : (
+        <button
+          type="button"
+          className="hotspot-card__action"
+          data-testid="action-share"
+          onClick={onShare}
+        >
+          {t("card.action.share")}
+        </button>
+      )}
       {outcome ? (
         <p
           className="hotspot-card__action-outcome"

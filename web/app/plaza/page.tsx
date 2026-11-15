@@ -9,6 +9,7 @@ import { RegionSwitch } from "../../components/region-switch/RegionSwitch";
 import { Screen } from "../../components/shell/Screen";
 import { fetchPlazaHot, fetchPlazaHotScoped, type PlazaCluster } from "../../lib/viewsClient";
 import { DEFAULT_REGION } from "../../lib/regions";
+import { FROZEN } from "../../lib/frozen";
 
 /** CN-03：往回找多少天。34 天是 `fixtures/` 现有回放窗口的长度，
  *  再多给一周的余量——**NEVER 无上限地往回走**：库真的空着时，
@@ -215,12 +216,16 @@ export default function PlazaPage(): JSX.Element {
               （`withUnassigned`），NEVER 塞进 `options.region`——那是 locale 的
               地理词表，`PUT /settings/locale` 拿它校验用户偏好，
               塞进去等于允许把「未归区」存成一个人的常住地。 */}
-          <RegionSwitch
-            region={region}
-            regions={filterRegions}
-            lang={locale.kind === "ready" ? (locale.data.lang ?? "") : ""}
-            onChange={chooseRegion}
-          />
+          {/* NARROW-05: the nine regions are a `DEC-066` frozen item. The switch
+              closes; a `region=` already in the URL still works (REGION-10). */}
+          {FROZEN.regionsAndLanguages ? null : (
+            <RegionSwitch
+              region={region}
+              regions={filterRegions}
+              lang={locale.kind === "ready" ? (locale.data.lang ?? "") : ""}
+              onChange={chooseRegion}
+            />
+          )}
           {/* PLAZA-03：四态由 PlazaCards 自己分。
               `clusters === null` 是**还在取**，它在那里变成骨架卡——
               改前这里是一行「正在读取当日热点」的文字，占不住卡片的位，
@@ -231,7 +236,9 @@ export default function PlazaPage(): JSX.Element {
             // 空结果时那句「换个区试试」列的是**筛选面**的其它选项，
             // 所以这里也带上未归区：它今天是库里最大的一批（104 条），
             // 从「其它去处」里漏掉它，等于把最可能有结果的那一项藏起来。
-            regions={filterRegions}
+            // NARROW-05: with the switch closed, naming other regions would point at
+            // a control that is not there, so the empty state lists none.
+            regions={FROZEN.regionsAndLanguages ? [] : filterRegions}
             // CN-02：三态里的第一态由它决定
             //（本版暂无该区内容 / 该区当日无数据 / 读失败）。
             regionInScope={scope.inScope}

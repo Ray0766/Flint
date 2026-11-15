@@ -25,7 +25,7 @@
 // 6 个入口、`href`、`aria-current` 全部照旧（`ENTRY-05` 的判据一条都不许倒）。
 // 这里换的只有**长相**。
 
-import type { JSX, ReactNode } from "react";
+import type { CSSProperties, JSX, ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { t as translate } from "../../lib/i18n/t";
@@ -123,6 +123,10 @@ export function AnimeNav({
       // 我换组件时把它写死成了中文——英文界面下会出现一句中文标签，
       // 而读屏软件读的正是它。
       aria-label={translate("shell.nav.label")}
+      // NARROW-05: the phone tab bar splits its width by how many tabs there are.
+      // It was a fixed seventh each; with the frozen entries closed there are three,
+      // and a fixed seventh left the bar covering under half the screen.
+      style={{ "--tab-count": items.length } as CSSProperties}
     >
       {/* 跟随发光块。五层模糊照蓝本（inset 0 / -4 / -8 / -12 + shine 扫光）。
           `left` / `width` 直接用量到的数——**判据会拿它与 offsetLeft 逐一比对**。 */}

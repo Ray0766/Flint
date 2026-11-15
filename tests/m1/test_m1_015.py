@@ -80,6 +80,11 @@ def build_registry(
     """Wire all four adapters to replay fixtures; the killed source gets a
     same-day fixture answering with a failure status."""
     flags = FeatureFlags(store=InMemoryFlagStore(), now=lambda: 0.0)
+    # Isolation is about four sources failing independently, so all four run here.
+    # Weibo and Google Trends are off by default since `DEC-066` froze them
+    # (`NARROW-05`); turning them on explicitly keeps this suite about isolation.
+    for sid in ADAPTERS:
+        flags.set(source_flag_name(sid), True)
     registry = SourceRegistry(flags=flags)
     for sid, adapter_cls in ADAPTERS.items():
         if sid == kill:

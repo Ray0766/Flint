@@ -40,12 +40,17 @@ def test_flag_name_convention_matches_e8() -> None:
 
 
 def test_registered_sources_enabled_by_default() -> None:
+    """Every registered source is on by default, except the two DEC-066 froze
+    (Weibo, Google Trends): those are off until a flag turns them on (NARROW-05)."""
     registry, _ = make_registry()
-    assert registry.enabled_source_ids() == ["arxiv", "ghtrend", "gtrends", "weibo"]
+    assert registry.enabled_source_ids() == ["arxiv", "ghtrend"]
+    assert registry.source_ids() == ["arxiv", "ghtrend", "gtrends", "weibo"]
 
 
 def test_disable_any_source_via_config() -> None:
     registry, flags = make_registry()
+    flags.set(source_flag_name("gtrends"), True)
+    flags.set(source_flag_name("weibo"), True)
     flags.set(source_flag_name("weibo"), False)
     assert registry.is_enabled("weibo") is False
     assert "weibo" not in registry.enabled_source_ids()

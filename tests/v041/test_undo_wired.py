@@ -48,6 +48,37 @@ def code_only(source: str) -> str:
     return "\n".join(re.sub(r"//.*$", "", line) for line in without_blocks.split("\n"))
 
 
+_SGR = re.compile(r"\x1b\[[0-9;]*m")
+
+# The two summary lines byte for byte as a GitHub runner printed them
+# (run 43694567536, unit job, 2026-11-15).
+COLOURED_SUMMARY = (
+    "\x1b[2m Test Files \x1b[22m \x1b[1m\x1b[32m2 passed\x1b[39m\x1b[22m\x1b[90m (2)\x1b[39m\n"
+    "\x1b[2m      Tests \x1b[22m \x1b[1m\x1b[32m25 passed\x1b[39m\x1b[22m\x1b[90m (25)\x1b[39m\n"
+)
+
+
+def plain(text: str) -> str:
+    """Drop terminal colour codes so a summary line reads the same in every shell.
+
+    vitest 4.1 colours its output unless NO_COLOR is set or it detects an agent
+    (`AI_AGENT`, `CLAUDECODE`, `CLAUDE_CODE`). A shell started by an agent therefore
+    prints plain text; a person's terminal and a GitHub runner print colour codes
+    between the words. Matching the raw text passed only in the first of the three.
+    """
+    return _SGR.sub("", text)
+
+
+def test_plain_reads_the_summary_through_colour_codes() -> None:
+    """The exact bytes that turned the first CI run red must read as a pass line."""
+    assert "Test Files  2 passed" not in COLOURED_SUMMARY, "the recorded line no longer shows the trap"
+
+    assert "Test Files  2 passed (2)" in plain(COLOURED_SUMMARY)
+    assert "Tests  25 passed (25)" in plain(COLOURED_SUMMARY)
+    assert "\x1b" not in plain(COLOURED_SUMMARY)
+    assert plain(" Test Files  2 passed (2)\n") == " Test Files  2 passed (2)\n"
+
+
 def test_code_only_strips_what_the_comments_say() -> None:
     """先证这把剥刀是真的——不然下面每一条都可能是被注释喂出来的绿。"""
     fake = 'const a = 1; // pushUndo\n/* pushUndo */\nconst b = 2;'
@@ -165,4 +196,4 @@ def test_the_vitest_filter_actually_passes() -> None:
     )
 
     assert done.returncode == 0, f"{done.stdout[-3000:]}\n{done.stderr[-2000:]}"
-    assert "Test Files  2 passed" in done.stdout, done.stdout[-1500:]
+    assert "Test Files  2 passed" in plain(done.stdout), plain(done.stdout)[-1500:]

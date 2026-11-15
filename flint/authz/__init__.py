@@ -87,7 +87,7 @@ class _Bridge:
         return future.result()
 
 
-def _blocking(coro: Coroutine[Any, Any, _T]) -> _T:
+def _blocking[T](coro: Coroutine[Any, Any, T]) -> T:
     """同步地拿到一个协程的结果，无论当前有没有循环在跑。"""
     try:
         asyncio.get_running_loop()

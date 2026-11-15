@@ -51,9 +51,7 @@ from __future__ import annotations
 import asyncio
 import threading
 from collections.abc import Coroutine
-from typing import Any, TypeVar
-
-T = TypeVar("T")
+from typing import Any
 
 _lock = threading.Lock()
 _loop: asyncio.AbstractEventLoop | None = None
@@ -84,7 +82,7 @@ def _ensure_loop() -> asyncio.AbstractEventLoop:
     return _loop
 
 
-def run_sync(coro: Coroutine[Any, Any, T]) -> T:
+def run_sync[T](coro: Coroutine[Any, Any, T]) -> T:
     """在专用循环上跑一个协程，**阻塞当前线程**直到它出结果。
 
     在事件循环线程上调用会抛 `BlockingCallOnEventLoop`——那不是保守，

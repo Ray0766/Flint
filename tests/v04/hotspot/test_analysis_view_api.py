@@ -22,7 +22,7 @@ import asyncio
 import json
 from collections.abc import Coroutine
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any
 
 import httpx
 import pytest
@@ -103,10 +103,9 @@ def sql_log_no_verdict(monkeypatch: pytest.MonkeyPatch) -> list[str]:
     return log
 
 
-T = TypeVar("T")
 
 
-def run(coro: Coroutine[Any, Any, T]) -> T:
+def run[T](coro: Coroutine[Any, Any, T]) -> T:
     """同步驱动一次协程（仓库既有惯例：tests/fe_views 同款，无 asyncio_mode 依赖）。"""
     return asyncio.run(coro)
 

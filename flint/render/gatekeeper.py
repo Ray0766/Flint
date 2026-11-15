@@ -9,11 +9,8 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from typing import TypeVar
 
 from flint.domain.models import Block
-
-RenderResult = TypeVar("RenderResult")
 
 
 class ExportBlocked(Exception):
@@ -50,7 +47,7 @@ def check_export(blocks: list[Block]) -> ExportCheck:
     )
 
 
-def guarded_render(
+def guarded_render[RenderResult](
     blocks: list[Block], renderer: Callable[[list[Block]], RenderResult]
 ) -> RenderResult:
     check = check_export(blocks)

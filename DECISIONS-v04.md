@@ -459,3 +459,16 @@ DEC-067（2026-11-14，owner · 会话原话 + 点选的选项）
   **与冻结清单怎么并存**：连跑照旧，但冻结清单仍然约束连跑领什么卡——`CLAUDE.md` S1 写着「NEVER 为冻结项开新卡或续做旧卡」，连跑里的 worker 同样受它约束。这是 Claude 对两条裁决合起来的读法，owner 没有逐字说过。
   **影响面**：`CLAUDE.md` S1 冻结清单删掉一行 · `docs/trace/NARROW-01.md` 第六节的四步停法标为不执行（见该文件第八节）· 本文件的水位判据。落地卡 `NARROW-02`。
   **撤回**：把「连跑批次」加回 `CLAUDE.md` 冻结清单，并按 `docs/trace/NARROW-01.md` 第六节的四步停。
+
+- **DEC-068**（owner 2026-11-15 裁决 · Python 以 3.13 为准）：owner 在粘贴 2026-11-15 评审的执行提示词时写下这一条。`CLAUDE.md` S3 写「Python 3.11」，而 `requirements.lock` 钉的 `numpy==2.5.1` 要求 ≥3.12，本机 `.venv` 是 3.13.18；按 S4 的规矩两处矛盾时代理不许自行择一，所以这件事一直等 owner 一句话。公开仓的 CI 四个作业都装 3.11，每次推送都在 lint 作业的装包一步死掉（run `43598672641`：`No matching distribution found for numpy==2.5.1`），后三个作业从没执行过。
+
+```
+DEC-068（2026-11-15，owner · 提示词原话）
+
+这一条里，CLAUDE.md S3 写的「Python 3.11」让位于锁文件与本机的 3.13——这是我粘贴本提示词时的裁决，照 DEC 的规矩记一条。
+```
+
+  **取代了什么**：`CLAUDE.md` S3 技术选型里的「Python 3.11」。锁文件一字不动——它本来就是 3.13 上装出来的那一份。
+  **没有取代的**：`contracts/models.py` 与 `flint/domain/models.py` 开头的「Python >= 3.11」是冻结件里的一句说明，不改（S2-1）；3.13 满足它。`compose.yaml` 里 api/worker 两个 `python:3.11-slim` 占位镜像只跑 `sleep`，`docker/pdf/Dockerfile` 的 PDF 镜像只装 weasyprint，这三处不装锁文件，本条不碰，留给用到它们的那张卡。
+  **影响面**：`CLAUDE.md` S3 一处 · `AGENTS.md` S3 同一处（它是 `CLAUDE.md` 的镜像）· `.github/workflows/ci.yaml` 四个作业 · `pyproject.toml` 的 `requires-python`、mypy `python_version`、ruff `target-version` · ruff 换到 py313 之后新报的 9 处 `UP047`（泛型函数改用类型参数写法）· 判据 `tests/m1/test_m1_001.py`、`tests/m1/test_m1_007.py`（原先钉 3.11，改钉 3.13）与本文件的水位判据。落地卡 `NARROW-03`。
+  **撤回**：把上面几处退回本条之前的提交；但退回之后 CI 照旧装不上锁文件，除非同时把锁文件重新解到 3.11 能装的版本。

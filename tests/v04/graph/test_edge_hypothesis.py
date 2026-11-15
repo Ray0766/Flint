@@ -26,7 +26,7 @@ import sys
 from collections.abc import Coroutine
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any
 
 import httpx
 import pytest
@@ -53,10 +53,9 @@ from flint.api.schemas import ERROR_CODES
 from flint.graph.store import GraphStore, add_node
 
 GRAPH = "wb-1"
-T = TypeVar("T")
 
 
-def run(coro: Coroutine[Any, Any, T]) -> T:
+def run[T](coro: Coroutine[Any, Any, T]) -> T:
     return asyncio.run(coro)
 
 

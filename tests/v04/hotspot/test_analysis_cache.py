@@ -22,7 +22,7 @@ from __future__ import annotations
 import asyncio
 from collections.abc import Coroutine
 from dataclasses import dataclass
-from typing import Any, TypeVar
+from typing import Any
 
 import pytest
 
@@ -38,10 +38,9 @@ from flint.domain.models import JobKind, Principal
 
 PAID = DeepAnalysisPricing(budget=2.5, charge_cny=19.0)
 
-T = TypeVar("T")
 
 
-def run(coro: Coroutine[Any, Any, T]) -> T:
+def run[T](coro: Coroutine[Any, Any, T]) -> T:
     return asyncio.run(coro)
 
 

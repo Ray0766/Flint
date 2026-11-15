@@ -11,6 +11,7 @@ ones used locally (S7 global gate + compose smoke split by marker).
 """
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -47,7 +48,9 @@ def test_stage_commands_match_local_gate() -> None:
 
 def test_pipeline_pins_python_and_lockfile() -> None:
     text = ci_text()
-    assert '"3.11"' in text or "'3.11'" in text
+    # DEC-068: every job runs the interpreter the lock can actually be installed on.
+    versions = re.findall(r"python-version:\s*[\"']?([0-9.]+)", text)
+    assert versions and set(versions) == {"3.13"}, versions
     assert "requirements.lock" in text
 
 

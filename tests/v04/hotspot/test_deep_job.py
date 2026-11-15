@@ -22,7 +22,7 @@ import asyncio
 from collections.abc import Coroutine
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any
 
 import pytest
 
@@ -45,10 +45,9 @@ DEEP_JOB_SRC = REPO_ROOT / "flint" / "analysis" / "deep_job.py"
 FREE_PRICING = DeepAnalysisPricing(budget=0.0, charge_cny=0.0)
 PAID_PRICING = DeepAnalysisPricing(budget=2.5, charge_cny=19.0)
 
-T = TypeVar("T")
 
 
-def run(coro: Coroutine[Any, Any, T]) -> T:
+def run[T](coro: Coroutine[Any, Any, T]) -> T:
     return asyncio.run(coro)
 
 

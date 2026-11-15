@@ -25,7 +25,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
-from typing import Any, TypeVar
+from typing import Any
 
 from flint.design.export_gate import (
     DesignExportBlocked,
@@ -33,8 +33,6 @@ from flint.design.export_gate import (
     GateViolation,
     check_design_export,
 )
-
-RenderResult = TypeVar("RenderResult")
 
 # 生产格式：交付出去的那些。探索期的 HTML 预览不在其中。
 PRODUCTION_FORMATS: frozenset[str] = frozenset({"pdf", "pack", "docx"})
@@ -94,7 +92,7 @@ def check_design_export_with_template(
     return GateResult(exportable=not violations, violations=violations)
 
 
-def guard_design_export_with_template(
+def guard_design_export_with_template[RenderResult](
     *,
     blocks: Sequence[Any],
     edges: Sequence[dict[str, Any]],

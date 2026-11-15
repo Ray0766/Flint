@@ -2,15 +2,15 @@
 name = "flint"
 version = "0.1.0"
 description = "燧石 Flint — 热点分析与项目计划书引擎（M1 数据与索引层）"
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.13"
 strict = true
 
-# ML 栈（torch/numpy/sentence-transformers/sklearn）类型桩面向 py3.12+ 语法，
-# 与本项目钉死的 3.11 语义冲突；域代码不消费其类型面（统一走注入后端协议），
-# 故跳过跟进不降低冻结件与业务代码的 strict 强度。
+# ML 栈（torch/numpy/sentence-transformers/sklearn）的类型桩当初与 3.11 语义冲突，才跳过跟进。
+# DEC-068 起语义是 3.13，那条理由已不成立。跳过仍保留：域代码不消费其类型面（统一走注入后端协议）；
+# 放开跟进没有试过，不在 DEC-068 的范围里。
 [[tool.mypy.overrides]]
 module = [
     "sentence_transformers.*",
@@ -24,7 +24,7 @@ ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py313"
 
 # 冻结件 NEVER 修改（S2-1）：import 排版类规则对其豁免，语义类规则仍然生效。
 [tool.ruff.lint.per-file-ignores]

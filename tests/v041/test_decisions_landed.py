@@ -156,12 +156,13 @@ def test_the_numbers_continue_the_existing_watermark() -> None:
     owner 2026-11-14 落 065（UI 从 0 重新设计，`REDESIGN-01`），水位 64 → 65，第十四次。
     同日 owner 落 066（收窄：目标改为开源自用、外围冻结，`NARROW-01`），水位 65 → 66，第十五次。
     同日 owner 又落 067（连跑批次照旧、移出冻结清单，`NARROW-02`），水位 66 → 67，第十六次。
+    owner 2026-11-15 落 068（Python 以 3.13 为准，`NARROW-03`），水位 67 → 68，第十七次。
     水位跟着事实走，而「不许跳号、不许重号」这两条意图一字未动。
     """
     numbers = sorted({int(m) for m in re.findall(r"DEC-0(\d{2})\b", _text())})
 
-    assert numbers[-1] == 67, f"最高编号是 DEC-0{numbers[-1]}，不是 DEC-067"
-    for expected in range(35, 68):
+    assert numbers[-1] == 68, f"最高编号是 DEC-0{numbers[-1]}，不是 DEC-068"
+    for expected in range(35, 69):
         assert expected in numbers, f"DEC-0{expected} 缺号"
     assert len(numbers) == len(set(numbers))
 

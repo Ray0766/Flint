@@ -30,11 +30,9 @@ from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from typing import Any, TypeVar
+from typing import Any
 
 from flint.render.gatekeeper import check_export
-
-RenderResult = TypeVar("RenderResult")
 
 
 @dataclass(frozen=True)
@@ -92,7 +90,7 @@ def check_design_export(
     return GateResult(exportable=not violations, violations=violations)
 
 
-def guard_design_export(
+def guard_design_export[RenderResult](
     *,
     blocks: Sequence[Any],
     edges: Sequence[dict[str, Any]],

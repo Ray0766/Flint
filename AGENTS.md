@@ -31,7 +31,7 @@
 
 **冻结件**：`contracts/models.py`（全部实体 + 判别联合）、`contracts/protocols.py`（全部接口签名）。实现 MUST 与其类型逐字一致；mypy --strict 是强制执行器。
 
-**技术选型（锁版，全部经 registry 校验 @2026-07-26）**：Python 3.11 / FastAPI 0.140 + uvicorn 0.51 / sse-starlette 3.4.6 / pydantic 2.13（仅边界，域层保持 dataclass）/ SQLAlchemy 2.0.51 + alembic 1.18.5 + asyncpg 0.31 / PostgreSQL 16 + pgvector(1024, HNSW m=16) / Redis 7 + arq 0.28 / httpx 0.28 + selectolax 0.4 + tenacity 9.1 / sentence-transformers 5.6.1（bge-m3）/ scikit-learn 1.9（凝聚聚类）/ anthropic 0.120（LLMProvider 适配器后）/ structlog 26.1 / markdown-it-py 4.2 + weasyprint 69 + python-docx 1.2 / pytest 9.1 + pytest-asyncio + respx / mypy 2.3 strict + ruff 0.16。前端：Next.js 16 + tiptap 3 + zustand 5。逐项理由 → `技术方案-v1.1.md#E1`。
+**技术选型（锁版，全部经 registry 校验 @2026-07-26）**：Python 3.13（`DEC-068`，原写 3.11）/ FastAPI 0.140 + uvicorn 0.51 / sse-starlette 3.4.6 / pydantic 2.13（仅边界，域层保持 dataclass）/ SQLAlchemy 2.0.51 + alembic 1.18.5 + asyncpg 0.31 / PostgreSQL 16 + pgvector(1024, HNSW m=16) / Redis 7 + arq 0.28 / httpx 0.28 + selectolax 0.4 + tenacity 9.1 / sentence-transformers 5.6.1（bge-m3）/ scikit-learn 1.9（凝聚聚类）/ anthropic 0.120（LLMProvider 适配器后）/ structlog 26.1 / markdown-it-py 4.2 + weasyprint 69 + python-docx 1.2 / pytest 9.1 + pytest-asyncio + respx / mypy 2.3 strict + ruff 0.16。前端：Next.js 16 + tiptap 3 + zustand 5。逐项理由 → `技术方案-v1.1.md#E1`。
 
 **目录结构**：
 

@@ -89,7 +89,13 @@ def test_repo_skeleton_top_dirs() -> None:
 
 
 def test_toolchain_config_present() -> None:
-    """pyproject.toml pins the toolchain contract: mypy strict + 3.11 semantics."""
+    """pyproject.toml pins the toolchain contract: mypy strict + 3.13 semantics.
+
+    Was 3.11 until DEC-068: the lock pins numpy==2.5.1, which needs >=3.12, so a
+    3.11 toolchain could never install it.
+    """
     pyproject = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    assert 'python_version = "3.11"' in pyproject
+    assert 'python_version = "3.13"' in pyproject
+    assert 'requires-python = ">=3.13"' in pyproject
+    assert 'target-version = "py313"' in pyproject
     assert "strict = true" in pyproject

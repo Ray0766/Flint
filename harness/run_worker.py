@@ -41,7 +41,7 @@ from flint.jobs.design_generate import DesignGenerateDeps
 from flint.jobs.events import PgJobEventStream
 from flint.jobs.gate1 import build_live_deps
 from flint.jobs.worker_main import WorkerDeps, build_worker
-from harness.local_model import build_local_provider
+from harness.demo_model import build_demo_provider
 
 DSN = os.environ.get("FLINT_DEMO_DSN", "postgresql://flint:flint@localhost:55432/flint")
 REDIS_URL = os.environ.get("FLINT_REDIS_URL", "redis://localhost:56379/0")
@@ -61,7 +61,8 @@ def build_deps() -> WorkerDeps:
     now = datetime.now(UTC)
     # `COMBO-WIRE-01`：地址、模型名、超时三样都在 `harness/local_model.py`——
     # combo 那一族（API 进程）拿的是**同一处定义**造出来的 provider。
-    provider = build_local_provider()
+    # `NARROW-04`：选哪一家在 `harness/demo_model.py`（`FLINT_DEMO_PROVIDER`，不设 = 本地）。
+    provider = build_demo_provider()
     return WorkerDeps(
         dsn=DSN,
         redis_url=REDIS_URL,

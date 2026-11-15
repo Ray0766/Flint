@@ -105,13 +105,18 @@ def test_combo_and_the_composing_family_read_one_definition_of_the_model() -> No
     两处各写一份 `os.environ.get("FLINT_FREE_TIER_MODEL", …)` 的话，
     默认值哪天分了叉，「combo 用的是哪个模型」就有两个答案——
     而两个答案在屏上、在日志里长得一模一样。
-    """
-    from harness import demo_server, local_model, run_worker
 
-    assert demo_server.build_local_provider is local_model.build_local_provider
-    assert run_worker.build_local_provider is local_model.build_local_provider
-    # combo 的模型名进的是端点的生成记录（`model=` 那一格），所以它也要是同一个。
-    assert demo_server.MODEL is local_model.MODEL
+    `NARROW-04` 之后那一处是 `harness/demo_model.py#build_demo_provider`（按
+    `FLINT_DEMO_PROVIDER` 选厂商，不设 = 照旧走 `local_model`）。combo 的模型名
+    改取 provider 自己的 `.model`，不再另读一个常量——那一半由
+    `tests/v041/test_demo_model.py` 的最后一条在带 key 的环境里判。
+    """
+    from harness import demo_model, demo_server, run_worker
+
+    assert demo_server.build_demo_provider is demo_model.build_demo_provider
+    assert run_worker.build_demo_provider is demo_model.build_demo_provider
+    assert not hasattr(demo_server, "build_local_provider")
+    assert not hasattr(run_worker, "build_local_provider")
 
 
 def test_only_one_place_in_the_harness_reads_the_model_environment() -> None:

@@ -113,12 +113,25 @@ fi
 
 # ── ② 模型端点：只报告配没配，不探测 ─────────────────────────────────
 step 2 "模型端点（只透传，不探测）"
-if [ -n "${FLINT_LOCAL_BASE_URL:-}" ] && [ -n "${FLINT_FREE_TIER_MODEL:-}" ]; then
-    ok "已配置模型：$FLINT_FREE_TIER_MODEL（端点取自 FLINT_LOCAL_BASE_URL）"
-else
-    warn "FLINT_LOCAL_BASE_URL / FLINT_FREE_TIER_MODEL 没配齐。"
-    warn "生成类功能（combo 主题、Gate 分析）调用模型时会失败；见 docs/macOS-安装.md 的「模型端点」一节。"
-fi
+# NARROW-04: FLINT_DEMO_PROVIDER picks the vendor (harness/demo_model.py). This script
+# only says which one was picked; that vendor's own variables are checked by its loader
+# when the backend starts, and a missing one is named there without echoing any value.
+case "${FLINT_DEMO_PROVIDER:-local}" in
+    local)
+        if [ -n "${FLINT_LOCAL_BASE_URL:-}" ] && [ -n "${FLINT_FREE_TIER_MODEL:-}" ]; then
+            ok "已配置模型：$FLINT_FREE_TIER_MODEL（端点取自 FLINT_LOCAL_BASE_URL）"
+        else
+            warn "FLINT_LOCAL_BASE_URL / FLINT_FREE_TIER_MODEL 没配齐。"
+            warn "生成类功能（combo 主题、Gate 分析）调用模型时会失败；见 docs/macOS-安装.md 的「模型端点」一节。"
+        fi
+        ;;
+    anthropic|deepseek|openai)
+        ok "模型走 $FLINT_DEMO_PROVIDER（FLINT_DEMO_PROVIDER）；这一家的变量配没配，后端启动时核，缺哪个点名哪个（见 .env.example）"
+        ;;
+    *)
+        warn "FLINT_DEMO_PROVIDER 只认 local / anthropic / deepseek / openai；后端会拒绝启动。"
+        ;;
+esac
 
 # ── ③ 后端(:8000) + 前端(:3000) + worker ─────────────────────────────
 step 3 "起后端(:8000) + 前端(:3000) + worker"

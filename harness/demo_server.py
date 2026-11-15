@@ -55,7 +55,7 @@ from flint.evidence.enrich import pin_verdict_citations
 from flint.evidence.search import GithubArxivSearcher
 from flint.jobs.gate1 import build_live_deps, run_gate1
 from flint.jobs.regenerate_job import RegenerateJobDeps, run_regenerate_job
-from harness.local_model import MODEL, build_local_provider
+from harness.demo_model import build_demo_provider
 
 REPO = Path(__file__).resolve().parents[1]
 DSN = os.environ.get("FLINT_DEMO_DSN", "postgresql://flint:flint@localhost:55432/flint")
@@ -127,7 +127,7 @@ async def _enqueue(job_id: str, kind: JobKind, payload: JSON) -> None:
     if kind != "gate1_analysis":
         return
     now = datetime.now(UTC)
-    provider = build_local_provider()
+    provider = build_demo_provider()
     searcher = GithubArxivSearcher(
         httpx.Client(timeout=30.0, follow_redirects=True), now,
         per_source=3, resilient=True)
@@ -152,7 +152,7 @@ async def _run_regenerate(job_id: str, payload: JSON) -> None:
     prompt_path = REPO / "prompts" / "section_draft@1.md"
     deps = RegenerateJobDeps(
         dsn=DSN,
-        provider=build_local_provider(),
+        provider=build_demo_provider(),
         prompt_text=prompt_path.read_text(encoding="utf-8") if prompt_path.exists() else "",
         # 逐字照冻结件 UserProfile 字段（demo 无真实档案 → 全空，NEVER 编造涉我信息）
         profile=UserProfile(
@@ -267,8 +267,12 @@ def build_app(inject_identity: bool | None = None) -> FastAPI:
     # 模型口径与组稿那一族**同一处定义**（`harness/local_model.py`）：
     # 各造一份的话，「combo 用的是哪个模型」会有两个答案，
     # 而两个答案在屏上、在日志里长得一模一样。
+    #
+    # `NARROW-04`：provider 改由 `harness/demo_model.py` 按 `FLINT_DEMO_PROVIDER` 选
+    # （不设 = 照旧本地）；模型名取 provider 自己的 `.model`，换了厂商也只有一个答案。
+    combo_provider = build_demo_provider()
     app = create_app(DSN, redis_url=REDIS_URL,
-                     combo_provider=build_local_provider(), combo_model=MODEL)
+                     combo_provider=combo_provider, combo_model=combo_provider.model)
     app.title = "flint-demo"
     # FIX-20：网关替身默认开着（demo 界面靠它取数），但**可以关**——
     # 关掉之后走真网络的匿名请求就是端点自己的答复（422）。

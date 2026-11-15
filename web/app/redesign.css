@@ -46,6 +46,9 @@
   --nav-w: 232px;
   --bar-h: 56px;
   --tabbar-h: 60px;
+  /* NARROW-05: how many phone tabs share the bar. 7 is the old fixed count; `AnimeNav` sets the
+     real number on the nav, and the tabs inherit it from there. */
+  --tab-count: 7;
   /* 质感：麻纸噪点与压印关掉。`_ds/tokens/texture.css` 里那两段噪点图没有删，只是不再用。 */
   --tex-paper: none;
   --tex-paper-strong: none;

@@ -30,7 +30,7 @@ COLORS = DS_TOKENS / "colors.css"
 
 # 这一层新引入的 token（`_ds` 与 `globals.css` 里都没有的）。写在这里是为了让下面那条
 # 「名字都对得上」的判据分得清「新加的」与「拼错的」。
-NEW_TOKENS = {"--nav-w", "--bar-h", "--tabbar-h"}
+NEW_TOKENS = {"--nav-w", "--bar-h", "--tabbar-h", "--tab-count"}
 
 COLOUR = re.compile(r"#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\(")
 

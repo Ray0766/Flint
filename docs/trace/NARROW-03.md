@@ -114,3 +114,39 @@ What does stand: the full front-end suite, which contains every spec file these 
 filter for, ran green in this session before the eviction got worse:
 `Test Files 89 passed (89) · Tests 892 passed (892)`. The `tsc` wrappers passed in the same
 rerun.
+
+## 7. Full gate, rerun outside iCloud (2026-11-15, later)
+
+The owner chose "move it out of iCloud". I did not move the checkout itself: the demo stack
+runs from it (backend PID 99562 and `next dev` PID 99601 have their cwd there), and the disk
+is 97 % full (`df -h ~`: 15 GiB free), which is what keeps Optimize Storage evicting. Instead:
+a clone of this branch in my scratch directory (not under iCloud), a fresh `python3.13 -m venv`,
+`pip install -r requirements.lock` (exit 0, 94 packages) and `npm ci` in `web/` (151 packages),
+zero `dataless` files in either. `HF_HOME` empty, as on a runner.
+
+```
+ruff check .                      All checks passed!
+mypy --strict flint eval harness  Success: no issues found in 372 source files
+npx tsc --noEmit                  exit 0
+npx vitest run                    Test Files 89 passed (89) · Tests 892 passed (892)
+pytest -q -m "not compose"        3 failed, 4407 passed, 417 skipped, 1070 deselected
+```
+
+The three failures were mine, from `NARROW-05` (fixed there, see its section 6):
+
+- `tests/v041/test_redesign_layer.py::test_every_token_the_layer_reads_is_defined_somewhere`:
+  `--tab-count` read but never defined in the token layer;
+- `tests/v041/test_gauge_map_b2.py` ×2: the B2 gauge map on disk did not list the new
+  `frozen_entries.test.tsx` under the `npm test -- --run app` gauge.
+
+After the two fixes (`2b37373`, `6dc9656`), the same unit stage:
+
+```
+pytest -q -m "not compose"        4410 passed, 417 skipped, 1070 deselected in 147.73s
+```
+
+This supersedes section 6: the six vitest-driven wrappers are in that run and pass.
+
+Not run: the `compose` stage. Its tests enqueue on `redis://localhost:56379/0`, the queue the
+running demo worker reads (`harness/run_worker.py:47`), and that worker writes to the demo
+database. I was told not to write there, so this stage waits for a stack I may stop.

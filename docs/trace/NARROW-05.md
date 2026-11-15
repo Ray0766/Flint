@@ -117,3 +117,18 @@ browser pane:
 - `CLAUDE.md` S1 still says 「入口今天还开着（侧栏在 `web/`，源的启用在 `flint/`），关入口另开卡」.
   After this card that sentence is false. I may not edit `CLAUDE.md` beyond the S3 line, so it
   waits for the owner.
+
+## 6. Rework after the full gate (2026-11-15, later)
+
+The full unit run outside iCloud (`NARROW-03` section 7) found two things this card broke,
+which my targeted runs had not covered:
+
+| judge | why red | fix |
+|---|---|---|
+| `test_redesign_layer.py::test_every_token_the_layer_reads_is_defined_somewhere` | `--tab-count` was only set inline on the nav; the layer must read only tokens the token layer defines | `:root:root { --tab-count: 7 }` (the old fixed count) and `--tab-count` registered in `NEW_TOKENS`; `AnimeNav` still sets the real number on the nav (`2b37373`) |
+| `test_gauge_map_b2.py` ×2 | the B2 gauge map counts every file under `web/__tests__/app` for the `npm test -- --run app` gauge, and the copy on disk predated `frozen_entries.test.tsx` | regenerated with `tools/gauge_map.py`, 4 lines added, file kept CRLF (`6dc9656`) |
+
+Both judges were seen red on the real defect before the fix; after it they pass with the rest
+of the unit stage (`4410 passed`). Real browser after the change (running `next dev`,
+hot-reloaded): 390×844, root `--tab-count` 7, nav 3, three tabs of 130 px at x 0/130/260,
+`scrollWidth 390`; 1920×1080, the three nav items stacked in the side bar.

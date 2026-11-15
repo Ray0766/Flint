@@ -68,9 +68,12 @@ docs/            进度台账、每张任务卡的 trace、阻塞单、出口报
 
 两点先说清：
 
-- `start-demo.sh` 写于 Windows 主机，**还没有在 macOS 实机上跑过**，已验的只有静态判据；
-- **模型接入**：演示栈目前只接不要密钥的 OpenAI 兼容端点。`start-demo.ps1` 默认指向本机 Ollama；
-  改接闭源模型 API 的工作尚未落到代码上，详见安装文档的「模型端点」一节。
+- `start-demo.sh` 写于 Windows 主机，2026-11-14 在一台 Apple M3 的 MacBook Air 上实跑过一次，
+  一次走完、exit 0（记录在 [`docs/trace/MAC-01.md`](docs/trace/MAC-01.md) 第七节）；
+- **模型接入**：选哪一家由环境变量 `FLINT_DEMO_PROVIDER` 决定，唯一定义处是
+  `harness/demo_model.py`。不设就是本地 OpenAI 兼容端点（不要密钥，`start-demo.ps1` 默认指向本机 Ollama）；
+  设成 `anthropic` / `deepseek` / `openai` 就走那一家，key、模型名、单价都从 `.env` 读。
+  详见安装文档的「模型端点」一节。
 
 ## 跑门禁
 

@@ -25,9 +25,8 @@
 brew install python@3.13 node@24 pango
 ```
 
-**Python 版本有一处未决**：`CLAUDE.md` S3 与 `.github/workflows/ci.yaml` 写的是 3.11，
-而实际开发环境是 3.13。`requirements.lock` 是在 3.13 下冻结的，其中的 `numpy==2.5.1`
-能不能装进 3.11 **没有核过**。本文按「先复现已知跑绿的环境」取 3.13；改回 3.11 属 owner 决策。
+**Python 用 3.13**（`DEC-068`，2026-11-15）。`requirements.lock` 是在 3.13 下冻结的，
+其中的 `numpy==2.5.1` 要求 3.12 以上，装不进 3.11；`CLAUDE.md` S3 与 CI 都已改成 3.13。
 
 ## 二、取代码、装依赖
 
@@ -50,30 +49,32 @@ cd Flint && python3.13 -m venv .venv && .venv/bin/pip install -r requirements.lo
 
 ## 三、模型端点
 
-**先说清现状：演示栈今天只能接「不要密钥的 OpenAI 兼容端点」。**
+后端与 worker 用哪个模型，只有一处定义：`harness/demo_model.py`（`NARROW-04`）。
+选择开关是环境变量 `FLINT_DEMO_PROVIDER`：
 
-- 后端与 worker 的模型接入只有一处定义：`harness/local_model.py:53` 的
-  `LocalProvider(base_url=..., model=...)`，**不传 `api_key`**；
-- 地址与模型名从两个环境变量读：`FLINT_LOCAL_BASE_URL`、`FLINT_FREE_TIER_MODEL`
-  （都不设时落到本机 `localhost:11434`）；
-- 云端三档的配置加载已经有了——`flint/llm/production.py` 的 `load_anthropic_tier`（:284）、
-  `load_deepseek_tier`（:384）、`load_openai_tier`（:390）——但**演示栈没有接它们**，
-  用到它们的是 `harness/topic_caliber.py`、`harness/prod_caliber.py` 这类口径测量脚本。
+| 取值 | 走哪里 | 读哪些变量（名字见 `.env.example`） |
+|---|---|---|
+| 不设 / `local` | 本地 OpenAI 兼容端点，**不要密钥**（`harness/local_model.py`） | `FLINT_LOCAL_BASE_URL`、`FLINT_FREE_TIER_MODEL`（都不设时落到本机 `localhost:11434`） |
+| `anthropic` | Claude | `FLINT_ANTHROPIC_API_KEY`、`FLINT_PAID_TIER_MODEL`、两项单价 |
+| `deepseek` | DeepSeek | `FLINT_DEEPSEEK_*`（key、模型名、两项单价，命中价可选） |
+| `openai` | OpenAI | `FLINT_OPENAI_*`（key、模型名、两项单价） |
 
-owner 2026-11-14 裁决：本地模型那条路先不做，开发阶段调闭源模型的 API。
-这条裁决**还没有落到代码上**：要让演示栈走闭源 API，得改 `harness/local_model.py`
-那一处工厂，并定下用哪一家、哪个模型、单价填多少（单价是 cost 记账的出处，NEVER 内置价表）。
-付费接口开通是 S2-10 的人审触点，那三样都属 owner 决策。
+- 三家的加载器是 `flint/llm/production.py` 里早就有的那几个；缺哪个变量，后端启动时点名报出来，
+  NEVER 回显任何值。取值写错（比如拼错厂商名）同样拒绝启动，不会悄悄退回本地；
+- 单价是 cost 记账的出处，NEVER 内置价表——所以单价也要自己填；
+- 用哪一家、哪个模型、单价多少，以及付费接口开通（S2-10 人审触点），都是 owner 的事，代码不替人选；
+- 这条接线是用三家**录下来的真实响应**回放验的（`tests/v041/test_demo_model.py`），
+  没有发过一个真实请求。真跑一次之前，它与真实厂商之间还隔着一次实测。
 
-在那之前：
+配置：
 
 ```bash
 cp .env.example .env
 ```
 
 - `start-demo.sh` 会把仓根 `.env` 整份导入环境（`.env` 已被 `.gitignore` 排除）；
-- 两个变量没配齐时脚本照常起栈，只在第 ② 步警告：生成类功能（combo 主题、Gate 分析）
-  调用模型时会失败。读库的屏幕（广场、工作台、报告查看）是否全部不受影响，**没有在 Mac 上核过**；
+- 走本地时两个变量没配齐，脚本照常起栈，只在第 ② 步警告：生成类功能（combo 主题、Gate 分析）
+  调用模型时会失败。走某一家时第 ② 步只报选了哪一家，那一家的变量由后端启动时核。读库的屏幕（广场、工作台、报告查看）是否全部不受影响，**没有在 Mac 上核过**；
 - `.env.example` 里的 `model-a` / `model-b` 是占位值，原样拷过去不会有模型可用。
 
 ## 四、起栈

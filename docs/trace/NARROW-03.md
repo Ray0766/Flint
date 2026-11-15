@@ -150,3 +150,62 @@ This supersedes section 6: the six vitest-driven wrappers are in that run and pa
 Not run: the `compose` stage. Its tests enqueue on `redis://localhost:56379/0`, the queue the
 running demo worker reads (`harness/run_worker.py:47`), and that worker writes to the demo
 database. I was told not to write there, so this stage waits for a stack I may stop.
+
+## 8. First run on GitHub, and the one check it turned red (2026-11-15, evening)
+
+The owner said to push the branch. Run `43694567536` on `f59ed62` is the first one on the
+public repo to get past install:
+
+```
+lint            success   88 s
+typecheck       success   113 s
+unit            failure   1 failed, 4396 passed, 430 skipped, 1070 deselected
+compose-smoke   skipped   (it needs unit)
+```
+
+The one red: `tests/v041/test_undo_wired.py::test_the_vitest_filter_actually_passes`. vitest
+itself passed (exit 0, 2 files, 25 tests). The second assertion looked for the plain text
+`Test Files  2 passed` and the runner printed
+`\x1b[2m Test Files \x1b[22m \x1b[1m\x1b[32m2 passed…`. The check was wrong, not the behaviour.
+
+Why section 7 did not see it: vitest 4.1 switches colour off when it detects an agent
+(`web/node_modules/vitest/dist/chunks/cac.DdICfEr1.js:2216`, `if (isAgent) disableDefaultColors()`;
+`std-env` reads `AI_AGENT`, `CLAUDECODE`, `CLAUDE_CODE`). Every local run of this check so far
+was started from an agent's shell, so it only ever saw plain text. Setting `CI=true` and
+`GITHUB_ACTIONS=true` alone does not reproduce it; removing the three agent variables does:
+
+```
+env -u AI_AGENT -u CLAUDECODE -u CLAUDE_CODE pytest -q tests/v041/test_undo_wired.py::test_the_vitest_filter_actually_passes
+tests/v041/test_undo_wired.py:168: AssertionError        1 failed
+```
+
+So it was also red in my own terminal, not only on GitHub.
+
+Fix: `plain()` in the same file drops SGR colour codes before the comparison; the text looked
+for is unchanged. `test_plain_reads_the_summary_through_colour_codes` holds the two summary
+lines byte for byte as the runner printed them.
+
+Seen red with the bug put back (`plain()` returning its input):
+
+```
+person's shell   2 failed, 8 passed   (the recorded-bytes test and the live one)
+agent's shell    1 failed, 9 passed   (the recorded-bytes test; the live one sees no colour here)
+```
+
+Restored: `10 passed` in both shells; `ruff check` clean.
+
+This is the only check in the repo that string-matches live vitest output
+(`test_gauge_map_b2`, `test_ui_mainchain`, `test_vitest_filters` judge by exit code or by a
+JSON line; `test_frontend_red_capture` reads recorded text).
+
+The whole unit stage again, from the clone outside iCloud, with the three agent variables
+removed and `CI=true GITHUB_ACTIONS=true` set, so vitest colours its output as on a runner:
+
+```
+pytest -q -m "not compose"        4411 passed, 417 skipped, 1070 deselected in 184.75s
+```
+
+4410 from section 7 plus the new recorded-bytes test.
+
+Still not known: the `compose-smoke` job has never executed on GitHub (skipped behind the red
+unit job), and it is the stage I could not run here either (section 7).

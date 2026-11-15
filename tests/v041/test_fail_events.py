@@ -82,7 +82,11 @@ async def _wipe() -> None:
 
 
 @pytest.fixture(autouse=True)
-def _isolated() -> Any:
+def _isolated(request: pytest.FixtureRequest) -> Any:
+    # NARROW-03: only the compose tests touch the database; CI's unit stage has none.
+    if request.node.get_closest_marker("compose") is None:
+        yield
+        return
     _run(_wipe())
     yield
     _run(_wipe())
@@ -91,6 +95,7 @@ def _isolated() -> Any:
 # ───────────────────────── 一、失败：两个记号一起写，原因在前、终态在后
 
 
+@pytest.mark.compose
 @pytest.mark.parametrize("state", ["queued", "drafting"])
 def test_a_failure_reaches_the_event_stream_with_its_reason(state: str) -> None:
     _run(_job("uir02-a", state))
@@ -109,6 +114,7 @@ def test_a_failure_reaches_the_event_stream_with_its_reason(state: str) -> None:
 # ───────────────────────── 二、已经是终态的不动
 
 
+@pytest.mark.compose
 @pytest.mark.parametrize("state", ["done", "cancelled"])
 def test_a_finished_or_cancelled_job_is_left_alone(state: str) -> None:
     _run(_job("uir02-b", state))
@@ -118,6 +124,7 @@ def test_a_finished_or_cancelled_job_is_left_alone(state: str) -> None:
     assert _run(_read("uir02-b")) == (state, None, [])
 
 
+@pytest.mark.compose
 def test_a_job_that_already_said_it_failed_is_not_told_twice() -> None:
     """重写作业自己会写失败事件（`REGEN-EVT-01`），随后异常抛到 worker，`mark_failed` 再来一次。
 
@@ -134,6 +141,7 @@ def test_a_job_that_already_said_it_failed_is_not_told_twice() -> None:
     assert events == spoken, "失败被说了两遍"
 
 
+@pytest.mark.compose
 def test_an_unknown_job_id_is_a_no_op() -> None:
     """没有这一行就什么都不写——事件流的外键指着 `jobs`，硬写会抛，而抛了会盖掉原来那个错。"""
     _run(make_mark_failed(TEST_DSN)("uir02-nobody", REASON))

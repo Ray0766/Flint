@@ -145,6 +145,7 @@ def test_the_filter_still_offers_every_region() -> None:
         assert hiding not in page, f"筛选器被收窄了：{hiding}"
 
 
+@pytest.mark.compose
 def test_the_region_column_still_exists_in_the_database() -> None:
     """`clusters.region` 这一列还在——收窄呈现不动数据层。"""
     import asyncio
@@ -235,6 +236,7 @@ def test_the_endpoint_really_says_false_for_a_deferred_region() -> None:
     assert every.json()["region_in_scope"] is True, "不选区被判成了不在范围内"
 
 
+@pytest.mark.compose
 def test_the_deferred_region_still_returns_a_real_query_not_an_error() -> None:
     """**不在范围** ≠ **报错**：`JP` 照旧走真 query、回 200 + 空列表。
 

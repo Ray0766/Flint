@@ -142,6 +142,7 @@ def test_the_scripts_keep_the_utf8_bom(script: Path) -> None:
     assert script.read_bytes()[:3] == b"\xef\xbb\xbf", f"{script.name} 掉了 BOM"
 
 
+@pytest.mark.compose
 def test_the_worker_can_actually_be_built_and_run_in_burst() -> None:
     """入口真的能起来：连上 redis、消费空队列后退出（burst 口径）。
 

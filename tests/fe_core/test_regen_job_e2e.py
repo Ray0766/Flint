@@ -64,9 +64,14 @@ def run(coro: Any) -> Any:
 
 
 @pytest.fixture(autouse=True)
-def _clean() -> Any:
+def _clean(request: pytest.FixtureRequest) -> Any:
     """测试隔离：清 fecore-e2e-* 行（含重生成派生 deliverable）——块级重生成保留
     block_id，跨版本重名，若不清会污染共享 DB（如 test_m2_001 迁移往返对块 PK 敏感）。"""
+    # NARROW-03: tests/v041/test_regen_events.py borrows this fixture, and its static
+    # tests run in CI's unit stage with no database. Every test here is compose anyway.
+    if request.node.get_closest_marker("compose") is None:
+        yield
+        return
     async def wipe() -> None:
         conn = await asyncpg.connect(DSN)
         try:

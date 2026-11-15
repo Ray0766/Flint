@@ -118,7 +118,10 @@ def _verdict_payload(artifacts: dict[str, Any]) -> dict[str, Any]:
 
 
 @pytest.fixture(autouse=True)
-def clean_slate() -> None:
+def clean_slate(request: pytest.FixtureRequest) -> None:
+    # NARROW-03: only the compose tests touch the database; CI's unit stage has none.
+    if request.node.get_closest_marker("compose") is None:
+        return
     run(_sql(WIPE_SQL))
 
 

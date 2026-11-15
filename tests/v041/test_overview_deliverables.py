@@ -94,12 +94,14 @@ def body() -> dict[str, object]:
 # ───────────────────────── 一、响应里只剩一份清单
 
 
+@pytest.mark.compose
 def test_the_old_column_is_no_longer_in_the_response(body: dict[str, object]) -> None:
     assert "deliverable_ids" not in body, "总览还在回那一列——清单仍是两份"
     assert STALE not in json.dumps(body, ensure_ascii=False), (
         "只存在于旧列里的那个 id 出现在响应里：端点还在读它")
 
 
+@pytest.mark.compose
 def test_the_one_list_comes_from_the_table_with_version_and_supersedes(
         body: dict[str, object]) -> None:
     listed = body["deliverables"]
@@ -115,6 +117,7 @@ def test_the_one_list_comes_from_the_table_with_version_and_supersedes(
 # ───────────────────────── 二、那一列还在库里，一个字没动
 
 
+@pytest.mark.compose
 def test_the_column_itself_is_kept_and_untouched(body: dict[str, object]) -> None:
     """`DEC-063`：列保留、不再读。端点 NEVER 顺手把它清掉或改写。"""
     assert json.loads(asyncio.run(_column())) == [STALE]

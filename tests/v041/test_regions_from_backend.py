@@ -124,6 +124,7 @@ def test_the_page_hands_the_list_down_from_the_response() -> None:
 # ───────────────────────── acceptance①：清单的唯一真相在冻结件
 
 
+@pytest.mark.compose
 def test_the_endpoint_serves_the_ten_from_the_frozen_contract(
     client: TestClient,
 ) -> None:

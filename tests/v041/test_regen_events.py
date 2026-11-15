@@ -108,8 +108,12 @@ async def _wipe() -> None:
 
 
 @pytest.fixture(autouse=True)
-def _isolated(_clean: Any) -> Any:
+def _isolated(request: pytest.FixtureRequest) -> Any:
     """`_clean` 是重写 e2e 那份判据的隔离件（清 `fecore-e2e-*`），这里把本文件的作业行也清掉。"""
+    # NARROW-03: only the compose tests touch the database; CI's unit stage has none.
+    if request.node.get_closest_marker("compose") is None:
+        yield
+        return
     base.run(_wipe())
     yield
     base.run(_wipe())
@@ -121,6 +125,7 @@ _clean = base._clean
 # ───────────────────────── 一、成功：两个记号一起到 done
 
 
+@pytest.mark.compose
 def test_a_finished_rewrite_reaches_done_in_both_places() -> None:
     base.run(base._seed())
     base.run(_submit(JOB_OK))
@@ -137,6 +142,7 @@ def test_a_finished_rewrite_reaches_done_in_both_places() -> None:
     assert [e for e in events if e["kind"] == "failed"] == []
 
 
+@pytest.mark.compose
 def test_the_screen_can_see_it_start_before_it_ends() -> None:
     """终态之前先有一条「在写了」：否则屏上从提交到完成之间一个字都没有。"""
     base.run(base._seed())
@@ -153,6 +159,7 @@ def test_the_screen_can_see_it_start_before_it_ends() -> None:
 # ───────────────────────── 二、失败：同样落事件，且没有半写
 
 
+@pytest.mark.compose
 def test_a_failed_rewrite_says_so_in_both_places_and_keeps_the_reason() -> None:
     base.run(base._seed())
     base.run(_submit(JOB_BAD))
@@ -170,6 +177,7 @@ def test_a_failed_rewrite_says_so_in_both_places_and_keeps_the_reason() -> None:
         "最后一条不是终态——屏上会停在「在写了」")
 
 
+@pytest.mark.compose
 def test_a_failed_rewrite_leaves_no_half_written_product() -> None:
     base.run(base._seed())
     base.run(_submit(JOB_BAD))
@@ -184,6 +192,7 @@ def test_a_failed_rewrite_leaves_no_half_written_product() -> None:
 # ───────────────────────── 三、没经队列提交的直调：照常产出，不造作业行
 
 
+@pytest.mark.compose
 def test_a_direct_call_without_a_job_row_still_works_and_invents_nothing() -> None:
     base.run(base._seed())
 

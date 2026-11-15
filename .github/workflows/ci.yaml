@@ -39,6 +39,12 @@ jobs:
         with:
           python-version: "3.13"
       - run: pip install -r requirements.lock
+      # Ten unit tests drive `npx vitest` / `npx tsc` in web/ (NARROW-03).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npm ci
+        working-directory: web
       - run: pytest -q -m "not compose"
 
   compose-smoke:

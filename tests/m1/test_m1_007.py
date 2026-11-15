@@ -59,3 +59,15 @@ def test_compose_marker_registered_and_used() -> None:
     assert "compose:" in pyproject, "compose marker must be registered"
     m1_002 = (REPO_ROOT / "tests" / "m1" / "test_m1_002.py").read_text(encoding="utf-8")
     assert "pytest.mark.compose" in m1_002, "compose smoke tests must carry the marker"
+
+
+def test_unit_stage_installs_the_front_end_its_tests_drive() -> None:
+    """NARROW-03: ten unit-stage tests run `npx vitest` / `npx tsc` inside `web/`.
+
+    Without Node and `web/node_modules` they fail on a fresh runner (found by running
+    the unit stage locally with no stack and no network), so the unit job installs them.
+    """
+    unit = ci_text().split("\n  unit:", 1)[1].split("\n  compose-smoke:", 1)[0]
+    assert "actions/setup-node" in unit
+    assert re.search(r"node-version:\s*[\"']?24", unit)
+    assert re.search(r"npm ci", unit) and "working-directory: web" in unit
